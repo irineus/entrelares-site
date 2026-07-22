@@ -1,0 +1,14 @@
+{
+  // Cloudflare Workers (static assets) deploy config — used by `npx wrangler deploy`
+  // in the Cloudflare git-connected build. Only files under public/ are uploaded.
+  "name": "guardacompartilhada-site",
+  "compatibility_date": "2026-07-22",
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

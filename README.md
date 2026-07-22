@@ -6,30 +6,40 @@ Pure HTML/CSS, no build step, no framework — every page is self-contained.
 The app itself lives in a separate repository (`SharedParentalCustody`) and is
 served at `app.guardacompartilhada.com`.
 
-## Pages
+## Structure
 
 | File | Purpose |
 |---|---|
-| `index.html` | Landing page: hero, how it works, benefits, install guide, pricing, FAQ |
-| `termos.html` | Terms of Use (**draft — needs legal review before public launch**) |
-| `privacidade.html` | Privacy Policy / LGPD (**draft — needs legal review before public launch**) |
-| `_redirects` | Cloudflare Pages rule: www → apex 301 |
-| `robots.txt` / `sitemap.xml` | SEO plumbing |
+| `public/index.html` | Landing page: hero, how it works, benefits, install guide, pricing, FAQ |
+| `public/termos.html` | Terms of Use (**draft — needs legal review before public launch**) |
+| `public/privacidade.html` | Privacy Policy / LGPD (**draft — needs legal review before public launch**) |
+| `public/robots.txt` / `public/sitemap.xml` | SEO plumbing |
+| `wrangler.jsonc` | Cloudflare Workers static-assets config (`assets.directory = ./public`) |
+
+Only `public/` is uploaded as site assets — never widen `assets.directory`
+to the repo root, or `.git/` and this README get published too.
 
 Icons (`favicon.png`, `icon-192.png`, `icon-512.png`) are copies of the app's
 PWA icons — keep them in sync if the app branding changes.
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare Workers (git-connected)
 
-1. Cloudflare Dashboard → **Workers & Pages → Create → Pages → Connect to Git**
-   and select this repository.
-2. Build settings: framework preset **None**, build command **(empty)**,
-   output directory **/** (root). Every push to `main` deploys automatically.
-3. **Custom domains**: add `guardacompartilhada.com` and `www.guardacompartilhada.com`
-   (requires the domain's DNS to be on Cloudflare — add the site under
-   **DNS** first and point the registrar's nameservers at Cloudflare).
-   TLS certificates are issued automatically. The `_redirects` file folds
-   `www` into the apex.
+The repo is connected in the Cloudflare Dashboard (**Workers & Pages**) with
+deploy command `npx wrangler deploy`; every push to `main` deploys
+automatically using the committed `wrangler.jsonc` (no interactive prompts,
+no settings drift).
+
+1. **DNS**: add `guardacompartilhada.com` under Cloudflare **DNS** and point
+   the registrar's nameservers at Cloudflare.
+2. **Custom domain**: in the Worker's **Settings → Domains & Routes**, add
+   `guardacompartilhada.com`. TLS certificates are issued automatically.
+3. **www → apex redirect**: `_redirects` cannot do cross-host redirects on
+   Workers static assets (that is a Pages-only feature). Use a dashboard
+   Redirect Rule instead: **Rules → Redirect Rules → Create** — When hostname
+   equals `www.guardacompartilhada.com` → dynamic redirect to
+   `concat("https://guardacompartilhada.com", http.request.uri.path)`,
+   status 301, "preserve query string" on. (Requires a DNS record for `www`,
+   e.g. a proxied CNAME to the apex.)
 
 ## Pending before public launch
 
