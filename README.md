@@ -22,12 +22,22 @@ to the repo root, or `.git/` and this README get published too.
 Icons (`favicon.png`, `icon-192.png`, `icon-512.png`) are copies of the app's
 PWA icons — keep them in sync if the app branding changes.
 
-## Deploy — Cloudflare Workers (git-connected)
+## Deploy — GitHub Actions → Cloudflare Workers
 
-The repo is connected in the Cloudflare Dashboard (**Workers & Pages**) with
-deploy command `npx wrangler deploy`; every push to `main` deploys
-automatically using the committed `wrangler.jsonc` (no interactive prompts,
-no settings drift).
+Every push to `main` runs `.github/workflows/deploy.yml`, which executes
+`wrangler deploy` using the committed `wrangler.jsonc` (assets from
+`public/`, account pinned via `account_id`). Manual runs are available via
+the workflow's **Run workflow** button.
+
+One-time setup:
+
+1. Cloudflare Dashboard → **My Profile → API Tokens → Create Token** →
+   template **"Edit Cloudflare Workers"** (scope it to this account).
+2. GitHub repo → **Settings → Secrets and variables → Actions** → new
+   repository secret `CLOUDFLARE_API_TOKEN` with that token.
+3. If the Worker is also git-connected in the Cloudflare dashboard, disable
+   that build connection (Worker → Settings → Build) so pushes don't trigger
+   two competing deploys.
 
 1. **DNS**: add `guardacompartilhada.com` under Cloudflare **DNS** and point
    the registrar's nameservers at Cloudflare.
