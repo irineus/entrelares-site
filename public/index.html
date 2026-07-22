@@ -67,7 +67,15 @@
           "name": "O que é guarda compartilhada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Guarda compartilhada é o regime em que pai e mãe dividem as responsabilidades e decisões sobre os filhos após a separação. No dia a dia, isso exige um calendário de convivência claro: quais dias a criança fica com cada responsável, como funcionam feriados e férias, e o que acontece quando é preciso trocar um dia. O app Guarda Compartilhada organiza esse calendário e registra tudo o que foi combinado."
+            "text": "Na guarda compartilhada, pai e mãe continuam dividindo as responsabilidades e as decisões sobre os filhos depois da separação. Na prática, o maior desafio não é a lei, é a rotina: saber com quem a criança fica em cada dia, como funcionam feriados e férias, e o que fazer quando é preciso trocar um dia. É esse combinado do dia a dia que o app Guarda Compartilhada organiza."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O que é o calendário (ou regime) de convivência?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "É o combinado que define de quem é cada dia: semanas alternadas, dias fixos, fins de semana revezados, feriados. Quando fica só na cabeça de cada um ou espalhado no WhatsApp, vira fonte de atrito. O app coloca esse calendário num único lugar, igual para os dois responsáveis, com cada troca de dia aprovada pelo outro e registrada com data e hora."
           }
         },
         {
@@ -108,6 +116,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Sim. O app funciona em qualquer celular com navegador, Android ou iPhone, e pode ser instalado na tela inicial em segundos, sem passar por loja de aplicativos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "E se o outro responsável não aprovar uma troca?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A troca simplesmente não acontece: o dia continua valendo como está no calendário, e a recusa fica registrada no histórico. A regra é uma só: nenhum dia muda sem o acordo dos dois. É isso que mantém o calendário confiável para ambos."
           }
         }
       ]
@@ -278,11 +294,6 @@
         .compare-good { background: var(--bg-tint); border-color: var(--indigo); }
         .compare-good li { color: var(--ink); }
         .compare-good li::before { content: "✓"; position: absolute; left: 2px; color: var(--indigo); font-weight: 700; }
-
-        /* ── SEO / education prose ──────────────────────────── */
-        .prose { max-width: 720px; }
-        .prose h3 { font-size: 19px; margin: 26px 0 8px; }
-        .prose p { color: var(--muted); font-size: 16px; margin-bottom: 12px; }
 
         /* ── Sticky mobile CTA ──────────────────────────────── */
         .mobile-cta { display: none; }
@@ -531,24 +542,19 @@
     </div>
 </section>
 
-<section id="sobre">
-    <div class="wrap">
-        <h2>O que é guarda compartilhada e por que um calendário ajuda</h2>
-        <div class="prose">
-            <p>Na <strong>guarda compartilhada</strong>, pai e mãe continuam dividindo as responsabilidades e as decisões sobre os filhos depois da separação. Na prática, o maior desafio do dia a dia não é a lei — é a rotina: saber <strong>com quem a criança fica em cada dia</strong>, como ficam os feriados e as férias, e o que fazer quando um dos dois precisa trocar um dia.</p>
-            <h3>O calendário de convivência</h3>
-            <p>O <strong>calendário de convivência</strong> (ou regime de convivência) é o combinado que define esses dias — semanas alternadas, dias fixos, fins de semana revezados. Quando ele fica só na cabeça de cada um, ou espalhado no WhatsApp, vira fonte de atrito. Deixá-lo visível e igual para os dois responsáveis é o que reduz o conflito.</p>
-            <h3>Como o app entra nisso</h3>
-            <p>O <strong>Guarda Compartilhada</strong> coloca esse calendário num único lugar acessível aos dois. Toda <strong>troca de dia</strong> passa por aprovação do outro responsável, e cada decisão fica registrada com data e hora, num histórico que não pode ser apagado. O objetivo é simples: menos discussão sobre o que foi combinado e mais previsibilidade para os filhos.</p>
-        </div>
-    </div>
-</section>
-
 <section id="faq">
     <div class="wrap">
-        <h2>Dúvidas frequentes</h2>
-        <p class="section-lead">O que os pais mais perguntam antes de começar.</p>
+        <h2>Dúvidas frequentes sobre a guarda compartilhada</h2>
+        <p class="section-lead">Do conceito ao dia a dia no app — o que os pais mais perguntam antes de começar.</p>
         <div class="faq-list">
+            <details>
+                <summary>O que é guarda compartilhada?</summary>
+                <div class="a">Na guarda compartilhada, pai e mãe continuam dividindo as responsabilidades e as decisões sobre os filhos depois da separação. Na prática, o maior desafio não é a lei — é a rotina: saber <strong>com quem a criança fica em cada dia</strong>, como ficam feriados e férias, e o que fazer quando um dos dois precisa trocar um dia. É esse combinado do dia a dia que o app organiza.</div>
+            </details>
+            <details>
+                <summary>O que é o calendário (ou regime) de convivência?</summary>
+                <div class="a">É o combinado que define de quem é cada dia — semanas alternadas, dias fixos, fins de semana revezados, feriados. Quando ele fica só na cabeça de cada um, ou espalhado no WhatsApp, vira fonte de atrito. O Guarda Compartilhada coloca esse calendário num único lugar, igual para os dois responsáveis, com cada <strong>troca de dia</strong> aprovada pelo outro e registrada com data e hora — menos discussão sobre o que foi combinado e mais previsibilidade para os filhos.</div>
+            </details>
             <details>
                 <summary>O outro responsável precisa ter conta também?</summary>
                 <div class="a">O app funciona melhor com os dois: você cria a família e envia um convite por e-mail. É com as duas contas que as trocas de dia ganham a aprovação mútua — o coração da ferramenta. Você pode começar sozinho e convidar o outro responsável quando quiser.</div>
@@ -562,11 +568,11 @@
                 <div class="a">Sim. Cada família só enxerga os próprios dados — a separação é garantida no banco de dados, não apenas na tela. Não exibimos anúncios nem vendemos dados, e seguimos a LGPD. Veja a nossa <a href="privacidade.html">Política de Privacidade</a>.</div>
             </details>
             <details>
-                <summary>Quanto custa?</summary>
+                <summary>Quanto custa o app de guarda compartilhada?</summary>
                 <div class="a">Durante o lançamento, nada — todas as funcionalidades são gratuitas. No futuro haverá um plano premium por família (um valor único que cobre todos os responsáveis), e quem já usa o app será avisado com antecedência.</div>
             </details>
             <details>
-                <summary>Funciona no iPhone?</summary>
+                <summary>Funciona no iPhone e no Android?</summary>
                 <div class="a">Sim. O app funciona em qualquer celular com navegador — Android ou iPhone — e pode ser instalado na tela inicial em segundos, sem passar por loja de aplicativos. Veja as <a href="#instalar">instruções de instalação</a>.</div>
             </details>
             <details>
