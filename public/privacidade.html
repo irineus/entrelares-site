@@ -12,60 +12,104 @@
         .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; }
         h1 { font-size: 30px; margin-bottom: 8px; letter-spacing: -0.02em; }
         h2 { font-size: 20px; margin: 32px 0 10px; }
+        h3 { font-size: 16.5px; margin: 20px 0 8px; }
         p, li { color: #475569; font-size: 15.5px; margin-bottom: 12px; }
         ul { padding-left: 22px; }
         a { color: #4f46e5; }
+        strong { color: #1e293b; }
         .updated { color: #94a3b8; font-size: 13px; margin-bottom: 28px; }
-        .draft { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; border-radius: 10px; padding: 12px 16px; font-size: 14px; margin-bottom: 28px; }
         .back { display: inline-block; margin-bottom: 24px; text-decoration: none; font-weight: 600; font-size: 14px; }
+        table { border-collapse: collapse; width: 100%; margin: 4px 0 16px; font-size: 14px; }
+        th, td { border: 1px solid #e2e8f0; padding: 9px 11px; text-align: left; vertical-align: top; color: #475569; }
+        th { background: #f1f5f9; color: #1e293b; font-weight: 600; }
+        .tbl-wrap { overflow-x: auto; }
     </style>
 </head>
 <body>
 <div class="wrap">
     <a class="back" href="/">← Voltar</a>
     <h1>Política de Privacidade</h1>
-    <p class="updated">Última atualização: julho de 2026</p>
+    <p class="updated">Última atualização: 22 de julho de 2026 · Versão 1.1</p>
 
-    <div class="draft"><strong>Rascunho:</strong> este texto é uma base inicial e deve ser revisado (idealmente com apoio jurídico) antes da divulgação pública do serviço.</div>
+    <h2>1. Controlador e Encarregado (DPO)</h2>
+    <p>O controlador dos dados pessoais tratados no Serviço é <strong>Irineu Junior Pinheiro dos Santos</strong>, pessoa física. Os demais dados de qualificação do controlador (CPF e endereço) são fornecidos mediante solicitação à ANPD ou ao titular, quando legalmente exigível. Esta política está em conformidade com a <strong>Lei nº 13.709/2018 (Lei Geral de Proteção de Dados — LGPD)</strong> e com o Marco Civil da Internet (Lei nº 12.965/2014).</p>
+    <p><strong>Encarregado pelo Tratamento de Dados (DPO):</strong> Irineu Junior Pinheiro dos Santos. Canal de contato para assuntos de privacidade e exercício de direitos: <a href="mailto:privacidade@guardacompartilhada.com">privacidade@guardacompartilhada.com</a>.</p>
 
-    <h2>1. Quem somos</h2>
-    <p>O Guarda Compartilhada ("nós") é um aplicativo que ajuda famílias a organizar o calendário de convivência de crianças em regime de guarda compartilhada. Esta política explica quais dados tratamos, por que tratamos e quais são os seus direitos, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).</p>
+    <h2>2. A quem esta política se aplica</h2>
+    <p>Aplica-se a todos os que utilizam o Serviço: responsáveis que criam ou são convidados para uma conta, e demais membros da família cadastrados. Também descreve como tratamos os dados mínimos da criança, sempre inseridos pelos responsáveis.</p>
 
-    <h2>2. Dados que coletamos</h2>
+    <h2>3. Dados que tratamos</h2>
     <ul>
-        <li><strong>Dados de conta:</strong> nome, e-mail e senha (armazenada de forma criptografada) de cada responsável que cria uma conta.</li>
-        <li><strong>Dados da família:</strong> nome da família, membros convidados, papéis (pai, mãe, avó etc.) e o primeiro nome ou apelido da criança, usados exclusivamente para montar o calendário.</li>
+        <li><strong>Dados de conta:</strong> nome, e-mail e senha (armazenada de forma criptografada, com uso de <em>hash</em>), de cada responsável.</li>
+        <li><strong>Dados da família:</strong> nome da família, membros convidados, papéis (pai, mãe, avó, etc.) e o <strong>primeiro nome ou apelido da criança</strong>, usados exclusivamente para montar o calendário.</li>
         <li><strong>Dados de uso do calendário:</strong> dias de convivência, solicitações de troca, aprovações, recusas e o histórico dessas ações, com data e hora.</li>
-        <li><strong>Dados técnicos:</strong> registros mínimos necessários para segurança e funcionamento do serviço.</li>
+        <li><strong>Dados técnicos e registros de acesso:</strong> endereço IP, data e hora de acesso, tipo de dispositivo/navegador e registros mínimos necessários para segurança, prevenção a fraudes e cumprimento de obrigação legal.</li>
     </ul>
-    <p>Coletamos apenas o necessário para o funcionamento do serviço. Não pedimos documentos, endereço ou dados escolares/médicos da criança.</p>
+    <p>Coletamos apenas o necessário (princípio da minimização). <strong>Não solicitamos documentos, endereço da criança, dados escolares, médicos, biométricos ou quaisquer dados sensíveis.</strong> Pedimos que você também não os insira em campos livres.</p>
 
-    <h2>3. Para que usamos os dados</h2>
+    <h2>4. Finalidades e bases legais</h2>
+    <p>Tratamos dados apenas para finalidades específicas e com fundamento em uma base legal da LGPD:</p>
+    <div class="tbl-wrap">
+    <table>
+        <tr><th>Finalidade</th><th>Base legal (LGPD)</th></tr>
+        <tr><td>Criar e manter sua conta e prestar o Serviço (exibir o calendário, processar trocas, manter o histórico)</td><td>Execução de contrato — art. 7º, V</td></tr>
+        <tr><td>Enviar comunicações transacionais e de segurança (convites, confirmações, avisos de troca)</td><td>Execução de contrato — art. 7º, V</td></tr>
+        <tr><td>Garantir segurança, prevenir fraudes e uso indevido; melhorar o Serviço</td><td>Legítimo interesse — art. 7º, IX (com teste de proporcionalidade)</td></tr>
+        <tr><td>Guarda de registros de acesso da aplicação</td><td>Cumprimento de obrigação legal — art. 7º, II c/c art. 15 do Marco Civil</td></tr>
+        <tr><td>Dados mínimos da criança (nome/apelido e calendário), inseridos pelos responsáveis</td><td>Melhor interesse da criança — art. 14 da LGPD, no exercício da autoridade parental</td></tr>
+        <tr><td>Exercício regular de direitos em processo</td><td>Art. 7º, VI, quando aplicável</td></tr>
+    </table>
+    </div>
+    <p><strong>Não exibimos anúncios, não vendemos dados e não os compartilhamos com terceiros para fins de marketing.</strong></p>
+
+    <h2>5. Dados de crianças e adolescentes</h2>
+    <p>O Serviço é operado por adultos responsáveis; crianças não criam conta nem acessam o app. Os únicos dados da criança tratados são o <strong>primeiro nome ou apelido</strong> e o <strong>calendário de convivência</strong>, inseridos pelos próprios responsáveis, no <strong>melhor interesse da criança</strong>, conforme o art. 14 da LGPD. Esses dados não são repassados a terceiros e são visíveis apenas aos membros da família. Se identificarmos coleta indevida de dados de criança sem a devida autoridade, poderemos removê-los.</p>
+
+    <h2>6. Visibilidade entre membros da família</h2>
+    <p>É essencial entender: os dados que você insere (calendário, trocas, histórico) ficam <strong>visíveis aos demais membros cadastrados na sua família</strong>. Essa visibilidade é o próprio funcionamento do Serviço. O app não é uma ferramenta de sigilo entre os responsáveis nem de vigilância de um sobre o outro. Cada família só enxerga os próprios dados — famílias distintas são isoladas no banco de dados, não apenas na tela.</p>
+
+    <h2>7. Compartilhamento e operadores</h2>
+    <p>Não vendemos nem alugamos dados. Para operar o Serviço, contamos com <strong>operadores</strong> (fornecedores) que tratam dados em nosso nome e sob contrato, sem autorização para usá-los para fins próprios, notadamente:</p>
     <ul>
-        <li>Exibir o calendário de convivência aos membros da família;</li>
-        <li>Processar solicitações de troca e registrar o histórico de decisões;</li>
-        <li>Enviar notificações e e-mails transacionais (convites, confirmações, avisos de troca);</li>
-        <li>Garantir a segurança das contas e prevenir uso indevido.</li>
+        <li>provedores de <strong>infraestrutura e banco de dados</strong> (hospedagem em nuvem);</li>
+        <li>provedor de <strong>envio de e-mails transacionais</strong>.</li>
     </ul>
-    <p><strong>Não exibimos anúncios, não vendemos dados e não compartilhamos dados com terceiros para fins de marketing.</strong></p>
+    <p>Podemos, ainda, compartilhar dados quando necessário para cumprir obrigação legal ou regulatória, atender a ordem de autoridade competente, ou exercer/defender direitos em processo.</p>
 
-    <h2>4. Com quem os dados são compartilhados</h2>
-    <p>Os dados da sua família são visíveis apenas para os membros dela. Para operar o serviço, usamos fornecedores de infraestrutura (hospedagem de banco de dados e envio de e-mails) que tratam os dados em nosso nome e sob contrato, sem autorização para usá-los para outros fins.</p>
+    <h2>8. Transferência internacional de dados</h2>
+    <p>Alguns operadores podem processar ou armazenar dados em servidores localizados <strong>fora do Brasil</strong>. Nesses casos, adotamos as salvaguardas exigidas pela LGPD (arts. 33 a 36), como cláusulas contratuais de proteção e a escolha de fornecedores que ofereçam grau adequado de proteção. Ao utilizar o Serviço, você está ciente de que pode ocorrer transferência internacional nessas condições.</p>
 
-    <h2>5. Dados de crianças</h2>
-    <p>O serviço é operado pelos responsáveis legais. Os únicos dados da criança tratados são o primeiro nome (ou apelido) e o calendário de convivência, inseridos pelos próprios responsáveis, no melhor interesse da criança, como base legal prevista na LGPD.</p>
+    <h2>9. Cookies e tecnologias similares</h2>
+    <p>Utilizamos apenas cookies e armazenamento local <strong>estritamente necessários</strong> para autenticação, segurança e funcionamento da sessão. Não utilizamos cookies de publicidade nem de rastreamento de terceiros para marketing. Caso, no futuro, adotemos ferramentas de medição, esta política será atualizada e, quando exigido, será solicitado o seu consentimento.</p>
 
-    <h2>6. Retenção e exclusão</h2>
-    <p>Os dados são mantidos enquanto a conta existir. Você pode solicitar a exclusão da sua conta e dos dados associados a qualquer momento pelo e-mail abaixo. O histórico de decisões da família é imutável por desenho enquanto a família existir — essa é uma característica central do serviço —, mas é apagado junto com a exclusão da família.</p>
+    <h2>10. Segurança da informação</h2>
+    <p>Adotamos medidas técnicas e administrativas para proteger os dados (art. 46 da LGPD), como criptografia de senhas, controle de acesso, isolamento lógico entre famílias e transmissão por canais seguros (HTTPS). Nenhum sistema é 100% imune; empenhamo-nos continuamente para reduzir riscos.</p>
 
-    <h2>7. Seus direitos (LGPD)</h2>
-    <p>Você pode solicitar: confirmação de tratamento, acesso, correção, portabilidade, exclusão e informações sobre compartilhamento. Para exercer qualquer direito, escreva para <a href="mailto:contato@guardacompartilhada.com">contato@guardacompartilhada.com</a>.</p>
+    <h2>11. Retenção e exclusão</h2>
+    <p>Mantemos os dados enquanto a conta e a família existirem e pelo tempo necessário às finalidades desta política. O histórico é imutável por concepção enquanto a família existir, e é apagado com a exclusão da família. Após a exclusão, os dados são eliminados ou anonimizados, ressalvada a guarda mínima exigida por lei — em especial os <strong>registros de acesso à aplicação, mantidos por 6 (seis) meses</strong> (art. 15 do Marco Civil da Internet) — e a conservação necessária ao exercício regular de direitos.</p>
 
-    <h2>8. Contato do controlador</h2>
-    <p>[Nome/razão social do responsável pelo serviço] — <a href="mailto:contato@guardacompartilhada.com">contato@guardacompartilhada.com</a></p>
+    <h2>12. Incidentes de segurança</h2>
+    <p>Em caso de incidente de segurança que possa acarretar risco ou dano relevante aos titulares, comunicaremos a Autoridade Nacional de Proteção de Dados (ANPD) e os titulares afetados, em prazo razoável, conforme o art. 48 da LGPD.</p>
 
-    <h2>9. Alterações desta política</h2>
-    <p>Esta política pode ser atualizada. Mudanças relevantes serão comunicadas no app ou por e-mail, com antecedência razoável.</p>
+    <h2>13. Seus direitos como titular</h2>
+    <p>Nos termos do art. 18 da LGPD, você pode solicitar, a qualquer tempo e gratuitamente:</p>
+    <ul>
+        <li>confirmação da existência de tratamento e acesso aos dados;</li>
+        <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+        <li>anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade;</li>
+        <li>portabilidade a outro fornecedor, observados os segredos comercial e industrial;</li>
+        <li>eliminação dos dados tratados com base no consentimento, ressalvadas as hipóteses de conservação legal;</li>
+        <li>informação sobre entidades com as quais compartilhamos dados;</li>
+        <li>informação sobre a possibilidade de não fornecer consentimento e suas consequências;</li>
+        <li>revogação do consentimento, quando esta for a base do tratamento.</li>
+    </ul>
+    <p>Para exercer qualquer direito, escreva para <a href="mailto:privacidade@guardacompartilhada.com">privacidade@guardacompartilhada.com</a>. Poderemos solicitar informações para confirmar sua identidade e proteger seus dados. Você também pode apresentar reclamação à <strong>ANPD</strong> (gov.br/anpd).</p>
+
+    <h2>14. Alterações desta política</h2>
+    <p>Esta política pode ser atualizada para refletir mudanças legais, técnicas ou do Serviço. Mudanças relevantes serão comunicadas no app ou por e-mail, com antecedência razoável, e a data da última atualização acima será revista.</p>
+
+    <h2>15. Contato</h2>
+    <p>Controlador: <strong>Irineu Junior Pinheiro dos Santos</strong> (pessoa física). Canal de privacidade e do encarregado: <a href="mailto:privacidade@guardacompartilhada.com">privacidade@guardacompartilhada.com</a>. Suporte ao usuário: <a href="mailto:suporte@guardacompartilhada.com">suporte@guardacompartilhada.com</a>.</p>
 </div>
 </body>
 </html>
