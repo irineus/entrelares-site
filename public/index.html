@@ -154,6 +154,8 @@
         }
         img, svg { max-width: 100%; }
         a { color: var(--indigo); }
+        a, .btn, summary { -webkit-tap-highlight-color: rgba(79, 70, 229, 0.12); }
+        a:focus-visible, .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
         .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
         section { padding: 64px 0; }
         h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; }
@@ -181,7 +183,10 @@
         .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
         .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4); }
         .btn-ghost { background: transparent; color: var(--indigo); border: 1px solid var(--indigo); }
-        .nav .btn { margin-left: 8px; padding: 9px 18px; }
+        /* CTA do header: pílula enxuta e elegante, visível em toda a navegação */
+        .nav .btn { margin-left: 8px; padding: 9px 20px; border-radius: 999px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.28); }
+        .nav .btn:hover { box-shadow: 0 5px 14px rgba(79, 70, 229, 0.36); }
+        .cta-short { display: none; }
 
         /* ── Hero ───────────────────────────────────────────── */
         .hero { background: linear-gradient(170deg, var(--bg) 0%, var(--bg-tint) 100%); padding: 72px 0 80px; }
@@ -295,17 +300,15 @@
         .compare-good li { color: var(--ink); }
         .compare-good li::before { content: "✓"; position: absolute; left: 2px; color: var(--indigo); font-weight: 700; }
 
-        /* ── Sticky mobile CTA ──────────────────────────────── */
-        .mobile-cta { display: none; }
-
         /* ── Final CTA + footer ─────────────────────────────── */
         .cta-final { text-align: center; background: #03173d; color: #fff; }
         .cta-final h2 { color: #fff; }
         .cta-final p { color: #cbd5e1; max-width: 520px; margin: 0 auto 28px; }
         footer { background: #03173d; color: #94a3b8; font-size: 14px; border-top: 1px solid #1e3a5f; }
         footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 24px; padding-bottom: 24px; }
-        footer a { color: #cbd5e1; text-decoration: none; margin-left: 18px; }
+        footer a { color: #cbd5e1; text-decoration: none; }
         footer a:hover { color: #fff; }
+        .foot-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 
         @media (max-width: 820px) {
             section { padding: 48px 0; }
@@ -314,16 +317,25 @@
             .steps, .features, .install-grid, .compare { grid-template-columns: 1fr; }
             .nav-links { display: none; }
 
-            /* Sticky bottom CTA so o botão principal está sempre à mão */
-            .mobile-cta {
-                display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-                padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-                background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px);
-                border-top: 1px solid var(--line); box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08);
-            }
-            .mobile-cta .btn { flex: 1; }
-            body { padding-bottom: 76px; }
-            .nav .btn { display: none; }
+            /* Header: barra enxuta com a pílula de CTA sempre visível à direita */
+            .nav { height: 58px; gap: 12px; }
+            .brand { font-size: 15.5px; gap: 8px; }
+            .brand img { width: 28px; height: 28px; }
+            .nav .btn { margin-left: auto; padding: 8px 16px; font-size: 14px; }
+            .cta-full { display: none; }
+            .cta-short { display: inline; }
+
+            /* Hero: CTAs em largura total, com alvo de toque confortável */
+            .hero-ctas { flex-direction: column; align-items: stretch; }
+            .hero-ctas .btn { width: 100%; }
+
+            .price-card { padding: 30px 22px; }
+            footer .wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+
+        @media (max-width: 380px) {
+            .brand { font-size: 0; gap: 0; }
+            .brand img { width: 30px; height: 30px; }
         }
     </style>
 </head>
@@ -343,7 +355,7 @@
             <a href="#precos">Preços</a>
             <a href="#faq">Dúvidas</a>
         </nav>
-        <a class="btn btn-primary" href="https://app.guardacompartilhada.com">Entrar no app</a>
+        <a class="btn btn-primary" href="https://app.guardacompartilhada.com" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
     </div>
 </header>
 
@@ -594,7 +606,7 @@
 <footer>
     <div class="wrap">
         <span>© 2026 Guarda Compartilhada · Cuidando juntos do que mais importa</span>
-        <span>
+        <span class="foot-links">
             <a href="termos.html">Termos de Uso</a>
             <a href="privacidade.html">Privacidade</a>
             <a href="mailto:suporte@guardacompartilhada.com">Suporte</a>
@@ -602,10 +614,6 @@
         </span>
     </div>
 </footer>
-
-<div class="mobile-cta">
-    <a class="btn btn-primary" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
-</div>
 
 </body>
 </html>
