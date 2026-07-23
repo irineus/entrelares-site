@@ -63,7 +63,6 @@ One-time setup:
 - [ ] Replace the CSS phone mockup with real app screenshots when available
       (swap the `.phone` block in `index.html`).
 - [x] Analytics (L-01): Umami cookieless snippet on every page + `data-umami-event` on
-      the CTAs. **Pending:** paste the real `data-website-id` (from the Umami dashboard)
-      in place of `PLACEHOLDER_LANDING_WEBSITE_ID`.
+      the CTAs, with the live landing `data-website-id`. Collecting once `main` redeploys.
 - [ ] Open Graph image: `icon-512.png` works but a 1200×630 banner renders
       better on WhatsApp/social previews.

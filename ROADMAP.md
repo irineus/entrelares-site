@@ -54,7 +54,7 @@ No strict order; run continuously.
 
 ### L-01 — Cookieless web analytics + CTA tracking
 
-**Order 1** · `high` · `low` · `high` · **Status: `in-progress`** (delivered with app T-37) · **Cross-repo:** coordinated with app **T-37**
+**Order 1** · `high` · `low` · `high` · **Status: `completed`** (Umami live on the landing; app side ships with T-37 to prod) · **Cross-repo:** coordinated with app **T-37**
 
 **Decision (with app T-37): Umami cookieless** (switched from Plausible to avoid its
 subscription; same cookieless/no-PII posture; PostHog reconsidered for later
@@ -64,9 +64,9 @@ consent banner**. It records pageviews, and the "Criar conta grátis" / "Entrar 
 CTAs carry `data-umami-event="cta-signup"` so their clicks are tracked. The landing
 privacy policy (§7/§9) discloses the cookieless analytics (Versão 1.3).
 
-Same Umami account as the app (T-37). **External prerequisite:** create the landing
-website in the Umami dashboard and paste its id into `data-website-id` (currently
-`PLACEHOLDER_LANDING_WEBSITE_ID`) — until then events are accepted-and-dropped.
+Same Umami provider as the app (T-37), in a separate account (the free tier allows one website
+per account). The landing's `data-website-id` is **set and live** in every page — collecting as
+soon as Cloudflare Pages redeploys `main`.
 
 **Files (done):** all `public/**/*.html` (script tag), `public/privacidade.html` (§9 disclosure).
 

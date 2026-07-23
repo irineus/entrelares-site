@@ -29,10 +29,10 @@ pages are currently the more up-to-date source of truth.** Legal review is track
 ## Analytics
 - **Umami cookieless** (L-01): the `cloud.umami.is/script.js` tag on every page records pageviews;
   CTA clicks are tracked via `data-umami-event="cta-signup"` on the app links — no cookies, no PII, no
-  consent banner. Same Umami account as the app (T-37). **Set the real `data-website-id`** (currently
-  `PLACEHOLDER_LANDING_WEBSITE_ID`) from the Umami dashboard for data to appear. Disclosed in
-  `privacidade.html` §7/§9. (Switched from Plausible to avoid its subscription; PostHog reconsidered for
-  later experimentation.)
+  consent banner. Same Umami provider as the app (T-37) — separate Umami accounts (the free tier allows
+  one website per account), so the landing and app have distinct `website-id`s. The landing's
+  `data-website-id` is live in every page. Disclosed in `privacidade.html` §7/§9. (Switched from
+  Plausible to avoid its subscription; PostHog reconsidered for later experimentation.)
 
 ## Gotchas
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,
