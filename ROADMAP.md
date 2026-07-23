@@ -98,15 +98,18 @@ The hero's CSS/HTML phone mockup is replaced by an **auto-rotating slideshow of 
 (Today card + calendar, swap approval, rotation wizard with a grandmother in the cycle, the
 immutable history, the per-parent summary) inside a phone frame — it pauses on hover/focus, is
 swipeable, has dot navigation and honours `prefers-reduced-motion`. A new **"Veja o app por
-dentro"** gallery shows four more screens (3-caregiver calendar, day editor, notifications,
-family/invite). Every image ships as `<picture>` **WebP + PNG fallback** (WebP ~half the bytes);
-below-the-fold shots lazy-load. The QA-build **"DEV" environment badge** was removed from each
-capture (its band was spliced out) so nothing hints at the dev environment.
+dentro"** gallery shows three more screens (3-caregiver calendar, day editor, family/invite).
+Every image ships as `<picture>` **WebP + PNG fallback** (WebP ~half the bytes); below-the-fold
+shots lazy-load. The QA-build **"DEV" environment badge** was painted out of each capture
+**in place** (the pill covered with its own local background — native height preserved so the
+phone frame shows every screen whole, bottom nav included, with nothing cropped). The
+notifications screen was dropped from the set because its notification titles carry an inline
+`[Dev]` environment prefix that can't be masked cleanly (recapture from prod later).
 
 Captured at ~412×915 (DPR 1) — sharp enough for the landing at the sizes shown; **re-capture at
 DPR 3 for the Play listing (app T-38)**.
 
-**Files (done):** `public/img/screenshots/*.{png,webp}` (12 assets); `index.html` (hero slideshow,
+**Files (done):** `public/img/screenshots/*.{png,webp}` (11 assets); `index.html` (hero slideshow,
 gallery section, slideshow styles + inline JS). **Micro-follow-up:** DPR-3 recaptures for T-38.
 
 ---
