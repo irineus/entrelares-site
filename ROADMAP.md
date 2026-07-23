@@ -96,21 +96,24 @@ available in this environment (no ImageMagick/pngquant/sharp/PIL), so deferred.
 
 The hero's CSS/HTML phone mockup is replaced by an **auto-rotating slideshow of real screenshots**
 (Today card + calendar, swap approval, rotation wizard with a grandmother in the cycle, the
-immutable history, the per-parent summary) inside a phone frame — it pauses on hover/focus, is
-swipeable, has dot navigation and honours `prefers-reduced-motion`. A new **"Veja o app por
-dentro"** gallery shows three more screens (3-caregiver calendar, day editor, family/invite).
+immutable history, and the 3-caregiver calendar) inside a phone frame — it pauses on hover/focus,
+is swipeable, has dot navigation and honours `prefers-reduced-motion`. A **"Veja o app por
+dentro"** gallery shows three more screens (other-parent day card, day editor, family/invite).
 Every image ships as `<picture>` **WebP + PNG fallback** (WebP ~half the bytes); below-the-fold
 shots lazy-load. The QA-build **"DEV" environment badge** was painted out of each capture
 **in place** (the pill covered with its own local background — native height preserved so the
-phone frame shows every screen whole, bottom nav included, with nothing cropped). The
-notifications screen was dropped from the set because its notification titles carry an inline
-`[Dev]` environment prefix that can't be masked cleanly (recapture from prod later).
+phone frame shows every screen whole, bottom nav included, with nothing cropped). Two screens are
+kept out of the on-site set: **notifications** (its titles carry an inline `[Dev]` env prefix) and
+the **per-parent summary** (its DEV pill straddles the yellow banner's edge + white, so no clean
+in-place mask) — both recapture cleanly from prod later.
 
-Captured at ~412×915 (DPR 1) — sharp enough for the landing at the sizes shown; **re-capture at
-DPR 3 for the Play listing (app T-38)**.
+Captured at **DPR 3 → 1080×1920** (9:16), so the same assets are Play-listing-ready and render
+crisp on retina; the earlier DPR-1 set was replaced.
 
-**Files (done):** `public/img/screenshots/*.{png,webp}` (11 assets); `index.html` (hero slideshow,
-gallery section, slideshow styles + inline JS). **Micro-follow-up:** DPR-3 recaptures for T-38.
+**Files (done):** `public/img/screenshots/*.{png,webp}` (8 assets, 1080×1920); `index.html` (hero slideshow,
+gallery section, slideshow styles + inline JS). **For T-38 (Play):** these 1080×1920 assets are
+store-ready; to complete the set, recapture **notifications** + **per-parent summary** from prod
+(no `[Dev]`/badge) so they can join the store listing too.
 
 ---
 
