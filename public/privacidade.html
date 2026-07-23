@@ -31,7 +31,7 @@
 <div class="wrap">
     <a class="back" href="/">← Voltar</a>
     <h1>Política de Privacidade</h1>
-    <p class="updated">Última atualização: 22 de julho de 2026 · Versão 1.1</p>
+    <p class="updated">Última atualização: 22 de julho de 2026 · Versão 1.2</p>
 
     <h2>1. Controlador e Encarregado (DPO)</h2>
     <p>O controlador dos dados pessoais tratados no Serviço é <strong>Irineu Junior Pinheiro dos Santos</strong>, pessoa física. Os demais dados de qualificação do controlador (CPF e endereço) são fornecidos mediante solicitação à ANPD ou ao titular, quando legalmente exigível. Esta política está em conformidade com a <strong>Lei nº 13.709/2018 (Lei Geral de Proteção de Dados — LGPD)</strong> e com o Marco Civil da Internet (Lei nº 12.965/2014).</p>
@@ -71,10 +71,12 @@
     <p>É essencial entender: os dados que você insere (calendário, trocas, histórico) ficam <strong>visíveis aos demais membros cadastrados na sua família</strong>. Essa visibilidade é o próprio funcionamento do Serviço. O app não é uma ferramenta de sigilo entre os responsáveis nem de vigilância de um sobre o outro. Cada família só enxerga os próprios dados — famílias distintas são isoladas no banco de dados, não apenas na tela.</p>
 
     <h2>7. Compartilhamento e operadores</h2>
-    <p>Não vendemos nem alugamos dados. Para operar o Serviço, contamos com <strong>operadores</strong> (fornecedores) que tratam dados em nosso nome e sob contrato, sem autorização para usá-los para fins próprios, notadamente:</p>
+    <p>Não vendemos nem alugamos dados. Para operar o Serviço, contamos com <strong>operadores</strong> (fornecedores) que tratam dados em nosso nome e sob contrato, sem autorização para usá-los para fins próprios:</p>
     <ul>
-        <li>provedores de <strong>infraestrutura e banco de dados</strong> (hospedagem em nuvem);</li>
-        <li>provedor de <strong>envio de e-mails transacionais</strong>.</li>
+        <li><strong>Supabase</strong> — autenticação e banco de dados;</li>
+        <li><strong>Resend</strong> — envio de e-mails transacionais (convites e avisos do fluxo de troca);</li>
+        <li><strong>Cloudflare</strong> — hospedagem e entrega do aplicativo;</li>
+        <li><strong>Plausible</strong> — estatísticas de uso sem cookies e sem dados pessoais (ver §9).</li>
     </ul>
     <p>Podemos, ainda, compartilhar dados quando necessário para cumprir obrigação legal ou regulatória, atender a ordem de autoridade competente, ou exercer/defender direitos em processo.</p>
 
@@ -85,7 +87,8 @@
     <p>Utilizamos apenas cookies e armazenamento local <strong>estritamente necessários</strong> para autenticação, segurança e funcionamento da sessão. Não utilizamos cookies de publicidade nem de rastreamento de terceiros para marketing. Para entender de forma agregada como o site e o aplicativo são usados, utilizamos o <strong>Plausible Analytics</strong> — uma ferramenta de medição <strong>sem cookies</strong> e <strong>sem coleta de dados pessoais</strong>, que não rastreia você entre sites nem cria perfil individual: registra apenas visitas e cliques agregados, com a contagem de visitantes derivada no servidor a partir de dados técnicos temporários. Por não usar cookies nem dados pessoais, essa medição não exige consentimento; ainda assim, informamos aqui em transparência.</p>
 
     <h2>10. Segurança da informação</h2>
-    <p>Adotamos medidas técnicas e administrativas para proteger os dados (art. 46 da LGPD), como criptografia de senhas, controle de acesso, isolamento lógico entre famílias e transmissão por canais seguros (HTTPS). Nenhum sistema é 100% imune; empenhamo-nos continuamente para reduzir riscos.</p>
+    <p>Adotamos medidas técnicas e administrativas para proteger os dados (art. 46 da LGPD): criptografia em trânsito (HTTPS/TLS); banco de dados em volumes criptografados (AES-256) pela infraestrutura do provedor, com cópias de segurança adicionalmente criptografadas com senha; senhas armazenadas apenas como <em>hash</em> criptográfico (bcrypt), nunca em texto legível; e controle de acesso no próprio banco (Row-Level Security), que restringe cada dado à família a que pertence — requisições sem login não acessam nenhuma tabela.</p>
+    <p>Os campos de texto livre (como as observações do calendário) não recebem uma camada adicional de criptografia por campo dentro do banco — a proteção deles é a criptografia de disco e o controle de acesso descritos acima. Nenhum sistema é 100% imune; recomendamos manter a senha em sigilo e registrar nas observações apenas o necessário para a rotina de guarda.</p>
 
     <h2>11. Retenção e exclusão</h2>
     <p>Mantemos os dados enquanto a conta e a família existirem e pelo tempo necessário às finalidades desta política. O histórico é imutável por concepção enquanto a família existir, e é apagado com a exclusão da família. Após a exclusão, os dados são eliminados ou anonimizados, ressalvada a guarda mínima exigida por lei — em especial os <strong>registros de acesso à aplicação, mantidos por 6 (seis) meses</strong> (art. 15 do Marco Civil da Internet) — e a conservação necessária ao exercício regular de direitos.</p>
