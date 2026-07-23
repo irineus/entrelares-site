@@ -119,7 +119,7 @@ store-ready; to complete the set, recapture **notifications** + **per-parent sum
 
 ### L-10 — Reposition around the immutable audit log ("histórico à prova de disputa")
 
-**Order 4** · `high` · `low` · `high` · **Cross-repo:** ↔ app **F-33** (the PDF report is this claim, made tangible)
+**Order 4** · `high` · `low` · `high` · **Status: `completed`** · **Cross-repo:** ↔ app **F-33** (the PDF report is this claim, made tangible)
 
 The app's **immutable, append-only audit log** is a genuine legal-grade differentiator that
 **no Brazilian competitor communicates**. Sharpen the hero/benefits copy around it —
@@ -129,6 +129,13 @@ history factually).
 
 **Files:** `public/index.html` — hero subcopy + the "Benefícios" card on immutable history;
 optionally a short "por que importa" block. Coordinate the wording with app F-33.
+
+**Done:** `public/index.html` — hero subcopy now foregrounds the *"registro à prova de disputa"*
+(histórico que não pode ser editado nem apagado); the immutable-history benefit card retitled
+*"Histórico à prova de disputa"* with sharpened, honest body copy. Wording coordinated with app
+**F-33** (v1.6.12), whose PDF report is literally the *"relatório à prova de disputa"*. Kept
+factual — no legal-proof overclaim (the FAQ already frames court value honestly). The optional
+"por que importa" block was not needed. Delivered alongside app F-33.
 
 ---
 

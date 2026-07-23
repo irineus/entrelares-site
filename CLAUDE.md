@@ -15,8 +15,9 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
 
 - **Preview is a stable staging site** — review landing changes live before promoting to
   production. Flow: feature branch → merge to `preview` (auto-deploys the preview worker) →
-  eyeball at preview.guardacompartilhada.com → merge `preview`→`main` (production). `main`
-  stays the single production source of truth (Cloudflare deploys from it).
+  eyeball at preview.guardacompartilhada.com → **on the user's explicit demand only**, promote
+  `preview`→`main` (production). `main` stays the single production source of truth (Cloudflare
+  deploys from it). See the Working agreement below for the review/authorization gates.
 - The preview build **strips the Umami loader from every `public/**/*.html` and overwrites
   `robots.txt` to deny all** — both applied to the CI checkout only, never committed, so the
   source and production stay unchanged. No stats, no consent surface, no SEO duplication.
@@ -28,6 +29,20 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
 ## Language conventions
 - **UI / legal copy: PT-BR.** File names/titles and commit bodies' technical terms: English is fine.
 - **Commit messages: PT-BR**, conventional-commit style (`feat(...)`, `fix(...)`, `docs(...)`).
+
+## Working agreement — branches, review, deploy (settled July 2026, mirrors the app)
+- **Per item:** analysis + gap questions BEFORE any code; once decisions are locked, implement,
+  commit and push to the session's work branch, then **report everything done**.
+- **One fresh branch per item**, always created from the current **`preview`** (the integration /
+  QA branch, the landing's equivalent of the app's `dev`); never reuse a merged branch (squash
+  merges orphan its commits — realign onto current `preview` first).
+- **`preview` (QA) merge needs the user's explicit OK — never automatic.** After the OK: PR +
+  squash-merge to `preview` → the preview worker auto-deploys → the user reviews live at
+  **preview.guardacompartilhada.com**.
+- **Production (`main`) is deploy-on-demand ONLY.** Promote `preview`→`main` (production)
+  **solely when the user explicitly asks** — never automatically, never bundled with a preview
+  merge, never on my own initiative. `main` stays the single production source of truth.
+- **Never commit directly to `preview` or `main`.**
 
 ## Roadmap
 - `ROADMAP.md` — the growth/conversion roadmap (L-01…L-12), companion to the app's Phase 6
