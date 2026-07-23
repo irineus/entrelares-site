@@ -92,15 +92,22 @@ available in this environment (no ImageMagick/pngquant/sharp/PIL), so deferred.
 
 ### L-03 — Real product screenshots (replace CSS mockup)
 
-**Order 3** · `high` · `low` · `high` · **Cross-repo:** **required by app T-38** (Play listing screenshots)
+**Order 3** · `high` · `low` · `high` · **Status: `done`** · **Cross-repo:** the assets feed app **T-38** (Play listing screenshots)
 
-The hero uses a **CSS/HTML phone mockup**, not real UI. Real screenshots of the Today card,
-calendar, and swap workflow build trust and help image SEO. Capture them at Play-listing
-resolutions so the **same assets serve app T-38** — this is why L-03 precedes the store work
-in the app track.
+The hero's CSS/HTML phone mockup is replaced by an **auto-rotating slideshow of real screenshots**
+(Today card + calendar, swap approval, rotation wizard with a grandmother in the cycle, the
+immutable history, the per-parent summary) inside a phone frame — it pauses on hover/focus, is
+swipeable, has dot navigation and honours `prefers-reduced-motion`. A new **"Veja o app por
+dentro"** gallery shows four more screens (3-caregiver calendar, day editor, notifications,
+family/invite). Every image ships as `<picture>` **WebP + PNG fallback** (WebP ~half the bytes);
+below-the-fold shots lazy-load. The QA-build **"DEV" environment badge** was removed from each
+capture (its band was spliced out) so nothing hints at the dev environment.
 
-**Files:** `public/img/` new screenshots (WebP + PNG fallback); hero + benefits sections in
-`index.html`.
+Captured at ~412×915 (DPR 1) — sharp enough for the landing at the sizes shown; **re-capture at
+DPR 3 for the Play listing (app T-38)**.
+
+**Files (done):** `public/img/screenshots/*.{png,webp}` (12 assets); `index.html` (hero slideshow,
+gallery section, slideshow styles + inline JS). **Micro-follow-up:** DPR-3 recaptures for T-38.
 
 ---
 

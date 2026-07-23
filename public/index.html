@@ -198,33 +198,33 @@
         .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
         .hero-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-        /* Phone mockup */
+        /* Phone frame + real-screenshot slideshow (L-03) */
+        .hero-shot { display: flex; flex-direction: column; align-items: center; gap: 16px; }
         .phone {
-            width: 300px; margin: 0 auto; background: #0f172a; border-radius: 36px; padding: 12px;
-            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+            width: 290px; max-width: 80vw; margin: 0; background: #0f172a; border-radius: 40px; padding: 11px;
+            box-shadow: 0 26px 60px rgba(15, 23, 42, 0.28);
         }
-        .phone-screen { background: var(--bg); border-radius: 26px; overflow: hidden; }
-        .phone-top { background: #03173d; color: #fff; padding: 14px 16px 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .phone-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-        .mock-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
-        .mock-today { border-left: 5px solid var(--indigo); }
-        .mock-today .day-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-        .mock-today .day-who { font-size: 16px; font-weight: 700; }
-        .mock-today .day-who span { color: var(--indigo); }
-        .mock-week { display: flex; gap: 6px; }
-        .mock-week .d {
-            flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: #fff;
-            border-radius: 8px; padding: 6px 0;
-        }
-        .d-indigo { background: var(--indigo); }
-        .d-pink { background: var(--pink); }
-        .mock-swap .swap-title { font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-        .mock-swap .swap-badge { background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
-        .mock-swap .swap-text { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-        .mock-swap .swap-actions { display: flex; gap: 8px; }
-        .mock-swap .swap-actions .a { flex: 1; text-align: center; font-size: 12px; font-weight: 600; padding: 7px 0; border-radius: 8px; }
-        .a-ok { background: var(--indigo); color: #fff; }
-        .a-no { background: #f1f5f9; color: var(--muted); }
+        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 411 / 864; }
+        .shots { position: absolute; inset: 0; }
+        .shot { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
+        .shot.is-active { opacity: 1; }
+        .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .shot-caption { font-size: 15px; font-weight: 600; color: var(--ink); text-align: center; max-width: 300px; min-height: 42px; margin: 0; }
+        .shot-dots { display: flex; gap: 9px; }
+        .shot-dots button { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; background: var(--line); cursor: pointer; transition: background .2s ease, transform .2s ease; }
+        .shot-dots button.is-on { background: var(--indigo); transform: scale(1.3); }
+        .shot-dots button:hover { background: var(--muted); }
+
+        /* Screenshot gallery ("por dentro do app") */
+        #galeria { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 8px; }
+        .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .phone-sm { width: 100%; max-width: 210px; background: #0f172a; border-radius: 30px; padding: 8px; box-shadow: 0 16px 36px rgba(15, 23, 42, 0.20); }
+        .phone-sm .scr { border-radius: 22px; overflow: hidden; aspect-ratio: 411 / 864; background: #fff; }
+        .phone-sm img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .gallery-item p { font-size: 14px; color: var(--muted); text-align: center; margin: 0; max-width: 210px; }
+
+        @media (prefers-reduced-motion: reduce) { .shot { transition: none; } }
 
         /* ── How it works ───────────────────────────────────── */
         .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -316,6 +316,7 @@
             .hero { padding: 40px 0 56px; }
             .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
             .steps, .features, .install-grid, .compare { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .nav-links { display: none; }
 
             /* Header: barra enxuta com a pílula de CTA sempre visível à direita */
@@ -384,37 +385,50 @@
             </div>
         </div>
 
-        <div class="phone" aria-hidden="true">
-            <div class="phone-screen">
-                <div class="phone-top">
-                    <img src="icon-192.png" alt="" width="20" height="20" style="border-radius:5px" />
-                    Guarda Compartilhada
-                </div>
-                <div class="phone-body">
-                    <div class="mock-card mock-today">
-                        <div class="day-label">Hoje · terça-feira</div>
-                        <div class="day-who">Dia de <span>Ana</span></div>
-                    </div>
-                    <div class="mock-card">
-                        <div class="mock-week">
-                            <div class="d d-indigo">S</div>
-                            <div class="d d-indigo">T</div>
-                            <div class="d d-pink">Q</div>
-                            <div class="d d-pink">Q</div>
-                            <div class="d d-indigo">S</div>
-                            <div class="d d-pink">S</div>
-                            <div class="d d-pink">D</div>
+        <div class="hero-shot">
+            <div class="phone">
+                <div class="phone-screen">
+                    <div class="shots" id="heroShots">
+                        <div class="shot is-active" data-caption="Veja de quem é o dia — hoje e nos próximos">
+                            <picture>
+                                <source srcset="img/screenshots/today-calendar-meu-dia.webp" type="image/webp" />
+                                <img src="img/screenshots/today-calendar-meu-dia.png" width="411" height="864" alt="Tela inicial do app: card mostrando de quem é o dia e o calendário do mês com os dias coloridos por responsável" loading="eager" decoding="async" />
+                            </picture>
+                        </div>
+                        <div class="shot" data-caption="Trocou um dia? Só vale com a aprovação dos dois">
+                            <picture>
+                                <source srcset="img/screenshots/troca-aguardando-aprovacao.webp" type="image/webp" />
+                                <img src="img/screenshots/troca-aguardando-aprovacao.png" width="414" height="864" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
+                            </picture>
+                        </div>
+                        <div class="shot" data-caption="Monte a rotação em segundos — até com avós no revezamento">
+                            <picture>
+                                <source srcset="img/screenshots/assistente-rotacao-com-avo.webp" type="image/webp" />
+                                <img src="img/screenshots/assistente-rotacao-com-avo.png" width="411" height="863" alt="Assistente de rotação montando um ciclo de revezamento com pai, mãe e avó" loading="lazy" decoding="async" />
+                            </picture>
+                        </div>
+                        <div class="shot" data-caption="Tudo registrado, com data e hora — sem poder apagar">
+                            <picture>
+                                <source srcset="img/screenshots/historico-auditoria.webp" type="image/webp" />
+                                <img src="img/screenshots/historico-auditoria.png" width="415" height="863" alt="Histórico de ajustes: registro imutável das alterações com data e hora" loading="lazy" decoding="async" />
+                            </picture>
+                        </div>
+                        <div class="shot" data-caption="Quantos dias ficaram com cada um, sem discussão">
+                            <picture>
+                                <source srcset="img/screenshots/relatorio-resumo.webp" type="image/webp" />
+                                <img src="img/screenshots/relatorio-resumo.png" width="413" height="863" alt="Resumo do período com a contagem de dias programados e realizados por responsável" loading="lazy" decoding="async" />
+                            </picture>
                         </div>
                     </div>
-                    <div class="mock-card mock-swap">
-                        <div class="swap-title">Troca de dia <span class="swap-badge">AGUARDANDO</span></div>
-                        <div class="swap-text">Carlos propôs ficar com o Théo na sexta, 24/07, no lugar de Ana.</div>
-                        <div class="swap-actions">
-                            <div class="a a-ok">Aprovar</div>
-                            <div class="a a-no">Recusar</div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+            <p class="shot-caption" id="shotCaption" aria-live="polite">Veja de quem é o dia — hoje e nos próximos</p>
+            <div class="shot-dots" id="shotDots" role="tablist" aria-label="Telas do aplicativo">
+                <button type="button" class="is-on" data-i="0" role="tab" aria-selected="true" aria-label="Tela 1: calendário de convivência"></button>
+                <button type="button" data-i="1" role="tab" aria-selected="false" aria-label="Tela 2: aprovação de troca de dia"></button>
+                <button type="button" data-i="2" role="tab" aria-selected="false" aria-label="Tela 3: assistente de rotação"></button>
+                <button type="button" data-i="3" role="tab" aria-selected="false" aria-label="Tela 4: histórico com data e hora"></button>
+                <button type="button" data-i="4" role="tab" aria-selected="false" aria-label="Tela 5: resumo por responsável"></button>
             </div>
         </div>
     </div>
@@ -439,6 +453,51 @@
                 <div class="n">3</div>
                 <h3>Precisou trocar um dia? Proponha no app</h3>
                 <p>A troca só vale quando o outro responsável aprova. Nada muda por decisão de um só — e tudo fica registrado, com data e hora.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="galeria">
+    <div class="wrap">
+        <h2>Veja o app por dentro</h2>
+        <p class="section-lead">Telas reais do aplicativo — do calendário do dia a dia aos detalhes que dão segurança para os dois lados.</p>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="phone-sm"><div class="scr">
+                    <picture>
+                        <source srcset="img/screenshots/calendario-tres-cuidadores.webp" type="image/webp" />
+                        <img src="img/screenshots/calendario-tres-cuidadores.png" width="413" height="864" alt="Calendário com três responsáveis — pai, mãe e avó — cada um com a sua cor" loading="lazy" decoding="async" />
+                    </picture>
+                </div></div>
+                <p>Pai, mãe e avó no mesmo calendário, cada um com a sua cor.</p>
+            </div>
+            <div class="gallery-item">
+                <div class="phone-sm"><div class="scr">
+                    <picture>
+                        <source srcset="img/screenshots/editor-dia.webp" type="image/webp" />
+                        <img src="img/screenshots/editor-dia.png" width="412" height="865" alt="Editor de um dia do calendário: responsável, horário da troca e observações" loading="lazy" decoding="async" />
+                    </picture>
+                </div></div>
+                <p>Defina o responsável, o horário da troca e uma observação para cada dia.</p>
+            </div>
+            <div class="gallery-item">
+                <div class="phone-sm"><div class="scr">
+                    <picture>
+                        <source srcset="img/screenshots/notificacoes.webp" type="image/webp" />
+                        <img src="img/screenshots/notificacoes.png" width="413" height="864" alt="Central de avisos com notificações de trocas e novidades" loading="lazy" decoding="async" />
+                    </picture>
+                </div></div>
+                <p>Avisos quando algo muda — os dois ficam sempre por dentro.</p>
+            </div>
+            <div class="gallery-item">
+                <div class="phone-sm"><div class="scr">
+                    <picture>
+                        <source srcset="img/screenshots/familia-membros.webp" type="image/webp" />
+                        <img src="img/screenshots/familia-membros.png" width="412" height="864" alt="Tela da família com os responsáveis e o convite por e-mail" loading="lazy" decoding="async" />
+                    </picture>
+                </div></div>
+                <p>Convide o outro responsável e outros cuidadores por e-mail.</p>
             </div>
         </div>
     </div>
@@ -619,6 +678,57 @@
         </span>
     </div>
 </footer>
+
+<script>
+// Hero screenshot slideshow: auto-rotate, pause on hover/focus, dots + swipe,
+// and honour prefers-reduced-motion (no autoplay). Self-hosted, no deps.
+(function () {
+    var root = document.getElementById('heroShots');
+    var dotsBox = document.getElementById('shotDots');
+    var cap = document.getElementById('shotCaption');
+    if (!root || !dotsBox) return;
+
+    var shots = Array.prototype.slice.call(root.querySelectorAll('.shot'));
+    var dots = Array.prototype.slice.call(dotsBox.querySelectorAll('[data-i]'));
+    if (shots.length < 2) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, timer = null, DELAY = 5000;
+
+    function show(n) {
+        i = (n + shots.length) % shots.length;
+        for (var k = 0; k < shots.length; k++) {
+            shots[k].classList.toggle('is-active', k === i);
+            if (dots[k]) {
+                dots[k].classList.toggle('is-on', k === i);
+                dots[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
+            }
+        }
+        if (cap) cap.textContent = shots[i].getAttribute('data-caption') || '';
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function play() { if (reduce) return; stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
+
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); play(); }); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', play);
+    dotsBox.addEventListener('focusin', stop);
+    dotsBox.addEventListener('focusout', play);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+
+    var x0 = null;
+    root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+    root.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+        x0 = null; play();
+    }, { passive: true });
+
+    show(0);
+    play();
+})();
+</script>
 
 </body>
 </html>
