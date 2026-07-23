@@ -54,16 +54,19 @@ No strict order; run continuously.
 
 ### L-01 — Cookieless web analytics + CTA tracking
 
-**Order 1** · `high` · `low` · `high` · **Cross-repo:** coordinated with app **T-37**
+**Order 1** · `high` · `low` · `high` · **Status: `in-progress`** (delivered with app T-37) · **Cross-repo:** coordinated with app **T-37**
 
-Add **cookieless** analytics (Cloudflare Web Analytics — already on Cloudflare — or
-Plausible/Umami). No cookies, no PII → **no LGPD consent banner**. Track landing pageviews
-and, critically, the **click-through on every "Criar conta grátis" / "Entrar no app" CTA**
-to `app.guardacompartilhada.com`. Top of the funnel that pairs with the app-side funnel
-(T-37) — today unmeasured, so it comes first.
+**Decision (with app T-37): Plausible cookieless.** Added the Plausible
+`script.outbound-links.js` tag to every page (`index.html`, the two legal pages and
+all blog pages) — cookieless, no PII → **no LGPD consent banner**. It records pageviews
+and, via the `outbound-links` extension, **auto-tracks every click on the "Criar conta
+grátis" / "Entrar no app" CTAs** (they are outbound to `app.guardacompartilhada.com`).
+The landing privacy policy (§9) was updated to disclose the cookieless analytics.
 
-**Files:** `public/index.html` (+ blog pages) — one analytics snippet; if Cloudflare Web
-Analytics, enable in the dashboard (zero code) + outbound-link events.
+Same Plausible account as the app (T-37) → **one funnel** across both sites.
+**External prerequisite:** register `guardacompartilhada.com` in the Plausible dashboard.
+
+**Files (done):** all `public/**/*.html` (script tag), `public/privacidade.html` (§9 disclosure).
 
 ---
 
