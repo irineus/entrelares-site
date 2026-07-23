@@ -74,15 +74,19 @@ soon as Cloudflare Pages redeploys `main`.
 
 ### L-02 — Fix Open Graph image (1200×630) + compress icon-512
 
-**Order 2** · `high` · `low` · `high` · **Cross-repo:** the banner + assets feed app **T-38**
+**Order 2** · `high` · `low` · `high` · **Status: `done` (banner)** · **Cross-repo:** the banner feeds app **T-38**
 
-The current OG image is a **512×512 square** (`icon-512.png`, 396 KB), so link previews on
-**WhatsApp** — the #1 sharing channel for this Brazilian audience — render poorly. Create a
-proper **1200×630** social banner and point `og:image` / `twitter:image` at it. Compress
-`icon-512.png`. The banner/screenshots double as Play-listing imagery for app T-38.
+The home OG image was a **512×512 square** (`icon-512.png`), so WhatsApp/social previews
+rendered poorly. Created a proper **1200×630** branded banner (`public/og-cover.png`) — navy
+brand gradient + wordmark + the hero hook ("De quem é o dia hoje?") + feature chips — rendered
+from an HTML card via headless Chromium. `index.html` `og:image`/`twitter:image` now point to
+it with `1200×630` dimensions (`twitter:card` was already `summary_large_image`). The banner
+doubles as Play-listing imagery for app T-38. Blog articles already use their own 1600×1067 OG
+images, and the legal pages are `noindex` — so only the home needed the banner.
 
-**Files:** `public/` new `og-cover.png` (1200×630); `og:image`/`twitter:image` in
-`index.html` (+ per-article OG in `public/blog/*.html`); recompress `icon-512.png`.
+**Done:** `public/og-cover.png` + `index.html` meta. **Micro-follow-up:** recompress
+`icon-512.png` (396 KB — used as favicon/apple-touch/JSON-LD logo); no image optimiser is
+available in this environment (no ImageMagick/pngquant/sharp/PIL), so deferred.
 
 ---
 

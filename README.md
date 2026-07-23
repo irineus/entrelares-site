@@ -64,5 +64,6 @@ One-time setup:
       (swap the `.phone` block in `index.html`).
 - [x] Analytics (L-01): Umami cookieless snippet on every page + `data-umami-event` on
       the CTAs, with the live landing `data-website-id`. Collecting once `main` redeploys.
-- [ ] Open Graph image: `icon-512.png` works but a 1200×630 banner renders
-      better on WhatsApp/social previews.
+- [x] Open Graph image (L-02): 1200×630 branded banner `og-cover.png` set as
+      `og:image`/`twitter:image` in `index.html`. **Pending:** recompress `icon-512.png`
+      (no image optimiser available in-env).
