@@ -1,0 +1,40 @@
+name: Deploy Preview to Cloudflare
+
+# Preview environment — mirrors the app's DEV/QA: a stable staging site at
+# preview.guardacompartilhada.com so landing changes can be reviewed live before
+# promoting them to production (main). Deploys the SEPARATE worker
+# `guardacompartilhada-site-preview` (see wrangler.jsonc env.preview).
+on:
+  push:
+    branches: [preview]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-preview
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The preview carries NO analytics (product decision) and must NEVER be
+      # indexed (avoid duplicate content with production). Both are applied to
+      # the ephemeral CI checkout only — the source/repo is left untouched, so
+      # production keeps its Umami tag and normal robots.txt.
+      - name: Strip analytics + block indexing
+        run: |
+          # Remove the Umami loader from every page; the inert data-umami-event
+          # attributes may stay (they do nothing without the loader).
+          find public -name '*.html' -print0 | xargs -0 sed -i '/cloud\.umami\.is/d'
+          # noindex the whole preview site.
+          printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
+
+      - name: Deploy static assets via Wrangler (preview env)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Assets-only Workers need Wrangler 4.x (same pin as production).
+          wranglerVersion: "4.113.0"
+          command: deploy --env preview
