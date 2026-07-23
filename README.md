@@ -62,6 +62,8 @@ One-time setup:
       remove the yellow "Rascunho" banners.
 - [ ] Replace the CSS phone mockup with real app screenshots when available
       (swap the `.phone` block in `index.html`).
-- [ ] Analytics (optional): add Plausible/Umami snippet to `index.html`.
+- [x] Analytics (L-01): Umami cookieless snippet on every page + `data-umami-event` on
+      the CTAs. **Pending:** paste the real `data-website-id` (from the Umami dashboard)
+      in place of `PLACEHOLDER_LANDING_WEBSITE_ID`.
 - [ ] Open Graph image: `icon-512.png` works but a 1200×630 banner renders
       better on WhatsApp/social previews.

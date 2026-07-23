@@ -27,10 +27,12 @@ the app additionally bumps `Helpers/PolicyVersions.cs` (S-13 demonstrable consen
 pages are currently the more up-to-date source of truth.** Legal review is tracked as app item S-15.
 
 ## Analytics
-- **Plausible cookieless** (L-01): the `script.outbound-links.js` tag on every page records
-  pageviews + outbound CTA clicks — no cookies, no PII, no consent banner. Same Plausible account as
-  the app (T-37) → one funnel across both sites. Requires `guardacompartilhada.com` registered in the
-  Plausible dashboard for data to appear. Disclosed in `privacidade.html` §9.
+- **Umami cookieless** (L-01): the `cloud.umami.is/script.js` tag on every page records pageviews;
+  CTA clicks are tracked via `data-umami-event="cta-signup"` on the app links — no cookies, no PII, no
+  consent banner. Same Umami account as the app (T-37). **Set the real `data-website-id`** (currently
+  `PLACEHOLDER_LANDING_WEBSITE_ID`) from the Umami dashboard for data to appear. Disclosed in
+  `privacidade.html` §7/§9. (Switched from Plausible to avoid its subscription; PostHog reconsidered for
+  later experimentation.)
 
 ## Gotchas
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,

@@ -56,15 +56,17 @@ No strict order; run continuously.
 
 **Order 1** · `high` · `low` · `high` · **Status: `in-progress`** (delivered with app T-37) · **Cross-repo:** coordinated with app **T-37**
 
-**Decision (with app T-37): Plausible cookieless.** Added the Plausible
-`script.outbound-links.js` tag to every page (`index.html`, the two legal pages and
-all blog pages) — cookieless, no PII → **no LGPD consent banner**. It records pageviews
-and, via the `outbound-links` extension, **auto-tracks every click on the "Criar conta
-grátis" / "Entrar no app" CTAs** (they are outbound to `app.guardacompartilhada.com`).
-The landing privacy policy (§9) was updated to disclose the cookieless analytics.
+**Decision (with app T-37): Umami cookieless** (switched from Plausible to avoid its
+subscription; same cookieless/no-PII posture; PostHog reconsidered for later
+experimentation). Added the Umami `cloud.umami.is/script.js` tag to every page
+(`index.html`, the two legal pages and all blog pages) — cookieless, no PII → **no LGPD
+consent banner**. It records pageviews, and the "Criar conta grátis" / "Entrar no app"
+CTAs carry `data-umami-event="cta-signup"` so their clicks are tracked. The landing
+privacy policy (§7/§9) discloses the cookieless analytics (Versão 1.3).
 
-Same Plausible account as the app (T-37) → **one funnel** across both sites.
-**External prerequisite:** register `guardacompartilhada.com` in the Plausible dashboard.
+Same Umami account as the app (T-37). **External prerequisite:** create the landing
+website in the Umami dashboard and paste its id into `data-website-id` (currently
+`PLACEHOLDER_LANDING_WEBSITE_ID`) — until then events are accepted-and-dropped.
 
 **Files (done):** all `public/**/*.html` (script tag), `public/privacidade.html` (§9 disclosure).
 
