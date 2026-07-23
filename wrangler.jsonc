@@ -1,6 +1,19 @@
 {
   // Cloudflare Workers (static assets) deploy config — used by `npx wrangler deploy`
-  // in the Cloudflare git-connected build. Only files under public/ are uploaded.
+  // in CI. Only files under public/ are uploaded.
+  //
+  // Two environments (mirrors the app's dev/prod split):
+  //   · PRODUCTION (default / top-level): worker `guardacompartilhada-site`,
+  //     custom domain guardacompartilhada.com, deployed from `main` (deploy.yml).
+  //     A plain `wrangler deploy` (no --env) uses this block and ignores env.* .
+  //   · PREVIEW (`wrangler deploy --env preview`): worker
+  //     `guardacompartilhada-site-preview`, custom domain
+  //     preview.guardacompartilhada.com, deployed from `preview`
+  //     (deploy-preview.yml). Analytics are stripped and the site is set to
+  //     noindex at deploy time — the preview carries no stats and must not be
+  //     indexed (no duplicate content with production). The custom domain is
+  //     attached ONCE in the Cloudflare dashboard (not declared here, so the CI
+  //     token needs no zone/DNS permission — same as production).
   "name": "guardacompartilhada-site",
   "account_id": "1185ad84960bdaf12e52096fe8df0dc9",
   "compatibility_date": "2026-07-22",
@@ -11,5 +24,20 @@
   },
   "observability": {
     "enabled": true
+  },
+  "env": {
+    "preview": {
+      "name": "guardacompartilhada-site-preview",
+      // Re-declared explicitly so the assets deploy is independent of any
+      // wrangler config-inheritance nuance across versions.
+      "assets": {
+        "directory": "./public",
+        "html_handling": "auto-trailing-slash",
+        "not_found_handling": "404-page"
+      },
+      "observability": {
+        "enabled": true
+      }
+    }
   }
 }

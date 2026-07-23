@@ -2,10 +2,28 @@
 
 ## Overview
 **guardacompartilhada.com** — the static marketing/landing site for **Guarda Compartilhada**,
-a shared-custody PWA. Hand-written static HTML/CSS (no framework, no build step), hosted on
-**Cloudflare Pages** (`wrangler.jsonc`), deployed by GitHub Actions on push to `main`. The
-application itself lives in the sibling repo **`SharedParentalCustody`** (Blazor WASM + Supabase),
-served at `app.guardacompartilhada.com`.
+a shared-custody PWA. Hand-written static HTML/CSS (no framework, no build step), served by a
+**Cloudflare Worker with static assets** (`wrangler.jsonc`, `wrangler deploy`), deployed by
+GitHub Actions. The application itself lives in the sibling repo **`SharedParentalCustody`**
+(Blazor WASM + Supabase), served at `app.guardacompartilhada.com`.
+
+## Environments (mirrors the app's dev/prod split)
+| Env | Worker | Domain | Branch → deploy | Analytics | Indexing |
+|---|---|---|---|---|---|
+| **Production** | `guardacompartilhada-site` | guardacompartilhada.com | `main` → `.github/workflows/deploy.yml` | Umami | normal |
+| **Preview** | `guardacompartilhada-site-preview` | preview.guardacompartilhada.com | `preview` → `.github/workflows/deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny + not attached to sitemap) |
+
+- **Preview is a stable staging site** — review landing changes live before promoting to
+  production. Flow: feature branch → merge to `preview` (auto-deploys the preview worker) →
+  eyeball at preview.guardacompartilhada.com → merge `preview`→`main` (production). `main`
+  stays the single production source of truth (Cloudflare deploys from it).
+- The preview build **strips the Umami loader from every `public/**/*.html` and overwrites
+  `robots.txt` to deny all** — both applied to the CI checkout only, never committed, so the
+  source and production stay unchanged. No stats, no consent surface, no SEO duplication.
+- The preview worker's custom domain is attached **once** in the Cloudflare dashboard (Workers
+  & Pages → `guardacompartilhada-site-preview` → Settings → Domains & Routes → Add custom
+  domain → `preview.guardacompartilhada.com`); it is intentionally NOT declared in
+  `wrangler.jsonc`, so the CI `CLOUDFLARE_API_TOKEN` needs no zone/DNS scope (same as prod).
 
 ## Language conventions
 - **UI / legal copy: PT-BR.** File names/titles and commit bodies' technical terms: English is fine.
