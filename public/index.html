@@ -204,7 +204,7 @@
             width: 290px; max-width: 80vw; margin: 0; background: #0f172a; border-radius: 40px; padding: 11px;
             box-shadow: 0 26px 60px rgba(15, 23, 42, 0.28);
         }
-        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 413 / 915; }
+        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 1080 / 1920; }
         .shots { position: absolute; inset: 0; }
         .shot { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
         .shot.is-active { opacity: 1; }
@@ -220,7 +220,7 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 8px; max-width: 820px; }
         .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 14px; }
         .phone-sm { width: 100%; max-width: 210px; background: #0f172a; border-radius: 30px; padding: 8px; box-shadow: 0 16px 36px rgba(15, 23, 42, 0.20); }
-        .phone-sm .scr { border-radius: 22px; overflow: hidden; aspect-ratio: 413 / 915; background: #fff; }
+        .phone-sm .scr { border-radius: 22px; overflow: hidden; aspect-ratio: 1080 / 1920; background: #fff; }
         .phone-sm img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
         .gallery-item p { font-size: 14px; color: var(--muted); text-align: center; margin: 0; max-width: 210px; }
 
@@ -392,31 +392,31 @@
                         <div class="shot is-active" data-caption="Veja de quem é o dia — hoje e nos próximos">
                             <picture>
                                 <source srcset="img/screenshots/today-calendar-meu-dia.webp" type="image/webp" />
-                                <img src="img/screenshots/today-calendar-meu-dia.png" width="413" height="915" alt="Tela inicial do app: card mostrando de quem é o dia e o calendário do mês com os dias coloridos por responsável" loading="eager" decoding="async" />
+                                <img src="img/screenshots/today-calendar-meu-dia.png" width="1080" height="1920" alt="Tela inicial do app: card mostrando de quem é o dia e o calendário do mês com os dias coloridos por responsável" loading="eager" decoding="async" />
                             </picture>
                         </div>
                         <div class="shot" data-caption="Trocou um dia? Só vale com a aprovação dos dois">
                             <picture>
                                 <source srcset="img/screenshots/troca-aguardando-aprovacao.webp" type="image/webp" />
-                                <img src="img/screenshots/troca-aguardando-aprovacao.png" width="414" height="916" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
+                                <img src="img/screenshots/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
                             </picture>
                         </div>
                         <div class="shot" data-caption="Monte a rotação em segundos — até com avós no revezamento">
                             <picture>
                                 <source srcset="img/screenshots/assistente-rotacao-com-avo.webp" type="image/webp" />
-                                <img src="img/screenshots/assistente-rotacao-com-avo.png" width="411" height="913" alt="Assistente de rotação montando um ciclo de revezamento com pai, mãe e avó" loading="lazy" decoding="async" />
+                                <img src="img/screenshots/assistente-rotacao-com-avo.png" width="1080" height="1920" alt="Assistente de rotação montando um ciclo de revezamento com pai, mãe e avó" loading="lazy" decoding="async" />
                             </picture>
                         </div>
                         <div class="shot" data-caption="Tudo registrado, com data e hora — sem poder apagar">
                             <picture>
                                 <source srcset="img/screenshots/historico-auditoria.webp" type="image/webp" />
-                                <img src="img/screenshots/historico-auditoria.png" width="415" height="917" alt="Histórico de ajustes: registro imutável das alterações com data e hora" loading="lazy" decoding="async" />
+                                <img src="img/screenshots/historico-auditoria.png" width="1080" height="1920" alt="Histórico de ajustes: registro imutável das alterações com data e hora" loading="lazy" decoding="async" />
                             </picture>
                         </div>
-                        <div class="shot" data-caption="Quantos dias ficaram com cada um, sem discussão">
+                        <div class="shot" data-caption="Pai, mãe e avó no mesmo calendário — cada um com a sua cor">
                             <picture>
-                                <source srcset="img/screenshots/relatorio-resumo.webp" type="image/webp" />
-                                <img src="img/screenshots/relatorio-resumo.png" width="413" height="915" alt="Resumo do período com a contagem de dias programados e realizados por responsável" loading="lazy" decoding="async" />
+                                <source srcset="img/screenshots/calendario-tres-cuidadores.webp" type="image/webp" />
+                                <img src="img/screenshots/calendario-tres-cuidadores.png" width="1080" height="1920" alt="Calendário com três responsáveis — pai, mãe e avó — cada um com a sua cor" loading="lazy" decoding="async" />
                             </picture>
                         </div>
                     </div>
@@ -428,7 +428,7 @@
                 <button type="button" data-i="1" role="tab" aria-selected="false" aria-label="Tela 2: aprovação de troca de dia"></button>
                 <button type="button" data-i="2" role="tab" aria-selected="false" aria-label="Tela 3: assistente de rotação"></button>
                 <button type="button" data-i="3" role="tab" aria-selected="false" aria-label="Tela 4: histórico com data e hora"></button>
-                <button type="button" data-i="4" role="tab" aria-selected="false" aria-label="Tela 5: resumo por responsável"></button>
+                <button type="button" data-i="4" role="tab" aria-selected="false" aria-label="Tela 5: calendário com três cuidadores"></button>
             </div>
         </div>
     </div>
@@ -466,17 +466,17 @@
             <div class="gallery-item">
                 <div class="phone-sm"><div class="scr">
                     <picture>
-                        <source srcset="img/screenshots/calendario-tres-cuidadores.webp" type="image/webp" />
-                        <img src="img/screenshots/calendario-tres-cuidadores.png" width="413" height="915" alt="Calendário com três responsáveis — pai, mãe e avó — cada um com a sua cor" loading="lazy" decoding="async" />
+                        <source srcset="img/screenshots/today-calendar-dia-do-outro.webp" type="image/webp" />
+                        <img src="img/screenshots/today-calendar-dia-do-outro.png" width="1080" height="1920" alt="Card do dia mostrando as duas cores quando o responsável de hoje é o outro" loading="lazy" decoding="async" />
                     </picture>
                 </div></div>
-                <p>Pai, mãe e avó no mesmo calendário, cada um com a sua cor.</p>
+                <p>No dia do outro responsável, o card mostra as duas cores.</p>
             </div>
             <div class="gallery-item">
                 <div class="phone-sm"><div class="scr">
                     <picture>
                         <source srcset="img/screenshots/editor-dia.webp" type="image/webp" />
-                        <img src="img/screenshots/editor-dia.png" width="412" height="918" alt="Editor de um dia do calendário: responsável, horário da troca e observações" loading="lazy" decoding="async" />
+                        <img src="img/screenshots/editor-dia.png" width="1080" height="1920" alt="Editor de um dia do calendário: responsável, horário da troca e observações" loading="lazy" decoding="async" />
                     </picture>
                 </div></div>
                 <p>Defina o responsável, o horário da troca e uma observação para cada dia.</p>
@@ -485,7 +485,7 @@
                 <div class="phone-sm"><div class="scr">
                     <picture>
                         <source srcset="img/screenshots/familia-membros.webp" type="image/webp" />
-                        <img src="img/screenshots/familia-membros.png" width="412" height="914" alt="Tela da família com os responsáveis e o convite por e-mail" loading="lazy" decoding="async" />
+                        <img src="img/screenshots/familia-membros.png" width="1080" height="1920" alt="Tela da família com os responsáveis e o convite por e-mail" loading="lazy" decoding="async" />
                     </picture>
                 </div></div>
                 <p>Convide o outro responsável e outros cuidadores por e-mail.</p>
