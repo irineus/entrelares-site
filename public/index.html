@@ -338,8 +338,8 @@
             .brand img { width: 30px; height: 30px; }
         }
     </style>
-    <!-- L-01: cookieless product analytics (Plausible) — pageviews + outbound CTA clicks; no cookies, no PII -->
-    <script defer data-domain="guardacompartilhada.com" src="https://plausible.io/js/script.outbound-links.js"></script>
+    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="PLACEHOLDER_LANDING_WEBSITE_ID"></script>
 </head>
 <body>
 
@@ -358,7 +358,7 @@
             <a href="#faq">Dúvidas</a>
             <a href="/blog/">Blog</a>
         </nav>
-        <a class="btn btn-primary" href="https://app.guardacompartilhada.com" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
     </div>
 </header>
 
@@ -372,7 +372,7 @@
                 histórico completo de tudo o que foi combinado.
             </p>
             <div class="hero-ctas">
-                <a class="btn btn-primary" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
+                <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
                 <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
             </div>
             <div class="trust">
@@ -551,7 +551,7 @@
                 <li>Notificações em tempo real e por e-mail</li>
                 <li>Cuidadores adicionais na família</li>
             </ul>
-            <a class="btn btn-primary" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
+            <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
             <p style="font-size:13px; margin:16px 0 0;">No futuro, haverá um plano premium por família — quem entrar agora será avisado com antecedência e terá condições especiais.</p>
         </div>
     </div>
@@ -602,7 +602,7 @@
     <div class="wrap">
         <h2>Menos discussão. Mais convivência.</h2>
         <p>Crie a conta, monte o calendário e convide o outro responsável. Em dez minutos, a rotina dos seus filhos sai do bate-boca e entra num combinado claro.</p>
-        <a class="btn btn-primary" href="https://app.guardacompartilhada.com/signup">Começar agora — é grátis</a>
+        <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com/signup">Começar agora — é grátis</a>
     </div>
 </section>
 

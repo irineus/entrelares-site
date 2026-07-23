@@ -24,14 +24,14 @@
         th { background: #f1f5f9; color: #1e293b; font-weight: 600; }
         .tbl-wrap { overflow-x: auto; }
     </style>
-    <!-- L-01: cookieless product analytics (Plausible) — pageviews + outbound CTA clicks; no cookies, no PII -->
-    <script defer data-domain="guardacompartilhada.com" src="https://plausible.io/js/script.outbound-links.js"></script>
+    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="PLACEHOLDER_LANDING_WEBSITE_ID"></script>
 </head>
 <body>
 <div class="wrap">
     <a class="back" href="/">← Voltar</a>
     <h1>Política de Privacidade</h1>
-    <p class="updated">Última atualização: 22 de julho de 2026 · Versão 1.2</p>
+    <p class="updated">Última atualização: 23 de julho de 2026 · Versão 1.3</p>
 
     <h2>1. Controlador e Encarregado (DPO)</h2>
     <p>O controlador dos dados pessoais tratados no Serviço é <strong>Irineu Junior Pinheiro dos Santos</strong>, pessoa física. Os demais dados de qualificação do controlador (CPF e endereço) são fornecidos mediante solicitação à ANPD ou ao titular, quando legalmente exigível. Esta política está em conformidade com a <strong>Lei nº 13.709/2018 (Lei Geral de Proteção de Dados — LGPD)</strong> e com o Marco Civil da Internet (Lei nº 12.965/2014).</p>
@@ -76,7 +76,7 @@
         <li><strong>Supabase</strong> — autenticação e banco de dados;</li>
         <li><strong>Resend</strong> — envio de e-mails transacionais (convites e avisos do fluxo de troca);</li>
         <li><strong>Cloudflare</strong> — hospedagem e entrega do aplicativo;</li>
-        <li><strong>Plausible</strong> — estatísticas de uso sem cookies e sem dados pessoais (ver §9).</li>
+        <li><strong>Umami</strong> — estatísticas de uso sem cookies e sem dados pessoais (ver §9).</li>
     </ul>
     <p>Podemos, ainda, compartilhar dados quando necessário para cumprir obrigação legal ou regulatória, atender a ordem de autoridade competente, ou exercer/defender direitos em processo.</p>
 
@@ -84,7 +84,7 @@
     <p>Alguns operadores podem processar ou armazenar dados em servidores localizados <strong>fora do Brasil</strong>. Nesses casos, adotamos as salvaguardas exigidas pela LGPD (arts. 33 a 36), como cláusulas contratuais de proteção e a escolha de fornecedores que ofereçam grau adequado de proteção. Ao utilizar o Serviço, você está ciente de que pode ocorrer transferência internacional nessas condições.</p>
 
     <h2>9. Cookies e tecnologias similares</h2>
-    <p>Utilizamos apenas cookies e armazenamento local <strong>estritamente necessários</strong> para autenticação, segurança e funcionamento da sessão. Não utilizamos cookies de publicidade nem de rastreamento de terceiros para marketing. Para entender de forma agregada como o site e o aplicativo são usados, utilizamos o <strong>Plausible Analytics</strong> — uma ferramenta de medição <strong>sem cookies</strong> e <strong>sem coleta de dados pessoais</strong>, que não rastreia você entre sites nem cria perfil individual: registra apenas visitas e cliques agregados, com a contagem de visitantes derivada no servidor a partir de dados técnicos temporários. Por não usar cookies nem dados pessoais, essa medição não exige consentimento; ainda assim, informamos aqui em transparência.</p>
+    <p>Utilizamos apenas cookies e armazenamento local <strong>estritamente necessários</strong> para autenticação, segurança e funcionamento da sessão. Não utilizamos cookies de publicidade nem de rastreamento de terceiros para marketing. Para entender de forma agregada como o site e o aplicativo são usados, utilizamos o <strong>Umami Analytics</strong> — uma ferramenta de medição <strong>sem cookies</strong> e <strong>sem coleta de dados pessoais</strong>, que não rastreia você entre sites nem cria perfil individual: registra apenas visitas e cliques agregados, com a contagem de visitantes derivada no servidor a partir de dados técnicos temporários. Por não usar cookies nem dados pessoais, essa medição não exige consentimento; ainda assim, informamos aqui em transparência.</p>
 
     <h2>10. Segurança da informação</h2>
     <p>Adotamos medidas técnicas e administrativas para proteger os dados (art. 46 da LGPD): criptografia em trânsito (HTTPS/TLS); banco de dados em volumes criptografados (AES-256) pela infraestrutura do provedor, com cópias de segurança adicionalmente criptografadas com senha; senhas armazenadas apenas como <em>hash</em> criptográfico (bcrypt), nunca em texto legível; e controle de acesso no próprio banco (Row-Level Security), que restringe cada dado à família a que pertence — requisições sem login não acessam nenhuma tabela.</p>
