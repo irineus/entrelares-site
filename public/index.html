@@ -309,7 +309,8 @@
         .founder-card p:last-of-type { margin-bottom: 0; }
         .founder-card strong { color: var(--ink); }
         .founder-sign { display: flex; align-items: center; gap: 13px; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
-        .founder-avatar { width: 46px; height: 46px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--pink)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 19px; }
+        .founder-avatar { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: block; background: var(--bg-tint); box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
+        .founder-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .founder-sign .who { font-weight: 700; color: var(--ink); font-size: 15px; line-height: 1.3; }
         .founder-sign .who span { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
         .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
@@ -592,7 +593,10 @@
                 <p>Precisávamos, os dois, saber com clareza <strong>de quem era cada dia</strong>. Tentei uma planilha — ajudou no começo, mas logo ficou complicada e nunca estava à mão na hora certa. Tentei um calendário comum — complexo demais de manter. Então criei uma solução própria, simples, que foi crescendo até virar um verdadeiro parceiro na convivência com meu filho.</p>
                 <p>Conversando com outros pais e mães que passaram pela separação, senti a mesma carência. Por isso decidi abrir esta ferramenta para mais famílias — para tirar esse atrito do caminho num momento tão delicado, que se supera com carinho, amor e, acima de tudo, <strong>respeito entre todas as partes</strong>.</p>
                 <div class="founder-sign">
-                    <span class="founder-avatar" aria-hidden="true">I</span>
+                    <picture class="founder-avatar">
+                        <source srcset="/img/founder.webp" type="image/webp" />
+                        <img src="/img/founder.jpg" alt="Irineu, fundador do Guarda Compartilhada" width="56" height="56" loading="lazy" />
+                    </picture>
                     <span class="who">Irineu<span>Fundador e pai</span></span>
                 </div>
             </div>
