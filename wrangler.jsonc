@@ -17,26 +17,51 @@
   "name": "guardacompartilhada-site",
   "account_id": "1185ad84960bdaf12e52096fe8df0dc9",
   "compatibility_date": "2026-07-22",
+  // Worker entrypoint (L-09): serves the static assets AND one dynamic endpoint,
+  // POST /api/subscribe, for the lead-magnet / newsletter opt-in. Asset requests
+  // are matched first; only a miss reaches the Worker, which delegates non-API
+  // routes back to the ASSETS binding (preserving 404-page handling).
+  "main": "src/index.js",
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
   "observability": {
     "enabled": true
   },
+  // Non-secret config for /api/subscribe. The RESEND_API_KEY is a SECRET and is
+  // NOT declared here — set it with `wrangler secret put RESEND_API_KEY` or in
+  // the Cloudflare dashboard (Workers → Settings → Variables). Without it the
+  // endpoint runs in dry-run mode (no side effects) — the default on preview.
+  "vars": {
+    "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
+    "FROM_EMAIL": "Guarda Compartilhada <materiais@guardacompartilhada.com>",
+    "REPLY_TO": "contato@guardacompartilhada.com"
+  },
   "env": {
     "preview": {
       "name": "guardacompartilhada-site-preview",
       // Re-declared explicitly so the assets deploy is independent of any
       // wrangler config-inheritance nuance across versions.
+      "main": "src/index.js",
       "assets": {
         "directory": "./public",
+        "binding": "ASSETS",
         "html_handling": "auto-trailing-slash",
         "not_found_handling": "404-page"
       },
       "observability": {
         "enabled": true
+      },
+      // Preview has NO RESEND_API_KEY secret by default → /api/subscribe dry-runs
+      // (no real e-mail, no contact written). Add the secret to this worker too if
+      // you want to test the full flow live on preview.
+      "vars": {
+        "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
+        "FROM_EMAIL": "Guarda Compartilhada <materiais@guardacompartilhada.com>",
+        "REPLY_TO": "contato@guardacompartilhada.com"
       }
     }
   }

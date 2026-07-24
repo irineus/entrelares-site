@@ -1,0 +1,123 @@
+/* L-09 — lead-magnet / newsletter opt-in.
+   Shared by index.html (full section `.lead-magnet`) and the blog articles
+   (compact `.lm-mini`). Self-contained: uses literal brand colours so it works
+   on any page regardless of that page's CSS custom properties. */
+
+/* Self-contained: don't rely on the host page's CSS reset for box-sizing,
+   otherwise width:100% inputs/cards overflow on narrow screens. */
+.lead-magnet, .lead-magnet *, .lm-mini, .lm-mini * { box-sizing: border-box; }
+
+.lead-magnet {
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+  border: 1px solid #e0e7ff;
+  border-radius: 20px;
+  padding: 40px 38px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.lead-magnet .lm-eyebrow {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #4338ca;
+  background: #e0e7ff;
+  padding: 4px 11px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.lead-magnet h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; color: #1e293b; margin-bottom: 12px; }
+.lead-magnet .lm-sub { color: #475569; font-size: 16px; line-height: 1.55; margin-bottom: 18px; }
+.lead-magnet .lm-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.lead-magnet .lm-list li { position: relative; padding-left: 26px; color: #475569; font-size: 14.5px; line-height: 1.45; }
+.lead-magnet .lm-list li::before {
+  content: "✓"; position: absolute; left: 0; top: 0;
+  color: #4f46e5; font-weight: 800;
+}
+
+/* Form card */
+.lm-form {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px 22px;
+  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.08);
+}
+.lm-form .lm-form-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+.lm-field { display: flex; flex-direction: column; gap: 8px; }
+.lm-field label { font-size: 13px; font-weight: 600; color: #334155; }
+.lm-input {
+  width: 100%;
+  font-size: 16px;
+  color: #1e293b;
+  padding: 13px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  font-family: inherit;
+}
+.lm-input:focus { outline: 2px solid #4f46e5; outline-offset: 1px; border-color: #4f46e5; }
+/* Honeypot — visually hidden, off-screen, not focusable */
+.lm-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.lm-btn {
+  margin-top: 12px;
+  width: 100%;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #fff;
+  background: #4f46e5;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: background .15s ease, transform .05s ease;
+}
+.lm-btn:hover { background: #4338ca; }
+.lm-btn:active { transform: translateY(1px); }
+.lm-btn:disabled { opacity: .6; cursor: default; box-shadow: none; }
+.lm-consent { font-size: 12px; color: #94a3b8; line-height: 1.5; margin-top: 12px; }
+.lm-consent a { color: #6366f1; }
+
+/* Status message (aria-live) */
+.lm-status { margin-top: 12px; font-size: 14px; line-height: 1.5; display: none; }
+.lm-status.is-shown { display: block; }
+.lm-status.is-ok { color: #15803d; font-weight: 600; }
+.lm-status.is-err { color: #b91c1c; font-weight: 600; }
+
+/* Success replaces the form fields */
+.lm-form.is-done .lm-field,
+.lm-form.is-done .lm-btn,
+.lm-form.is-done .lm-consent { display: none; }
+.lm-form.is-done .lm-form-title { display: none; }
+
+/* ---- Compact variant for blog articles ---- */
+.lm-mini {
+  max-width: 720px;
+  margin: 8px auto 40px;
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+  border: 1px solid #e0e7ff;
+  border-radius: 16px;
+  padding: 24px 24px 22px;
+}
+.lm-mini h2 { font-size: 19px; line-height: 1.25; color: #1e293b; margin: 0 0 6px; }
+.lm-mini p.lm-mini-sub { font-size: 14.5px; color: #475569; margin: 0 0 16px; line-height: 1.5; }
+.lm-mini .lm-form {
+  box-shadow: none;
+  background: #fff;
+  padding: 16px;
+}
+.lm-mini .lm-form-title { display: none; }
+.lm-mini .lm-inline { display: flex; gap: 10px; }
+.lm-mini .lm-inline .lm-input { flex: 1; }
+.lm-mini .lm-inline .lm-btn { width: auto; margin-top: 0; white-space: nowrap; padding: 13px 20px; }
+
+@media (max-width: 760px) {
+  .lead-magnet { grid-template-columns: 1fr; gap: 26px; padding: 30px 22px; }
+  .lead-magnet h2 { font-size: 23px; }
+  .lm-mini .lm-inline { flex-direction: column; }
+  .lm-mini .lm-inline .lm-btn { width: 100%; }
+}

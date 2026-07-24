@@ -114,6 +114,7 @@
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+    <link rel="stylesheet" href="/css/lead-magnet.css" />
 </head>
 <body>
 
@@ -182,6 +183,23 @@
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
+<div class="lm-mini">
+    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <form class="lm-form" novalidate>
+        <div class="lm-inline">
+            <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
+            <button class="lm-btn" type="submit" data-umami-event="lead-magnet-submit">Quero o PDF</button>
+        </div>
+        <div class="lm-hp" aria-hidden="true">
+            <label>Não preencha este campo<input type="text" name="empresa" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <p class="lm-consent">Enviamos o material e novidades ocasionais do app. Sem spam; você sai quando quiser. Veja a <a href="/privacidade.html">Política de Privacidade</a>.</p>
+        <p class="lm-status" role="status" aria-live="polite"></p>
+    </form>
+</div>
+
+
 <section class="related">
     <h2>Leia também</h2>
     <a href="/blog/como-montar-calendario-guarda-compartilhada.html">Como montar um calendário de guarda compartilhada</a>
@@ -201,5 +219,6 @@
     </div>
 </footer>
 
+<script defer src="/js/lead-magnet.js"></script>
 </body>
 </html>

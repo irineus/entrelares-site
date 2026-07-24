@@ -49,6 +49,22 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
   (Growth, Analytics & Monetization) in `SharedParentalCustody/backlog/README.md`. Cross-repo
   prerequisites are noted per item.
 
+## Worker endpoint — lead-magnet / newsletter (L-09)
+The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
+`wrangler.jsonc`). It serves the `ASSETS` binding for everything and adds ONE dynamic route,
+**`POST /api/subscribe`**, for the opt-in (`public/js/lead-magnet.js` posts to it). The Worker
+registers the e-mail in a **Resend segment** and sends the *Modelos de rotina* PDF
+(`public/downloads/…`, generated from `assets-src/lead-magnet.html` via headless Chromium).
+- **Secret:** `RESEND_API_KEY` (Resend full-access) is set per-worker via `wrangler secret put` /
+  the Cloudflare dashboard — **never committed**. When absent the endpoint **dry-runs** (no
+  e-mail, no contact) — that is the intended default on the **preview** worker, so preview shows
+  the success UI without real sends unless you add the secret there too. Non-secret config
+  (`RESEND_SEGMENT_ID`, `FROM_EMAIL`, `REPLY_TO`) lives in `wrangler.jsonc` `vars`.
+- Deploys need Wrangler **4.x** (already pinned in both workflows) — 3.x can't deploy a Worker
+  with a `main` entrypoint. The CI `CLOUDFLARE_API_TOKEN` needs only Workers Scripts:Edit (vars
+  ship with the script; the secret is set out-of-band), same scope as before.
+- Umami events: `lead-magnet-submit` (button click) and `lead-magnet-subscribe` (success).
+
 ## Legal pages (Privacy & Terms) — cross-repo sync (MUST)
 `public/privacidade.html` + `public/termos.html` are the **same legal documents for the same
 product** as the app's `Pages/Privacy.razor` (`/privacy`) + `Pages/Terms.razor` (`/terms`) in the
