@@ -1,10 +1,12 @@
-# Landing Page — Growth & Conversion Roadmap
+# Landing Page — Backlog & Growth Roadmap
 
-Roadmap for `guardacompartilhada.com` (the marketing site), ordered by **execution
-sequence**. Companion to the app-side priority track in
-`SharedParentalCustody/backlog/README.md` → **Phase 6 — Growth, Analytics &
-Monetization**. The landing and the app funnel are **one funnel** (landing CTR feeds
-app signups), so several items have **cross-repo prerequisites** — flagged per item.
+The **backlog + forward plan** for `guardacompartilhada.com` (the marketing site): a
+summary table of every landing item (`L-*`), the plan for what's next, and the full
+per-item records. Companion to the app-side plan in
+[`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md).
+The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
+several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
+own items: `L-*` here, `F-/U-/T-/S-*` in the app.
 
 The site is a hand-written static site on Cloudflare (no framework, no JS build). Its
 SEO foundation is already strong (JSON-LD `SoftwareApplication`/`Organization`/`FAQPage`
@@ -15,42 +17,41 @@ distribution** — not the SEO base.
 > **Status values:** `pending` · `in-progress` · `completed`
 > IDs (`L-` + number) are stable and never reused.
 
-## Part A — On-site work (code / content), by execution order
+## Summary table
 
-| Order | ID | Title | Priority | Complexity | Impact | Cross-repo link |
-|---|---|---|---|---|---|---|
-| 1 | L-01 | Cookieless web analytics + CTA tracking | `high` | `low` | `high` | ↔ app **T-37** (same funnel) |
-| 2 | L-02 | Fix Open Graph image (1200×630) + compress icon-512 | `high` | `low` | `high` | → feeds app **T-38** store imagery |
-| 3 | L-03 | Real product screenshots (replace CSS mockup) | `high` | `low` | `high` | → **required by app T-38** (Play listing assets) |
-| 4 | L-10 | Reposition around the immutable audit log ("prova de disputa") | `high` | `low` | `high` | ↔ app **F-33** (the PDF report embodies the claim) |
-| 5 | L-06 | Soft social proof (beta count / founder note) · **`completed`** | `medium` | `low` | `medium` | — |
-| 6 | L-09 | Content lead-magnet + e-mail capture ("receba modelos de rotina") · **`completed`** | `medium` | `medium` | `medium` | → feeds app **F-32** premium waitlist |
-| 7 | L-04 | Optimize blog images (WebP/AVIF + srcset) | `medium` | `low` | `medium` | — |
-| 8 | L-05 | Expand SEO content cluster + interactive tool | `medium` | `medium` | `high` | mirrors app rotation wizard |
-| 9 | L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | `low` | `low` | `low` | — |
-| 10 | L-08 | Update pricing section for premium launch | `medium` | `low` | `high` | ← **gated by app F-32 / T-39** |
+All landing items and their status at a glance; full records are in the item detail below. IDs (`L-` + number) are stable and never reused. **On-site** items are code/content in this repo; **off-site** items are marketing/distribution activities, tracked here so they are not lost.
 
-**Rationale for the order:** measure first (L-01), then the highest-impact
-conversion/sharing/positioning fixes that are also cheap and that *unblock the app's Play
-listing* (L-02 preview, L-03 screenshots → app T-38; L-10 sharpens the core
-differentiator). Trust and list-building follow (L-06, L-09). Performance (L-04) and
-content growth (L-05) next. Sitemap hygiene (L-07) is minor cleanup. Pricing (L-08) comes
-**last** — it can only be written once the app's plan and price are decided (F-32 / T-39).
+| ID | Title | Kind | Priority | Impact | Status |
+|---|---|---|---|---|---|
+| L-01 | Cookieless web analytics + CTA tracking (Umami) | on-site | `high` | `high` | `completed` |
+| L-02 | Open Graph banner 1200×630 (+ icon-512 note) | on-site | `high` | `high` | `completed` |
+| L-03 | Real product screenshots (hero slideshow + gallery) | on-site | `high` | `high` | `completed` |
+| L-10 | Reposition around the immutable audit log ("à prova de disputa") | on-site | `high` | `high` | `completed` |
+| L-06 | Soft social proof — founder note + photo + values badges | on-site | `medium` | `medium` | `completed` |
+| L-09 | Content lead-magnet + e-mail capture (Worker + Resend) | on-site | `medium` | `medium` | `completed` |
+| L-04 | Optimize blog images (WebP/AVIF + srcset) | on-site | `medium` | `medium` | `pending` |
+| L-05 | Expand SEO content cluster + interactive tool | on-site | `medium` | `high` | `pending` |
+| L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | on-site | `low` | `low` | `pending` |
+| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `pending` — gated by app **F-32/T-39** |
+| L-11 | Community channels (co-parenting groups & forums) | off-site | `medium` | `medium` | `pending` — ongoing |
+| L-12 | Lawyer / mediator referral partnerships (B2B2C) | off-site | `medium` | `high` | `pending` — ongoing |
 
-## Part B — Off-site distribution (non-code, ongoing)
+## Roadmap — what's next
 
-These are **marketing/distribution activities, not code changes** — captured here so they
-are not lost; they feed the top of the same funnel (L-01 measures their landing arrivals).
-No strict order; run continuously.
+Six on-site items have shipped (L-01/L-02/L-03/L-06/L-09/L-10 — analytics, the OG banner, real screenshots, the "à prova de disputa" repositioning, the founder note, and the lead-magnet/newsletter). Remaining on-site work, in recommended order:
 
-| ID | Title | Priority | Impact | Cross-repo link |
-|---|---|---|---|---|
-| L-11 | Community channels (separated-parents / co-parenting groups & forums) | `medium` | `medium` | → drives signups to the app |
-| L-12 | Lawyer / mediator referral partnerships (B2B2C) | `medium` | `high` | → high-intent signups; pairs with app **F-33** (court PDF) |
+1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
+2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
+4. **L-08 — Pricing section** for the premium launch — **gated by the app's F-32/T-39**: it can only be written once the plan + price are decided, and ships lockstep with app billing (**T-39**) and its pricing copy.
+
+**Off-site (ongoing, no strict order):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** court PDF) — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
+
+> **Cross-repo:** the app's forward plan lives in [`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
 
 ---
 
-## Part A — item detail
+## On-site items — detail
 
 ### L-01 — Cookieless web analytics + CTA tracking
 
@@ -268,7 +269,7 @@ CTA remain **L-08**, still gated by T-39 (billing).
 
 ---
 
-## Part B — item detail (non-code / ongoing)
+## Off-site items — detail
 
 ### L-11 — Community channels
 
