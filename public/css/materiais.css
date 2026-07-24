@@ -1,13 +1,13 @@
-/* L-09 — lead-magnet / newsletter opt-in.
-   Shared by index.html (full section `.lead-magnet`) and the blog articles
+/* L-09 — materiais / newsletter opt-in.
+   Shared by index.html (full section `.materiais-box`) and the blog articles
    (compact `.lm-mini`). Self-contained: uses literal brand colours so it works
    on any page regardless of that page's CSS custom properties. */
 
 /* Self-contained: don't rely on the host page's CSS reset for box-sizing,
    otherwise width:100% inputs/cards overflow on narrow screens. */
-.lead-magnet, .lead-magnet *, .lm-mini, .lm-mini * { box-sizing: border-box; }
+.materiais-box, .materiais-box *, .lm-mini, .lm-mini * { box-sizing: border-box; }
 
-.lead-magnet {
+.materiais-box {
   background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
   border: 1px solid #e0e7ff;
   border-radius: 20px;
@@ -17,7 +17,7 @@
   gap: 40px;
   align-items: center;
 }
-.lead-magnet .lm-eyebrow {
+.materiais-box .lm-eyebrow {
   display: inline-block;
   font-size: 12.5px;
   font-weight: 700;
@@ -29,11 +29,11 @@
   border-radius: 999px;
   margin-bottom: 14px;
 }
-.lead-magnet h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; color: #1e293b; margin-bottom: 12px; }
-.lead-magnet .lm-sub { color: #475569; font-size: 16px; line-height: 1.55; margin-bottom: 18px; }
-.lead-magnet .lm-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.lead-magnet .lm-list li { position: relative; padding-left: 26px; color: #475569; font-size: 14.5px; line-height: 1.45; }
-.lead-magnet .lm-list li::before {
+.materiais-box h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; color: #1e293b; margin-bottom: 12px; }
+.materiais-box .lm-sub { color: #475569; font-size: 16px; line-height: 1.55; margin-bottom: 18px; }
+.materiais-box .lm-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.materiais-box .lm-list li { position: relative; padding-left: 26px; color: #475569; font-size: 14.5px; line-height: 1.45; }
+.materiais-box .lm-list li::before {
   content: "✓"; position: absolute; left: 0; top: 0;
   color: #4f46e5; font-weight: 800;
 }
@@ -116,8 +116,8 @@
 .lm-mini .lm-inline .lm-btn { width: auto; margin-top: 0; white-space: nowrap; padding: 13px 20px; }
 
 @media (max-width: 760px) {
-  .lead-magnet { grid-template-columns: 1fr; gap: 26px; padding: 30px 22px; }
-  .lead-magnet h2 { font-size: 23px; }
+  .materiais-box { grid-template-columns: 1fr; gap: 26px; padding: 30px 22px; }
+  .materiais-box h2 { font-size: 23px; }
   .lm-mini .lm-inline { flex-direction: column; }
   .lm-mini .lm-inline .lm-btn { width: 100%; }
 }

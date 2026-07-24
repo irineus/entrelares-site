@@ -175,21 +175,23 @@ becomes the audience for the F-32 premium launch.
 **Done.** Delivered as a Cloudflare **Worker + Resend** flow (no new subscription, reusing the
 already-verified `guardacompartilhada.com` sending domain, sa-east-1):
 
-- **Lead magnet** — a 2-page branded PDF *"Modelos de rotina de guarda compartilhada"* (7/7,
+- **Content guide (PDF)** — a 2-page branded PDF *"Modelos de rotina de guarda compartilhada"* (7/7,
   quinzenal, 2-2-3, 2-2-5-5 and residence + alternating weekends, each with a two-week visual
-  strip, pros/cons, plus a holidays/vacation guide). Generated from `assets-src/lead-magnet.html`
+  strip, pros/cons, plus a holidays/vacation guide). Generated from `assets-src/modelos-rotina.html`
   via headless Chromium → `public/downloads/modelos-rotina-guarda-compartilhada.pdf` (both the
-  output and the generator are versioned so it can be updated).
+  output and the generator are versioned so it can be updated; the generator's `<title>` sets the
+  PDF's `/Title`, so it opens with a proper name).
 - **Capture endpoint** — `src/index.js` adds a single dynamic route, `POST /api/subscribe`, to the
-  static Worker: it validates the e-mail (+ honeypot), registers the contact in a dedicated Resend
-  segment (*"Landing — Novidades e Materiais"*), and sends the PDF by e-mail (single opt-in, with
-  an unsubscribe line). Everything else is delegated to the `ASSETS` binding (404 handling
-  preserved). `wrangler.jsonc` gains `main` + `vars`; `RESEND_API_KEY` is a **secret** — when
-  absent (default on preview) the endpoint **dry-runs** (no side effects).
+  static Worker: it validates the e-mail (+ honeypot), registers the contact in **Resend** (the
+  contacts show under *Audience* in the dashboard), and sends a **welcome e-mail** with the PDF
+  link (single opt-in, with an unsubscribe line). Everything else is delegated to the `ASSETS`
+  binding (404 handling preserved). `wrangler.jsonc` gains `main` + `vars`; `RESEND_API_KEY` is a
+  **secret** — when absent (default on preview) the endpoint **dry-runs** (no side effects).
 - **Opt-in UI** — a full section on `index.html` (`#materiais`, before the final CTA) and a compact
-  block at the foot of all four blog articles, sharing `public/css/lead-magnet.css` +
-  `public/js/lead-magnet.js` (progressive enhancement, `aria-live` status, Umami
-  `lead-magnet-submit`/`lead-magnet-subscribe` events). Mobile-safe down to 344 px.
+  block at the foot of all four blog articles, sharing `public/css/materiais.css` +
+  `public/js/materiais.js` (progressive enhancement, `aria-live` status, Umami
+  `materiais-baixar`/`materiais-inscricao` events). Mobile-safe down to 344 px. No user-visible
+  artifact carries a "lead-magnet" name (files, section class `.materiais-box`, PDF title).
 - **Legal** — new consent-based processing (art. 7º, I) disclosed in `privacidade.html` §3/§4/§7
   (Versão 1.4) and mirrored in the app's Privacy (v1.6.21) **without** forcing re-consent
   (transparency-only; `PolicyVersions.cs` unchanged). Legal review stays **S-15**.
@@ -197,9 +199,9 @@ already-verified `guardacompartilhada.com` sending domain, sa-east-1):
 **Manual steps (ops):** set the `RESEND_API_KEY` secret on the production worker (and optionally the
 preview worker to test the live flow) — see the PR notes.
 
-**Files:** `public/index.html`, `public/blog/*.html` (4), `public/css/lead-magnet.css`,
-`public/js/lead-magnet.js`, `public/downloads/modelos-rotina-guarda-compartilhada.pdf`,
-`assets-src/lead-magnet.html`, `src/index.js`, `wrangler.jsonc`, `public/privacidade.html`;
+**Files:** `public/index.html`, `public/blog/*.html` (4), `public/css/materiais.css`,
+`public/js/materiais.js`, `public/downloads/modelos-rotina-guarda-compartilhada.pdf`,
+`assets-src/modelos-rotina.html`, `src/index.js`, `wrangler.jsonc`, `public/privacidade.html`;
 cross-repo: app `Pages/Privacy.razor` + version bump.
 
 ---

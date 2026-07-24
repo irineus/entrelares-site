@@ -18,7 +18,7 @@
   "account_id": "1185ad84960bdaf12e52096fe8df0dc9",
   "compatibility_date": "2026-07-22",
   // Worker entrypoint (L-09): serves the static assets AND one dynamic endpoint,
-  // POST /api/subscribe, for the lead-magnet / newsletter opt-in. Asset requests
+  // POST /api/subscribe, for the materials / newsletter opt-in. Asset requests
   // are matched first; only a miss reaches the Worker, which delegates non-API
   // routes back to the ASSETS binding (preserving 404-page handling).
   "main": "src/index.js",

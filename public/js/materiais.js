@@ -1,4 +1,4 @@
-/* L-09 — lead-magnet / newsletter opt-in handler.
+/* L-09 — materiais / newsletter opt-in handler.
    Attaches to every <form class="lm-form"> on the page (index + blog). Posts the
    e-mail as JSON to /api/subscribe (the Cloudflare Worker), which registers the
    contact in Resend and sends the "Modelos de rotina" PDF. No dependencies. */
@@ -47,7 +47,7 @@
         .then(function (res) { return res.json().catch(function () { return { ok: res.ok }; }); })
         .then(function (data) {
           if (data && data.ok) {
-            track("lead-magnet-subscribe");
+            track("materiais-inscricao");
             form.classList.add("is-done");
             setStatus(
               status,
