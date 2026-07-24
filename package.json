@@ -1,0 +1,10 @@
+{
+  "name": "guardacompartilhada-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Landing site — Cloudflare Worker (static assets + POST /api/subscribe) for Guarda Compartilhada.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

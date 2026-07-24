@@ -31,14 +31,31 @@ export default {
   },
 };
 
-function json(body, status = 200) {
+export function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });
 }
 
-async function handleSubscribe(request, env, ctx) {
+// ── Pure request-shape helpers (exported for unit tests) ────────────────────
+
+/** Honeypot: real users never fill the hidden "empresa" field; bots do. */
+export function isHoneypot(data) {
+  return !!(data && typeof data.empresa === "string" && data.empresa.trim() !== "");
+}
+
+/** The submitted e-mail, trimmed + lower-cased; "" when absent or not a string. */
+export function normalizeEmail(data) {
+  return data && typeof data.email === "string" ? data.email.trim().toLowerCase() : "";
+}
+
+/** A normalized e-mail is acceptable when non-empty, ≤254 chars, and matches the shape. */
+export function isValidEmail(email) {
+  return !!email && email.length <= 254 && EMAIL_RE.test(email);
+}
+
+export async function handleSubscribe(request, env, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204 });
   if (request.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405);
 
@@ -52,14 +69,13 @@ async function handleSubscribe(request, env, ctx) {
     return json({ ok: false, error: "invalid_json" }, 400);
   }
 
-  // Honeypot: real users never fill the hidden "empresa" field. Bots do.
-  // Pretend success so the bot gets no signal, but do nothing.
-  if (data && typeof data.empresa === "string" && data.empresa.trim() !== "") {
+  // Honeypot: pretend success so the bot gets no signal, but do nothing.
+  if (isHoneypot(data)) {
     return json({ ok: true });
   }
 
-  const email = typeof data.email === "string" ? data.email.trim().toLowerCase() : "";
-  if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
+  const email = normalizeEmail(data);
+  if (!isValidEmail(email)) {
     return json({ ok: false, error: "invalid_email" }, 422);
   }
 
