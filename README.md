@@ -21,6 +21,7 @@ served from `public/`.
 - [Environments](#environments)
 - [Deploy](#deploy)
 - [Worker endpoint — materials / newsletter (L-09)](#worker-endpoint--materials--newsletter-l-09)
+- [Testing](#testing)
 - [Analytics (L-01)](#analytics-l-01)
 - [Legal pages — cross-repo sync](#legal-pages--cross-repo-sync)
 - [First-time Cloudflare setup](#first-time-cloudflare-setup)
@@ -63,12 +64,16 @@ guardacompartilhada-site/
 │   └── blog/                   # 4-article SEO cluster (+ index, img/) with the L-09 opt-in block
 ├── src/
 │   └── index.js                # Cloudflare Worker entrypoint: serves ASSETS + POST /api/subscribe
+├── test/
+│   └── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
 ├── assets-src/
 │   └── modelos-rotina.html     # generator for the lead-magnet PDF (headless Chromium; NOT served)
 ├── wrangler.jsonc              # Workers config (main + assets + vars; two envs)
+├── package.json                # `type: module` + `test` script (no runtime deps; NOT served)
 ├── .github/workflows/
 │   ├── deploy.yml              # push to `main`    → production worker
-│   └── deploy-preview.yml      # push to `preview` → preview worker (analytics stripped, noindex)
+│   ├── deploy-preview.yml      # push to `preview` → preview worker (analytics stripped, noindex)
+│   └── test.yml                # PR + push → runs the Worker tests (gates the merge)
 ├── ROADMAP.md · README.md · CLAUDE.md   # repo-root docs (never served)
 ```
 
@@ -120,6 +125,24 @@ a proper name).
 - Umami events: `materiais-baixar` (button click) and `materiais-inscricao` (success). No
   user-visible artifact carries a "lead-magnet" name (files are `materiais.*`, the section class is
   `.materiais-box`, the PDF title is set); internal `.lm-*` style hooks stay.
+
+## Testing
+
+The static assets need no build, but the Worker endpoint (`src/index.js`) carries real logic
+— validation, honeypot, dry-run, provider-error handling, partial-success reporting — so it has
+a unit suite. **Zero dependencies:** Node's built-in test runner over `test/*.test.js`, with the
+global `fetch` stubbed to assert the Resend request shape without any network call.
+
+```
+npm test          # === node --test  (requires Node 18+; CI uses 22)
+```
+
+`.github/workflows/test.yml` runs it on every PR and on pushes to `preview`/`main`, so a
+regression in the subscribe endpoint **blocks the merge before** the deploy workflows run. The
+suite covers: method/payload guards (204/405/413/400), the honeypot short-circuit, e-mail
+validation, the no-key **dry-run**, the happy path (contact + welcome e-mail, payload shaping,
+origin-tracked PDF link), a tolerated duplicate (409), and every provider-failure branch
+(contact 5xx → 502, e-mail failure → partial success). Pure static/HTML changes don't touch it.
 
 ## Analytics (L-01)
 

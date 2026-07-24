@@ -69,6 +69,11 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
 - Umami events: `materiais-baixar` (button click) and `materiais-inscricao` (success).
 - Neutral naming: no user-visible artifact says "lead-magnet" (files are `materiais.css`/`materiais.js`,
   the section class is `.materiais-box`, the PDF title is set). Internal `.lm-*` style hooks stay.
+- **Tests:** `src/index.js` exports its pure helpers (`isHoneypot`/`normalizeEmail`/`isValidEmail`)
+  and `handleSubscribe`; `test/subscribe.test.js` covers them with Node's built-in runner (**zero
+  deps** — `npm test` / `node --test`, global `fetch` stubbed). `.github/workflows/test.yml` gates
+  every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
+  touching the endpoint; static/HTML-only changes don't affect it.
 
 ## Legal pages (Privacy & Terms) — cross-repo sync (MUST)
 `public/privacidade.html` + `public/termos.html` are the **same legal documents for the same

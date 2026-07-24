@@ -1,0 +1,24 @@
+name: Test Worker
+
+# Unit tests for the Worker endpoint (src/index.js — POST /api/subscribe, L-09).
+# Runs on every PR and on pushes to the integration/production branches, so a
+# regression in the subscribe logic blocks the merge BEFORE the deploy workflows
+# (deploy-preview.yml / deploy.yml) ever run. Zero dependencies: Node's built-in
+# test runner over test/*.test.js.
+on:
+  pull_request:
+  push:
+    branches: [preview, main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # No dependencies to install — the suite uses node:test + global fetch.
+      - name: Run Worker tests
+        run: npm test

@@ -197,13 +197,21 @@ already-verified `guardacompartilhada.com` sending domain, sa-east-1):
   (Versão 1.4) and mirrored in the app's Privacy (v1.6.21) **without** forcing re-consent
   (transparency-only; `PolicyVersions.cs` unchanged). Legal review stays **S-15**.
 
+- **Tests** — the endpoint's logic is covered by `test/subscribe.test.js` (Node's built-in runner,
+  **zero deps**; `npm test`): method/payload guards, honeypot, e-mail validation, the no-key
+  dry-run, the happy path (contact + welcome e-mail with the origin-tracked PDF link and payload
+  shaping), a tolerated duplicate (409), and every provider-failure branch (contact 5xx → 502,
+  e-mail failure → partial success). `.github/workflows/test.yml` gates every PR + push to
+  `preview`/`main` before the deploy workflows.
+
 **Manual steps (ops):** set the `RESEND_API_KEY` secret on the production worker (and optionally the
 preview worker to test the live flow) — see the PR notes.
 
 **Files:** `public/index.html`, `public/blog/*.html` (4), `public/css/materiais.css`,
 `public/js/materiais.js`, `public/downloads/modelos-rotina-guarda-compartilhada.pdf`,
-`assets-src/modelos-rotina.html`, `src/index.js`, `wrangler.jsonc`, `public/privacidade.html`;
-cross-repo: app `Pages/Privacy.razor` + version bump.
+`assets-src/modelos-rotina.html`, `src/index.js`, `test/subscribe.test.js`, `package.json`,
+`.github/workflows/test.yml`, `wrangler.jsonc`, `public/privacidade.html`; cross-repo: app
+`Pages/Privacy.razor` + version bump.
 
 ---
 
