@@ -218,6 +218,14 @@ written once the app's plan and price are decided; keep the free tier honest and
 **Files:** `public/index.html` "Preços" section (free/premium comparison + CTA); coordinate copy
 with the app's F-32/T-39 plan definition.
 
+**Soft precursor shipped (July 2026, with app F-37).** The app's first concrete freemium gate —
+**F-37** (the 3rd+ caregiver is Premium) — landed with a *soft* landing touch (product-owner
+decision: keep the "tudo grátis no lançamento" promise intact, no prices). The **Preços** note and
+the **FAQ** (visible + JSON-LD) now give the coming premium a concrete shape — *incluir avós, babá e
+outros cuidadores além do casal, e o relatório em PDF para advogados/Justiça* — while affirming the
+essential couple-calendar stays free. The full free-vs-premium comparison table + price + checkout
+CTA remain **L-08**, still gated by T-39 (billing).
+
 ---
 
 ## Part B — item detail (non-code / ongoing)
