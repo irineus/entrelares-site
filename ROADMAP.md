@@ -24,7 +24,7 @@ distribution** — not the SEO base.
 | 3 | L-03 | Real product screenshots (replace CSS mockup) | `high` | `low` | `high` | → **required by app T-38** (Play listing assets) |
 | 4 | L-10 | Reposition around the immutable audit log ("prova de disputa") | `high` | `low` | `high` | ↔ app **F-33** (the PDF report embodies the claim) |
 | 5 | L-06 | Soft social proof (beta count / founder note) | `medium` | `low` | `medium` | — |
-| 6 | L-09 | Content lead-magnet + e-mail capture ("receba modelos de rotina") | `medium` | `medium` | `medium` | → feeds app **F-32** premium waitlist |
+| 6 | L-09 | Content lead-magnet + e-mail capture ("receba modelos de rotina") · **`completed`** | `medium` | `medium` | `medium` | → feeds app **F-32** premium waitlist |
 | 7 | L-04 | Optimize blog images (WebP/AVIF + srcset) | `medium` | `low` | `medium` | — |
 | 8 | L-05 | Expand SEO content cluster + interactive tool | `medium` | `medium` | `high` | mirrors app rotation wizard |
 | 9 | L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | `low` | `low` | `low` | — |
@@ -153,7 +153,7 @@ testimonials once available. Keep it honest (no fabricated reviews).
 
 ### L-09 — Content lead-magnet + e-mail capture
 
-**Order 6** · `medium` · `medium` · `medium` · **Cross-repo:** feeds app **F-32** premium waitlist
+**Order 6** · `medium` · `medium` · `medium` · **Status: `completed`** · **Cross-repo:** feeds app **F-32** premium waitlist; legal mirror in app Privacy (v1.6.21)
 
 The app is live, so the primary CTA is signup — but a **soft e-mail capture** ("receba modelos
 de rotina de guarda") builds a list for launch/premium announcements and captures visitors not
@@ -161,8 +161,35 @@ yet ready to sign up. Keep it optional and privacy-clean (single opt-in, no dark
 static form posting to a form endpoint or a Cloudflare Worker + the e-mail provider). The list
 becomes the audience for the F-32 premium launch.
 
-**Files:** a lead-magnet asset (e.g. a PDF of rotation templates); an opt-in form block in
-`public/index.html` and/or the blog; a tiny Worker/form endpoint (staying framework-free).
+**Done.** Delivered as a Cloudflare **Worker + Resend** flow (no new subscription, reusing the
+already-verified `guardacompartilhada.com` sending domain, sa-east-1):
+
+- **Lead magnet** — a 2-page branded PDF *"Modelos de rotina de guarda compartilhada"* (7/7,
+  quinzenal, 2-2-3, 2-2-5-5 and residence + alternating weekends, each with a two-week visual
+  strip, pros/cons, plus a holidays/vacation guide). Generated from `assets-src/lead-magnet.html`
+  via headless Chromium → `public/downloads/modelos-rotina-guarda-compartilhada.pdf` (both the
+  output and the generator are versioned so it can be updated).
+- **Capture endpoint** — `src/index.js` adds a single dynamic route, `POST /api/subscribe`, to the
+  static Worker: it validates the e-mail (+ honeypot), registers the contact in a dedicated Resend
+  segment (*"Landing — Novidades e Materiais"*), and sends the PDF by e-mail (single opt-in, with
+  an unsubscribe line). Everything else is delegated to the `ASSETS` binding (404 handling
+  preserved). `wrangler.jsonc` gains `main` + `vars`; `RESEND_API_KEY` is a **secret** — when
+  absent (default on preview) the endpoint **dry-runs** (no side effects).
+- **Opt-in UI** — a full section on `index.html` (`#materiais`, before the final CTA) and a compact
+  block at the foot of all four blog articles, sharing `public/css/lead-magnet.css` +
+  `public/js/lead-magnet.js` (progressive enhancement, `aria-live` status, Umami
+  `lead-magnet-submit`/`lead-magnet-subscribe` events). Mobile-safe down to 344 px.
+- **Legal** — new consent-based processing (art. 7º, I) disclosed in `privacidade.html` §3/§4/§7
+  (Versão 1.4) and mirrored in the app's Privacy (v1.6.21) **without** forcing re-consent
+  (transparency-only; `PolicyVersions.cs` unchanged). Legal review stays **S-15**.
+
+**Manual steps (ops):** set the `RESEND_API_KEY` secret on the production worker (and optionally the
+preview worker to test the live flow) — see the PR notes.
+
+**Files:** `public/index.html`, `public/blog/*.html` (4), `public/css/lead-magnet.css`,
+`public/js/lead-magnet.js`, `public/downloads/modelos-rotina-guarda-compartilhada.pdf`,
+`assets-src/lead-magnet.html`, `src/index.js`, `wrangler.jsonc`, `public/privacidade.html`;
+cross-repo: app `Pages/Privacy.razor` + version bump.
 
 ---
 

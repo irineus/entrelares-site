@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root {
+    --ink: #1e293b; --muted: #64748b; --indigo: #4f46e5; --indigo-deep: #3730a3;
+    --rose: #db2777; --navy: #03173d; --bg: #f8fafc; --bg-tint: #eef2ff;
+    --line: #e2e8f0; --a: #4f46e5; --a-soft: #e0e7ff; --b: #db2777; --b-soft: #fce7f3;
+  }
+  @page { size: A4; margin: 0; }
+  html, body { font-family: "Liberation Sans", "DejaVu Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); line-height: 1.5; }
+  .page { width: 210mm; height: 297mm; overflow: hidden; padding: 0; position: relative; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* Header band */
+  .band { background: linear-gradient(120deg, var(--navy) 0%, #12235c 55%, var(--indigo-deep) 100%); color: #fff; padding: 20px 22mm 22px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 14px; letter-spacing: .01em; opacity: .92; }
+  .brand .dot { width: 20px; height: 20px; border-radius: 6px; background: #fff; color: var(--indigo-deep); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+  h1 { font-size: 26px; line-height: 1.16; letter-spacing: -0.02em; margin: 12px 0 6px; max-width: 150mm; }
+  .band .sub { font-size: 13px; opacity: .86; max-width: 150mm; }
+
+  .body { padding: 15px 22mm 0; }
+  .lead { font-size: 12.5px; color: var(--muted); max-width: 158mm; margin-bottom: 12px; }
+  .lead strong { color: var(--ink); }
+
+  .legend { display: flex; gap: 18px; align-items: center; margin: 0 0 12px; font-size: 12px; color: var(--muted); }
+  .legend .k { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; color: var(--ink); }
+  .swatch { width: 15px; height: 15px; border-radius: 4px; display: inline-block; }
+  .sw-a { background: var(--a); } .sw-b { background: var(--b); }
+
+  .model { border: 1px solid var(--line); border-radius: 13px; padding: 12px 15px 13px; margin-bottom: 9px; background: #fff; }
+  .model h2 { font-size: 15px; color: var(--ink); display: flex; align-items: baseline; gap: 9px; }
+  .model h2 .tag { font-size: 10.5px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 999px; padding: 2px 9px; letter-spacing: .02em; }
+  .model .who { font-size: 11.5px; color: var(--muted); margin: 2px 0 8px; }
+
+  /* Two-week strip */
+  .strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; max-width: 128mm; }
+  .strip .wk { grid-column: 1 / -1; font-size: 9.5px; color: #94a3b8; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin: 4px 0 1px; }
+  .cell { border-radius: 5px; padding: 4px 0 5px; text-align: center; font-size: 9px; font-weight: 700; color: #fff; }
+  .cell small { display: block; font-size: 8px; font-weight: 600; opacity: .8; margin-bottom: 1px; }
+  .c-a { background: var(--a); } .c-b { background: var(--b); }
+  .c-a.soft { background: var(--a-soft); color: var(--indigo-deep); } .c-b.soft { background: var(--b-soft); color: #9d174d; }
+
+  .note { font-size: 11px; color: var(--muted); margin-top: 11px; }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  .pros { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 20px; margin-top: 8px; }
+  .pros div { font-size: 10.5px; color: var(--muted); position: relative; padding-left: 15px; }
+  .pros .p::before { content: "＋"; position: absolute; left: 0; color: #16a34a; font-weight: 800; }
+  .pros .c::before { content: "－"; position: absolute; left: 0; color: var(--rose); font-weight: 800; }
+
+  /* Holidays box */
+  .box { border: 1px dashed #c7d2fe; background: #f5f7ff; border-radius: 13px; padding: 12px 16px; margin-bottom: 10px; }
+  .box h2 { font-size: 15px; margin-bottom: 6px; }
+  .box ul { list-style: none; }
+  .box li { font-size: 11.5px; color: var(--muted); position: relative; padding-left: 18px; margin-bottom: 4px; }
+  .box li::before { content: "◆"; position: absolute; left: 0; top: 1px; color: var(--indigo); font-size: 9px; }
+  .box li b { color: var(--ink); font-weight: 600; }
+
+  .cta { margin: 4px 22mm 0; background: linear-gradient(120deg, var(--navy) 0%, var(--indigo-deep) 100%); color: #fff; border-radius: 15px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+  .cta h3 { font-size: 16px; margin-bottom: 4px; }
+  .cta p { font-size: 11.5px; opacity: .85; max-width: 105mm; }
+  .cta .btn { background: #fff; color: var(--indigo-deep); font-weight: 700; font-size: 12.5px; padding: 11px 18px; border-radius: 10px; white-space: nowrap; text-decoration: none; }
+
+  .foot { position: absolute; bottom: 9mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; font-size: 9.5px; color: #94a3b8; border-top: 1px solid var(--line); padding-top: 7px; }
+  .disclaimer { font-size: 10px; color: #94a3b8; margin: 9px 22mm 0; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+  <div class="band">
+    <div class="brand"><span class="dot">G</span> Guarda Compartilhada</div>
+    <h1>Modelos de rotina de guarda compartilhada</h1>
+    <div class="sub">5 formas comuns de dividir os dias entre os responsáveis — com um guia visual de duas semanas para cada uma, para vocês escolherem o combinado que melhor cabe na vida dos filhos.</div>
+  </div>
+
+  <div class="body">
+    <p class="lead">Não existe rotina “certa”: a melhor é a que respeita a idade da criança, a distância entre as casas e a rotina de cada responsável. Use estes modelos como <strong>ponto de partida da conversa</strong> — e lembre que qualquer combinado funciona melhor quando está num lugar só, igual para os dois. As cores mostram de quem é cada dia:</p>
+
+    <div class="legend">
+      <span class="k"><span class="swatch sw-a"></span> Responsável A</span>
+      <span class="k"><span class="swatch sw-b"></span> Responsável B</span>
+      <span style="font-size:11px">Seg · Ter · Qua · Qui · Sex · Sáb · Dom</span>
+    </div>
+
+    <!-- Model 1: 7/7 -->
+    <div class="model">
+      <h2>Semana sim, semana não <span class="tag">7/7</span></h2>
+      <div class="who">Uma semana inteira com cada responsável. Simples e previsível — o modelo mais usado.</div>
+      <div class="strip">
+        <div class="wk">Semana 1</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-a"><small>Qua</small>A</div><div class="cell c-a"><small>Qui</small>A</div><div class="cell c-a"><small>Sex</small>A</div><div class="cell c-a"><small>Sáb</small>A</div><div class="cell c-a"><small>Dom</small>A</div>
+        <div class="wk">Semana 2</div>
+        <div class="cell c-b"><small>Seg</small>B</div><div class="cell c-b"><small>Ter</small>B</div><div class="cell c-b"><small>Qua</small>B</div><div class="cell c-b"><small>Qui</small>B</div><div class="cell c-b"><small>Sex</small>B</div><div class="cell c-b"><small>Sáb</small>B</div><div class="cell c-b"><small>Dom</small>B</div>
+      </div>
+      <div class="pros">
+        <div class="p">Poucas trocas de casa; rotina estável.</div>
+        <div class="c">Uma semana longe do outro responsável.</div>
+        <div class="p">Fácil de combinar com a escola.</div>
+        <div class="c">Menos indicado para crianças bem pequenas.</div>
+      </div>
+    </div>
+
+    <!-- Model 2: quinzenal -->
+    <div class="model">
+      <h2>Quinzenal <span class="tag">14/14</span></h2>
+      <div class="who">Duas semanas seguidas com cada responsável. Indicado quando as casas ficam distantes.</div>
+      <div class="strip">
+        <div class="wk">Semanas 1 e 2 · Responsável A</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-a"><small>Qua</small>A</div><div class="cell c-a"><small>Qui</small>A</div><div class="cell c-a"><small>Sex</small>A</div><div class="cell c-a"><small>Sáb</small>A</div><div class="cell c-a"><small>Dom</small>A</div>
+        <div class="wk">Semanas 3 e 4 · Responsável B</div>
+        <div class="cell c-b"><small>Seg</small>B</div><div class="cell c-b"><small>Ter</small>B</div><div class="cell c-b"><small>Qua</small>B</div><div class="cell c-b"><small>Qui</small>B</div><div class="cell c-b"><small>Sex</small>B</div><div class="cell c-b"><small>Sáb</small>B</div><div class="cell c-b"><small>Dom</small>B</div>
+      </div>
+      <div class="pros">
+        <div class="p">Menos deslocamento ainda; bom para longas distâncias.</div>
+        <div class="c">Períodos longos sem ver o outro responsável.</div>
+        <div class="p">Menos transições no meio da semana.</div>
+        <div class="c">Exige boa comunicação sobre escola e saúde.</div>
+      </div>
+    </div>
+
+    <!-- Model 3: 2-2-3 -->
+    <div class="model">
+      <h2>Rotação 2-2-3 <span class="tag">crianças pequenas</span></h2>
+      <div class="who">Blocos curtos que se alternam a cada semana. A criança nunca fica muitos dias longe de nenhum dos dois.</div>
+      <div class="strip">
+        <div class="wk">Semana 1</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-b"><small>Qua</small>B</div><div class="cell c-b"><small>Qui</small>B</div><div class="cell c-a"><small>Sex</small>A</div><div class="cell c-a"><small>Sáb</small>A</div><div class="cell c-a"><small>Dom</small>A</div>
+        <div class="wk">Semana 2</div>
+        <div class="cell c-b"><small>Seg</small>B</div><div class="cell c-b"><small>Ter</small>B</div><div class="cell c-a"><small>Qua</small>A</div><div class="cell c-a"><small>Qui</small>A</div><div class="cell c-b"><small>Sex</small>B</div><div class="cell c-b"><small>Sáb</small>B</div><div class="cell c-b"><small>Dom</small>B</div>
+      </div>
+      <div class="pros">
+        <div class="p">Contato frequente com os dois responsáveis.</div>
+        <div class="c">Muitas trocas de casa na semana.</div>
+        <div class="p">Ótimo para crianças pequenas.</div>
+        <div class="c">Pede casas próximas e rotina bem alinhada.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>guardacompartilhada.com</span>
+    <span>Modelos de rotina de guarda compartilhada · pág. 1 de 2</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page">
+  <div class="body" style="padding-top:8mm">
+
+    <!-- Model 4: 2-2-5-5 -->
+    <div class="model">
+      <h2>Rotação 2-2-5-5 <span class="tag">dias fixos</span></h2>
+      <div class="who">Cada responsável tem sempre os mesmos dois dias de semana fixos; os fins de semana se revezam em blocos de cinco.</div>
+      <div class="strip">
+        <div class="wk">Semana 1</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-b"><small>Qua</small>B</div><div class="cell c-b"><small>Qui</small>B</div><div class="cell c-a"><small>Sex</small>A</div><div class="cell c-a"><small>Sáb</small>A</div><div class="cell c-a"><small>Dom</small>A</div>
+        <div class="wk">Semana 2</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-b"><small>Qua</small>B</div><div class="cell c-b"><small>Qui</small>B</div><div class="cell c-b"><small>Sex</small>B</div><div class="cell c-b"><small>Sáb</small>B</div><div class="cell c-b"><small>Dom</small>B</div>
+      </div>
+      <div class="note"><b>Dias fixos:</b> Seg/Ter sempre com A, Qua/Qui sempre com B — fácil de memorizar. Só os dias de Sex a Dom giram entre as semanas.</div>
+      <div class="pros">
+        <div class="p">Dias de semana previsíveis para a escola.</div>
+        <div class="c">Um pouco mais complexo de explicar no começo.</div>
+        <div class="p">Divisão equilibrada de fins de semana.</div>
+        <div class="c">Ainda exige casas relativamente próximas.</div>
+      </div>
+    </div>
+
+    <!-- Model 5: fins de semana alternados -->
+    <div class="model">
+      <h2>Residência principal + fins de semana alternados <span class="tag">clássico</span></h2>
+      <div class="who">A criança mora durante a semana com um responsável e passa fins de semana alternados com o outro. Comum logo após a separação.</div>
+      <div class="strip">
+        <div class="wk">Semana 1</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-a"><small>Qua</small>A</div><div class="cell c-a"><small>Qui</small>A</div><div class="cell c-b"><small>Sex</small>B</div><div class="cell c-b"><small>Sáb</small>B</div><div class="cell c-b"><small>Dom</small>B</div>
+        <div class="wk">Semana 2</div>
+        <div class="cell c-a"><small>Seg</small>A</div><div class="cell c-a"><small>Ter</small>A</div><div class="cell c-a"><small>Qua</small>A</div><div class="cell c-a"><small>Qui</small>A</div><div class="cell c-a"><small>Sex</small>A</div><div class="cell c-a"><small>Sáb</small>A</div><div class="cell c-a"><small>Dom</small>A</div>
+      </div>
+      <div class="note"><b>Dica:</b> muitas famílias somam uma tarde no meio da semana com o responsável B (ex.: jantar na quarta), para o contato não ficar só de 15 em 15 dias.</div>
+      <div class="pros">
+        <div class="p">Rotina escolar bem estável.</div>
+        <div class="c">Convivência desigual entre os responsáveis.</div>
+        <div class="p">Transição mais suave no início.</div>
+        <div class="c">Menos indicado como arranjo permanente.</div>
+      </div>
+    </div>
+
+    <!-- Holidays box -->
+    <div class="box">
+      <h2>Férias, feriados e datas especiais</h2>
+      <ul>
+        <li><b>Combine à parte da rotina semanal.</b> Férias escolares e feriados costumam “pausar” o calendário normal e seguir uma divisão própria.</li>
+        <li><b>Alternem por ano.</b> Natal com A e Ano-Novo com B neste ano; troca no ano seguinte. O mesmo vale para aniversários e feriados longos.</li>
+        <li><b>Dia das Mães e Dia dos Pais</b> ficam sempre com o responsável homenageado, independentemente de quem é o dia na rotina.</li>
+        <li><b>Aniversário da criança:</b> definam se será dividido no próprio dia ou alternado por ano — e registrem a decisão.</li>
+        <li><b>Férias de meio de ano e fim de ano:</b> combinem os blocos com semanas de antecedência, para planejar viagens sem conflito.</li>
+      </ul>
+    </div>
+
+    <p class="disclaimer">Este material é informativo e não constitui aconselhamento jurídico. As regras de guarda e convivência de cada família dependem do acordo entre os responsáveis e, quando houver, da decisão judicial. Em caso de dúvida, consulte seu advogado ou a Defensoria Pública.</p>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>Coloque a rotina escolhida no app — grátis</h3>
+      <p>Monte o calendário, convide o outro responsável e cada troca de dia passa a ter a aprovação dos dois, registrada com data e hora. Menos discussão, mais previsibilidade para os filhos.</p>
+    </div>
+    <a class="btn" href="https://guardacompartilhada.com/">Começar agora →</a>
+  </div>
+
+  <div class="foot">
+    <span>guardacompartilhada.com</span>
+    <span>Modelos de rotina de guarda compartilhada · pág. 2 de 2</span>
+  </div>
+</div>
+
+</body>
+</html>

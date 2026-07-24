@@ -131,6 +131,7 @@
     }
     </script>
 
+    <link rel="stylesheet" href="/css/lead-magnet.css" />
     <style>
         :root {
             --ink: #1e293b;
@@ -650,6 +651,37 @@
     </div>
 </section>
 
+<section id="materiais">
+    <div class="wrap">
+        <div class="lead-magnet">
+            <div class="lm-copy">
+                <span class="lm-eyebrow">Material gratuito</span>
+                <h2>5 modelos de rotina de guarda para escolher com calma</h2>
+                <p class="lm-sub">Um guia visual em PDF com as formas mais comuns de dividir os dias entre os responsáveis — para vocês conversarem a partir de exemplos claros, não do zero.</p>
+                <ul class="lm-list">
+                    <li>Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados</li>
+                    <li>Calendário visual de duas semanas para cada modelo</li>
+                    <li>Prós e contras de cada rotina, em linguagem simples</li>
+                    <li>Um roteiro para combinar férias, feriados e datas especiais</li>
+                </ul>
+            </div>
+            <form class="lm-form" novalidate>
+                <p class="lm-form-title">Receba o PDF por e-mail</p>
+                <div class="lm-field">
+                    <label for="lm-email-home">Seu melhor e-mail</label>
+                    <input class="lm-input" type="email" id="lm-email-home" name="email" inputmode="email" autocomplete="email" placeholder="voce@exemplo.com" required />
+                </div>
+                <div class="lm-hp" aria-hidden="true">
+                    <label>Não preencha este campo<input type="text" name="empresa" tabindex="-1" autocomplete="off" /></label>
+                </div>
+                <button class="lm-btn" type="submit" data-umami-event="lead-magnet-submit">Quero os modelos grátis</button>
+                <p class="lm-consent">Enviamos o material e novidades ocasionais do app. Sem spam; você sai quando quiser. Veja a <a href="privacidade.html">Política de Privacidade</a>.</p>
+                <p class="lm-status" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
 <section class="cta-final">
     <div class="wrap">
         <h2>Menos discussão. Mais convivência.</h2>
@@ -721,6 +753,8 @@
     play();
 })();
 </script>
+
+<script defer src="/js/lead-magnet.js"></script>
 
 </body>
 </html>
