@@ -23,7 +23,7 @@ distribution** — not the SEO base.
 | 2 | L-02 | Fix Open Graph image (1200×630) + compress icon-512 | `high` | `low` | `high` | → feeds app **T-38** store imagery |
 | 3 | L-03 | Real product screenshots (replace CSS mockup) | `high` | `low` | `high` | → **required by app T-38** (Play listing assets) |
 | 4 | L-10 | Reposition around the immutable audit log ("prova de disputa") | `high` | `low` | `high` | ↔ app **F-33** (the PDF report embodies the claim) |
-| 5 | L-06 | Soft social proof (beta count / founder note) | `medium` | `low` | `medium` | — |
+| 5 | L-06 | Soft social proof (beta count / founder note) · **`completed`** | `medium` | `low` | `medium` | — |
 | 6 | L-09 | Content lead-magnet + e-mail capture ("receba modelos de rotina") · **`completed`** | `medium` | `medium` | `medium` | → feeds app **F-32** premium waitlist |
 | 7 | L-04 | Optimize blog images (WebP/AVIF + srcset) | `medium` | `low` | `medium` | — |
 | 8 | L-05 | Expand SEO content cluster + interactive tool | `medium` | `medium` | `high` | mirrors app rotation wizard |
@@ -141,13 +141,24 @@ factual — no legal-proof overclaim (the FAQ already frames court value honestl
 
 ### L-06 — Soft social proof (beta count / founder note)
 
-**Order 5** · `medium` · `low` · `medium`
+**Order 5** · `medium` · `low` · `medium` · **Status: `completed`**
 
 The page has **no social proof** today — trust rests only on feature claims. Even soft proof
 helps: a beta user count, a short founder note ("por que construí isso"), or the first real
 testimonials once available. Keep it honest (no fabricated reviews).
 
-**Files:** new section in `public/index.html` (near "Por quê" or before the final CTA).
+**Done.** Added a **founder note** — an honest, first-person `#fundador` section (after
+`#beneficios`) telling the real story behind the app (the founder's own shared-custody
+experience: the instability after separation, the need to give a small child predictability,
+the failed spreadsheet/generic-calendar attempts, building a private tool that grew, then
+opening it to other families). Signed *"Irineu — Fundador e pai"* with a gradient-initial avatar
+(name is already public as the controller in the privacy policy; photo can be added later). Below
+it, a **values strip** of already-true trust signals (🇧🇷 feito no Brasil · 🔒 LGPD · 🚫 sem
+anúncios/venda de dados · 📜 histórico à prova de disputa · 💙 essencial grátis). **No fabricated
+numbers or reviews** — a beta count / real testimonials can be added later once there is honest
+data. Styles are inline in `index.html` (index-specific); mobile-safe.
+
+**Files:** `public/index.html` (new `#fundador` section + styles); `ROADMAP.md`.
 
 ---
 
