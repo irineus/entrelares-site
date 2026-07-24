@@ -1,7 +1,7 @@
 // Cloudflare Worker for the landing site.
 //
 // The site is 99% static assets (served by the `ASSETS` binding). This Worker
-// adds ONE dynamic endpoint — POST /api/subscribe — for the L-09 lead-magnet /
+// adds ONE dynamic endpoint — POST /api/subscribe — for the L-09 materials /
 // newsletter opt-in: it registers the e-mail in a Resend segment (the launch /
 // premium-announcement list) and sends the "Modelos de rotina" PDF by e-mail.
 //
@@ -97,7 +97,7 @@ async function handleSubscribe(request, env, ctx) {
     return json({ ok: false, error: "provider_unavailable" }, 502);
   }
 
-  // 2) Send the lead-magnet e-mail with the PDF link. Link to the same origin
+  // 2) Send the welcome e-mail with the PDF link. Link to the same origin
   //    the request came from (prod → prod, preview → preview).
   const origin = new URL(request.url).origin;
   const pdfUrl = `${origin}/downloads/modelos-rotina-guarda-compartilhada.pdf`;
@@ -113,7 +113,7 @@ async function handleSubscribe(request, env, ctx) {
         from,
         to: [email],
         reply_to: replyTo,
-        subject: "Seus modelos de rotina de guarda compartilhada 📅",
+        subject: "Seu guia de rotinas de guarda compartilhada 🎉",
         headers: {
           "List-Unsubscribe": `<mailto:${unsubscribe}?subject=descadastro>`,
         },
@@ -138,46 +138,126 @@ async function handleSubscribe(request, env, ctx) {
 
 function emailText(pdfUrl, unsubscribe) {
   return [
-    "Olá!",
+    "Que bom ter você por aqui :)",
     "",
-    "Obrigado por se inscrever. Aqui está o material que você pediu:",
+    "Organizar a convivência dos filhos depois da separação é um dos maiores",
+    "desafios do dia a dia. Preparamos um guia para ajudar você e o outro",
+    "responsável a começar essa conversa a partir de exemplos claros.",
     "",
-    "Modelos de rotina de guarda compartilhada (PDF):",
-    pdfUrl,
+    "Baixe o guia (PDF): " + pdfUrl,
     "",
-    "São 5 modelos comuns (semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e",
-    "fins de semana alternados), com um guia visual de duas semanas para cada um,",
-    "além de um roteiro para férias e feriados.",
+    "O que você vai encontrar:",
+    "  - 5 modelos de rotina prontos, das semanas alternadas às opções para",
+    "    crianças pequenas;",
+    "  - um calendário visual de duas semanas para cada modelo;",
+    "  - os prós e contras de cada rotina, em linguagem simples;",
+    "  - um roteiro para combinar férias, feriados e datas especiais.",
     "",
-    "Quando escolher a rotina de vocês, você pode montá-la no app — grátis — em",
-    "https://guardacompartilhada.com. Cada troca de dia passa a ter a aprovação",
-    "dos dois responsáveis, registrada com data e hora.",
+    "E quando vocês escolherem a rotina, é só colocá-la no app Guarda",
+    "Compartilhada — grátis. Ele mantém o calendário num lugar só, igual para",
+    "os dois responsáveis:",
+    "  - de quem é o dia, sempre à vista;",
+    "  - trocas de dia com a aprovação dos dois;",
+    "  - histórico com data e hora, que não pode ser editado nem apagado.",
+    "",
+    "Conheça o app: https://guardacompartilhada.com/",
     "",
     "Um abraço,",
-    "Equipe Guarda Compartilhada",
+    "Irineu — Guarda Compartilhada",
     "",
     "—",
-    `Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com. Para sair da lista, escreva para ${unsubscribe}.`,
+    "Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com.",
+    "Para sair da lista, é só responder a este e-mail ou escrever para " + unsubscribe + ".",
   ].join("\n");
 }
 
 function emailHtml(pdfUrl, unsubscribe) {
+  const brand = "#03173d", indigo = "#4f46e5", indigoDeep = "#3730a3";
+  const ink = "#1e293b", muted = "#475569", line = "#e6e8ef";
+  const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+  const li = (emoji, text) =>
+    `<tr>
+       <td valign="top" style="padding:6px 10px 6px 0;font-size:18px;line-height:1.5;">${emoji}</td>
+       <td valign="top" style="padding:6px 0;font-size:15px;line-height:1.5;color:${muted};">${text}</td>
+     </tr>`;
+  const button = (href, label, bg) =>
+    `<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+       <td bgcolor="${bg}" style="border-radius:10px;">
+         <a href="${href}" style="display:inline-block;padding:14px 26px;font-family:${font};font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">${label}</a>
+       </td>
+     </tr></table>`;
+
   return `<!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#1e293b;">
-  <div style="max-width:560px;margin:0 auto;padding:28px 20px;">
-    <div style="font-weight:700;font-size:16px;color:#3730a3;margin-bottom:20px;">Guarda Compartilhada</div>
-    <h1 style="font-size:22px;line-height:1.25;margin:0 0 14px;color:#1e293b;">Seus modelos de rotina chegaram 📅</h1>
-    <p style="font-size:15px;line-height:1.6;color:#475569;margin:0 0 18px;">Obrigado por se inscrever! Preparamos um guia com <strong>5 modelos comuns de rotina</strong> — semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — cada um com um calendário visual de duas semanas, além de um roteiro para férias e feriados.</p>
-    <p style="margin:0 0 26px;">
-      <a href="${pdfUrl}" style="display:inline-block;background:#4f46e5;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:13px 22px;border-radius:10px;">Baixar o PDF dos modelos →</a>
-    </p>
-    <p style="font-size:15px;line-height:1.6;color:#475569;margin:0 0 18px;">Quando vocês escolherem a rotina, é só colocá-la no app — grátis. Cada troca de dia passa a ter a aprovação dos dois responsáveis, registrada com data e hora: menos discussão, mais previsibilidade para os filhos.</p>
-    <p style="margin:0 0 28px;">
-      <a href="https://guardacompartilhada.com/" style="color:#4f46e5;font-weight:600;font-size:15px;text-decoration:none;">Conhecer o app &rarr;</a>
-    </p>
-    <hr style="border:none;border-top:1px solid #e2e8f0;margin:24px 0;">
-    <p style="font-size:12px;line-height:1.5;color:#94a3b8;margin:0;">Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com. Para sair da lista, escreva para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.</p>
-  </div>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Seu guia de rotinas de guarda compartilhada</title></head>
+<body style="margin:0;padding:0;background:#eef2ff;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Seu guia com 5 modelos de rotina — e como dar mais previsibilidade para os filhos.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#eef2ff;">
+    <tr><td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid ${line};font-family:${font};">
+
+        <!-- header -->
+        <tr><td align="center" bgcolor="${brand}" style="background:${brand};padding:26px 24px;">
+          <div style="font-family:${font};font-size:17px;font-weight:700;color:#ffffff;letter-spacing:.01em;">📅 Guarda Compartilhada</div>
+        </td></tr>
+
+        <!-- hero -->
+        <tr><td style="padding:32px 32px 8px;">
+          <h1 style="margin:0 0 12px;font-family:${font};font-size:23px;line-height:1.3;color:${ink};">Prontinho — aqui está o seu guia 🎉</h1>
+          <p style="margin:0 0 20px;font-family:${font};font-size:15px;line-height:1.65;color:${muted};">Que bom ter você por aqui. Organizar a convivência dos filhos depois da separação é um dos maiores desafios do dia a dia — e este guia é um bom ponto de partida para vocês combinarem a rotina a partir de exemplos claros.</p>
+        </td></tr>
+
+        <!-- download card -->
+        <tr><td style="padding:0 32px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f7ff;border:1px solid #e0e7ff;border-radius:12px;">
+            <tr><td style="padding:22px 22px 24px;">
+              <div style="font-family:${font};font-size:16px;font-weight:700;color:${ink};margin-bottom:6px;">📘 Modelos de rotina de guarda compartilhada</div>
+              <p style="margin:0 0 18px;font-family:${font};font-size:14px;line-height:1.6;color:${muted};">Um guia visual com as formas mais comuns de dividir os dias — e um roteiro para férias e feriados.</p>
+              ${button(pdfUrl, "Baixar o guia (PDF)", indigo)}
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- what's inside -->
+        <tr><td style="padding:26px 32px 6px;">
+          <div style="font-family:${font};font-size:15px;font-weight:700;color:${ink};margin-bottom:6px;">O que você vai encontrar</div>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            ${li("🗓️", "<strong style=\"color:" + ink + "\">5 modelos prontos</strong> — das semanas alternadas às opções para crianças pequenas")}
+            ${li("👀", "Um <strong style=\"color:" + ink + "\">calendário visual de duas semanas</strong> para cada modelo")}
+            ${li("⚖️", "Os <strong style=\"color:" + ink + "\">prós e contras</strong> de cada rotina, em linguagem simples")}
+            ${li("🏖️", "Um roteiro para combinar <strong style=\"color:" + ink + "\">férias, feriados e datas especiais</strong>")}
+          </table>
+        </td></tr>
+
+        <!-- app intro -->
+        <tr><td style="padding:14px 20px 0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border-top:1px solid ${line};border-radius:0 0 4px 4px;">
+            <tr><td style="padding:26px 12px 4px;">
+              <h2 style="margin:0 0 8px;font-family:${font};font-size:18px;line-height:1.35;color:${ink};">E quando vocês escolherem a rotina?</h2>
+              <p style="margin:0 0 14px;font-family:${font};font-size:14.5px;line-height:1.6;color:${muted};">Coloque-a no app Guarda Compartilhada — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                ${li("📅", "De quem é o dia, <strong style=\"color:" + ink + "\">sempre à vista</strong>")}
+                ${li("🤝", "Trocas de dia só valem com a <strong style=\"color:" + ink + "\">aprovação dos dois</strong>")}
+                ${li("📜", "Histórico com data e hora, que <strong style=\"color:" + ink + "\">não pode ser editado nem apagado</strong>")}
+              </table>
+              <div style="padding:18px 0 4px;">${button("https://guardacompartilhada.com/", "Conhecer o app", indigoDeep)}</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- signature -->
+        <tr><td style="padding:22px 32px 4px;">
+          <p style="margin:0;font-family:${font};font-size:15px;line-height:1.6;color:${muted};">Um abraço,<br><strong style="color:${ink};">Irineu</strong> — fundador do Guarda Compartilhada</p>
+        </td></tr>
+
+        <!-- footer -->
+        <tr><td style="padding:20px 32px 30px;">
+          <div style="border-top:1px solid ${line};padding-top:16px;">
+            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com. Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.</p>
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
 </body></html>`;
 }
