@@ -134,9 +134,16 @@ optionally a short "por que importa" block. Coordinate the wording with app F-33
 **Done:** `public/index.html` — hero subcopy now foregrounds the *"registro à prova de disputa"*
 (histórico que não pode ser editado nem apagado); the immutable-history benefit card retitled
 *"Histórico à prova de disputa"* with sharpened, honest body copy. Wording coordinated with app
-**F-33** (v1.6.12), whose PDF report is literally the *"relatório à prova de disputa"*. Kept
+**F-33** (v1.6.12), whose PDF report was originally the *"relatório à prova de disputa"*. Kept
 factual — no legal-proof overclaim (the FAQ already frames court value honestly). The optional
 "por que importa" block was not needed. Delivered alongside app F-33.
+
+> **Update (July 2026, app v1.6.23):** the **F-33 PDF report** was repositioned away from the
+> lawyer/court framing — it is now the neutral **"Relatório do histórico em PDF"** (a consolidated,
+> formatted export of the history), on both the app and this landing (Preços + FAQ + JSON-LD).
+> This L-10 **"histórico à prova de disputa"** tagline for the **immutable log itself** (hero +
+> benefit card + founder badge) was **intentionally kept** — the repositioning applies only to how
+> the *report* is described, not to the immutable-history claim.
 
 ---
 
@@ -271,7 +278,8 @@ with the app's F-32/T-39 plan definition.
 **F-37** (the 3rd+ caregiver is Premium) — landed with a *soft* landing touch (product-owner
 decision: keep the "tudo grátis no lançamento" promise intact, no prices). The **Preços** note and
 the **FAQ** (visible + JSON-LD) now give the coming premium a concrete shape — *incluir avós, babá e
-outros cuidadores além do casal, e o relatório em PDF para advogados/Justiça* — while affirming the
+outros cuidadores além do casal, e o relatório do histórico em PDF* (repositioned from the earlier
+"para advogados/Justiça" wording — see the L-10 update note, app v1.6.23) — while affirming the
 essential couple-calendar stays free. The full free-vs-premium comparison table + price + checkout
 CTA remain **L-08**, still gated by T-39 (billing).
 
