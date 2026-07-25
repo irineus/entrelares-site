@@ -96,4 +96,5 @@ pages are currently the more up-to-date source of truth.** Legal review is track
 ## Gotchas
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,
   so they are never served — safe to edit without touching the published site.
-- The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes only `./public`.
+- The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
+  assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.

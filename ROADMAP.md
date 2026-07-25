@@ -45,7 +45,7 @@ Six on-site items have shipped (L-01/L-02/L-03/L-06/L-09/L-10 — analytics, the
 3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
 4. **L-08 — Pricing section** for the premium launch — **gated by the app's F-32/T-39**: it can only be written once the plan + price are decided, and ships lockstep with app billing (**T-39**) and its pricing copy.
 
-**Off-site (ongoing, no strict order):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** court PDF) — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
+**Off-site (ongoing, no strict order):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
 > **Cross-repo:** the app's forward plan lives in [`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
 
@@ -124,9 +124,9 @@ store-ready; to complete the set, recapture **notifications** + **per-parent sum
 
 The app's **immutable, append-only audit log** is a genuine legal-grade differentiator that
 **no Brazilian competitor communicates**. Sharpen the hero/benefits copy around it —
-*"histórico à prova de disputa"* — so the positioning matches the paid wedge (F-33 lawyer/court
-PDF). Cheap copy/messaging change, high differentiation. Keep it honest (describe the immutable
-history factually).
+*"histórico à prova de disputa"* — so the positioning matches the paid wedge (F-33, the
+"Relatório do histórico em PDF"). Cheap copy/messaging change, high differentiation. Keep it
+honest (describe the immutable history factually).
 
 **Files:** `public/index.html` — hero subcopy + the "Benefícios" card on immutable history;
 optionally a short "por que importa" block. Coordinate the wording with app F-33.
@@ -159,8 +159,9 @@ testimonials once available. Keep it honest (no fabricated reviews).
 `#beneficios`) telling the real story behind the app (the founder's own shared-custody
 experience: the instability after separation, the need to give a small child predictability,
 the failed spreadsheet/generic-calendar attempts, building a private tool that grew, then
-opening it to other families). Signed *"Irineu — Fundador e pai"* with a gradient-initial avatar
-(name is already public as the controller in the privacy policy; photo can be added later). Below
+opening it to other families). Signed *"Irineu — Fundador e pai"* with the founder's photo
+(`public/img/founder.jpg` + `.webp`; name is already public as the controller in the privacy
+policy). Below
 it, a **values strip** of already-true trust signals (🇧🇷 feito no Brasil · 🔒 LGPD · 🚫 sem
 anúncios/venda de dados · 📜 histórico à prova de disputa · 💙 essencial grátis). **No fabricated
 numbers or reviews** — a beta count / real testimonials can be added later once there is honest
@@ -305,7 +306,7 @@ the interactive tool (L-05) rather than hard-selling. Landing arrivals are measu
 
 Family lawyers and mediators advise exactly the people who need this product. Build a referral
 relationship ("recommend this to your clients"), possibly with a simple co-branded one-pager. The
-app's court/lawyer PDF report (F-33) is the natural hook — it makes their job easier, so the
+app's F-33 report ("Relatório do histórico em PDF") is a natural hook — it makes their job easier, so the
 partnership is mutually useful. Highest-intent acquisition channel available.
 
 **Not a repo change** — a partnership/distribution activity tracked here so it is not lost.
