@@ -32,7 +32,7 @@ All landing items and their status at a glance; full records are in the item det
 | L-04 | Optimize blog images (WebP/AVIF + srcset) | on-site | `medium` | `medium` | `pending` |
 | L-05 | Expand SEO content cluster + interactive tool | on-site | `medium` | `high` | `pending` |
 | L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | on-site | `low` | `low` | `pending` |
-| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `pending` — gated by app **F-32/T-39** |
+| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `completed` |
 | L-11 | Community channels (co-parenting groups & forums) | off-site | `medium` | `medium` | `pending` — ongoing |
 | L-12 | Lawyer / mediator referral partnerships (B2B2C) | off-site | `medium` | `high` | `pending` — ongoing |
 
@@ -264,13 +264,23 @@ hardcoded and will go stale. Drop the noindex pages from the sitemap and set a l
 
 ### L-08 — Update pricing section for premium launch
 
-**Order 10 (last)** · `medium` · `low` · `high` · **Cross-repo:** gated by app **F-32** (tiering) and **T-39** (billing)
+**Order 10 (last)** · `medium` · `low` · `high` · **Status: `completed`** (July 2026, with app T-39 PR3) · **Cross-repo:** app **F-32** (tiering) + **T-39** (billing)
 
 The landing already has a **Preços** section (currently a single "R$ 0/mês — Lançamento" card).
 When the app introduces the paid tier, this section must present the real free-vs-premium
 comparison, the price, and a checkout/"assine no site" CTA. **Comes last** — it can only be
 written once the app's plan and price are decided; keep the free tier honest and prominent
 (essentials stay free forever, per the app track's guiding principles).
+
+**Shipped (July 2026, lockstep with app T-39 PR3).** The Preços section is now the real
+free-vs-premium comparison: Gratuito (R$ 0, essentials forever) side by side with Premium
+(**R$ 14,90/mês · R$ 149/ano — 2 meses grátis, por família**), CTA "Assinar no app"
+(`cta-premium` Umami event; the subscription itself happens in the app's Família page,
+admin-only). Stale "grátis durante o lançamento" copy swept everywhere: meta/OG/Twitter
+descriptions, visible FAQ + FAQ JSON-LD, and the SoftwareApplication JSON-LD now lists both
+offers (0 and 14.90 BRL). Same delivery also mirrored the Terms §10 rewrite (subscription,
+Asaas, cancellation/refund CDC art. 49 — v1.2) and the Privacy Asaas-operator + subscription-data
+additions (v1.5), in sync with the app (PolicyVersions 2026-07-28).
 
 **Files:** `public/index.html` "Preços" section (free/premium comparison + CTA); coordinate copy
 with the app's F-32/T-39 plan definition.
