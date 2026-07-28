@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guarda Compartilhada: app de calendário de convivência dos filhos</title>
-    <meta name="description" content="App de guarda compartilhada para pais separados: calendário de convivência claro, trocas de dia com aprovação dos dois responsáveis e histórico com data e hora. Grátis durante o lançamento, sem cartão de crédito." />
+    <meta name="description" content="App de guarda compartilhada para pais separados: calendário de convivência claro, trocas de dia com aprovação dos dois responsáveis e histórico com data e hora. O essencial é grátis para sempre; Premium opcional por família." />
     <meta name="keywords" content="guarda compartilhada, calendário de convivência, guarda dos filhos, pais separados, divórcio filhos, regime de convivência, aplicativo guarda compartilhada, agenda dos filhos" />
     <meta name="author" content="Guarda Compartilhada" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -18,7 +18,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Guarda Compartilhada" />
     <meta property="og:title" content="Guarda Compartilhada — o app do calendário de convivência" />
-    <meta property="og:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. Grátis durante o lançamento." />
+    <meta property="og:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. O essencial é grátis para sempre." />
     <meta property="og:url" content="https://guardacompartilhada.com/" />
     <meta property="og:image" content="https://guardacompartilhada.com/og-cover.png" />
     <meta property="og:image:width" content="1200" />
@@ -29,7 +29,7 @@
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Guarda Compartilhada — o app do calendário de convivência" />
-    <meta name="twitter:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. Grátis durante o lançamento." />
+    <meta name="twitter:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. O essencial é grátis para sempre." />
     <meta name="twitter:image" content="https://guardacompartilhada.com/og-cover.png" />
 
     <script type="application/ld+json">
@@ -41,7 +41,7 @@
       "applicationCategory": "LifestyleApplication",
       "inLanguage": "pt-BR",
       "description": "Aplicativo para pais separados organizarem o calendário de convivência dos filhos, com trocas de dia aprovadas pelos dois responsáveis e histórico completo.",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+      "offers": [ { "@type": "Offer", "price": "0", "priceCurrency": "BRL", "name": "Gratuito" }, { "@type": "Offer", "price": "14.90", "priceCurrency": "BRL", "name": "Premium (mensal, por família)" } ],
       "url": "https://guardacompartilhada.com/"
     }
     </script>
@@ -108,7 +108,7 @@
           "name": "Quanto custa o app de guarda compartilhada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Durante o lançamento, nada: todas as funcionalidades são gratuitas e não é preciso cartão de crédito. No futuro haverá um plano premium por família, reunindo recursos como incluir avós, babá e outros cuidadores além do casal e o relatório do histórico em PDF (um resumo consolidado e formatado dos dias e das trocas do período); o essencial (calendário do casal, trocas aprovadas e histórico) segue gratuito. Quem já usa o app será avisado com antecedência e terá condições especiais."
+            "text": "O essencial é gratuito para sempre: calendário do casal, trocas com aprovação dos dois e histórico. O plano Premium custa R$ 14,90/mês (ou R$ 149/ano) por família — cobre todos os responsáveis — e libera recursos avançados como cuidadores além do casal, relatório do histórico em PDF e planejamento de até 24 meses. Pagamento por Pix ou cartão; cancele quando quiser sem perder dados."
           }
         },
         {
@@ -271,6 +271,15 @@
         .price-card ul { list-style: none; text-align: left; margin: 0 auto 26px; max-width: 340px; font-size: 15px; }
         .price-card li { padding: 6px 0 6px 28px; position: relative; }
         .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
+        /* L-08: free vs premium comparison */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; align-items: stretch; }
+        .price-grid .price-card { max-width: none; margin: 0; display: flex; flex-direction: column; }
+        .price-grid .price-card ul { flex: 1; }
+        .price-card.free { border-color: var(--line); box-shadow: none; }
+        .price-card.free .price-badge { background: var(--bg); color: var(--muted); }
+        .price-card .price-cycle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+        .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
+        @media (max-width: 760px) { .price-grid { grid-template-columns: 1fr; } }
 
         /* ── FAQ ────────────────────────────────────────────── */
         .faq-list { max-width: 720px; }
@@ -639,21 +648,37 @@
 <section id="precos">
     <div class="wrap">
         <h2 style="text-align:center">Preços</h2>
-        <p class="section-lead" style="text-align:center; margin-left:auto; margin-right:auto;">Simples assim: durante o lançamento, tudo é gratuito.</p>
-        <div class="price-card">
-            <div class="price-badge">Lançamento</div>
-            <div class="price">R$ 0<small>/mês</small></div>
-            <p>Acesso completo a todas as funcionalidades enquanto durar o período de lançamento.</p>
-            <ul>
-                <li>Calendário de convivência completo</li>
-                <li>Trocas de dia com aprovação dos dois</li>
-                <li>Histórico imutável de todas as decisões</li>
-                <li>Notificações em tempo real e por e-mail</li>
-                <li>Cuidadores adicionais na família</li>
-            </ul>
-            <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
-            <p style="font-size:13px; margin:16px 0 0;">No futuro, haverá um plano premium por família — reunindo recursos como incluir avós, babá e outros cuidadores além do casal e o relatório do histórico em PDF (um resumo consolidado e formatado dos dias e das trocas do período). O essencial — o calendário do casal, as trocas com aprovação dos dois e o histórico — continua grátis. Quem entrar agora será avisado com antecedência e terá condições especiais.</p>
+        <p class="section-lead" style="text-align:center; margin-left:auto; margin-right:auto;">O essencial é <strong>gratuito para sempre</strong>. O Premium libera os recursos avançados — <strong>uma assinatura por família</strong>, não por pessoa.</p>
+        <div class="price-grid">
+            <div class="price-card free">
+                <div class="price-badge">Gratuito</div>
+                <div class="price">R$ 0<small>/para sempre</small></div>
+                <p>Tudo o que o casal precisa para organizar a convivência — sem prazo, sem pegadinha.</p>
+                <ul>
+                    <li>Calendário de convivência para os dois responsáveis</li>
+                    <li>Trocas de dia com aprovação dos dois</li>
+                    <li>Histórico imutável de todas as decisões</li>
+                    <li>Notificações em tempo real e por e-mail</li>
+                    <li>Planejamento de até 6 meses à frente</li>
+                </ul>
+                <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com/signup">Criar conta grátis</a>
+            </div>
+            <div class="price-card">
+                <div class="price-badge">Premium</div>
+                <div class="price">R$ 14,90<small>/mês</small></div>
+                <p class="price-cycle">ou R$ 149/ano — 2 meses grátis</p>
+                <p>Para famílias que precisam de mais gente e mais alcance — cobre <strong>todos</strong> os responsáveis.</p>
+                <ul>
+                    <li>Avós, babá e outros cuidadores além do casal</li>
+                    <li>Relatório do histórico em PDF (resumo consolidado do período)</li>
+                    <li>Planejamento além de 6 meses (até 24)</li>
+                    <li>Modo administrador para corrigir dias passados</li>
+                    <li>Tudo do plano Gratuito, claro</li>
+                </ul>
+                <a class="btn btn-primary" data-umami-event="cta-premium" href="https://app.guardacompartilhada.com">Assinar no app</a>
+            </div>
         </div>
+        <p class="price-note">Pagamento por <strong>Pix ou cartão</strong>, em ambiente seguro do provedor (Asaas). Cancele quando quiser: o período pago continua valendo até o fim e <strong>nenhum dado é apagado</strong> — os recursos Premium apenas voltam a ficar bloqueados. A assinatura é feita dentro do app, na página da família, por um administrador.</p>
     </div>
 </section>
 
@@ -684,7 +709,7 @@
             </details>
             <details>
                 <summary>Quanto custa o app de guarda compartilhada?</summary>
-                <div class="a">Durante o lançamento, nada — todas as funcionalidades são gratuitas. No futuro haverá um plano premium por família (um valor único que cobre todos os responsáveis) — reunindo recursos como incluir avós, babá e outros cuidadores além do casal e o relatório do histórico em PDF (um resumo consolidado e formatado dos dias e das trocas do período); o essencial (calendário do casal, trocas aprovadas e histórico) segue gratuito. Quem já usa o app será avisado com antecedência.</div>
+                <div class="a">O essencial é gratuito para sempre: o calendário do casal, as trocas com aprovação dos dois, as notificações e o histórico. O plano Premium custa R$ 14,90/mês (ou R$ 149/ano, com 2 meses grátis) por família — um valor único que cobre todos os responsáveis — e libera recursos avançados como incluir avós, babá e outros cuidadores além do casal, o relatório do histórico em PDF e o planejamento de até 24 meses. Pagamento por Pix ou cartão; cancele quando quiser sem perder nenhum dado.</div>
             </details>
             <details>
                 <summary>Funciona no iPhone e no Android?</summary>
