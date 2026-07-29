@@ -29,21 +29,22 @@ All landing items and their status at a glance; full records are in the item det
 | L-10 | Reposition around the immutable audit log ("à prova de disputa") | on-site | `high` | `high` | `completed` |
 | L-06 | Soft social proof — founder note + photo + values badges | on-site | `medium` | `medium` | `completed` |
 | L-09 | Content lead-magnet + e-mail capture (Worker + Resend) | on-site | `medium` | `medium` | `completed` |
+| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `completed` |
 | L-04 | Optimize blog images (WebP/AVIF + srcset) | on-site | `medium` | `medium` | `pending` |
 | L-05 | Expand SEO content cluster + interactive tool | on-site | `medium` | `high` | `pending` |
 | L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | on-site | `low` | `low` | `pending` |
-| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `completed` |
 | L-11 | Community channels (co-parenting groups & forums) | off-site | `medium` | `medium` | `pending` — ongoing |
 | L-12 | Lawyer / mediator referral partnerships (B2B2C) | off-site | `medium` | `high` | `pending` — ongoing |
 
 ## Roadmap — what's next
 
-Six on-site items have shipped (L-01/L-02/L-03/L-06/L-09/L-10 — analytics, the OG banner, real screenshots, the "à prova de disputa" repositioning, the founder note, and the lead-magnet/newsletter). Remaining on-site work, in recommended order:
+**Seven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10 — analytics, the OG banner, real screenshots, the "à prova de disputa" repositioning, the founder note, the real free-vs-premium pricing section, and the lead-magnet/newsletter). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. Remaining on-site work, in recommended order:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
 3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
-4. **L-08 — Pricing section** for the premium launch — **gated by the app's F-32/T-39**: it can only be written once the plan + price are decided, and ships lockstep with app billing (**T-39**) and its pricing copy.
+
+With the pricing gate cleared, **every remaining on-site item is independent of the app** — L-05/L-04/L-07 can ship in any order, whenever there is appetite, without waiting on a cross-repo delivery.
 
 **Off-site (ongoing, no strict order):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -291,8 +292,9 @@ decision: keep the "tudo grátis no lançamento" promise intact, no prices). The
 the **FAQ** (visible + JSON-LD) now give the coming premium a concrete shape — *incluir avós, babá e
 outros cuidadores além do casal, e o relatório do histórico em PDF* (repositioned from the earlier
 "para advogados/Justiça" wording — see the L-10 update note, app v1.6.23) — while affirming the
-essential couple-calendar stays free. The full free-vs-premium comparison table + price + checkout
-CTA remain **L-08**, still gated by T-39 (billing).
+essential couple-calendar stays free. *(Historical note — the full free-vs-premium comparison table
++ price + CTA it was waiting on landed later in the same month, in the "Shipped" paragraph above;
+the "tudo grátis no lançamento" copy it preserved has since been swept.)*
 
 ---
 
