@@ -160,8 +160,10 @@ product** as the app's `Pages/Privacy.razor` (`/privacy`) + `Pages/Terms.razor` 
 **in the same delivery** (mirror the *substance*, not line-for-line — the two differ in section
 numbering). Bump the "Última atualização" date + the landing "Versão N.N" label on both for a
 material change; the app additionally bumps `Helpers/PolicyVersions.cs` (demonstrable consent).
-**These landing pages are the more up-to-date source of truth.** External legal review is tracked
-as app item **S-15**.
+**Since S-15 (July 2026) the two sides are ALIGNED** — the old "landing is the more up-to-date
+source of truth" no longer holds; treat them as equals and change both together. The external
+legal review (app item **S-15**) is **done**: three rounds of legal opinion, 19 findings, all
+implemented across app v1.6.34–1.6.39 and mirrored here.
 
 ## First-time Cloudflare setup
 
@@ -185,7 +187,10 @@ as app item **S-15**.
 
 ## Pending before public launch
 
-- [ ] **Legal review** of `termos.html` + `privacidade.html` (app item **S-15**, external counsel).
+- [x] ~~**Legal review** of `termos.html` + `privacidade.html`~~ — done (app item **S-15**, July 2026):
+      all 19 findings implemented. Here that meant A-2/A-3/B-1/B-2/B-3/C-1/C-3/C-5 in the two legal
+      pages, **C-7** (the "à prova de disputa" promise removed from `index.html`) and **C-6** (the
+      opt-in evidence log in KV, plus the §3 correction it forced).
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; no image optimiser available
       in-environment, deferred).
 - [ ] **Remaining on-site roadmap:** L-05 (SEO content + interactive tool), L-04 (blog image

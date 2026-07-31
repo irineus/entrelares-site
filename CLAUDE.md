@@ -92,8 +92,16 @@ product** as the app's `Pages/Privacy.razor` (`/privacy`) + `Pages/Terms.razor` 
 here must be mirrored in the app repo **in the same delivery**, and vice-versa. The two documents
 differ in structure/section numbering — mirror the **substance**, not line-for-line. Bump the
 "Última atualização" date (and the landing "Versão N.N" label) on both sides for material changes;
-the app additionally bumps `Helpers/PolicyVersions.cs` (S-13 demonstrable consent). **These landing
-pages are currently the more up-to-date source of truth.** Legal review is tracked as app item S-15.
+the app additionally bumps `Helpers/PolicyVersions.cs` (S-13 demonstrable consent). **Since S-15
+(July 2026) the two sides are ALIGNED** — the old "landing is the more up-to-date source of truth"
+no longer holds; treat them as equals and change both together. The external legal review (app
+item S-15) is **done**: 19 findings, all implemented.
+
+**The S-15 lesson: check every sentence against the CODE before publishing it.** Applying that to
+counsel's own approved wording caught two claims this repo would otherwise have shipped as false —
+the app's B-3 e-mail warning (which had no implementation) and this repo's §3 "apenas o e-mail",
+written while the C-6 opt-in log also stores date, time and IP. Legal text is a claim ABOUT the
+system; an unverified claim is a liability no matter who drafted it.
 
 ## Analytics
 - **Umami cookieless** (L-01): the `cloud.umami.is/script.js` tag on every page records pageviews;
