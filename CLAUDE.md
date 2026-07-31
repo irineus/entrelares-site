@@ -29,6 +29,13 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
 ## Language conventions
 - **UI / legal copy: PT-BR.** File names/titles and commit bodies' technical terms: English is fine.
 - **Commit messages: PT-BR**, conventional-commit style (`feat(...)`, `fix(...)`, `docs(...)`).
+- **Every commit that DELIVERS a roadmap item ends with the trailer `Backlog: <ID>`**
+  (several comma-separated). That trailer is the ONLY mark meaning "this commit delivers this
+  item" — `git log --format='%(trailers:key=Backlog,valueonly)'` reads it with no regex and no
+  false positives; mentioning an ID in prose stays free and never counts as a delivery. **The
+  trailer lives at the END of the PR template body**, so the squash-merge commit inherits it
+  automatically. Same convention as the app repo (`SharedParentalCustody/CLAUDE.md`), because
+  the Notion board is shared and reads both histories the same way.
 
 ## Working agreement — branches, review, deploy (settled July 2026, mirrors the app)
 - **Per item:** analysis + gap questions BEFORE any code; once decisions are locked, implement,
@@ -45,9 +52,23 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
 - **Never commit directly to `preview` or `main`.**
 
 ## Roadmap
-- `ROADMAP.md` — the growth/conversion roadmap (L-01…L-12), companion to the app's Phase 6
-  (Growth, Analytics & Monetization) in `SharedParentalCustody/backlog/README.md`. Cross-repo
-  prerequisites are noted per item.
+- **Status board = Notion (since July 2026), not markdown.** Database *"Backlog"* under
+  [Guarda Compartilhada — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
+  reachable through the **Notion MCP connector**. It is **shared with the app repo** — the `L-*`
+  rows carry `Repo = landing`, the app's `F-`/`U-`/`T-`/`S-` rows `Repo = app` — and owns
+  **status, execution order (`Ordem`) and effort spent** (`Esforço gasto (h)`, `Início`,
+  `Conclusão`). The `ID` property is the join key with this repo. **If the connector is not
+  enabled in a session, say so instead of guessing the status** — `ROADMAP.md` no longer carries
+  a status summary. Property keys via MCP are the schema names except `ID`, which is
+  `userDefined:ID`, and dates, which split into `date:<prop>:start` / `:is_datetime`.
+- `ROADMAP.md` — the growth/conversion roadmap's **rationale** + the full per-item records
+  (L-01…L-12); companion to the app's Phase 6 (Growth, Analytics & Monetization) in
+  `SharedParentalCustody/backlog/README.md`. Cross-repo prerequisites are noted per item.
+  **Closing an item = its record here + the Notion row, in the same delivery.**
+- **The Notion page BODY is a mirror, not a second source.** Each row's page carries the full
+  record from `ROADMAP.md` plus an **Entregas** section with the item's PRs and commits, all
+  generated FROM this repo — the markdown stays the source of truth. Regenerate after closing
+  an item rather than hand-editing the Notion body.
 
 ## Worker endpoint — materials / newsletter (L-09)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
