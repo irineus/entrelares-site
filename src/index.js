@@ -16,6 +16,12 @@
 //   RESEND_API_KEY     — Resend full-access key. When ABSENT the endpoint runs in
 //                        dry-run mode (returns ok without side effects) — this is
 //                        how the preview environment behaves unless the key is set.
+// KV binding:
+//   OPTIN_LOG          — S-15/C-6: the opt-in evidence log (date, time, IP). The
+//                        legal review accepted plain opt-in for the newsletter
+//                        ONLY on condition that this log is kept, so it is written
+//                        even in dry-run: the consent happened when the form was
+//                        submitted, regardless of whether the e-mail went out.
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,6 +61,42 @@ export function isValidEmail(email) {
   return !!email && email.length <= 254 && EMAIL_RE.test(email);
 }
 
+/**
+ * S-15/C-6 — record the opt-in as evidence (date, time, IP), as the legal review
+ * required in exchange for accepting simple opt-in as the consent mechanism.
+ *
+ * One key per submission (`optin:<email>:<iso>`), never one per e-mail: a person
+ * who subscribes, unsubscribes and subscribes again performed TWO acts of consent,
+ * and overwriting would destroy the evidence for the first. No expiration — proof
+ * of consent has to outlive the contact it justifies.
+ *
+ * Best-effort by design. If KV is unavailable we log and continue: refusing the
+ * material because the audit write failed would punish the user for our outage.
+ * It runs BEFORE the Resend calls, so a send failure still leaves the record.
+ */
+export async function logOptIn(env, email, request) {
+  if (!env.OPTIN_LOG) {
+    console.warn("subscribe: OPTIN_LOG binding missing — opt-in not recorded for", email);
+    return false;
+  }
+  const ts = new Date().toISOString();
+  try {
+    await env.OPTIN_LOG.put(`optin:${email}:${ts}`, JSON.stringify({
+      email,
+      ts,
+      // CF-Connecting-IP is set by the edge and cannot be spoofed by the client.
+      ip: request.headers.get("CF-Connecting-IP") ?? null,
+      userAgent: request.headers.get("User-Agent") ?? null,
+      origin: new URL(request.url).origin,
+      source: "materiais",
+    }));
+    return true;
+  } catch (err) {
+    console.error("subscribe: opt-in log write failed", err);
+    return false;
+  }
+}
+
 export async function handleSubscribe(request, env, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204 });
   if (request.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405);
@@ -78,6 +120,11 @@ export async function handleSubscribe(request, env, ctx) {
   if (!isValidEmail(email)) {
     return json({ ok: false, error: "invalid_email" }, 422);
   }
+
+  // S-15/C-6: the consent happened HERE, at a valid submission. Recorded before
+  // any provider call so the evidence survives a Resend failure — and recorded in
+  // dry-run too, where the act is just as real even though no e-mail is sent.
+  await logOptIn(env, email, request);
 
   // Dry-run when no key is configured (e.g. the preview worker without the secret).
   if (!env.RESEND_API_KEY) {

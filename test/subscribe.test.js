@@ -10,6 +10,7 @@ import {
   isHoneypot,
   normalizeEmail,
   isValidEmail,
+  logOptIn,
 } from "../src/index.js";
 
 // ── fetch stub ──────────────────────────────────────────────────────────────
@@ -17,6 +18,19 @@ import {
 const realFetch = globalThis.fetch;
 let calls; // recorded outbound requests: { url, method, headers, body }
 let responders; // { contacts: () => Response, emails: () => Response }
+let optInLog; // S-15/C-6 KV stub, replaced per test
+
+/** Minimal KV double: only .put() is used by the Worker. */
+function kvStub({ failing = false } = {}) {
+  const store = new Map();
+  return {
+    store,
+    async put(key, value) {
+      if (failing) throw new Error("kv unavailable");
+      store.set(key, value);
+    },
+  };
+}
 
 beforeEach(() => {
   calls = [];
@@ -24,6 +38,8 @@ beforeEach(() => {
     contacts: () => new Response(JSON.stringify({ id: "c1" }), { status: 200 }),
     emails: () => new Response(JSON.stringify({ id: "e1" }), { status: 200 }),
   };
+  optInLog = kvStub();
+  LIVE_ENV.OPTIN_LOG = optInLog;
   globalThis.fetch = async (url, opts = {}) => {
     const u = String(url);
     calls.push({
@@ -256,4 +272,84 @@ test("email send network throw also reports partial success", async () => {
   const res = await handleSubscribe(req({ email: "x@y.com" }), LIVE_ENV);
   assert.equal(res.status, 200);
   assert.deepEqual(await body(res), { ok: true, emailQueued: false });
+});
+
+// ── S-15/C-6 — opt-in evidence log ──────────────────────────────────────────
+// The legal review accepted plain opt-in for the newsletter ONLY on condition
+// that a log of date, time and IP is kept. These tests are that condition.
+
+test("opt-in log: records email, timestamp and IP on a valid subscribe", async () => {
+  const request = new Request("https://guardacompartilhada.com/api/subscribe", {
+    method: "POST",
+    body: JSON.stringify({ email: "Ana@Exemplo.com " }),
+    headers: { "content-type": "application/json", "CF-Connecting-IP": "203.0.113.7" },
+  });
+
+  await handleSubscribe(request, LIVE_ENV);
+
+  assert.equal(optInLog.store.size, 1);
+  const [key, raw] = [...optInLog.store.entries()][0];
+  const entry = JSON.parse(raw);
+
+  // Normalized, same as what goes to Resend — the evidence must match the contact.
+  assert.equal(entry.email, "ana@exemplo.com");
+  assert.equal(entry.ip, "203.0.113.7");
+  assert.ok(key.startsWith("optin:ana@exemplo.com:"));
+  assert.ok(!Number.isNaN(Date.parse(entry.ts)));
+});
+
+test("opt-in log: written even in dry-run (no RESEND_API_KEY)", async () => {
+  // The preview worker has no key. The consent still happened, so the evidence
+  // must exist regardless of whether any e-mail went out.
+  const kv = kvStub();
+  const res = await handleSubscribe(req({ email: "x@y.com" }), { OPTIN_LOG: kv });
+
+  assert.equal(res.status, 200);
+  assert.deepEqual(await body(res), { ok: true, dryRun: true });
+  assert.equal(kv.store.size, 1);
+});
+
+test("opt-in log: nothing recorded for a honeypot submission", async () => {
+  await handleSubscribe(req({ email: "bot@spam.com", empresa: "Acme" }), LIVE_ENV);
+  assert.equal(optInLog.store.size, 0);
+});
+
+test("opt-in log: nothing recorded for an invalid e-mail", async () => {
+  await handleSubscribe(req({ email: "not-an-email" }), LIVE_ENV);
+  assert.equal(optInLog.store.size, 0);
+});
+
+test("opt-in log: one key per submission, so a re-subscribe is not overwritten", async () => {
+  // Two acts of consent must leave two records — overwriting would destroy the
+  // evidence for the first one.
+  await handleSubscribe(req({ email: "dup@y.com" }), LIVE_ENV);
+  await new Promise((r) => setTimeout(r, 2)); // distinct ISO timestamps
+  await handleSubscribe(req({ email: "dup@y.com" }), LIVE_ENV);
+
+  assert.equal(optInLog.store.size, 2);
+});
+
+test("opt-in log: a KV outage does not fail the subscription", async () => {
+  // Best-effort by design: refusing the material because the audit write failed
+  // would punish the user for our outage.
+  const env = { ...LIVE_ENV, OPTIN_LOG: kvStub({ failing: true }) };
+  const res = await handleSubscribe(req({ email: "x@y.com" }), env);
+
+  assert.equal(res.status, 200);
+  assert.equal((await body(res)).ok, true);
+});
+
+test("opt-in log: a missing binding does not fail the subscription", async () => {
+  const { OPTIN_LOG, ...envWithoutKv } = LIVE_ENV;
+  const res = await handleSubscribe(req({ email: "x@y.com" }), envWithoutKv);
+
+  assert.equal(res.status, 200);
+  assert.equal((await body(res)).ok, true);
+});
+
+test("logOptIn: reports false when the binding is absent, true on success", async () => {
+  const request = req({ email: "x@y.com" });
+  assert.equal(await logOptIn({}, "x@y.com", request), false);
+  assert.equal(await logOptIn({ OPTIN_LOG: kvStub() }, "x@y.com", request), true);
+  assert.equal(await logOptIn({ OPTIN_LOG: kvStub({ failing: true }) }, "x@y.com", request), false);
 });

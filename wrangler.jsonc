@@ -31,6 +31,13 @@
   "observability": {
     "enabled": true
   },
+  // S-15/C-6: opt-in evidence log (date, time, IP) for the newsletter consent.
+  // The legal review accepted plain opt-in ONLY on condition that this log exists.
+  // One namespace PER ENVIRONMENT so preview submissions never mix into the
+  // production evidence — the preview worker dry-runs sends but still records.
+  "kv_namespaces": [
+    { "binding": "OPTIN_LOG", "id": "cf5ae659d87f4c9d9bd1e07b08b140de" }
+  ],
   // Non-secret config for /api/subscribe. The RESEND_API_KEY is a SECRET and is
   // NOT declared here — set it with `wrangler secret put RESEND_API_KEY` or in
   // the Cloudflare dashboard (Workers → Settings → Variables). Without it the
@@ -55,6 +62,9 @@
       "observability": {
         "enabled": true
       },
+      "kv_namespaces": [
+        { "binding": "OPTIN_LOG", "id": "752b58df98dc4a889e89615838ac1fe6" }
+      ],
       // Preview has NO RESEND_API_KEY secret by default → /api/subscribe dry-runs
       // (no real e-mail, no contact written). Add the secret to this worker too if
       // you want to test the full flow live on preview.

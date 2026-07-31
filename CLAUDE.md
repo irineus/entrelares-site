@@ -66,6 +66,16 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
 - Deploys need Wrangler **4.x** (already pinned in both workflows) — 3.x can't deploy a Worker
   with a `main` entrypoint. The CI `CLOUDFLARE_API_TOKEN` needs only Workers Scripts:Edit (vars
   ship with the script; the secret is set out-of-band), same scope as before.
+- **KV binding `OPTIN_LOG` (S-15/C-6)** — the opt-in evidence log. The legal review accepted
+  plain opt-in as the consent mechanism for the newsletter **only on condition that a log of
+  date, time and IP is kept**, so `logOptIn()` writes one key per submission
+  (`optin:<email>:<iso>`, never one per e-mail — a re-subscribe is a second act of consent and
+  must not overwrite the first) with **no expiration**: proof of consent has to outlive the
+  contact it justifies. Written **before** the Resend calls and **also in dry-run**, because the
+  consent happened at submission regardless of whether an e-mail went out. Best-effort: a KV
+  outage logs and continues rather than refusing the material. One namespace **per environment**
+  (prod `guardacompartilhada-optin-log`, preview `…-preview`), declared in `wrangler.jsonc`, so
+  preview submissions never mix into the production evidence. Disclosed in `privacidade.html` §3.
 - Umami events: `materiais-baixar` (button click) and `materiais-inscricao` (success).
 - Neutral naming: no user-visible artifact says "lead-magnet" (files are `materiais.css`/`materiais.js`,
   the section class is `.materiais-box`, the PDF title is set). Internal `.lm-*` style hooks stay.
