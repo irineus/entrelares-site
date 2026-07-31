@@ -68,7 +68,26 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
 - **The Notion page BODY is a mirror, not a second source.** Each row's page carries the full
   record from `ROADMAP.md` plus an **Entregas** section with the item's PRs and commits, all
   generated FROM this repo — the markdown stays the source of truth. Regenerate after closing
-  an item rather than hand-editing the Notion body.
+  an item rather than hand-editing the Notion body. The generator lives in the **app** repo and
+  reads both (the board is shared):
+  ```
+  python3 ../SharedParentalCustody/tools/notion-mirror.py \
+      --app ../SharedParentalCustody --landing . -o mirror.json
+  ```
+- **Before writing code for an `L-` item, read its Notion row** — `Status`, `Ordem` and the page
+  body are the current truth about whether it is still wanted and what was already spent on it.
+  ```
+  query_data_sources → mode "sql", data_source_urls
+    ["collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"]
+  SELECT "userDefined:ID", "Item", "Status", "Ordem", "Esforço gasto (h)", url
+  FROM "collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"
+  WHERE "Repo" = 'landing' AND "Status" = 'pending' ORDER BY "Ordem"
+  ```
+  The column is `"userDefined:ID"`, never `ID`, and a column alias does not work in `WHERE` —
+  repeat the full name or the query silently returns nothing.
+- **On close, in the SAME delivery:** the record in `ROADMAP.md` + the Notion row (`Status`,
+  `Conclusão`, `Esforço gasto (h)`, clear `Ordem`) + regenerate the page body. A row left behind
+  is worse than no row: every future session reads it as current.
 
 ## Worker endpoint — materials / newsletter (L-09)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
