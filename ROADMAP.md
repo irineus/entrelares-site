@@ -1,8 +1,7 @@
 # Landing Page — Backlog & Growth Roadmap
 
-The **backlog + forward plan** for `guardacompartilhada.com` (the marketing site): a
-summary table of every landing item (`L-*`), the plan for what's next, and the full
-per-item records. Companion to the app-side plan in
+The **forward plan + full per-item records** for `guardacompartilhada.com` (the marketing
+site). Companion to the app-side plan in
 [`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md).
 The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
 several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
@@ -17,24 +16,20 @@ distribution** — not the SEO base.
 > **Status values:** `pending` · `in-progress` · `completed`
 > IDs (`L-` + number) are stable and never reused.
 
-## Summary table
+## Where the status lives (changed July 2026)
 
-All landing items and their status at a glance; full records are in the item detail below. IDs (`L-` + number) are stable and never reused. **On-site** items are code/content in this repo; **off-site** items are marketing/distribution activities, tracked here so they are not lost.
+The **live status board moved to Notion** — database *"Backlog"* under
+[Guarda Compartilhada — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
+maintained through the Notion MCP connector. It is **shared with the app repo**: the `L-*` rows
+sit next to the app's `F-`/`U-`/`T-`/`S-` rows (filter by `Repo = landing`), which is what makes
+the one-funnel view possible in a single place. It owns **status, execution order (`Ordem`) and
+the effort actually spent** (`Esforço gasto (h)`, `Início`, `Conclusão`).
 
-| ID | Title | Kind | Priority | Impact | Status |
-|---|---|---|---|---|---|
-| L-01 | Cookieless web analytics + CTA tracking (Umami) | on-site | `high` | `high` | `completed` |
-| L-02 | Open Graph banner 1200×630 (+ icon-512 note) | on-site | `high` | `high` | `completed` |
-| L-03 | Real product screenshots (hero slideshow + gallery) | on-site | `high` | `high` | `completed` |
-| L-10 | Reposition around the immutable audit log ("histórico inalterável") | on-site | `high` | `high` | `completed` |
-| L-06 | Soft social proof — founder note + photo + values badges | on-site | `medium` | `medium` | `completed` |
-| L-09 | Content lead-magnet + e-mail capture (Worker + Resend) | on-site | `medium` | `medium` | `completed` |
-| L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `completed` |
-| L-04 | Optimize blog images (WebP/AVIF + srcset) | on-site | `medium` | `medium` | `pending` |
-| L-05 | Expand SEO content cluster + interactive tool | on-site | `medium` | `high` | `pending` |
-| L-07 | Sitemap hygiene (drop noindex legal pages; lastmod) | on-site | `low` | `low` | `pending` |
-| L-11 | Community channels (co-parenting groups & forums) | off-site | `medium` | `medium` | `pending` — ongoing |
-| L-12 | Lawyer / mediator referral partnerships (B2B2C) | off-site | `medium` | `high` | `pending` — ongoing |
+**The old summary table in this file is gone** — it duplicated by hand what Notion now tracks.
+What stays here is what belongs next to the code: the **rationale** below and the **full per-item
+records** further down. IDs (`L-` + number) remain stable, never reused, and are the join key with
+the Notion row. **On-site** items are code/content in this repo; **off-site** items are
+marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
