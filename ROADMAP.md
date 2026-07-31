@@ -26,7 +26,7 @@ All landing items and their status at a glance; full records are in the item det
 | L-01 | Cookieless web analytics + CTA tracking (Umami) | on-site | `high` | `high` | `completed` |
 | L-02 | Open Graph banner 1200×630 (+ icon-512 note) | on-site | `high` | `high` | `completed` |
 | L-03 | Real product screenshots (hero slideshow + gallery) | on-site | `high` | `high` | `completed` |
-| L-10 | Reposition around the immutable audit log ("à prova de disputa") | on-site | `high` | `high` | `completed` |
+| L-10 | Reposition around the immutable audit log ("histórico inalterável") | on-site | `high` | `high` | `completed` |
 | L-06 | Soft social proof — founder note + photo + values badges | on-site | `medium` | `medium` | `completed` |
 | L-09 | Content lead-magnet + e-mail capture (Worker + Resend) | on-site | `medium` | `medium` | `completed` |
 | L-08 | Pricing section for the premium launch | on-site | `medium` | `high` | `completed` |
@@ -38,7 +38,7 @@ All landing items and their status at a glance; full records are in the item det
 
 ## Roadmap — what's next
 
-**Seven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10 — analytics, the OG banner, real screenshots, the "à prova de disputa" repositioning, the founder note, the real free-vs-premium pricing section, and the lead-magnet/newsletter). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. Remaining on-site work, in recommended order:
+**Seven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10 — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, and the lead-magnet/newsletter). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. Remaining on-site work, in recommended order:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
@@ -119,32 +119,36 @@ store-ready; to complete the set, recapture **notifications** + **per-parent sum
 
 ---
 
-### L-10 — Reposition around the immutable audit log ("histórico à prova de disputa")
+### L-10 — Reposition around the immutable audit log ("histórico inalterável")
 
 **Order 4** · `high` · `low` · `high` · **Status: `completed`** · **Cross-repo:** ↔ app **F-33** (the PDF report is this claim, made tangible)
 
 The app's **immutable, append-only audit log** is a genuine legal-grade differentiator that
 **no Brazilian competitor communicates**. Sharpen the hero/benefits copy around it —
-*"histórico à prova de disputa"* — so the positioning matches the paid wedge (F-33, the
+— so the positioning matches the paid wedge (F-33, the
 "Relatório do histórico em PDF"). Cheap copy/messaging change, high differentiation. Keep it
 honest (describe the immutable history factually).
 
 **Files:** `public/index.html` — hero subcopy + the "Benefícios" card on immutable history;
 optionally a short "por que importa" block. Coordinate the wording with app F-33.
 
-**Done:** `public/index.html` — hero subcopy now foregrounds the *"registro à prova de disputa"*
-(histórico que não pode ser editado nem apagado); the immutable-history benefit card retitled
-*"Histórico à prova de disputa"* with sharpened, honest body copy. Wording coordinated with app
-**F-33** (v1.6.12), whose PDF report was originally the *"relatório à prova de disputa"*. Kept
-factual — no legal-proof overclaim (the FAQ already frames court value honestly). The optional
-"por que importa" block was not needed. Delivered alongside app F-33.
+**Done:** `public/index.html` — hero subcopy, the immutable-history benefit card and the
+commitments badge all foreground the log's factual property: **the history cannot be edited or
+deleted**. Wording coordinated with app **F-33** (v1.6.12). The optional "por que importa" block
+was not needed. Delivered alongside app F-33.
 
-> **Update (July 2026, app v1.6.23):** the **F-33 PDF report** was repositioned away from the
+> **Update 1 (July 2026, app v1.6.23):** the **F-33 PDF report** was repositioned away from the
 > lawyer/court framing — it is now the neutral **"Relatório do histórico em PDF"** (a consolidated,
 > formatted export of the history), on both the app and this landing (Preços + FAQ + JSON-LD).
-> This L-10 **"histórico à prova de disputa"** tagline for the **immutable log itself** (hero +
-> benefit card + founder badge) was **intentionally kept** — the repositioning applies only to how
-> the *report* is described, not to the immutable-history claim.
+> At the time, the L-10 tagline for the **immutable log itself** was intentionally kept.
+
+> **Update 2 (31/07/2026, app S-15/C-7) — the tagline is GONE.** The legal review objected to
+> *"histórico à prova de disputa"*: it promises an OUTCOME (that the record settles disputes),
+> which is not something we can guarantee — the Terms themselves say the probative value is the
+> court's to weigh. The product owner chose a factual reformulation, and all three occurrences in
+> `public/index.html` (hero, benefit-card title, commitments badge) now say **"histórico
+> inalterável" / "não pode ser editado nem apagado"** — the same vocabulary the legal texts use.
+> **The differentiation survives; only the promise is gone.** Do not reintroduce the old phrasing.
 
 ---
 
@@ -164,7 +168,8 @@ opening it to other families). Signed *"Irineu — Fundador e pai"* with the fou
 (`public/img/founder.jpg` + `.webp`; name is already public as the controller in the privacy
 policy). Below
 it, a **values strip** of already-true trust signals (🇧🇷 feito no Brasil · 🔒 LGPD · 🚫 sem
-anúncios/venda de dados · 📜 histórico à prova de disputa · 💙 essencial grátis). **No fabricated
+anúncios/venda de dados · 📜 histórico inalterável · 💙 essencial grátis — the badge was reworded
+from "à prova de disputa" by S-15/C-7, see L-10). **No fabricated
 numbers or reviews** — a beta count / real testimonials can be added later once there is honest
 data. Styles are inline in `index.html` (index-specific); mobile-safe.
 
@@ -204,7 +209,20 @@ already-verified `guardacompartilhada.com` sending domain, sa-east-1):
   artifact carries a "lead-magnet" name (files, section class `.materiais-box`, PDF title).
 - **Legal** — new consent-based processing (art. 7º, I) disclosed in `privacidade.html` §3/§4/§7
   (Versão 1.4) and mirrored in the app's Privacy (v1.6.21) **without** forcing re-consent
-  (transparency-only; `PolicyVersions.cs` unchanged). Legal review stays **S-15**.
+  (transparency-only; `PolicyVersions.cs` unchanged).
+
+> **Update (31/07/2026, app S-15/C-6) — the opt-in now carries an evidence log.** The legal
+> review sustained **simple opt-in** as the consent mechanism for this list, but **on the
+> condition** that a log of date, time and IP is kept. `logOptIn()` in `src/index.js` writes one
+> KV key per submission (`optin:<email>:<iso>` — never one per e-mail: a re-subscribe is a second
+> act of consent and must not overwrite the first), with **no expiration**, since proof of consent
+> has to outlive the contact it justifies. Written BEFORE the Resend calls and **also in dry-run**
+> (the consent happened at submission, whether or not an e-mail went out), and best-effort: a KV
+> outage logs and continues rather than refusing the material. One namespace per environment
+> (`guardacompartilhada-optin-log` / `…-preview`), so preview submissions never mix into the
+> production evidence. This also forced a correction to `privacidade.html` §3, which claimed we
+> processed **"apenas o e-mail"** — it now discloses the IP and timestamp, their purpose and their
+> retention. Covered by 8 new tests in `test/subscribe.test.js`.
 
 - **Tests** — the endpoint's logic is covered by `test/subscribe.test.js` (Node's built-in runner,
   **zero deps**; `npm test`): method/payload guards, honeypot, e-mail validation, the no-key
