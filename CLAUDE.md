@@ -56,7 +56,9 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
   [Guarda Compartilhada — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
   reachable through the **Notion MCP connector**. It is **shared with the app repo** — the `L-*`
   rows carry `Repo = landing`, the app's `F-`/`U-`/`T-`/`S-` rows `Repo = app` — and owns
-  **status, execution order (`Ordem`) and effort spent** (`Esforço gasto (h)`, `Início`,
+  **status, the roadmap slot (`Grupo roadmap` + `Ordem` — pending `L-*` items sit in the SAME
+  groups as the app's, forming the integrated roadmap; the first row of the board's "A fazer"
+  view is always the next item to execute) and effort spent** (`Esforço gasto (h)`, `Início`,
   `Conclusão`). The `ID` property is the join key with this repo. **If the connector is not
   enabled in a session, say so instead of guessing the status** — `ROADMAP.md` no longer carries
   a status summary. Property keys via MCP are the schema names except `ID`, which is
@@ -74,20 +76,22 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
   python3 ../SharedParentalCustody/tools/notion-mirror.py \
       --app ../SharedParentalCustody --landing . -o mirror.json
   ```
-- **Before writing code for an `L-` item, read its Notion row** — `Status`, `Ordem` and the page
-  body are the current truth about whether it is still wanted and what was already spent on it.
+- **Before writing code for an `L-` item, read its Notion row** — `Status`, `Grupo roadmap`/`Ordem`
+  and the page body are the current truth about whether it is still wanted and what was already
+  spent on it.
   ```
   query_data_sources → mode "sql", data_source_urls
     ["collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"]
-  SELECT "userDefined:ID", "Item", "Status", "Ordem", "Esforço gasto (h)", url
+  SELECT "userDefined:ID", "Item", "Status", "Grupo roadmap", "Ordem", "Esforço gasto (h)", url
   FROM "collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"
-  WHERE "Repo" = 'landing' AND "Status" = 'pending' ORDER BY "Ordem"
+  WHERE "Repo" = 'landing' AND "Status" = 'pending' ORDER BY "Grupo roadmap", "Ordem"
   ```
   The column is `"userDefined:ID"`, never `ID`, and a column alias does not work in `WHERE` —
   repeat the full name or the query silently returns nothing.
 - **On close, in the SAME delivery:** the record in `ROADMAP.md` + the Notion row (`Status`,
-  `Conclusão`, `Esforço gasto (h)`, clear `Ordem`) + regenerate the page body. A row left behind
-  is worse than no row: every future session reads it as current.
+  `Conclusão`, `Esforço gasto (h)`, clear `Grupo roadmap`/`Ordem`) + regenerate the page body.
+  A row left behind is worse than no row: every future session reads it as current. Landing rows
+  never set `Fase` — the phases are the app's development history.
 
 ## Worker endpoint — materials / newsletter (L-09)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
