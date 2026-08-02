@@ -7,6 +7,11 @@ name: Deploy Preview to Cloudflare
 on:
   push:
     branches: [preview]
+    # T-46 (app repo): docs-only pushes skip the deploy — same rationale and
+    # list as deploy.yml (root *.md are never served; only public/ is).
+    paths-ignore:
+      - '**.md'
+      - '.claude/**'
   workflow_dispatch:
 
 concurrency:
