@@ -38,6 +38,7 @@ marketing/distribution activities, tracked here so they are not lost.
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
 3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
+4. **L-14 — Trust signals** (CNPJ/company identity in the footer, the 7-day guarantee next to the price, a Play-badge slot) — **cross-repo pair of the app's F-48, same delivery**; board slot: *Distribuição*, right after F-48.
 
 With the pricing gate cleared, **every remaining on-site item is independent of the app** — L-05/L-04/L-07 can ship in any order, whenever there is appetite, without waiting on a cross-repo delivery.
 
@@ -312,6 +313,32 @@ essential couple-calendar stays free. *(Historical note — the full free-vs-pre
 the "tudo grátis no lançamento" copy it preserved has since been swept.)*
 
 ---
+
+### L-14 — Trust signals: company identity, guarantee, store badge
+
+`low` · `high` · on-site · **cross-repo pair of app F-48 — MUST ship in the same delivery**
+
+Created Aug 2026 from the architecture/monetization review. The owner's doubt — *"will anyone
+pay R$14,90/month for something outside the stores?"* — is at bottom a **trust** question, and
+the landing is where that trust is won or lost before the checkout is ever seen. Three cheap,
+high-signal changes:
+
+- **Company identity in the footer (all pages):** CNPJ, razão social and a contact channel.
+  Paying a site with no legal identity is the trust leap Brazilian users rightly refuse; naming
+  the company closes it for the cost of a footer line.
+- **Guarantee next to the price (L-08 section):** the explicit 7-day money-back line (CDC
+  art. 49 already obliges it — turn the obligation into a visible badge) plus the Pix emphasis
+  (pay by QR from your own bank app; no card data handed over).
+- **Store badge slot:** a "Disponível no Google Play" badge placed (behind a comment until the
+  app's **T-38** listing is live) where it reads as legitimacy, not as a download detour — the
+  PWA remains the primary install path.
+
+Wording that touches policy/terms substance syncs the legal pages on both repos (standing
+MUST); plain identity/guarantee copy does not.
+
+**Definition of done:** footer identity on every page; guarantee line live in the pricing
+section; badge slot ready and commented; substance mirrored with the app side of F-48 where it
+overlaps (checkout copy).
 
 ## Off-site items — detail
 
