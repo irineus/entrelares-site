@@ -43,6 +43,8 @@ With the pricing gate cleared, **every remaining on-site item is independent of 
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
+**Off-site (planned, board group *Polimento e melhoria progressiva*, last slot):** **L-13** — outreach discovery, a time-boxed comparison of where promotion effort should actually go, whose output is a ranked shortlist that becomes real items. The owner placed it at the END of that group (Aug 2026): choosing *where to spend* is worth more once the product depth ahead of it has landed.
+
 > **Cross-repo:** the app's forward plan lives in [`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
 
 ---
@@ -335,3 +337,43 @@ app's F-33 report ("Relatório do histórico em PDF") is a natural hook — it m
 partnership is mutually useful. Highest-intent acquisition channel available.
 
 **Not a repo change** — a partnership/distribution activity tracked here so it is not lost.
+
+---
+
+### L-13 — Outreach discovery: where to spend promotion effort
+
+`medium` · `high` · **discovery, time-boxed** · → decides what the next acquisition items are
+
+Created Aug 2026 at the owner's request, in the board's *Polimento e melhoria progressiva* group
+(**last slot**). Everything the roadmap does for acquisition today was chosen one channel at a
+time — SEO (**L-05**), communities (**L-11**), lawyer/mediator partnerships (**L-12**), the Play
+listing (app **T-38**). None was chosen by comparing it against the alternatives, and none has a
+cost-per-signup attached. This item is that comparison: an exploration whose deliverable is a
+**ranked shortlist**, not a channel.
+
+**What to look at** (a starting point, not the answer):
+- **The loop the product already has.** Every family invites a co-parent — the app's invitation
+	flow (F-15/F-28) puts a second adult in front of the product on *every* signup, and nobody has
+	measured what fraction of invitees convert or what they do next. Cheapest thing on this list
+	and the only one that compounds; measure it before buying an audience anywhere.
+- **Product-led surfaces:** the app's F-33 PDF report leaves the product and lands in front of
+	lawyers and mediators — an artifact that already travels. What does it say about its origin?
+- **Search intent not yet covered** beyond L-05's cluster: comparison/alternative queries,
+	regional and legal-vocabulary variants.
+- **Store presence:** ASO for the Play listing (app **T-38**) — title, description, screenshots.
+- **Paid acquisition as a MEASUREMENT, not a channel:** a small budget buys a cost-per-signup
+	number that makes the organic options comparable. Decide after seeing it, not before.
+- **Press / institutional:** family-law associations, mediation councils, parenting media.
+
+**Constraint that shapes the answer:** the product charges (billing live since 29/07/2026) but
+the platform still runs on free tiers, and the owner's rule is that additional platform spend
+waits for revenue — that is what the app roadmap's group **8 · Início da monetização** exists to
+say. So the shortlist ranks options by *cost*, and a zero-cost option that compounds beats a paid
+one that does not.
+
+**Definition of done:** a written comparison (here or in a linked doc) covering, per option, the
+expected reach, the cost, the effort and how it would be measured with L-01/Umami — plus the top
+two turned into real backlog items with IDs. Explicitly **not** satisfied by "we should do more
+marketing".
+
+**Not a repo change by itself** — a discovery activity; the items it produces are the change.
