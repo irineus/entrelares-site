@@ -329,10 +329,13 @@ where that trust is won or lost before the checkout is ever seen.
   `suporte@guardacompartilhada.com`) plus the Pix emphasis rewritten into the price note
   ("QR code pelo aplicativo do seu banco, **sem informar dados de cartão**"). Both also added
   to the pricing FAQ — visible `<details>` **and** the JSON-LD copy, kept in substance-sync.
-- **Promotional launch price (owner decision, Aug 2026): R$ 4,90/mês · R$ 49/ano** — replaces
-  R$ 14,90/149 in the price card, FAQ and JSON-LD, with a "Preço promocional de lançamento"
-  tag. "2 meses grátis" stays exact (49 = 10 × 4,90). The app side changed the actual charge
-  in the same delivery (migration `20260805003000_f48_promo_pricing`); the landing `main`
+- **Promotional launch price (owner decision, Aug 2026): R$ 5,49/mês · R$ 54,90/ano** —
+  replaces R$ 14,90/149 in the price card, FAQ and JSON-LD, with a "Preço promocional de
+  lançamento" tag. "2 meses grátis" stays exact (54,90 = 10 × 5,49). *QA round: the price
+  first chosen, R$ 4,90, sat under the Asaas Pix/boleto minimum of R$ 5,00 and broke every
+  monthly checkout — the app repriced in `1.7.13` and this repo followed in the same
+  delivery; the monthly price must stay ≥ R$ 5,00.* The app side changed the actual charge
+  (migrations `20260805003000` + `20260805020000`); the landing `main`
   promotion **must ride together with the app promotion that carries the new price** — the
   two surfaces must never announce different prices.
 - **Store badge slot:** a commented "Disponível no Google Play" block under the pricing
