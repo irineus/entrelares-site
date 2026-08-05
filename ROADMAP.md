@@ -33,14 +33,14 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Seven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10 — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, and the lead-magnet/newsletter). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/L-11/L-12 in *Distribuição*, L-04/L-07 in *Polimento*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
+**Eight** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10/**L-14** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, the lead-magnet/newsletter, and the trust signals next to the price). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/L-11/L-12 in *Distribuição*, L-04/L-07 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
 3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
-4. **L-14 — Trust signals** (CNPJ/company identity in the footer, the 7-day guarantee next to the price, a Play-badge slot) — **cross-repo pair of the app's F-48, same delivery**; board slot: *Distribuição*, right after F-48.
+4. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **every remaining on-site item is independent of the app** — L-05/L-04/L-07 can ship in any order, whenever there is appetite, without waiting on a cross-repo delivery.
+With the pricing gate cleared, **L-05/L-04/L-07 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt.
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -314,31 +314,55 @@ the "tudo grátis no lançamento" copy it preserved has since been swept.)*
 
 ---
 
-### L-14 — Trust signals: company identity, guarantee, store badge
+### L-14 — Trust signals: guarantee, Pix emphasis, store badge (company identity → L-15)
 
-`low` · `high` · on-site · **cross-repo pair of app F-48 — MUST ship in the same delivery**
+`low` · `high` · on-site · **Status: `completed` (Aug 2026)** · **cross-repo pair of app F-48 — shipped in the same delivery**
 
 Created Aug 2026 from the architecture/monetization review. The owner's doubt — *"will anyone
-pay R$14,90/month for something outside the stores?"* — is at bottom a **trust** question, and
-the landing is where that trust is won or lost before the checkout is ever seen. Three cheap,
-high-signal changes:
+pay for something outside the stores?"* — is at bottom a **trust** question, and the landing is
+where that trust is won or lost before the checkout is ever seen.
 
-- **Company identity in the footer (all pages):** CNPJ, razão social and a contact channel.
-  Paying a site with no legal identity is the trust leap Brazilian users rightly refuse; naming
-  the company closes it for the cost of a footer line.
-- **Guarantee next to the price (L-08 section):** the explicit 7-day money-back line (CDC
-  art. 49 already obliges it — turn the obligation into a visible badge) plus the Pix emphasis
-  (pay by QR from your own bank app; no card data handed over).
-- **Store badge slot:** a "Disponível no Google Play" badge placed (behind a comment until the
-  app's **T-38** listing is live) where it reads as legitimacy, not as a download detour — the
+**What shipped (same delivery as the app's F-48 part 1):**
+
+- **Guarantee next to the price (L-08 section):** the explicit 7-day money-back box (CDC
+  art. 49 — the legal obligation turned into a visible badge, operated manually via
+  `suporte@guardacompartilhada.com`) plus the Pix emphasis rewritten into the price note
+  ("QR code pelo aplicativo do seu banco, **sem informar dados de cartão**"). Both also added
+  to the pricing FAQ — visible `<details>` **and** the JSON-LD copy, kept in substance-sync.
+- **Promotional launch price (owner decision, Aug 2026): R$ 4,90/mês · R$ 49/ano** — replaces
+  R$ 14,90/149 in the price card, FAQ and JSON-LD, with a "Preço promocional de lançamento"
+  tag. "2 meses grátis" stays exact (49 = 10 × 4,90). The app side changed the actual charge
+  in the same delivery (migration `20260805003000_f48_promo_pricing`); the landing `main`
+  promotion **must ride together with the app promotion that carries the new price** — the
+  two surfaces must never announce different prices.
+- **Store badge slot:** a commented "Disponível no Google Play" block under the pricing
+  section — uncomment (and add the badge asset) when the app's **T-38** listing is live. The
   PWA remains the primary install path.
 
-Wording that touches policy/terms substance syncs the legal pages on both repos (standing
-MUST); plain identity/guarantee copy does not.
+**Design decision — company identity carved OUT to L-15:** the owner has no CNPJ yet and
+will not expose his personal identity (CPF/name) instead — so the CNPJ/razão social footer
+line waits for the company to exist, as **L-15** (pair of app **F-49**), in roadmap group 8
+(*Início da monetização*), where the CNPJ decision already lives. The contact channel half
+already existed (`suporte@`/`contato@` in the footer).
 
-**Definition of done:** footer identity on every page; guarantee line live in the pricing
-section; badge slot ready and commented; substance mirrored with the app side of F-48 where it
-overlaps (checkout copy).
+Guarantee copy is a visible **mirror of what the Terms already promise** (§ arrependimento,
+same 7 days / full refund / same channel) — no material policy change, so no legal-page bump
+on either repo.
+
+---
+
+### L-15 — Company identity (CNPJ) on the site
+
+`low` · `medium` · on-site · **cross-repo pair of app F-49 — MUST ship in the same delivery** · **gated: waits for the CNPJ to exist (roadmap group 8, Início da monetização)**
+
+The half of L-14 that could not ship in Aug 2026: **CNPJ + razão social in the footer of
+every page** (landing, legal pages, blog). Paying a site with no legal identity is the trust
+leap Brazilian users rightly refuse; naming the company closes it for the cost of a footer
+line. Blocked on the owner opening the company — a deliberate group-8 decision alongside
+T-36/S-17, not development debt. When it ships, mirror the same identity block on the app's
+payment surfaces (F-49) and check whether the Terms' "Prestador do serviço" wording needs the
+CNPJ added (that half IS legal-page substance — sync both repos, but identity disclosure is
+non-material: no `PolicyVersions` bump).
 
 ## Off-site items — detail
 
