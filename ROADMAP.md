@@ -33,12 +33,16 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Eight** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10/**L-14** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, the lead-magnet/newsletter, and the trust signals next to the price). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/L-11/L-12 in *Distribuição*, L-04/L-07 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
+**Eight** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10/**L-14** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, the lead-magnet/newsletter, and the trust signals next to the price). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-16**/L-05/L-11/L-12 in *Distribuição*, L-04/L-07 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
 
-1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
-2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-3. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
-4. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+1. **L-16 — English version of the site.** *(New 05/08/2026 — takes the first slot.)* The app went
+   PT-BR-only into an international audience and the tester recruitment stalled on it; the site is
+   what a recruited tester reads **before** the app, so it cannot stay behind. Board slot:
+   *Distribuição* (group 4), **pair of the app's U-13**, planned right after it.
+2. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
+3. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+4. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
+5. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
 With the pricing gate cleared, **L-05/L-04/L-07 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt.
 
@@ -351,6 +355,53 @@ already existed (`suporte@`/`contato@` in the footer).
 Guarantee copy is a visible **mirror of what the Terms already promise** (§ arrependimento,
 same 7 days / full refund / same channel) — no material policy change, so no legal-page bump
 on either repo.
+
+---
+
+### L-16 — English version of the site
+
+`high` · `medium` · on-site · **pair of the app's U-13 — planned right after it** · → unblocks
+international tester recruitment
+
+**Why now (05/08/2026).** The owner went looking for testers for the Play closed test and could
+not recruit: the product is **PT-BR only** and most of the developer community he can reach does
+not read Portuguese. The app is now **open to the international community**, so the app is being
+translated (U-13). The site is the page a recruited tester opens **first** — the link shared in a
+community, the destination of the store listing's "site" field, the place where "what is this and
+why would I use it" is answered. An English app behind a Portuguese landing page loses the reader
+before the app is ever installed.
+
+**Scope.** An English version of the **conversion path**, not of the whole archive:
+`index.html` (hero, how-it-works, pricing, FAQ, CTAs) and the 404 page. The four blog articles
+are the **SEO cluster targeting Brazilian search intent** — translating them buys nothing for
+recruitment and would compete with itself, so they stay PT-BR (the English index links to the app,
+not to the cluster). Decide in the analysis step whether the legal pages get an English courtesy
+version or a notice pointing at the binding PT-BR text — the app's U-13 makes the same call and
+the two must agree (the cross-repo legal-sync rule in `CLAUDE.md`).
+
+**How (decide in the analysis step, but the constraints are known).** The site is static HTML
+served by the Worker's `ASSETS` binding with no build step, so a second language is a second set
+of files — most likely `/en/` — rather than a templating layer. What that implies:
+
+- **`hreflang` + a canonical per language**, and the language switch visible in the header of both
+  versions. Getting this wrong is the one way this item can *hurt*: the PT-BR pages already rank,
+  and duplicate content without correct annotation is a real SEO risk.
+- **`sitemap.xml`** gains the English URLs (and it is worth doing L-07's `lastmod` convention at
+  the same time if the appetite is there — same file, same pass).
+- **Language detection.** Prefer a visible switch plus, at most, a soft suggestion banner; a hard
+  `Accept-Language` redirect in the Worker breaks crawlers and traps a Brazilian on an English
+  laptop. If a redirect is wanted at all, it belongs behind a one-time cookie.
+- **Prices.** The paywall charges in **BRL via Pix/card (Asaas)** — the English page must show
+  R$ 5,49 / R$ 54,90 as BRL, not a converted figure it cannot honour, and should say so plainly.
+  Same numbers as L-08/L-14; they stay in sync by hand.
+- **Umami (L-01)** should distinguish the two versions so the recruitment traffic is measurable —
+  the app's F-48 funnel already tags by channel and this is its site-side half.
+- **OG/meta** per language (title, description, `og:locale`); the existing `og-cover.png` can be
+  reused unless the English hero copy diverges enough to matter.
+
+**Deliberately NOT in this item:** translating the blog cluster, a third language, and any
+automated translation pipeline. If English proves itself, the cluster is a separate decision with
+its own keyword research.
 
 ---
 
