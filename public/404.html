@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página não encontrada · Page not found — Guarda Compartilhada</title>
+    <!-- A 404 must never be indexed, and it is deliberately NOT in sitemap.xml. -->
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=4" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png?v=4" />
+    <meta name="theme-color" content="#03173d" />
+    <style>
+        /* L-16: bilingual 404. One page for both languages instead of /404.html +
+           /en/404.html — Cloudflare's `not_found_handling: "404-page"` serves ONE
+           file for the whole site, and a visitor who mistyped a URL has no language
+           we can trust anyway. Design tokens copied from index.html (no build step). */
+        :root {
+            --ink: #1e293b;
+            --muted: #64748b;
+            --indigo: #4f46e5;
+            --bg: #f8fafc;
+            --bg-tint: #eef2ff;
+            --card: #ffffff;
+            --line: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color: var(--ink);
+            background: linear-gradient(170deg, var(--bg) 0%, var(--bg-tint) 100%);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+        }
+        a { color: var(--indigo); }
+        a:focus-visible, .btn:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+        .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+        header { border-bottom: 1px solid var(--line); background: rgba(248, 250, 252, 0.92); }
+        header .wrap { display: flex; align-items: center; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--ink); text-decoration: none; }
+        .brand img { width: 32px; height: 32px; border-radius: 8px; }
+        main { flex: 1; display: flex; align-items: center; padding: 48px 0; }
+        .code { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; color: var(--indigo); line-height: 1; }
+        h1 { font-size: clamp(24px, 5vw, 30px); line-height: 1.25; letter-spacing: -0.02em; margin: 12px 0 10px; }
+        p { color: var(--muted); font-size: 16px; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 22px; border-radius: 10px; font-size: 15px; font-weight: 600;
+            text-decoration: none; border: none;
+        }
+        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
+        .btn-ghost { background: transparent; color: var(--indigo); border: 1px solid var(--indigo); }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+        .lang-block { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px 26px; }
+        .lang-block + .lang-block { margin-top: 16px; }
+        .lang-tag {
+            display: inline-block; background: var(--bg-tint); color: var(--indigo); font-size: 12px;
+            font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 4px 12px;
+            border-radius: 999px; margin-bottom: 6px;
+        }
+        footer { border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); }
+        footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 18px; padding-bottom: 18px; }
+        footer a { color: var(--muted); text-decoration: none; }
+        footer a:hover { color: var(--ink); }
+        @media (max-width: 520px) {
+            .actions .btn { width: 100%; }
+            .lang-block { padding: 24px 20px; }
+        }
+    </style>
+    <!-- L-01: Umami — a 404 pageview is how a broken inbound link gets noticed. -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+</head>
+<body>
+
+<header>
+    <div class="wrap">
+        <a class="brand" href="/">
+            <img src="/icon-192.png?v=4" alt="" width="32" height="32" />
+            Guarda Compartilhada
+        </a>
+    </div>
+</header>
+
+<main>
+    <div class="wrap">
+        <div class="code" aria-hidden="true">404</div>
+
+        <section class="lang-block" lang="pt-BR">
+            <span class="lang-tag">Português</span>
+            <h1>Esta página não existe (ou mudou de endereço).</h1>
+            <p>O link pode estar quebrado ou desatualizado. Volte para a página inicial — de lá dá para chegar em tudo.</p>
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Ir para a página inicial</a>
+                <a class="btn btn-ghost" href="https://app.guardacompartilhada.com">Entrar no app</a>
+            </div>
+        </section>
+
+        <section class="lang-block" lang="en">
+            <span class="lang-tag">English</span>
+            <h1>This page doesn't exist (or it moved).</h1>
+            <p>The link may be broken or out of date. Head back to the home page — everything is reachable from there.</p>
+            <div class="actions">
+                <a class="btn btn-primary" href="/en/">Go to the English home page</a>
+                <a class="btn btn-ghost" href="https://app.guardacompartilhada.com">Open the app</a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="wrap">
+        <a href="/">Início</a>
+        <a href="/en/" hreflang="en" lang="en">English</a>
+        <a href="/blog/">Blog</a>
+        <a href="/termos.html">Termos de Uso</a>
+        <a href="/privacidade.html">Privacidade</a>
+        <a href="mailto:suporte@guardacompartilhada.com">Suporte · Support</a>
+    </div>
+</footer>
+
+</body>
+</html>

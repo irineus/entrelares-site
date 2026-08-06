@@ -18,6 +18,7 @@ served from `public/`.
 ## Table of contents
 - [Overview](#overview)
 - [Structure](#structure)
+- [Languages — PT-BR and EN (L-16)](#languages--pt-br-and-en-l-16)
 - [Environments](#environments)
 - [Deploy](#deploy)
 - [Worker endpoint — materials / newsletter (L-09)](#worker-endpoint--materials--newsletter-l-09)
@@ -36,7 +37,8 @@ to the app's sign-up, and captures e-mails from visitors not yet ready to sign u
 funnel with the app (landing CTR → app signups), so several items coordinate cross-repo (see
 `ROADMAP.md`). The SEO foundation is strong out of the box — JSON-LD
 (`SoftwareApplication`/`Organization`/`FAQPage` + per-article `Article`/`BreadcrumbList`),
-canonicals, `sitemap.xml`, `robots.txt`, and a 4-article blog cluster.
+canonicals, reciprocal `hreflang` across the two languages, `sitemap.xml`, `robots.txt`, and a
+4-article blog cluster.
 
 Only `public/` is uploaded as site assets — **never widen `assets.directory` to the repo root**,
 or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADMAP.md`,
@@ -47,12 +49,17 @@ or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADM
 ```
 guardacompartilhada-site/
 ├── public/                     # the ONLY directory uploaded as site assets
-│   ├── index.html              # landing page: hero slideshow, how-it-works, benefits,
+│   ├── index.html              # landing page (PT-BR): hero slideshow, how-it-works, benefits,
 │   │                           #   founder note (L-06), #materiais opt-in (L-09), pricing, FAQ
+│   ├── en/index.html           # L-16: the English version of the conversion path. A SIBLING of
+│   │                           #   index.html, not a template — the design system is copied, so
+│   │                           #   a styling change must be applied to both. No #materiais block.
+│   ├── 404.html                # L-16: bilingual not-found page (noindex, not in the sitemap)
 │   ├── privacidade.html        # Privacy Policy / LGPD  (kept in sync with the app — see below)
 │   ├── termos.html             # Terms of Use            (kept in sync with the app)
-│   ├── robots.txt / sitemap.xml# SEO plumbing
-│   ├── og-cover.png            # 1200×630 Open Graph banner (L-02)
+│   ├── robots.txt / sitemap.xml# SEO plumbing (lastmod convention documented inside the sitemap)
+│   ├── og-cover.png            # 1200×630 Open Graph banner, PT-BR (L-02)
+│   ├── og-cover-en.png         # 1200×630 Open Graph banner, EN (L-16)
 │   ├── favicon.png · icon-192.png · icon-512.png  # copies of the app's PWA icons — keep in sync
 │   ├── css/materiais.css       # styles for the L-09 opt-in (shared by index + blog)
 │   ├── js/materiais.js         # L-09 opt-in handler (posts to /api/subscribe)
@@ -66,8 +73,9 @@ guardacompartilhada-site/
 │   └── index.js                # Cloudflare Worker entrypoint: serves ASSETS + POST /api/subscribe
 ├── test/
 │   └── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
-├── assets-src/
-│   └── modelos-rotina.html     # generator for the lead-magnet PDF (headless Chromium; NOT served)
+├── assets-src/                 # generators — NOT served
+│   ├── modelos-rotina.html     # the lead-magnet PDF (headless Chromium)
+│   └── og-cover-en.html        # the English OG banner (headless Chrome; command in the file)
 ├── wrangler.jsonc              # Workers config (main + assets + vars; two envs)
 ├── package.json                # `type: module` + `test` script (no runtime deps; NOT served)
 ├── .github/workflows/
@@ -76,6 +84,36 @@ guardacompartilhada-site/
 │   └── test.yml                # PR + push → runs the Worker tests (gates the merge)
 ├── ROADMAP.md · README.md · CLAUDE.md   # repo-root docs (never served)
 ```
+
+## Languages — PT-BR and EN (L-16)
+
+The site is published in **two languages**: PT-BR at `/` and English at `/en/`. There is no build
+step and no templating layer, so **`public/en/index.html` is a sibling file, not a render of the
+Portuguese one** — the design system is duplicated on purpose. A styling or copy change that
+should apply to both has to be made **twice**; the two files carry cross-references saying so.
+
+| | PT-BR | EN |
+|---|---|---|
+| Landing page | `public/index.html` (`/`) | `public/en/index.html` (`/en/`) |
+| OG banner | `og-cover.png` | `og-cover-en.png` (generator in `assets-src/`) |
+| Blog cluster | 4 articles + index | *(none — targets Brazilian search intent)* |
+| Legal pages | `termos.html` · `privacidade.html` | *(none — the PT-BR text is the binding one)* |
+| L-09 materials opt-in | yes | *(no — the PDF and its e-mail are PT-BR)* |
+| 404 | `public/404.html` — **one bilingual page for the whole site** | |
+
+- **`hreflang` is reciprocal** on both pages, with a canonical per language. **`x-default` points
+  at the PT-BR home** — it is the canonical entry point and the primary market. Getting this wrong
+  is the one way a second language can *hurt*: the PT-BR pages already rank, and duplicate content
+  without correct annotation is a real risk. If a page gains a language sibling, it gains the tags.
+- **No language detection.** A visible `PT | EN` switch in both headers, nothing else — no
+  `Accept-Language` redirect (it breaks crawlers and traps a Brazilian on an English laptop) and no
+  suggestion banner. The switch sits **outside `.nav-links`**, which is `display:none` below
+  820 px; putting it inside would strand mobile readers in one language.
+- **Prices stay in BRL and in Brazilian format** (`R$ 5,49`) in both languages — the checkout
+  charges in reais and cannot honour a converted figure. Same call the app's U-13 made. The English
+  page states this plainly rather than hiding it.
+- **Analytics:** one Umami `website-id` for both. The URL rides on every pageview and event, so
+  `/en/` is already separable in the dashboard; a second website would mean the paid tier.
 
 ## Environments
 
@@ -194,7 +232,15 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; no image optimiser available
       in-environment, deferred).
 - [ ] **Remaining on-site roadmap:** L-05 (SEO content + interactive tool), L-04 (blog image
-      optimization), L-07 (sitemap hygiene), L-08 (pricing — gated by app F-32/T-39). See
+      optimization), L-15 (company identity — gated on the CNPJ existing). See
       [`ROADMAP.md`](ROADMAP.md).
+- [ ] **English screenshots for `/en/`** (L-16 follow-up) — the phone frames on the English page
+      still show the PT-BR captures. Re-shoot them from an English build once the app's **U-13**
+      is in production, which is the same gate the English page itself waits on (below).
 - [x] Analytics (L-01), Open Graph banner (L-02), real screenshots (L-03), audit-log repositioning
-      (L-10), founder note (L-06), lead-magnet/newsletter (L-09) — shipped.
+      (L-10), founder note (L-06), lead-magnet/newsletter (L-09), pricing (L-08), trust signals
+      (L-14), sitemap hygiene (L-07), English version (L-16) — shipped.
+
+> ⚠️ **L-16 promotion gate.** The English page states that the app is available in English. That
+> is true on the app's `dev`, **not yet in production**. Do not promote `preview`→`main` with
+> `/en/` until the app's **U-13** has reached production.

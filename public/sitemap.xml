@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  L-07 — sitemap hygiene. Two rules, both easy to break:
+
+  1. ONLY indexable pages belong here. `termos.html` and `privacidade.html` carry
+     <meta name="robots" content="noindex"> and were listed anyway until Aug 2026 —
+     asking a crawler to fetch a page that then tells it to go away. The 404 page is
+     out for the same reason. If a page gains a `noindex`, remove it from this file
+     in the SAME delivery.
+  2. `lastmod` is the date THAT page's content last changed — updated by hand, in the
+     delivery that changes the page. It is not a build timestamp and must never be
+     bumped globally: a sitemap that claims every page changed today teaches the
+     crawler to ignore the field. `git log -1 --format=%ad --date=short -- <file>`
+     gives the honest value.
+
+  L-16 — the English version is listed as its own URL. The PT-BR/EN pairing is
+  declared by the reciprocal <link rel="alternate" hreflang> tags in each page's
+  <head>, which is what Google reads; keeping it out of here keeps this file simple.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://guardacompartilhada.com/</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://guardacompartilhada.com/en/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://guardacompartilhada.com/blog/</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://guardacompartilhada.com/blog/como-montar-calendario-guarda-compartilhada.html</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://guardacompartilhada.com/blog/guarda-compartilhada-x-guarda-alternada.html</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://guardacompartilhada.com/blog/como-funciona-guarda-compartilhada.html</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://guardacompartilhada.com/blog/modelos-de-rotina-guarda-compartilhada.html</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://guardacompartilhada.com/termos.html</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://guardacompartilhada.com/privacidade.html</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
 </urlset>

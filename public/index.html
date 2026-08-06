@@ -9,6 +9,14 @@
     <meta name="author" content="Guarda Compartilhada" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://guardacompartilhada.com/" />
+
+    <!-- L-16: reciprocal hreflang. x-default points here — the PT-BR home is the
+         canonical entry point and the site's primary market; the English version at
+         /en/ is annotated explicitly, so neither page competes with the other. -->
+    <link rel="alternate" hreflang="pt-BR" href="https://guardacompartilhada.com/" />
+    <link rel="alternate" hreflang="en" href="https://guardacompartilhada.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://guardacompartilhada.com/" />
+
     <link rel="icon" type="image/png" href="favicon.png?v=4" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=4" />
     <meta name="theme-color" content="#03173d" />
@@ -16,6 +24,7 @@
     <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="Guarda Compartilhada" />
     <meta property="og:title" content="Guarda Compartilhada — o app do calendário de convivência" />
     <meta property="og:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. O essencial é grátis." />
@@ -41,7 +50,7 @@
       "applicationCategory": "LifestyleApplication",
       "inLanguage": "pt-BR",
       "description": "Aplicativo para pais separados organizarem o calendário de convivência dos filhos, com trocas de dia aprovadas pelos dois responsáveis e histórico completo.",
-      "offers": [ { "@type": "Offer", "price": "0", "priceCurrency": "BRL", "name": "Gratuito" }, { "@type": "Offer", "price": "14.90", "priceCurrency": "BRL", "name": "Premium (mensal, por família)" } ],
+      "offers": [ { "@type": "Offer", "price": "0", "priceCurrency": "BRL", "name": "Gratuito" }, { "@type": "Offer", "price": "5.49", "priceCurrency": "BRL", "name": "Premium (mensal, por família)" } ],
       "url": "https://guardacompartilhada.com/"
     }
     </script>
@@ -189,6 +198,18 @@
         .nav .btn { margin-left: 8px; padding: 9px 20px; border-radius: 999px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.28); }
         .nav .btn:hover { box-shadow: 0 5px 14px rgba(79, 70, 229, 0.36); }
         .cta-short { display: none; }
+
+        /* ── Language switch (L-16) ─────────────────────────── */
+        /* Lives OUTSIDE .nav-links on purpose: those links are hidden on mobile,
+           and the switch has to survive there — it is the only way to /en/. */
+        .lang-switch {
+            display: inline-flex; align-items: center; gap: 2px; flex-shrink: 0;
+            border: 1px solid var(--line); background: var(--card); border-radius: 999px;
+            padding: 3px; font-size: 13px; font-weight: 600;
+        }
+        .lang-switch a, .lang-switch span { padding: 4px 10px; border-radius: 999px; line-height: 1; text-decoration: none; color: var(--muted); }
+        .lang-switch a:hover { color: var(--ink); }
+        .lang-switch .lang-on { background: var(--bg-tint); color: var(--indigo); }
 
         /* ── Hero ───────────────────────────────────────────── */
         .hero { background: linear-gradient(170deg, var(--bg) 0%, var(--bg-tint) 100%); padding: 72px 0 80px; }
@@ -349,11 +370,12 @@
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .nav-links { display: none; }
 
-            /* Header: barra enxuta com a pílula de CTA sempre visível à direita */
-            .nav { height: 58px; gap: 12px; }
+            /* Header: barra enxuta com o seletor de idioma e a pílula de CTA à direita */
+            .nav { height: 58px; gap: 10px; }
             .brand { font-size: 15.5px; gap: 8px; }
             .brand img { width: 28px; height: 28px; }
-            .nav .btn { margin-left: auto; padding: 8px 16px; font-size: 14px; }
+            .lang-switch { margin-left: auto; }
+            .nav .btn { margin-left: 0; padding: 8px 16px; font-size: 14px; }
             .cta-full { display: none; }
             .cta-short { display: inline; }
 
@@ -369,9 +391,13 @@
             .values { justify-content: flex-start; }
         }
 
-        @media (max-width: 380px) {
+        /* L-16: o seletor de idioma entrou na barra, então o nome da marca some um
+           pouco mais cedo (antes era 380px) para o header não estourar. */
+        @media (max-width: 420px) {
             .brand { font-size: 0; gap: 0; }
             .brand img { width: 30px; height: 30px; }
+            .lang-switch { font-size: 12px; padding: 2px; }
+            .lang-switch a, .lang-switch span { padding: 4px 8px; }
         }
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
@@ -394,6 +420,10 @@
             <a href="#faq">Dúvidas</a>
             <a href="/blog/">Blog</a>
         </nav>
+        <div class="lang-switch" role="group" aria-label="Idioma">
+            <span class="lang-on" aria-current="true">PT</span>
+            <a href="/en/" hreflang="en" lang="en" title="English version">EN</a>
+        </div>
         <a class="btn btn-primary" data-umami-event="cta-signup" href="https://app.guardacompartilhada.com" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
     </div>
 </header>
@@ -788,6 +818,7 @@
     <div class="wrap">
         <span>© 2026 Guarda Compartilhada · Cuidando juntos do que mais importa</span>
         <span class="foot-links">
+            <a href="/en/" hreflang="en" lang="en">English</a>
             <a href="/blog/">Blog</a>
             <a href="termos.html">Termos de Uso</a>
             <a href="privacidade.html">Privacidade</a>

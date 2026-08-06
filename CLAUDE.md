@@ -26,8 +26,42 @@ GitHub Actions. The application itself lives in the sibling repo **`SharedParent
   domain → `preview.guardacompartilhada.com`); it is intentionally NOT declared in
   `wrangler.jsonc`, so the CI `CLOUDFLARE_API_TOKEN` needs no zone/DNS scope (same as prod).
 
+## Two published languages (L-16, Aug 2026)
+The site is published in **PT-BR at `/` and English at `/en/`**. No build step and no templating
+layer, so **`public/en/index.html` is a SIBLING FILE of `public/index.html`, not a render of it** —
+the design system (the whole inline `<style>` block) and the slideshow script are **duplicated on
+purpose**. A change that belongs in both has to be made twice; both files carry a comment saying
+so. That is the item's standing cost, accepted over introducing a generator to a site whose virtue
+is that it deploys exactly what is in the repo.
+- **`hreflang` is reciprocal on both pages**, canonical per language, **`x-default` → the PT-BR
+  home**. This is the one way a second language can *hurt*: the PT-BR pages already rank, and
+  duplicate content without correct annotation is a real SEO risk. Any new page that gains a
+  language sibling gains the tags in the same delivery.
+- **No language detection** — a visible `PT | EN` switch, nothing else. No `Accept-Language`
+  redirect (breaks crawlers, traps a Brazilian on an English laptop), no suggestion banner. The
+  switch lives **outside `.nav-links`**, which is `display:none` below 820 px — inside it, mobile
+  would have no way across. Verified at 344 px.
+- **Not translated, deliberately:** the blog cluster (it targets Brazilian search intent), the
+  legal pages (see the cross-repo section below — the PT-BR text is the binding one and `/en/`
+  says so), and the L-09 materials opt-in (the PDF, the Worker's welcome e-mail and
+  `js/materiais.js` are PT-BR, so `/en/` omits the section rather than deliver Portuguese material).
+- **Prices stay `R$ 5,49` / `R$ 54,90` in Brazilian format in BOTH languages** — the checkout
+  charges in reais and cannot honour a converted figure. Same call the app's U-13 made; `/en/`
+  states it plainly instead of hiding it.
+- **One Umami `website-id` for both** — the URL rides on every pageview and event, so `/en/` is
+  already separable; a second website would mean the paid tier.
+- **`public/404.html` is bilingual and single**: Cloudflare's `not_found_handling: "404-page"`
+  serves ONE file for the whole site, and a visitor who mistyped a URL has no language we can
+  trust. `noindex`, and never in the sitemap.
+- **⚠️ Promotion gate, live at the time of writing:** `/en/` tells the reader the app is available
+  in English. That is true on the app's `dev` (**U-13**) and **not yet in production** (prod was
+  `v1.7.15`, PT-BR only). **Do not promote `preview`→`main` until the app's U-13 is in
+  production** — and re-shoot `img/screenshots/*` in English at that point, since the phone frames
+  on `/en/` still show the PT-BR captures.
+
 ## Language conventions
-- **UI / legal copy: PT-BR.** File names/titles and commit bodies' technical terms: English is fine.
+- **UI / legal copy: PT-BR** (and the English mirror at `/en/`, per the section above). File
+  names/titles and commit bodies' technical terms: English is fine.
 - **Commit messages: PT-BR**, conventional-commit style (`feat(...)`, `fix(...)`, `docs(...)`).
 - **Every commit that DELIVERS a roadmap item ends with the trailer `Backlog: <ID>`**
   (several comma-separated). That trailer is the ONLY mark meaning "this commit delivers this
@@ -158,5 +192,14 @@ system; an unverified claim is a liability no matter who drafted it.
 ## Gotchas
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,
   so they are never served — safe to edit without touching the published site.
+- **`sitemap.xml` carries its own rules in a header comment (L-07)** — only indexable pages belong
+  in it (the `noindex` legal pages were listed for months, and the 404 must never be), and
+  `lastmod` is the date THAT page changed, set by hand in the delivery that changes it
+  (`git log -1 --format=%ad --date=short -- <file>`). Never bump it globally: a sitemap claiming
+  every page changed today teaches the crawler to ignore the field.
+- **Generated images have generators in `assets-src/`, and the command lives in the file** — the
+  lead-magnet PDF (`modelos-rotina.html`) and the English OG banner (`og-cover-en.html`, rendered
+  with headless Chrome at 1200×630). Re-render when the copy they show changes; a banner whose
+  text no longer matches the page is worse than no banner.
 - The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
   assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.
