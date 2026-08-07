@@ -33,11 +33,15 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/L-11/L-12 in *Distribuição*, L-04 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
+**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
-2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-3. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+2. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
+3. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
+4. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
+5. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+6. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
+7. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
 With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16 carries a live cross-repo gate of its own**: the English page must not be promoted to production before the app's **U-13** is in production (see its record).
 
@@ -467,6 +471,150 @@ T-36/S-17, not development debt. When it ships, mirror the same identity block o
 payment surfaces (F-49) and check whether the Terms' "Prestador do serviço" wording needs the
 CNPJ added (that half IS legal-page substance — sync both repos, but identity disclosure is
 non-material: no `PolicyVersions` bump).
+
+---
+
+### L-17 — Show the immutable history instead of describing it (animated demo)
+
+`high` · `medium` · on-site · **Status: `pending`** · board slot: *Distribuição* · **cross-repo:
+the capture comes from the app** (F-44 swap message + F-45 history origin are what make the
+sequence legible)
+
+Created 06/08/2026 from an external site review. Since **L-10** the whole positioning rests on one
+claim — *o histórico não pode ser editado nem apagado* — and the page **states** it in the hero, in
+a benefit card and in a badge, while **showing** a static screenshot. The thing that dissolves the
+"eu não fiquei sabendo" argument is a *sequence*: someone asks for a swap, the other approves, and
+a line appears in a record with a date and time that nobody can take back. A still frame cannot
+carry a sequence.
+
+**Scope.** Replace the static mockup slot (or add above the L-03 slideshow — decide at
+implementation) with a **short, silent, looping** demo: request → approval → the stamped line in
+the history. ~8–12 s, no narration.
+
+**Format decision, to make in the analysis step but with the constraint stated now:** this site
+has **no framework and no JS build**, deliberately. A Lottie player is a JS dependency (~250 KB)
+plus a JSON payload, for something a **muted, `playsinline`, `loop` `<video>` (WebM + MP4) with a
+`poster`** does natively, at a fraction of the bytes and with zero script. An animated WebP is the
+even cheaper fallback. Prefer video; justify Lottie in writing if it wins.
+
+**Constraints that are not negotiable**
+- **`prefers-reduced-motion`** — the L-03 slideshow already honours it; this must too (a
+  poster/still, not a paused video element).
+- **Weight and LCP** — the hero is the LCP element today. The demo must not become it: lazy-load
+  below the fold, or keep the poster as the painted frame.
+- **Both languages.** `/en/` exists since **L-16** and already carries a known follow-up (its
+  screenshots are PT-BR captures). A demo of a PT-BR UI on the English page repeats that defect in
+  a more prominent slot — so either capture both, or make the sequence readable without text and
+  say so.
+- **Honest content.** Fictional names, real UI, no invented numbers — the S-15 rule applied to
+  marketing assets. And the copy around it stays **factual** (L-10 update 2: *inalterável*, never
+  the retired "à prova de disputa" promise).
+
+**Files:** `public/index.html` + `public/en/index.html` (hero/gallery block), new
+`public/video/` or `public/img/` assets, an `assets-src/` capture note so it can be re-recorded
+when the UI changes.
+
+---
+
+### L-18 — Founder note higher on the page + calmer typography
+
+`medium` · `low` · on-site · **Status: `pending`** · board slot: *Polimento*
+
+Created 06/08/2026 from an external site review: the `#fundador` section (**L-06**) is the part
+of the page that earns empathy, and it sits **fifth**, after `como-funciona`, `galeria`, `porque`
+and `beneficios`. The review asks to move it right below *Como funciona*, with more whitespace and
+a lighter, more spaced sans-serif — "transmitindo calma e proximidade".
+
+**Take it as a bet, not as a fact.** Moving the founder note above the product proof buys empathy
+earlier and delays the *what is this* payoff for a visitor who arrived from a search result and
+does not yet care who built it. Both effects are real and the page already has the instrument to
+tell them apart: **L-01/Umami** records the CTA events (`cta-signup`). So the item ships **with**
+its measurement — the current CTA rate is the baseline, and the note goes back down if the new
+placement costs conversions. Without that reading, this is a preference, and preferences do not
+belong in a roadmap.
+
+**Scope:** the section move (`#fundador` between `#como-funciona` and `#galeria`, keeping the
+values strip with it), typography/whitespace pass on that section only, and the same change on
+`/en/` (L-16) so the two pages do not drift apart. Anchor links (`#fundador`) and the nav must
+keep working.
+
+**Files:** `public/index.html`, `public/en/index.html`.
+
+---
+
+### L-19 — Animated iOS install guide
+
+`medium` · `low` · on-site · **Status: `pending`** · board slot: *Distribuição* · **cross-repo:
+the same instructions live in the app's F-09 opt-in flow**
+
+Created 06/08/2026 from an external site review. `#instalar` already carries the correct written
+steps (*Compartilhar → Adicionar à Tela de Início*), but for an iPhone user who has never
+installed a PWA, a share-sheet icon described in words is exactly the friction that ends the
+visit. A ~6-second screen recording removes it.
+
+**The written steps stay.** The animation is **added**, never substituted: it is what a
+screen-reader user, a `prefers-reduced-motion` visitor and anyone on a slow connection falls back
+to — and it is also what stays correct when Apple moves a button and the video silently starts
+lying. Date the recording in a comment so a future session knows how old it is.
+
+**Notes**
+- Capture on the real validation device (iPhone 15 Pro Max, per the app's `CLAUDE.md`), Safari,
+  in **both languages** (`/en/` has the same section).
+- Same format constraint as **L-17** (muted looping video / animated WebP over a JS animation
+  library) — do the two together if they land in the same window; it is the same capture and
+  compression pipeline.
+- **Pairs with the app's F-09:** on iOS, Web Push only exists for a PWA added to the home screen,
+  so the app's permission flow sends people through exactly these steps. The two texts must agree.
+
+**Files:** `public/index.html` + `public/en/index.html` (`#instalar`), new asset(s).
+
+---
+
+### L-20 — E-mail sequence for the routine-models material (L-09 follow-up)
+
+`medium` · `medium` · on-site (Worker) · **Status: `pending`** · board slot: *Distribuição* ·
+**⚠ carries a production risk and a consent question — read before scheduling anything**
+
+Created 06/08/2026 from an external review, which asked for a 3-step automation after the
+**L-09** download: day 1 the PDF, day 3 a tip about organizing holidays, day 5 an invitation to
+plan the calendar in the app. Today only the first exists (the welcome e-mail with the PDF link,
+sent by `src/index.js` via Resend).
+
+**Two things must be settled before a single e-mail is scheduled — both discovered in the app
+repo, and neither is visible from the site.**
+
+1. **The Resend allowance is per ACCOUNT, and it is shared with production sign-ups (app T-49).**
+   One team, one verified domain, six API keys — this Worker, both projects' Edge Functions and
+   **both projects' GoTrue SMTP** — all drawing on the free plan's **100 e-mails/day**. The app's
+   test suite alone once measured 86 in a day. A drip campaign adds *scheduled* volume to that
+   same bucket, and the failure it courts is not a missed marketing e-mail: it is a **429 on a
+   sign-up confirmation or a password reset**, i.e. a real user who cannot get into the app, with
+   nothing on screen explaining why. So this item starts with the capacity decision — a paid
+   Resend plan (platform spend, which the app roadmap's group 8 says waits for revenue), a
+   separate account/subdomain for marketing, or a hard daily send cap in the Worker — and only
+   then with the copy.
+2. **The consent purpose is what was announced at the opt-in (app S-15/C-6).** The material is
+   collected under **single opt-in with a logged consent** (date, time and IP in KV) for a purpose
+   the form states. Turning "receba os modelos" into a sequence must stay **inside** that stated
+   purpose — the cheap and honest way is to say so at the opt-in ("os modelos + alguns e-mails
+   sobre rotina de guarda"), which is a copy change on the form and a matching line in
+   `privacidade.html` §3/§4 — **and the app's Privacy mirrors it in the same delivery** (standing
+   cross-repo MUST). Check against the app's S-15 rules whether the wording change is material:
+   if it is, it costs a `PolicyVersions` bump, which drags the entire app user base through a
+   blocking re-consent screen. Designing the sequence to fit the purpose already announced is
+   almost certainly cheaper than the alternative — decide it deliberately, not by accident.
+   Every message keeps the unsubscribe line the welcome e-mail already has.
+
+**Implementation shape** (after the two decisions): a Cloudflare **Cron Trigger** on the existing
+Worker plus a KV queue keyed by the opt-in (the namespace pattern already exists for the consent
+log), or Resend's own scheduled send — whichever keeps the daily cap enforceable **in our code**,
+because the cap is the safety property. Unsubscribes and bounces must stop the sequence, and a
+subscriber who creates an account should stop receiving the "come try it" step.
+
+**Files:** `src/index.js` (schedule handler + queue), `wrangler.jsonc` (cron trigger, KV binding),
+`public/index.html` + blog opt-in copy, `public/privacidade.html`; cross-repo: the app's
+`Pages/Privacy.razor`. Tests belong in `test/subscribe.test.js`'s neighbourhood — the send cap and
+the stop conditions are logic, not copy.
 
 ## Off-site items — detail
 
