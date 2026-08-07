@@ -33,18 +33,13 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Eight** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/L-09/L-10/**L-14** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, the lead-magnet/newsletter, and the trust signals next to the price). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-16**/L-05/L-11/L-12 in *Distribuição*, L-04/L-07 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
+**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/L-11/L-12 in *Distribuição*, L-04 in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
 
-1. **L-16 — English version of the site.** *(New 05/08/2026 — takes the first slot.)* The app went
-   PT-BR-only into an international audience and the tester recruitment stalled on it; the site is
-   what a recruited tester reads **before** the app, so it cannot stay behind. Board slot:
-   *Distribuição* (group 4), **pair of the app's U-13**, planned right after it.
-2. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
-3. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-4. **L-07 — Sitemap hygiene** (drop the `noindex` legal pages from the sitemap; set a `lastmod` convention).
-5. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
+2. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+3. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-05/L-04/L-07 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt.
+With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16 carries a live cross-repo gate of its own**: the English page must not be promoted to production before the app's **U-13** is in production (see its record).
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -273,13 +268,28 @@ acquisition channel in BR; also a natural home for the L-09 lead magnet.
 
 ### L-07 — Sitemap hygiene
 
-**Order 9** · `low` · `low` · `low`
+**Order 9** · `low` · `low` · `low` · **Status: `completed` (Aug 2026)** · **shipped inside L-16**
+(same file, same pass)
 
 Minor: the legal pages are correctly `noindex` but still listed in `sitemap.xml`; `lastmod` is
 hardcoded and will go stale. Drop the noindex pages from the sitemap and set a lastmod convention
 (or generate it in the deploy Action).
 
-**Files:** `public/sitemap.xml`; optionally `.github/workflows/deploy.yml`.
+**What shipped.** `termos.html` and `privacidade.html` are **out** of the sitemap — listing a
+`noindex` page asks a crawler to fetch something that then tells it to go away; the new `404.html`
+stays out for the same reason. The `lastmod` **convention is written into the file's own header
+comment**, where the next person to edit it will actually read it: `lastmod` is the date *that
+page's* content last changed, updated by hand in the delivery that changes the page — never a
+build timestamp, never bumped globally (a sitemap claiming every page changed today teaches the
+crawler to ignore the field). The comment names the command that yields the honest value,
+`git log -1 --format=%ad --date=short -- <file>`, which is how the current dates were set.
+
+**Generating it in the deploy Action was considered and dropped:** the workflow would have to run
+`git log` per file and rewrite the XML at deploy time, adding a moving part to a pipeline whose
+whole virtue is that it uploads exactly what is in the repo — for a file that changes a handful of
+times a year.
+
+**Files:** `public/sitemap.xml`.
 
 ---
 
@@ -360,8 +370,16 @@ on either repo.
 
 ### L-16 — English version of the site
 
-`high` · `medium` · on-site · **pair of the app's U-13 — planned right after it** · → unblocks
-international tester recruitment
+`high` · `medium` · on-site · **Status: `completed` (Aug 2026)** · **pair of the app's U-13** ·
+→ unblocks international tester recruitment · **shipped together with L-07** (same file, same pass)
+
+> ⚠️ **Promotion gate (`preview` → `main`).** This page tells an English reader the app is
+> available in English. That is true on `dev` (the app's **U-13**), and **NOT yet in
+> production** — prod was at `v1.7.15` when this shipped, which is PT-BR only. So the English
+> landing must **not** be promoted to production before the app's U-13 reaches production.
+> Promoting it earlier turns the hero, the trust bar and the "Is the app available in English?"
+> FAQ into false claims — the exact S-15 failure mode (a claim about the system that the system
+> does not yet honour).
 
 **Why now (05/08/2026).** The owner went looking for testers for the Play closed test and could
 not recruit: the product is **PT-BR only** and most of the developer community he can reach does
@@ -379,29 +397,61 @@ not to the cluster). Decide in the analysis step whether the legal pages get an 
 version or a notice pointing at the binding PT-BR text — the app's U-13 makes the same call and
 the two must agree (the cross-repo legal-sync rule in `CLAUDE.md`).
 
-**How (decide in the analysis step, but the constraints are known).** The site is static HTML
-served by the Worker's `ASSETS` binding with no build step, so a second language is a second set
-of files — most likely `/en/` — rather than a templating layer. What that implies:
+**What shipped (Aug 2026).** A second language on a site with no build step is a second set of
+files, not a templating layer — so `/en/` is a full sibling of `/`, and the design system is
+*copied*, not shared.
 
-- **`hreflang` + a canonical per language**, and the language switch visible in the header of both
-  versions. Getting this wrong is the one way this item can *hurt*: the PT-BR pages already rank,
-  and duplicate content without correct annotation is a real SEO risk.
-- **`sitemap.xml`** gains the English URLs (and it is worth doing L-07's `lastmod` convention at
-  the same time if the appetite is there — same file, same pass).
-- **Language detection.** Prefer a visible switch plus, at most, a soft suggestion banner; a hard
-  `Accept-Language` redirect in the Worker breaks crawlers and traps a Brazilian on an English
-  laptop. If a redirect is wanted at all, it belongs behind a one-time cookie.
-- **Prices.** The paywall charges in **BRL via Pix/card (Asaas)** — the English page must show
-  R$ 5,49 / R$ 54,90 as BRL, not a converted figure it cannot honour, and should say so plainly.
-  Same numbers as L-08/L-14; they stay in sync by hand.
-- **Umami (L-01)** should distinguish the two versions so the recruitment traffic is measurable —
-  the app's F-48 funnel already tags by channel and this is its site-side half.
-- **OG/meta** per language (title, description, `og:locale`); the existing `og-cover.png` can be
-  reused unless the English hero copy diverges enough to matter.
+- **`public/en/index.html`** — the whole conversion path in English (hero, how-it-works, gallery,
+  comparison, features, founder note, install, pricing, FAQ, final CTA). Asset paths are absolute
+  (`/img/…`) because the page sits one level down.
+- **`hreflang` on both pages**, reciprocal, plus a canonical per language. **`x-default` points at
+  the PT-BR home**: it is the site's canonical entry point and primary market, and the English
+  version is annotated explicitly, so a Portuguese query is never routed to `/en/`.
+- **Language switch** (`.lang-switch`, `PT | EN`) in both headers, and reciprocal footer links.
+  It lives **outside `.nav-links`** on purpose: those links are `display:none` below 820 px, and
+  the switch has to survive there or mobile has no way across. Verified at **344 px** with no
+  horizontal overflow; the brand wordmark now collapses at 420 px instead of 380 px to make room.
+- **No language detection.** Visible switch only — no soft banner, no `Accept-Language` redirect
+  (owner's call in the analysis step): a redirect breaks crawlers and traps a Brazilian on an
+  English laptop, and the banner was not worth its JavaScript.
+- **Legal pages stay PT-BR**, matching the app's U-13 decision exactly: the footer links to
+  `/termos.html` and `/privacidade.html` and a notice states in English that **the Portuguese text
+  is the binding one** and that this page is a courtesy translation of the *product description,
+  not of the contract*. No second normative text, no new cross-repo sync burden.
+- **Prices in BRL**, in Brazilian format (`R$ 5,49` / `R$ 54,90`) — the same call the app's U-13
+  made, because the charge is in reais. The English page says so plainly instead of hiding it, and
+  adds that the free plan needs no payment method and works anywhere.
+- **`public/404.html`** — bilingual, one file for the whole site (Cloudflare's
+  `not_found_handling: "404-page"` serves a single page and a visitor who mistyped a URL has no
+  language we can trust). `noindex`, and deliberately absent from the sitemap. **It did not exist
+  before this item** — the site was falling back to Cloudflare's generic 404.
+- **`public/og-cover-en.png`** + its generator `assets-src/og-cover-en.html`. Reusing the PT-BR
+  banner would have shown a **Portuguese link preview** to precisely the reader `/en/` exists for.
+  Rendered with headless Chrome, same way the L-09 PDF is produced.
+- **Umami (L-01)** keeps the single `website-id`: the URL rides on every pageview and event, so
+  `/en/` traffic is already separable in the dashboard — a second website would cost the paid tier
+  for a split the data already has.
+- **`sitemap.xml`** gained `/en/` — and, in the same pass, **L-07 closed** (see its record).
+- Adjacent defect fixed: the PT-BR page's `SoftwareApplication` JSON-LD still advertised
+  `"price": "14.90"` while the visible price had been **R$ 5,49** since L-14, so the structured
+  data was telling Google a price the page contradicts.
 
-**Deliberately NOT in this item:** translating the blog cluster, a third language, and any
-automated translation pipeline. If English proves itself, the cluster is a separate decision with
-its own keyword research.
+**Known follow-up (not a blocker, but visible).** The phone screenshots on `/en/` are the **PT-BR
+captures** — an English reader sees a Portuguese UI inside the frames. Re-capturing them needs a
+running English build of the app, which is the same thing the promotion gate above waits for, so
+the two travel together: when U-13 reaches production, re-shoot `img/screenshots/*` in English for
+the `/en/` page. Sized as its own small item rather than blocking this one.
+
+**Deliberately NOT in this item:** translating the blog cluster (it targets Brazilian search
+intent — translating it buys nothing for recruitment and would compete with itself), the L-09
+materials opt-in (`/en/` omits it: the PDF, the Worker's welcome e-mail and `js/materiais.js` are
+all PT-BR, so offering it would hand an English reader Portuguese material), a third language, and
+any automated translation pipeline. If English proves itself, the cluster is a separate decision
+with its own keyword research.
+
+**Files:** `public/en/index.html` (new), `public/404.html` (new), `public/og-cover-en.png` (new),
+`assets-src/og-cover-en.html` (new), `public/index.html` (hreflang, switch, footer link, JSON-LD
+price), `public/sitemap.xml`.
 
 ---
 
