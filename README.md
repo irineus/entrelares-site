@@ -234,13 +234,15 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **Remaining on-site roadmap:** L-05 (SEO content + interactive tool), L-04 (blog image
       optimization), L-15 (company identity — gated on the CNPJ existing). See
       [`ROADMAP.md`](ROADMAP.md).
-- [ ] **English screenshots for `/en/`** (L-16 follow-up) — the phone frames on the English page
-      still show the PT-BR captures. Re-shoot them from an English build once the app's **U-13**
-      is in production, which is the same gate the English page itself waits on (below).
+- [ ] **English screenshots for `/en/`** (**L-21**, the L-16 follow-up) — the phone frames on the
+      English page still show the PT-BR captures. The gate that held it (the app's **U-13** in
+      production) fell on 07/08/2026, so it is executable now: re-shoot `img/screenshots/*` from
+      the app in English.
 - [x] Analytics (L-01), Open Graph banner (L-02), real screenshots (L-03), audit-log repositioning
       (L-10), founder note (L-06), lead-magnet/newsletter (L-09), pricing (L-08), trust signals
       (L-14), sitemap hygiene (L-07), English version (L-16) — shipped.
 
-> ⚠️ **L-16 promotion gate.** The English page states that the app is available in English. That
-> is true on the app's `dev`, **not yet in production**. Do not promote `preview`→`main` with
-> `/en/` until the app's **U-13** has reached production.
+> ✅ **L-16 promotion gate — cleared 10/08/2026.** The English page states that the app is
+> available in English; that became true in production with the app's **U-13** (`v1.8.0`, 07/08 —
+> prod is now `v1.8.1`, and the live login screen switches to English). `preview`→`main` was
+> promoted on 10/08/2026, so `/en/` is live at `guardacompartilhada.com/en/`.
