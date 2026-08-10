@@ -33,17 +33,18 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. Remaining on-site work:
+**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, **L-21**/L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
 3. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
 4. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
-5. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-6. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
-7. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+5. **L-21 — English screenshots for `/en/`.** The English page is live and still shows the PT-BR captures inside the phone frames. Follow-up of L-16, unblocked the moment the app's U-13 reached production.
+6. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+7. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
+8. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16 carries a live cross-repo gate of its own**: the English page must not be promoted to production before the app's **U-13** is in production (see its record).
+With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind, **L-21** (the screenshots inside the frames are still the PT-BR captures).
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -377,13 +378,14 @@ on either repo.
 `high` · `medium` · on-site · **Status: `completed` (Aug 2026)** · **pair of the app's U-13** ·
 → unblocks international tester recruitment · **shipped together with L-07** (same file, same pass)
 
-> ⚠️ **Promotion gate (`preview` → `main`).** This page tells an English reader the app is
-> available in English. That is true on `dev` (the app's **U-13**), and **NOT yet in
-> production** — prod was at `v1.7.15` when this shipped, which is PT-BR only. So the English
-> landing must **not** be promoted to production before the app's U-13 reaches production.
-> Promoting it earlier turns the hero, the trust bar and the "Is the app available in English?"
-> FAQ into false claims — the exact S-15 failure mode (a claim about the system that the system
-> does not yet honour).
+> ✅ **Promotion gate (`preview` → `main`) — CLEARED 10/08/2026.** This page tells an English
+> reader the app is available in English. When it shipped that was true only on `dev` (the app's
+> **U-13**), with production at `v1.7.15`, PT-BR only — so promoting it earlier would have turned
+> the hero, the trust bar and the "Is the app available in English?" FAQ into false claims, the
+> exact S-15 failure mode (a claim about the system that the system does not yet honour). The
+> app's **U-13 reached production in `v1.8.0`** (07/08/2026; prod is now `v1.8.1`), **verified on
+> the live login screen** rather than from the changelog — it switches to "Sign in / Shared
+> Custody Calendar". `preview`→`main` was promoted on **10/08/2026** and `/en/` is live.
 
 **Why now (05/08/2026).** The owner went looking for testers for the Play closed test and could
 not recruit: the product is **PT-BR only** and most of the developer community he can reach does
@@ -440,11 +442,11 @@ files, not a templating layer — so `/en/` is a full sibling of `/`, and the de
   `"price": "14.90"` while the visible price had been **R$ 5,49** since L-14, so the structured
   data was telling Google a price the page contradicts.
 
-**Known follow-up (not a blocker, but visible).** The phone screenshots on `/en/` are the **PT-BR
-captures** — an English reader sees a Portuguese UI inside the frames. Re-capturing them needs a
-running English build of the app, which is the same thing the promotion gate above waits for, so
-the two travel together: when U-13 reaches production, re-shoot `img/screenshots/*` in English for
-the `/en/` page. Sized as its own small item rather than blocking this one.
+**Known follow-up — now tracked as [L-21](#l-21--english-screenshots-for-en).** The phone
+screenshots on `/en/` are the **PT-BR captures**, so an English reader sees a Portuguese UI inside
+the frames. Re-capturing them needed a running English build of the app, which is exactly what the
+promotion gate above was waiting for — that gate fell on 07/08/2026, so the follow-up became
+executable and was written up as its own item on the day of the promotion.
 
 **Deliberately NOT in this item:** translating the blog cluster (it targets Brazilian search
 intent — translating it buys nothing for recruitment and would compete with itself), the L-09
@@ -539,6 +541,39 @@ values strip with it), typography/whitespace pass on that section only, and the 
 keep working.
 
 **Files:** `public/index.html`, `public/en/index.html`.
+
+---
+
+### L-21 — English screenshots for `/en/`
+
+`medium` · `low` · on-site · **Status: `pending`** · board slot: *Polimento* · **follow-up of
+L-16** · **cross-repo: the captures come from the app (U-13)**
+
+Written up on 10/08/2026, the day `/en/` went to production. `public/en/index.html` reuses the
+`img/screenshots/*` assets captured for the PT-BR page (**L-03**), so the hero slideshow and the
+gallery show an English reader a **Portuguese interface** — on the one page whose entire reason to
+exist is that the reader does not read Portuguese. The captions around the frames are already in
+English, which makes the mismatch more visible, not less: the page claims the app speaks English
+and then shows it speaking Portuguese.
+
+It could not ship with L-16 because there was no English build to capture — the app's **U-13** was
+still on `dev`. That gate fell with the app's `v1.8.0` (07/08/2026), so this is now ordinary work.
+
+**Scope.** Re-shoot the same set of screens from the app in English (the language switch is on the
+login screen and in the profile), at the same 1080×1920 as L-03, and serve them **only to `/en/`**
+— the PT-BR page keeps its own captures. That means a parallel asset set
+(`img/screenshots/en/*.{png,webp}`) rather than replacing the existing files; overwriting them
+would hand the PT-BR page an English UI and simply move the defect.
+
+**Constraints.** Same fictional-but-real-UI rule as L-03 (no invented data, no mocked screens —
+the S-15 rule applied to marketing assets); keep the `webp` + `png` pair and the existing
+`loading`/`width`/`height` attributes so the hero's LCP does not regress; the alt text on `/en/`
+must describe the English screen it now actually shows. If **L-17** (the animated demo) lands
+first, capture both languages in the same session — the recording and the stills come from the
+same running app, and doing it twice is the expensive part.
+
+**Files:** `public/img/screenshots/en/*` (new), `public/en/index.html` (slideshow + gallery
+sources and alt text).
 
 ---
 

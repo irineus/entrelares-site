@@ -53,11 +53,14 @@ is that it deploys exactly what is in the repo.
 - **`public/404.html` is bilingual and single**: Cloudflare's `not_found_handling: "404-page"`
   serves ONE file for the whole site, and a visitor who mistyped a URL has no language we can
   trust. `noindex`, and never in the sitemap.
-- **⚠️ Promotion gate, live at the time of writing:** `/en/` tells the reader the app is available
-  in English. That is true on the app's `dev` (**U-13**) and **not yet in production** (prod was
-  `v1.7.15`, PT-BR only). **Do not promote `preview`→`main` until the app's U-13 is in
-  production** — and re-shoot `img/screenshots/*` in English at that point, since the phone frames
-  on `/en/` still show the PT-BR captures.
+- **Promotion gate — CLEARED (10/08/2026).** `/en/` tells the reader the app is available in
+  English, which was true only on the app's `dev` when L-16 shipped. The app's **U-13 reached
+  production in `v1.8.0`** (07/08) and prod is at **`v1.8.1`** — verified on the live login screen,
+  which switches to "Sign in / Shared Custody Calendar". `/en/` was promoted to production in the
+  same pass. The gate is kept here as the pattern, not as a live warning: **a page that describes
+  the app must not be promoted ahead of the app**, which is the S-15 rule applied to marketing copy.
+  What did NOT travel with it is the screenshot re-shoot — the phone frames on `/en/` still show
+  the PT-BR captures, now tracked as **L-21**.
 
 ## Language conventions
 - **UI / legal copy: PT-BR** (and the English mirror at `/en/`, per the section above). File
