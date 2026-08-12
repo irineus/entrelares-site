@@ -3,18 +3,18 @@
   // in CI. Only files under public/ are uploaded.
   //
   // Two environments (mirrors the app's dev/prod split):
-  //   · PRODUCTION (default / top-level): worker `guardacompartilhada-site`,
-  //     custom domain guardacompartilhada.com, deployed from `main` (deploy.yml).
+  //   · PRODUCTION (default / top-level): worker `entrelares-site` (F-54; the pre-rebrand worker `guardacompartilhada-site` keeps serving until the domains move),
+  //     custom domain entrelares.app (+ the old apex as 301), deployed from `main` (deploy.yml).
   //     A plain `wrangler deploy` (no --env) uses this block and ignores env.* .
   //   · PREVIEW (`wrangler deploy --env preview`): worker
-  //     `guardacompartilhada-site-preview`, custom domain
-  //     preview.guardacompartilhada.com, deployed from `preview`
+  //     `entrelares-site-preview`, custom domain
+  //     preview.entrelares.app, deployed from `preview`
   //     (deploy-preview.yml). Analytics are stripped and the site is set to
   //     noindex at deploy time — the preview carries no stats and must not be
   //     indexed (no duplicate content with production). The custom domain is
   //     attached ONCE in the Cloudflare dashboard (not declared here, so the CI
   //     token needs no zone/DNS permission — same as production).
-  "name": "guardacompartilhada-site",
+  "name": "entrelares-site",
   "account_id": "1185ad84960bdaf12e52096fe8df0dc9",
   "compatibility_date": "2026-07-22",
   // Worker entrypoint (L-09): serves the static assets AND one dynamic endpoint,
@@ -44,12 +44,12 @@
   // endpoint runs in dry-run mode (no side effects) — the default on preview.
   "vars": {
     "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
-    "FROM_EMAIL": "Guarda Compartilhada <materiais@guardacompartilhada.com>",
-    "REPLY_TO": "contato@guardacompartilhada.com"
+    "FROM_EMAIL": "Entrelares <materiais@guardacompartilhada.com>",
+    "REPLY_TO": "contato@entrelares.app"
   },
   "env": {
     "preview": {
-      "name": "guardacompartilhada-site-preview",
+      "name": "entrelares-site-preview",
       // Re-declared explicitly so the assets deploy is independent of any
       // wrangler config-inheritance nuance across versions.
       "main": "src/index.js",
@@ -70,8 +70,8 @@
       // you want to test the full flow live on preview.
       "vars": {
         "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
-        "FROM_EMAIL": "Guarda Compartilhada <materiais@guardacompartilhada.com>",
-        "REPLY_TO": "contato@guardacompartilhada.com"
+        "FROM_EMAIL": "Entrelares <materiais@guardacompartilhada.com>",
+        "REPLY_TO": "contato@entrelares.app"
       }
     }
   }

@@ -1,9 +1,11 @@
-# guardacompartilhada-site
+# entrelares-site
 
-The marketing/landing site for **Guarda Compartilhada** — a shared-custody PWA. Served at
-**guardacompartilhada.com**; the application itself lives in the sibling repo
+The marketing/landing site for **Entrelares** (rebranded from "Guarda Compartilhada" — F-54/L-22,
+Aug 2026) — a shared-custody PWA. Served at
+**entrelares.app** (the old apex 301-redirects from the F-54 promotion-A cutover onwards);
+the application itself lives in the sibling repo
 [`SharedParentalCustody`](../SharedParentalCustody) and is served at
-`app.guardacompartilhada.com`.
+`web.entrelares.app`.
 
 Hand-written static HTML/CSS (no framework, no build step) served by a **Cloudflare Worker
 with static assets**. The site is *almost* fully static — `src/index.js` adds **one** dynamic
@@ -47,7 +49,7 @@ or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADM
 ## Structure
 
 ```
-guardacompartilhada-site/
+entrelares-site/
 ├── public/                     # the ONLY directory uploaded as site assets
 │   ├── index.html              # landing page (PT-BR): hero slideshow, how-it-works, benefits,
 │   │                           #   founder note (L-06), #materiais opt-in (L-09), pricing, FAQ
@@ -121,12 +123,12 @@ Mirrors the app's dev/prod split.
 
 | Env | Worker | Domain | Branch → deploy | Analytics | Indexing |
 |---|---|---|---|---|---|
-| **Production** | `guardacompartilhada-site` | guardacompartilhada.com | `main` → `deploy.yml` | Umami | normal |
-| **Preview** | `guardacompartilhada-site-preview` | preview.guardacompartilhada.com | `preview` → `deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny) |
+| **Production** | `entrelares-site` (F-54; the pre-rebrand worker `guardacompartilhada-site` serves until the domains move at the landing's production promotion) | entrelares.app | `main` → `deploy.yml` | Umami | normal |
+| **Preview** | `entrelares-site-preview` (same F-54 transition) | preview.entrelares.app | `preview` → `deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny) |
 
 **Preview is a stable staging site** — review landing changes live before promoting to production.
 Flow: feature branch → merge to **`preview`** (auto-deploys the preview worker) → eyeball at
-`preview.guardacompartilhada.com` → **only on explicit demand**, promote `preview`→`main`
+`preview.entrelares.app` → **only on explicit demand**, promote `preview`→`main`
 (production). The preview build strips the Umami loader from every `public/**/*.html` and overwrites
 `robots.txt` to deny all — applied to the CI checkout only, so source and production stay unchanged.
 
@@ -209,16 +211,16 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
    **"Edit Cloudflare Workers"** (scoped to this account). Add it as the GitHub repo secret
    `CLOUDFLARE_API_TOKEN` (*Settings → Secrets and variables → Actions*). If the Worker is also
    git-connected in the dashboard, disable that build connection so pushes don't double-deploy.
-2. **DNS** — add `guardacompartilhada.com` under Cloudflare *DNS* and point the registrar's
+2. **DNS** — add `entrelares.app` under Cloudflare *DNS* and point the registrar's
    nameservers at Cloudflare.
 3. **Custom domains** — in each Worker's *Settings → Domains & Routes*, add the domain
-   (`guardacompartilhada.com` on production; `preview.guardacompartilhada.com` on the preview
+   (`entrelares.app` on production; `preview.entrelares.app` on the preview
    worker — attached **once** in the dashboard, intentionally not in `wrangler.jsonc`, so the CI
    token needs no zone/DNS scope). TLS is automatic.
 4. **www → apex redirect** — `_redirects` cannot do cross-host redirects on Workers static assets
    (Pages-only). Use a dashboard **Redirect Rule**: when hostname equals
-   `www.guardacompartilhada.com` → 301 to
-   `concat("https://guardacompartilhada.com", http.request.uri.path)`, preserve query string.
+   `www.entrelares.app` → 301 to
+   `concat("https://entrelares.app", http.request.uri.path)`, preserve query string.
    (Requires a proxied `www` DNS record.)
 5. **Worker secret** — `wrangler secret put RESEND_API_KEY` (or the dashboard) on the production
    worker for the L-09 endpoint (see above).
@@ -245,4 +247,4 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 > ✅ **L-16 promotion gate — cleared 10/08/2026.** The English page states that the app is
 > available in English; that became true in production with the app's **U-13** (`v1.8.0`, 07/08 —
 > prod is now `v1.8.1`, and the live login screen switches to English). `preview`→`main` was
-> promoted on 10/08/2026, so `/en/` is live at `guardacompartilhada.com/en/`.
+> promoted on 10/08/2026, so `/en/` is live (at the old apex then; `entrelares.app/en/` since F-54's Ops A).

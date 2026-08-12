@@ -1,9 +1,9 @@
 name: Deploy Preview to Cloudflare
 
 # Preview environment — mirrors the app's DEV/QA: a stable staging site at
-# preview.guardacompartilhada.com so landing changes can be reviewed live before
+# preview.entrelares.app so landing changes can be reviewed live before
 # promoting them to production (main). Deploys the SEPARATE worker
-# `guardacompartilhada-site-preview` (see wrangler.jsonc env.preview).
+# `entrelares-site-preview` (see wrangler.jsonc env.preview).
 on:
   push:
     branches: [preview]

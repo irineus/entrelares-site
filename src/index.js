@@ -10,7 +10,9 @@
 //
 // Config (wrangler.jsonc `vars`, non-secret):
 //   RESEND_SEGMENT_ID  — the Resend segment the contact is added to.
-//   FROM_EMAIL         — verified-domain sender, e.g. "Guarda Compartilhada <materiais@guardacompartilhada.com>".
+//   FROM_EMAIL         — verified-domain sender, e.g. "Entrelares <materiais@entrelares.app>"
+//                        (address stays on the OLD domain until the F-54 promotion-A Resend
+//                        cutover — the Free plan verifies ONE domain and the old one is it).
 //   REPLY_TO           — reply-to address shown to the reader.
 // Secret (via `wrangler secret put RESEND_API_KEY` or the Cloudflare dashboard):
 //   RESEND_API_KEY     — Resend full-access key. When ABSENT the endpoint runs in
@@ -164,9 +166,9 @@ export async function handleSubscribe(request, env, ctx) {
   //    the request came from (prod → prod, preview → preview).
   const origin = new URL(request.url).origin;
   const pdfUrl = `${origin}/downloads/modelos-rotina-guarda-compartilhada.pdf`;
-  const from = env.FROM_EMAIL || "Guarda Compartilhada <materiais@guardacompartilhada.com>";
-  const replyTo = env.REPLY_TO || "contato@guardacompartilhada.com";
-  const unsubscribe = "privacidade@guardacompartilhada.com";
+  const from = env.FROM_EMAIL || "Entrelares <materiais@guardacompartilhada.com>";
+  const replyTo = env.REPLY_TO || "contato@entrelares.app";
+  const unsubscribe = "privacidade@entrelares.app";
 
   try {
     const res = await fetch(`${RESEND_API}/emails`, {
@@ -223,13 +225,13 @@ function emailText(pdfUrl, unsubscribe) {
     "  - trocas de dia com a aprovação dos dois;",
     "  - histórico com data e hora, que não pode ser editado nem apagado.",
     "",
-    "Conheça o app: https://guardacompartilhada.com/",
+    "Conheça o app: https://entrelares.app/",
     "",
     "Um abraço,",
-    "Irineu — Guarda Compartilhada",
+    "Irineu — Entrelares",
     "",
     "—",
-    "Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com.",
+    "Você recebeu este e-mail porque se inscreveu em entrelares.app.",
     "Para sair da lista, é só responder a este e-mail ou escrever para " + unsubscribe + ".",
   ].join("\n");
 }
@@ -260,7 +262,7 @@ function emailHtml(pdfUrl, unsubscribe) {
 
         <!-- header -->
         <tr><td align="center" bgcolor="${brand}" style="background:${brand};padding:26px 24px;">
-          <div style="font-family:${font};font-size:17px;font-weight:700;color:#ffffff;letter-spacing:.01em;">📅 Guarda Compartilhada</div>
+          <div style="font-family:${font};font-size:17px;font-weight:700;color:#ffffff;letter-spacing:.01em;">📅 Entrelares</div>
         </td></tr>
 
         <!-- hero -->
@@ -296,26 +298,26 @@ function emailHtml(pdfUrl, unsubscribe) {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border-top:1px solid ${line};border-radius:0 0 4px 4px;">
             <tr><td style="padding:26px 12px 4px;">
               <h2 style="margin:0 0 8px;font-family:${font};font-size:18px;line-height:1.35;color:${ink};">E quando vocês escolherem a rotina?</h2>
-              <p style="margin:0 0 14px;font-family:${font};font-size:14.5px;line-height:1.6;color:${muted};">Coloque-a no app Guarda Compartilhada — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
+              <p style="margin:0 0 14px;font-family:${font};font-size:14.5px;line-height:1.6;color:${muted};">Coloque-a no app Entrelares — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 ${li("📅", "De quem é o dia, <strong style=\"color:" + ink + "\">sempre à vista</strong>")}
                 ${li("🤝", "Trocas de dia só valem com a <strong style=\"color:" + ink + "\">aprovação dos dois</strong>")}
                 ${li("📜", "Histórico com data e hora, que <strong style=\"color:" + ink + "\">não pode ser editado nem apagado</strong>")}
               </table>
-              <div style="padding:18px 0 4px;">${button("https://guardacompartilhada.com/", "Conhecer o app", indigoDeep)}</div>
+              <div style="padding:18px 0 4px;">${button("https://entrelares.app/", "Conhecer o app", indigoDeep)}</div>
             </td></tr>
           </table>
         </td></tr>
 
         <!-- signature -->
         <tr><td style="padding:22px 32px 4px;">
-          <p style="margin:0;font-family:${font};font-size:15px;line-height:1.6;color:${muted};">Um abraço,<br><strong style="color:${ink};">Irineu</strong> — fundador do Guarda Compartilhada</p>
+          <p style="margin:0;font-family:${font};font-size:15px;line-height:1.6;color:${muted};">Um abraço,<br><strong style="color:${ink};">Irineu</strong> — fundador do Entrelares</p>
         </td></tr>
 
         <!-- footer -->
         <tr><td style="padding:20px 32px 30px;">
           <div style="border-top:1px solid ${line};padding-top:16px;">
-            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em guardacompartilhada.com. Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.</p>
+            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em entrelares.app. Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.</p>
           </div>
         </td></tr>
 

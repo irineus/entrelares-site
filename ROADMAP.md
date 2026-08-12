@@ -651,6 +651,68 @@ subscriber who creates an account should stop receiving the "come try it" step.
 `Pages/Privacy.razor`. Tests belong in `test/subscribe.test.js`'s neighbourhood — the send cap and
 the stop conditions are logic, not copy.
 
+### L-22 — Rebranding to "Entrelares" (site half of the app's F-54)
+
+`high` · `medium` · on-site · **Status: `done` (delivered 12/08/2026, same delivery as the
+app's F-54 PR 1)** · **cross-repo: the app's F-54 owns the decisions; this item executes them
+on the site**
+
+Two closed-alpha testers independently criticized the old name — "Guarda Compartilhada" names
+the legal instrument, not the product — and the owner confirmed the rebrand to **Entrelares**
+(*"Duas casas, uma mesma infância."*) with a full domain migration to **`entrelares.app`**
+(bought 12/08/2026; the PWA moved to `web.entrelares.app`). The owner's standing directive:
+**leave no trace of the old brand** — it survives only as the legal TERM (which the blog
+cluster deliberately targets for search) and as history (git, published releases).
+
+**What shipped here (12/08/2026):**
+- **Brand**: every title-case "Guarda Compartilhada" (site name, org in JSON-LD, nav/footer
+  brand, CTA copy, © line) → "Entrelares", on `/`, `/en/`, the blog cluster and the 404.
+  Lowercase "guarda compartilhada" stays everywhere it names the CUSTODY ARRANGEMENT — that
+  is the search intent the blog exists for, and the article slugs/filenames keep it too.
+- **Domain**: canonical, reciprocal hreflang, `og:url`/`og:image`, JSON-LD urls, sitemap
+  `loc`s (all `lastmod` = 2026-08-12 — every page's content really changed), `robots.txt`
+  sitemap pointer, app links → `https://web.entrelares.app`.
+- **OG banners regenerated**, and the PT-BR one GAINED a generator: `assets-src/og-cover-pt.html`
+  (the original L-02 banner predated the generator convention). Both generators now use fixed
+  positions instead of flex `space-between` — font metrics differ per platform (Segoe UI vs
+  DejaVu) and the metric-dependent layout overflowed the 630px canvas when rendered off-Windows.
+  Headless-Chromium quirk worth keeping: `--window-size=1200,630` yields a 1200×543 viewport
+  (≈87px of window chrome) scaled up to 630 — render at `--window-size=1200,717` and crop to
+  1200×630.
+- **Lead-magnet PDF re-rendered** from the rebranded `assets-src/modelos-rotina.html` — the
+  FILENAME `modelos-rotina-guarda-compartilhada.pdf` is kept on purpose: it is the keyword
+  (not the brand), and it is linked from welcome e-mails already delivered.
+- **Legal pages**: product name + contact addresses → `@entrelares.app` (catch-all verified
+  working in the app's Ops A), "Última atualização" → 12/08/2026. **Non-material** — the
+  "Versão" labels did not move, and the app's `PolicyVersions` was not bumped. Mirrored in
+  the app's `Privacy.razor`/`Terms.razor` in the same delivery, per the sync rule.
+- **Worker**: `src/index.js` welcome e-mail rebranded; `REPLY_TO`/unsubscribe →
+  `@entrelares.app` (receive-side, already delivering). **The FROM address stays on the old
+  domain** — Resend Free verifies ONE domain and the old one is production's live sender; it
+  flips at the app's promotion-A cutover (app runbook 5.8), which now includes this worker's
+  `FROM_EMAIL`. `wrangler.jsonc` renames the workers to `entrelares-site`/`-preview` — worker
+  names are immutable, so these are NEW workers: on first deploy the owner re-attaches the
+  custom domains (preview → `preview.entrelares.app`), re-sets `RESEND_API_KEY` on the
+  production one, and the KV namespace IDs are unchanged so the opt-in evidence log does not
+  fork. Old workers are deleted only after the domains move.
+- **Repo renamed** `guardacompartilhada-site` → **`entrelares-site`** (owner, GitHub UI;
+  GitHub redirects the old URLs) — docs and the app's `notion-mirror.py` updated.
+
+**Deliberately NOT here**: the screenshot re-shoot (L-21 — the frames still show the old
+brand's UI until the app's `1.8.2` reaches the environments they are captured from); Umami
+still counts the old hostname until the owner updates the website domain in the Umami
+dashboard (ops, promotion sitting); the old domain's 301s (promotion-A cutover, so the old
+apex keeps serving the CURRENT production site until the new-brand production promotion).
+
+**Files:** `public/index.html`, `public/en/index.html`, `public/blog/*.html`, `public/404.html`,
+`public/privacidade.html`, `public/termos.html`, `public/sitemap.xml`, `public/robots.txt`,
+`public/og-cover.png`, `public/og-cover-en.png`, `public/downloads/…pdf`,
+`assets-src/og-cover-pt.html` (new), `assets-src/og-cover-en.html`,
+`assets-src/modelos-rotina.html`, `src/index.js`, `test/subscribe.test.js`, `wrangler.jsonc`,
+`.github/workflows/deploy-preview.yml`, `README.md`, `CLAUDE.md`.
+
+---
+
 ## Off-site items — detail
 
 ### L-11 — Community channels
