@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<title>Entrelares — English Open Graph cover</title>
+<title>Entrelares — Open Graph cover (PT-BR)</title>
 <!--
-  L-16/F-54 — generator for public/og-cover-en.png (the English social-sharing banner).
+  F-54 — generator for public/og-cover.png (the PT-BR social-sharing banner).
 
   New visual identity (F-54): light theme, the two-houses mark and the brand tagline
-  as the headline. The <g id="mark"> block is duplicated from icon-entrelares.html —
-  keep them identical when the mark changes. The brand-row icon is the RENDERED
-  public/icon-192.png, so it always matches the shipped icon.
+  as the headline. Replaces the old dark-navy banner that still said "Guarda
+  Compartilhada" (which, until this file, had no generator in the repo). The
+  <g id="mark"> block is duplicated from icon-entrelares.html — keep them identical
+  when the mark changes. The brand-row icon is the RENDERED public/icon-192.png, so
+  it always matches the shipped icon. The English sibling is og-cover-en.html.
 
   NOT served: this file lives in assets-src/, like the lead-magnet PDF generator.
-  The PT-BR banner (public/og-cover.png, og-cover.html) carries Portuguese text, so
-  reusing it on /en/ would show a Portuguese preview to exactly the reader the
-  English page exists for.
 
   Render with headless Chrome/Edge at the Open Graph size (1200x630):
 
     chrome --headless --disable-gpu --hide-scrollbars \
-           --screenshot=public/og-cover-en.png --window-size=1200,630 \
-           assets-src/og-cover-en.html
+           --screenshot=public/og-cover.png --window-size=1200,630 \
+           assets-src/og-cover.html
 
   NOTE: some headless builds subtract window chrome from --window-size (the viewport
   comes out ~87px shorter than asked). If the output shows a white band, render with
   a LARGER window and crop the top-left corner:
 
     chrome --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
-           --screenshot=/tmp/shot.png --window-size=1300,780 assets-src/og-cover-en.html
+           --screenshot=/tmp/shot.png --window-size=1300,780 assets-src/og-cover.html
     python3 -c "from PIL import Image; Image.open('/tmp/shot.png').crop((0,0,1200,630))\
-    .convert('RGB').save('public/og-cover-en.png', optimize=True)"
+    .convert('RGB').save('public/og-cover.png', optimize=True)"
 
-  Re-render whenever the English hero copy or the mark changes.
+  Re-render whenever the hero copy or the mark changes.
 -->
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,8 +58,8 @@
     font-size: 66px; font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
     margin-bottom: 22px;
   }
-  h1 .homes { color: #4f46e5; }
-  h1 .childhood { color: #db2777; }
+  h1 .casas { color: #4f46e5; }
+  h1 .infancia { color: #db2777; }
   .sub { font-size: 27px; line-height: 1.42; color: #475569; }
   .sub b { color: #3730a3; font-weight: 700; }
 
@@ -103,8 +102,8 @@
 </div>
 
 <div class="mid">
-  <h1><span class="homes">Two homes,</span><br /><span class="childhood">one childhood.</span></h1>
-  <p class="sub"><b>Whose day is it today?</b> A shared parenting calendar, day swaps approved by both, and a history nobody can erase.</p>
+  <h1><span class="casas">Duas casas,</span><br /><span class="infancia">uma mesma infância.</span></h1>
+  <p class="sub"><b>De quem é o dia hoje?</b> Calendário de convivência, trocas de dia com aprovação dos dois e histórico completo.</p>
 </div>
 
 <div class="art">
@@ -112,10 +111,10 @@
 </div>
 
 <div class="foot">
-  <span class="chip">Android &amp; iPhone</span>
-  <span class="chip">No ads</span>
-  <span class="chip">The essentials are free</span>
-  <span class="domain">entrelares.app/en</span>
+  <span class="chip">Android e iPhone</span>
+  <span class="chip">Sem anúncios</span>
+  <span class="chip">O essencial é grátis</span>
+  <span class="domain">entrelares.app</span>
 </div>
 
 </body>
