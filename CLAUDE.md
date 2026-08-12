@@ -7,15 +7,15 @@ the landing's next `preview`→`main` promotion), a shared-custody PWA. Hand-wri
 HTML/CSS (no framework, no build step), served by a **Cloudflare Worker with static assets**
 (`wrangler.jsonc`, `wrangler deploy`), deployed by GitHub Actions. The application itself
 lives in the sibling repo **`entrelares-app`** (Blazor WASM + Supabase), served at
-`web.entrelares.app`. The pre-rebrand hosts keep serving and become permanent 301s at the
-F-54 promotion-A cutover; the e-mail SENDER address also flips only at that cutover (Resend
-Free = one verified domain), which is why `wrangler.jsonc`'s `FROM_EMAIL` still carries the
-old domain.
+`web.entrelares.app`. The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
+cutover (12/08/2026), which also flipped the e-mail SENDER to `materiais@entrelares.app` —
+the Resend Free plan verifies ONE domain, so the old one had to be deleted before the new
+one could exist.
 
 ## Environments (mirrors the app's dev/prod split)
 | Env | Worker | Domain | Branch → deploy | Analytics | Indexing |
 |---|---|---|---|---|---|
-| **Production** | `entrelares-site` (F-54 — worker names are immutable, so this is a NEW worker; `guardacompartilhada-site` keeps serving until the domains move at the production promotion, then is deleted) | entrelares.app | `main` → `.github/workflows/deploy.yml` | Umami | normal |
+| **Production** | `entrelares-site` (F-54 — worker names are immutable, so this is a NEW worker; the domains moved at the 12/08/2026 promotion and `guardacompartilhada-site` is now domain-less, pending deletion in the cleanup) | entrelares.app | `main` → `.github/workflows/deploy.yml` | Umami | normal |
 | **Preview** | `entrelares-site-preview` (same transition) | preview.entrelares.app | `preview` → `.github/workflows/deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny + not attached to sitemap) |
 
 - **Preview is a stable staging site** — review landing changes live before promoting to
@@ -160,8 +160,9 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   contact it justifies. Written **before** the Resend calls and **also in dry-run**, because the
   consent happened at submission regardless of whether an e-mail went out. Best-effort: a KV
   outage logs and continues rather than refusing the material. One namespace **per environment**
-  (prod `guardacompartilhada-optin-log`, preview `…-preview`), declared in `wrangler.jsonc`, so
-  preview submissions never mix into the production evidence. Disclosed in `privacidade.html` §3.
+  (prod `guardacompartilhada-optin-log`, preview `…-preview` — the NAMES keep the old brand on
+  purpose: the ids are what `wrangler.jsonc` binds, and renaming would fork the evidence log),
+  declared in `wrangler.jsonc`, so preview submissions never mix into the production evidence. Disclosed in `privacidade.html` §3.
 - Umami events: `materiais-baixar` (button click) and `materiais-inscricao` (success).
 - Neutral naming: no user-visible artifact says "lead-magnet" (files are `materiais.css`/`materiais.js`,
   the section class is `.materiais-box`, the PDF title is set). Internal `.lm-*` style hooks stay.

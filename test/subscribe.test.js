@@ -215,7 +215,7 @@ test("PDF link and sender fall back to defaults, and track the request origin", 
   // No segment configured → the contact body omits segment_ids entirely.
   assert.equal("segment_ids" in contact.body, false);
   // From/reply-to fall back to the built-in defaults.
-  assert.match(emailCall.body.from, /materiais@guardacompartilhada\.com/);
+  assert.match(emailCall.body.from, /materiais@entrelares\.app/);
   assert.equal(emailCall.body.reply_to, "contato@entrelares.app");
   // The PDF URL tracks the origin the request came in on (preview → preview).
   assert.ok(emailCall.body.html.includes("https://preview.entrelares.app/downloads/"));

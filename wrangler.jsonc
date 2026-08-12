@@ -44,7 +44,7 @@
   // endpoint runs in dry-run mode (no side effects) — the default on preview.
   "vars": {
     "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
-    "FROM_EMAIL": "Entrelares <materiais@guardacompartilhada.com>",
+    "FROM_EMAIL": "Entrelares <materiais@entrelares.app>",
     "REPLY_TO": "contato@entrelares.app"
   },
   "env": {
@@ -70,7 +70,7 @@
       // you want to test the full flow live on preview.
       "vars": {
         "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
-        "FROM_EMAIL": "Entrelares <materiais@guardacompartilhada.com>",
+        "FROM_EMAIL": "Entrelares <materiais@entrelares.app>",
         "REPLY_TO": "contato@entrelares.app"
       }
     }
