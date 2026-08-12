@@ -60,7 +60,7 @@ afterEach(() => {
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 
-function req(body, { method = "POST", origin = "https://guardacompartilhada.com" } = {}) {
+function req(body, { method = "POST", origin = "https://entrelares.app" } = {}) {
   const init = { method };
   if (body !== undefined) {
     init.body = typeof body === "string" ? body : JSON.stringify(body);
@@ -72,8 +72,8 @@ function req(body, { method = "POST", origin = "https://guardacompartilhada.com"
 const LIVE_ENV = {
   RESEND_API_KEY: "re_test_key",
   RESEND_SEGMENT_ID: "seg-123",
-  FROM_EMAIL: "Guarda <materiais@guardacompartilhada.com>",
-  REPLY_TO: "contato@guardacompartilhada.com",
+  FROM_EMAIL: "Guarda <materiais@entrelares.app>",
+  REPLY_TO: "contato@entrelares.app",
 };
 
 async function body(res) {
@@ -205,7 +205,7 @@ test("happy path: adds contact to segment and sends the welcome e-mail", async (
 test("PDF link and sender fall back to defaults, and track the request origin", async () => {
   const env = { RESEND_API_KEY: "re_x" }; // no SEGMENT/FROM/REPLY configured
   const res = await handleSubscribe(
-    req({ email: "a@b.com" }, { origin: "https://preview.guardacompartilhada.com" }),
+    req({ email: "a@b.com" }, { origin: "https://preview.entrelares.app" }),
     env,
   );
   assert.equal((await body(res)).emailQueued, true);
@@ -216,9 +216,9 @@ test("PDF link and sender fall back to defaults, and track the request origin", 
   assert.equal("segment_ids" in contact.body, false);
   // From/reply-to fall back to the built-in defaults.
   assert.match(emailCall.body.from, /materiais@guardacompartilhada\.com/);
-  assert.equal(emailCall.body.reply_to, "contato@guardacompartilhada.com");
+  assert.equal(emailCall.body.reply_to, "contato@entrelares.app");
   // The PDF URL tracks the origin the request came in on (preview → preview).
-  assert.ok(emailCall.body.html.includes("https://preview.guardacompartilhada.com/downloads/"));
+  assert.ok(emailCall.body.html.includes("https://preview.entrelares.app/downloads/"));
 });
 
 // ── duplicate contact tolerated ──────────────────────────────────────────
@@ -279,7 +279,7 @@ test("email send network throw also reports partial success", async () => {
 // that a log of date, time and IP is kept. These tests are that condition.
 
 test("opt-in log: records email, timestamp and IP on a valid subscribe", async () => {
-  const request = new Request("https://guardacompartilhada.com/api/subscribe", {
+  const request = new Request("https://entrelares.app/api/subscribe", {
     method: "POST",
     body: JSON.stringify({ email: "Ana@Exemplo.com " }),
     headers: { "content-type": "application/json", "CF-Connecting-IP": "203.0.113.7" },
