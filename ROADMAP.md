@@ -1,8 +1,8 @@
 # Landing Page — Backlog & Growth Roadmap
 
-The **forward plan + full per-item records** for `guardacompartilhada.com` (the marketing
+The **forward plan + full per-item records** for `entrelares.app` (the marketing
 site). Companion to the app-side plan in
-[`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md).
+[`entrelares-app/backlog/README.md`](../entrelares-app/backlog/README.md).
 The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
 several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
 own items: `L-*` here, `F-/U-/T-/S-*` in the app.
@@ -19,7 +19,7 @@ distribution** — not the SEO base.
 ## Where the status lives (changed July 2026)
 
 The **live status board moved to Notion** — database *"Backlog"* under
-[Guarda Compartilhada — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
+[Entrelares — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
 maintained through the Notion MCP connector. It is **shared with the app repo**: the `L-*` rows
 sit next to the app's `F-`/`U-`/`T-`/`S-` rows (filter by `Repo = landing`), which is what makes
 the one-funnel view possible in a single place. It owns **status, execution order (`Ordem`) and
@@ -50,7 +50,7 @@ With the pricing gate cleared, **L-05 and L-04 are independent of the app** and 
 
 **Off-site (planned, board group *Polimento e melhoria progressiva*, last slot):** **L-13** — outreach discovery, a time-boxed comparison of where promotion effort should actually go, whose output is a ranked shortlist that becomes real items. The owner placed it at the END of that group (Aug 2026): choosing *where to spend* is worth more once the product depth ahead of it has landed.
 
-> **Cross-repo:** the app's forward plan lives in [`SharedParentalCustody/backlog/README.md`](../SharedParentalCustody/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
+> **Cross-repo:** the app's forward plan lives in [`entrelares-app/backlog/README.md`](../entrelares-app/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
 
 ---
 
@@ -697,6 +697,9 @@ cluster deliberately targets for search) and as history (git, published releases
   fork. Old workers are deleted only after the domains move.
 - **Repo renamed** `guardacompartilhada-site` → **`entrelares-site`** (owner, GitHub UI;
   GitHub redirects the old URLs) — docs and the app's `notion-mirror.py` updated.
+- **QA round (12/08)**: FAQ reworded to "Dúvidas sobre o processo de guarda parental" with a
+  first question covering ANY custody arrangement (#51), and the EN page now says **divorce**
+  wherever "separation" meant the end of the marriage (#52; data-isolation mentions kept).
 
 **Deliberately NOT here**: the screenshot re-shoot (L-21 — the frames still show the old
 brand's UI until the app's `1.8.2` reaches the environments they are captured from); Umami
