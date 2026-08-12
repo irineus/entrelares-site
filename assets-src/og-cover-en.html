@@ -6,12 +6,11 @@
 <!--
   L-16/F-54 — generator for public/og-cover-en.png (the English social-sharing banner).
 
-  Identity "O Emblema" (F-54): the official brand artwork (assets-src/
-  brand-emblema.png, AI-generated, approved by the owner — no vector source) shown
+  Identity "O Emblema" (F-54): the official brand artwork (assets-src/brand-emblema.png,
+  1024x1024 text-free, AI-generated, approved by the owner — no vector source) shown
   as a framed card on the cream layout, navy #2F4156 for text. The card's
-  background-size/position crop the source's (219,0)-(1178,752) window; recompute
-  them if the artwork or the card size changes (bg-size = 1380*W/959, bg-pos-x =
-  -219*W/959). The brand-row icon is the RENDERED public/icon-192.png, so it always
+  square framed card shows the TEXT-FREE square master 1:1 (the favicon derives
+  from the flat variant brand-emblema-flat.png — see brand-icons.py). The brand-row icon is the RENDERED public/icon-192.png, so it always
   matches the shipped icon (see assets-src/brand-icons.py). The PT-BR banner
   (public/og-cover.png, og-cover.html) carries Portuguese text, so reusing it on
   /en/ would show a Portuguese preview to exactly the reader the English page
@@ -57,7 +56,7 @@
   .brand img { width: 62px; height: 62px; border-radius: 16px; display: block; }
   .brand span { font-size: 31px; font-weight: 700; letter-spacing: -0.01em; }
 
-  .mid { position: absolute; top: 172px; left: 70px; right: 470px; }
+  .mid { position: absolute; top: 172px; left: 70px; right: 452px; }
   h1 {
     font-size: 61px; font-weight: 800; line-height: 1.12; letter-spacing: -0.025em;
     color: #2f4156; margin-bottom: 24px;
@@ -65,15 +64,14 @@
   .sub { font-size: 27px; line-height: 1.42; color: #56636e; }
   .sub b { color: #2f4156; font-weight: 700; }
 
-  /* the brand plaque, framed: source window (219,0)-(1178,752) of the 1380px art */
+  /* the brand plaque, framed: the square text-free master, shown 1:1 */
   .art {
-    position: absolute; top: 156px; right: 62px;
-    width: 380px; height: 298px;
+    position: absolute; top: 148px; right: 66px;
+    width: 316px; height: 316px;
     border-radius: 24px; overflow: hidden;
     box-shadow: 0 12px 32px rgba(93, 79, 54, 0.18);
-    background: url(brand-emblema.png) no-repeat #eeece7;
-    background-size: 547px auto;
-    background-position: -87px 0;
+    background: url(brand-emblema.png) no-repeat #f2f0ec;
+    background-size: 100% 100%;
   }
 
   .foot { position: absolute; bottom: 54px; left: 70px; right: 70px;
