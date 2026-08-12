@@ -6,12 +6,14 @@
 <!--
   F-54 — generator for public/og-cover.png (the PT-BR social-sharing banner).
 
-  New visual identity (F-54): light theme, the two-houses mark and the brand tagline
-  as the headline. Replaces the old dark-navy banner that still said "Guarda
-  Compartilhada" (which, until this file, had no generator in the repo). The
-  <g id="mark"> block is duplicated from icon-entrelares.html — keep them identical
-  when the mark changes. The brand-row icon is the RENDERED public/icon-192.png, so
-  it always matches the shipped icon. The English sibling is og-cover-en.html.
+  Identity "O Emblema" (F-54): the official brand artwork (assets-src/
+  brand-emblema.png, AI-generated, approved by the owner — no vector source) shown
+  as a framed card on the cream layout, navy #2F4156 for text. The card's
+  background-size/position crop the source's (219,0)-(1178,752) window; recompute
+  them if the artwork or the card size changes (bg-size = 1380*W/959, bg-pos-x =
+  -219*W/959). The brand-row icon is the RENDERED public/icon-192.png, so it always
+  matches the shipped icon (see assets-src/brand-icons.py). The English sibling is
+  og-cover-en.html.
 
   NOT served: this file lives in assets-src/, like the lead-magnet PDF generator.
 
@@ -30,19 +32,18 @@
     python3 -c "from PIL import Image; Image.open('/tmp/shot.png').crop((0,0,1200,630))\
     .convert('RGB').save('public/og-cover.png', optimize=True)"
 
-  Re-render whenever the hero copy or the mark changes.
+  Re-render whenever the hero copy or the artwork changes.
 -->
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
     font-family: "Segoe UI", "Liberation Sans", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
-    background: #f8fafc;
+    background: #f7f2e7;
     background-image:
-      radial-gradient(900px 560px at 88% 0%, #e0e7ff 0%, rgba(224,231,255,0) 60%),
-      radial-gradient(760px 520px at 6% 100%, #fce7f3 0%, rgba(252,231,243,0) 58%),
-      linear-gradient(160deg, #f8fafc 0%, #f1f5f9 100%);
-    color: #0f172a;
+      radial-gradient(760px 480px at 92% 0%, rgba(118,143,122,0.10) 0%, rgba(118,143,122,0) 60%),
+      radial-gradient(640px 440px at 4% 100%, rgba(212,160,129,0.14) 0%, rgba(212,160,129,0) 58%);
+    color: #2f4156;
     padding: 48px 70px 54px;
     position: relative;
   }
@@ -53,48 +54,40 @@
   .brand img { width: 62px; height: 62px; border-radius: 16px; display: block; }
   .brand span { font-size: 31px; font-weight: 700; letter-spacing: -0.01em; }
 
-  .mid { position: absolute; top: 185px; left: 70px; right: 460px; }
+  .mid { position: absolute; top: 172px; left: 70px; right: 470px; }
   h1 {
-    font-size: 66px; font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
-    margin-bottom: 22px;
+    font-size: 61px; font-weight: 800; line-height: 1.12; letter-spacing: -0.025em;
+    color: #2f4156; margin-bottom: 24px;
   }
-  h1 .casas { color: #4f46e5; }
-  h1 .infancia { color: #db2777; }
-  .sub { font-size: 27px; line-height: 1.42; color: #475569; }
-  .sub b { color: #3730a3; font-weight: 700; }
+  .sub { font-size: 27px; line-height: 1.42; color: #56636e; }
+  .sub b { color: #2f4156; font-weight: 700; }
 
-  .art { position: absolute; top: 168px; right: 62px; }
-  .art svg { width: 330px; height: 272px; display: block; }
+  /* the brand plaque, framed: source window (219,0)-(1178,752) of the 1380px art */
+  .art {
+    position: absolute; top: 156px; right: 62px;
+    width: 380px; height: 298px;
+    border-radius: 24px; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(93, 79, 54, 0.18);
+    background: url(brand-emblema.png) no-repeat #eeece7;
+    background-size: 547px auto;
+    background-position: -87px 0;
+  }
 
   .foot { position: absolute; bottom: 54px; left: 70px; right: 70px;
           display: flex; align-items: center; gap: 16px; }
   .chip {
     background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e4dcc8;
     border-radius: 999px;
     padding: 11px 22px;
     font-size: 21px;
     font-weight: 600;
-    color: #334155;
+    color: #44525e;
   }
-  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #4f46e5; }
+  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #a8642f; }
 </style>
 </head>
 <body>
-
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <!-- keep identical to assets-src/icon-entrelares.html -->
-    <g id="mark" stroke-linejoin="round">
-      <path d="M108 210 L208 130 L308 210 L308 390 L108 390 Z" fill="#4f46e5" stroke="#4f46e5" stroke-width="22"/>
-      <path d="M204 210 L304 130 L404 210 L404 390 L204 390 Z" fill="#db2777" stroke="#db2777" stroke-width="22"/>
-      <path d="M204 210 L256 168.4 L308 210 L308 390 L204 390 Z" fill="#5b21b6" stroke="#5b21b6" stroke-width="22"/>
-      <g transform="translate(256,262) scale(1.45)">
-        <path d="M0 18 C 0 10 -6 2 -16 2 C -27 2 -32 10 -32 17 C -32 30 -14 40 0 52 C 14 40 32 30 32 17 C 32 10 27 2 16 2 C 6 2 0 10 0 18 Z" fill="#ffffff"/>
-      </g>
-    </g>
-  </defs>
-</svg>
 
 <div class="brand">
   <img src="../public/icon-192.png" alt="" />
@@ -102,13 +95,11 @@
 </div>
 
 <div class="mid">
-  <h1><span class="casas">Duas casas,</span><br /><span class="infancia">uma mesma infância.</span></h1>
+  <h1>Duas casas,<br />uma mesma infância.</h1>
   <p class="sub"><b>De quem é o dia hoje?</b> Calendário de convivência, trocas de dia com aprovação dos dois e histórico completo.</p>
 </div>
 
-<div class="art">
-  <svg viewBox="86 114 340 304"><use href="#mark"/></svg>
-</div>
+<div class="art"></div>
 
 <div class="foot">
   <span class="chip">Android e iPhone</span>
