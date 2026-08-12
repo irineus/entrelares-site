@@ -1,40 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<title>Entrelares — English Open Graph cover</title>
+<title>Entrelares — Open Graph cover (PT-BR)</title>
 <!--
-  L-16/F-54 — generator for public/og-cover-en.png (the English social-sharing banner).
+  F-54 — generator for public/og-cover.png (the PT-BR social-sharing banner).
 
   Identity "O Emblema" (F-54): the official brand artwork (assets-src/brand-emblema.png,
   1024x1024 text-free, AI-generated, approved by the owner — no vector source) shown
   as a framed card on the cream layout, navy #2F4156 for text. The card's
   square framed card shows the TEXT-FREE square master 1:1 (the favicon derives
   from the flat variant brand-emblema-flat.png — see brand-icons.py). The brand-row icon is the RENDERED public/icon-192.png, so it always
-  matches the shipped icon (see assets-src/brand-icons.py). The PT-BR banner
-  (public/og-cover.png, og-cover.html) carries Portuguese text, so reusing it on
-  /en/ would show a Portuguese preview to exactly the reader the English page
-  exists for. (The artwork itself carries the PT tagline engraved — it is the brand
-  plaque, kept identical in both banners on purpose.)
+  matches the shipped icon (see assets-src/brand-icons.py). The English sibling is
+  og-cover-en.html.
 
   NOT served: this file lives in assets-src/, like the lead-magnet PDF generator.
 
   Render with headless Chrome/Edge at the Open Graph size (1200x630):
 
     chrome --headless --disable-gpu --hide-scrollbars \
-           --screenshot=public/og-cover-en.png --window-size=1200,630 \
-           assets-src/og-cover-en.html
+           --screenshot=public/og-cover.png --window-size=1200,630 \
+           assets-src/og-cover.html
 
   NOTE: some headless builds subtract window chrome from --window-size (the viewport
   comes out ~87px shorter than asked). If the output shows a white band, render with
   a LARGER window and crop the top-left corner:
 
     chrome --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
-           --screenshot=/tmp/shot.png --window-size=1300,780 assets-src/og-cover-en.html
+           --screenshot=/tmp/shot.png --window-size=1300,780 assets-src/og-cover.html
     python3 -c "from PIL import Image; Image.open('/tmp/shot.png').crop((0,0,1200,630))\
-    .convert('RGB').save('public/og-cover-en.png', optimize=True)"
+    .convert('RGB').save('public/og-cover.png', optimize=True)"
 
-  Re-render whenever the English hero copy or the artwork changes.
+  Re-render whenever the hero copy or the artwork changes.
 -->
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -96,17 +93,17 @@
 </div>
 
 <div class="mid">
-  <h1>Two homes,<br />one childhood.</h1>
-  <p class="sub"><b>Whose day is it today?</b> A shared parenting calendar, day swaps approved by both, and a history nobody can erase.</p>
+  <h1>Duas casas,<br />uma mesma infância.</h1>
+  <p class="sub"><b>De quem é o dia hoje?</b> Calendário de convivência, trocas de dia com aprovação dos dois e histórico completo.</p>
 </div>
 
 <div class="art"></div>
 
 <div class="foot">
-  <span class="chip">Android &amp; iPhone</span>
-  <span class="chip">No ads</span>
-  <span class="chip">The essentials are free</span>
-  <span class="domain">entrelares.app/en</span>
+  <span class="chip">Android e iPhone</span>
+  <span class="chip">Sem anúncios</span>
+  <span class="chip">O essencial é grátis</span>
+  <span class="domain">entrelares.app</span>
 </div>
 
 </body>
