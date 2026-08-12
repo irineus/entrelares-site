@@ -10,9 +10,9 @@
 //
 // Config (wrangler.jsonc `vars`, non-secret):
 //   RESEND_SEGMENT_ID  — the Resend segment the contact is added to.
-//   FROM_EMAIL         — verified-domain sender, e.g. "Entrelares <materiais@entrelares.app>"
-//                        (address stays on the OLD domain until the F-54 promotion-A Resend
-//                        cutover — the Free plan verifies ONE domain and the old one is it).
+//   FROM_EMAIL         — verified-domain sender: "Entrelares <materiais@entrelares.app>"
+//                        (flipped at the F-54 promotion-A cutover, 12/08/2026 — the Resend
+//                        Free plan verifies ONE domain, so the old one was deleted first).
 //   REPLY_TO           — reply-to address shown to the reader.
 // Secret (via `wrangler secret put RESEND_API_KEY` or the Cloudflare dashboard):
 //   RESEND_API_KEY     — Resend full-access key. When ABSENT the endpoint runs in
@@ -166,7 +166,7 @@ export async function handleSubscribe(request, env, ctx) {
   //    the request came from (prod → prod, preview → preview).
   const origin = new URL(request.url).origin;
   const pdfUrl = `${origin}/downloads/modelos-rotina-guarda-compartilhada.pdf`;
-  const from = env.FROM_EMAIL || "Entrelares <materiais@guardacompartilhada.com>";
+  const from = env.FROM_EMAIL || "Entrelares <materiais@entrelares.app>";
   const replyTo = env.REPLY_TO || "contato@entrelares.app";
   const unsubscribe = "privacidade@entrelares.app";
 
