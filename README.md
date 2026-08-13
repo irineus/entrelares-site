@@ -123,7 +123,7 @@ Mirrors the app's dev/prod split.
 
 | Env | Worker | Domain | Branch → deploy | Analytics | Indexing |
 |---|---|---|---|---|---|
-| **Production** | `entrelares-site` (F-54; the pre-rebrand worker `guardacompartilhada-site` serves until the domains move at the landing's production promotion) | entrelares.app | `main` → `deploy.yml` | Umami | normal |
+| **Production** | `entrelares-site` (F-54 — a NEW worker, since worker names are immutable; the domains moved at the 12/08/2026 promotion and the old ones now 301 here) | entrelares.app | `main` → `deploy.yml` | Umami | normal |
 | **Preview** | `entrelares-site-preview` (same F-54 transition) | preview.entrelares.app | `preview` → `deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny) |
 
 **Preview is a stable staging site** — review landing changes live before promoting to production.
