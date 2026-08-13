@@ -1,9 +1,9 @@
 {
-  "name": "guardacompartilhada-site",
+  "name": "entrelares-site",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Landing site — Cloudflare Worker (static assets + POST /api/subscribe) for Guarda Compartilhada.",
+  "description": "Landing site — Cloudflare Worker (static assets + POST /api/subscribe) for Entrelares.",
   "scripts": {
     "test": "node --test"
   }

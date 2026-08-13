@@ -3,8 +3,10 @@
   // in CI. Only files under public/ are uploaded.
   //
   // Two environments (mirrors the app's dev/prod split):
-  //   · PRODUCTION (default / top-level): worker `entrelares-site` (F-54; the pre-rebrand worker `guardacompartilhada-site` keeps serving until the domains move),
-  //     custom domain entrelares.app (+ the old apex as 301), deployed from `main` (deploy.yml).
+  //   · PRODUCTION (default / top-level): worker `entrelares-site` (F-54 — worker names are
+  //     immutable, so the rebrand meant a NEW worker and the domains were moved by hand at the
+  //     12/08/2026 promotion; the old apex now 301s here),
+  //     custom domain entrelares.app, deployed from `main` (deploy.yml).
   //     A plain `wrangler deploy` (no --env) uses this block and ignores env.* .
   //   · PREVIEW (`wrangler deploy --env preview`): worker
   //     `entrelares-site-preview`, custom domain
