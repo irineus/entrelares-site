@@ -707,12 +707,26 @@ still counts the old hostname until the owner updates the website domain in the 
 dashboard (ops, promotion sitting); the old domain's 301s (promotion-A cutover, so the old
 apex keeps serving the CURRENT production site until the new-brand production promotion).
 
+**Closed 12–13/08/2026.** Production carries the new brand since the `preview`→`main` promotion
+of 12/08, and the cutover finished in the same sitting: the domains moved to the new workers,
+`guardacompartilhada.com` and `www` now answer **301** to `https://entrelares.app` (path and
+query preserved), and the old workers plus the app's old Pages project were deleted. Two
+follow-ups landed right after and are part of this record: the Worker's `FROM_EMAIL` moved to
+`materiais@entrelares.app` — the old domain had just been deleted from Resend, so the welcome
+e-mail of the L-09 opt-in would have failed silently — and the internal names (`package.json`,
+the `wrangler.jsonc` comment, the README environments table) stopped describing the domain move
+as something still to come. **The KV namespaces keep the old name on purpose**: the binding is
+by id, and renaming would fork the consent evidence log. What did NOT close with this item:
+**L-21** (screenshot re-shoot — the phone frames still show the pre-rebrand UI) and the Umami
+website-domain field, which still counts the old hostname until the owner edits it in the Umami
+dashboard.
+
 **Files:** `public/index.html`, `public/en/index.html`, `public/blog/*.html`, `public/404.html`,
 `public/privacidade.html`, `public/termos.html`, `public/sitemap.xml`, `public/robots.txt`,
 `public/og-cover.png`, `public/og-cover-en.png`, `public/downloads/…pdf`,
 `assets-src/og-cover-pt.html` (new), `assets-src/og-cover-en.html`,
 `assets-src/modelos-rotina.html`, `src/index.js`, `test/subscribe.test.js`, `wrangler.jsonc`,
-`.github/workflows/deploy-preview.yml`, `README.md`, `CLAUDE.md`.
+`.github/workflows/deploy-preview.yml`, `package.json`, `README.md`, `CLAUDE.md`.
 
 ---
 
