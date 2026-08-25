@@ -33,18 +33,17 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, **L-21**/L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
+**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
 
 1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
 2. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
 3. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
 4. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
-5. **L-21 — English screenshots for `/en/`.** The English page is live and still shows the PT-BR captures inside the phone frames. Follow-up of L-16, unblocked the moment the app's U-13 reached production.
-6. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-7. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
-8. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+5. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+6. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
+7. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind, **L-21** (the screenshots inside the frames are still the PT-BR captures).
+With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames are still the PT-BR captures. That was **L-21**, and since 24/08/2026 it is the app repo's **T-57**: the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages, owned by the repo the app lives in.
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -442,7 +441,7 @@ files, not a templating layer — so `/en/` is a full sibling of `/`, and the de
   `"price": "14.90"` while the visible price had been **R$ 5,49** since L-14, so the structured
   data was telling Google a price the page contradicts.
 
-**Known follow-up — now tracked as [L-21](#l-21--english-screenshots-for-en).** The phone
+**Known follow-up — [L-21](#l-21--english-screenshots-for-en), absorbed by the app repo's T-57 on 24/08/2026.** The phone
 screenshots on `/en/` are the **PT-BR captures**, so an English reader sees a Portuguese UI inside
 the frames. Re-capturing them needed a running English build of the app, which is exactly what the
 promotion gate above was waiting for — that gate fell on 07/08/2026, so the follow-up became
@@ -546,8 +545,25 @@ keep working.
 
 ### L-21 — English screenshots for `/en/`
 
-`medium` · `low` · on-site · **Status: `pending`** · board slot: *Polimento* · **follow-up of
-L-16** · **cross-repo: the captures come from the app (U-13)**
+`medium` · `low` · on-site · **Status: `skipped` — absorbed by the app repo's
+[T-57](https://github.com/irineus/entrelares-flutter/blob/main/backlog/technical.md)
+(24/08/2026)** · **follow-up of L-16**
+
+> **Why it was absorbed rather than done.** This record was written on 10/08/2026 on a premise
+> that has since died: that the PT-BR captures were current and only the English set was
+> missing. Two things happened after. The **cutover** (app T-53, 23/08/2026) replaced the
+> client these frames photograph — both channels now run the Flutter app — and **U-27/U-28**
+> replaced its visual system. So the PT-BR set is exactly as stale as the English one is
+> absent, and the work is no longer "translate the frames": it is one capture session that
+> produces both languages, from an app that lives in the other repository. Splitting it would
+> put a hand-off in the middle of a single sitting.
+>
+> **Nothing here was dropped.** T-57 carries this record's scope forward verbatim where it
+> still applies: the parallel `img/screenshots/en/` directory (never overwrite the PT-BR
+> files — that just moves the defect), the fictional-but-real-UI rule, the `webp`+`png` pair
+> with its `loading`/`width`/`height` attributes so the hero's LCP does not regress, the
+> English `alt` text, and the "shoot it in the same session as L-17" note. The landing-side
+> files are still landing-side files; the item that owns them moved, not the work.
 
 Written up on 10/08/2026, the day `/en/` went to production. `public/en/index.html` reuses the
 `img/screenshots/*` assets captured for the PT-BR page (**L-03**), so the hero slideshow and the
@@ -701,7 +717,7 @@ cluster deliberately targets for search) and as history (git, published releases
   first question covering ANY custody arrangement (#51), and the EN page now says **divorce**
   wherever "separation" meant the end of the marriage (#52; data-isolation mentions kept).
 
-**Deliberately NOT here**: the screenshot re-shoot (L-21 — the frames still show the old
+**Deliberately NOT here**: the screenshot re-shoot (L-21, now the app repo's **T-57** — the frames still show the old
 brand's UI until the app's `1.8.2` reaches the environments they are captured from); Umami
 still counts the old hostname until the owner updates the website domain in the Umami
 dashboard (ops, promotion sitting); the old domain's 301s (promotion-A cutover, so the old
@@ -717,7 +733,7 @@ e-mail of the L-09 opt-in would have failed silently — and the internal names 
 the `wrangler.jsonc` comment, the README environments table) stopped describing the domain move
 as something still to come. **The KV namespaces keep the old name on purpose**: the binding is
 by id, and renaming would fork the consent evidence log. What did NOT close with this item:
-**L-21** (screenshot re-shoot — the phone frames still show the pre-rebrand UI) and the Umami
+**L-21**, now the app repo's **T-57** (screenshot re-shoot — the phone frames still show the pre-rebrand UI), and the Umami
 website-domain field, which still counts the old hostname until the owner edits it in the Umami
 dashboard.
 
