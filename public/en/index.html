@@ -348,6 +348,53 @@
         .compare-good li { color: var(--ink); }
         .compare-good li::before { content: "✓"; position: absolute; left: 2px; color: var(--indigo); font-weight: 700; }
 
+        /* ── Demo: o histórico sendo escrito (L-17) ─────────────
+           Sequência DIRIGIDA sobre os frames REAIS do app (T-57), não um vídeo:
+           o texto é HTML — serve os dois idiomas sem um segundo binário e sem
+           re-encodar quando a UI mudar —, os quadros já estão no cache da
+           página (peso extra ≈ 0, o LCP segue no hero) e
+           prefers-reduced-motion vira só "não avança sozinho": os três passos
+           continuam legíveis parados. */
+        .demo { display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: center; max-width: 880px; }
+        .demo .phone { margin: 0; }
+        .demo-frame { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
+        .demo-frame.is-active { opacity: 1; }
+        .demo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        /* O foco é um RECORTE: escurece tudo fora dele com um box-shadow gigante
+           (por isso .phone-screen precisa do overflow:hidden que já tem) e
+           desliza de um beat para o outro. É esse movimento que faz a peça ler
+           como sequência, e não como mais um slideshow. As coordenadas do
+           primeiro beat estão inline no HTML: sem JS, o recorte já nasce certo. */
+        .demo-ring {
+            position: absolute; border: 2.5px solid var(--indigo); border-radius: 12px;
+            box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.45); pointer-events: none;
+            transition: left .55s cubic-bezier(.4, 0, .2, 1), top .55s cubic-bezier(.4, 0, .2, 1),
+                        width .55s cubic-bezier(.4, 0, .2, 1), height .55s cubic-bezier(.4, 0, .2, 1);
+        }
+        .demo-steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .demo-steps button {
+            display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; text-align: left;
+            background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+            padding: 16px 18px; cursor: pointer; font: inherit; color: inherit;
+            transition: border-color .2s ease, background .2s ease;
+        }
+        .demo-steps button:hover { border-color: var(--indigo); }
+        .demo-steps button[aria-current="true"] { border-color: var(--indigo); background: var(--bg-tint); }
+        .demo-n {
+            width: 30px; height: 30px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo);
+            font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center;
+        }
+        .demo-steps button[aria-current="true"] .demo-n { background: var(--indigo); color: #fff; }
+        .demo-tx strong { display: block; font-size: 16px; margin-bottom: 4px; }
+        .demo-d { display: block; font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+        /* A barra só existe enquanto algo de fato avança sozinho — sem autoplay
+           (reduced-motion, ponteiro em cima, aba oculta) ela some em vez de
+           mentir que está correndo. */
+        .demo-bar { grid-column: 2; height: 3px; border-radius: 2px; background: var(--line); margin-top: 12px; overflow: hidden; display: none; }
+        .demo.is-playing .demo-steps button[aria-current="true"] .demo-bar { display: block; }
+        .demo-bar i { display: block; height: 100%; width: 0; background: var(--indigo); }
+        @media (prefers-reduced-motion: reduce) { .demo-frame, .demo-ring { transition: none; } }
+
         /* ── Founder note + values (L-06) ───────────────────── */
         .founder { max-width: 760px; margin: 0 auto; }
         .founder-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--indigo); border-radius: var(--radius); padding: 32px 34px; }
@@ -380,6 +427,10 @@
             .hero { padding: 40px 0 56px; }
             .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
             .steps, .features, .install-grid, .compare { grid-template-columns: 1fr; }
+            /* L-17: a demo empilha e centraliza — a lista de passos vira legenda
+               abaixo do telefone em vez de uma coluna espremida. */
+            .demo { grid-template-columns: 1fr; gap: 28px; justify-items: center; }
+            .demo-steps { width: 100%; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .nav-links { display: none; }
 
@@ -596,6 +647,62 @@
                     <li>Instant notifications — nobody is left out</li>
                 </ul>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- L-17 — the unchangeable-record promise, SHOWN instead of asserted.
+     Sibling of #registro in public/index.html — same markup, English copy and
+     the English frames. Two coordinates differ from the PT-BR page on purpose:
+     the request card is taller here because "Requested on" wraps to two lines.
+     Everything the captions claim is verified in the app: a day with an open
+     request is frozen (a database rule) and activity_logs is append-only,
+     written by trigger only. -->
+<section id="record">
+    <div class="wrap">
+        <h2>Watch the record being written</h2>
+        <p class="section-lead">A sentence cannot prove that a record is unchangeable. These are two real screens of the app, in the order things happen — from the swap request to the line nobody can take back.</p>
+        <div class="demo" id="demo">
+            <div class="phone">
+                <div class="phone-screen">
+                    <div class="demo-frame is-active">
+                        <picture>
+                            <source srcset="/img/screenshots/en/troca-aguardando-aprovacao.webp" type="image/webp" />
+                            <img src="/img/screenshots/en/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="App screen with the pending swap request for 31 Aug 2026: requested by Marina, proposed caregiver Rafael, requested on 23 Aug 2026 7:59 AM, and the Approve and Reject buttons" loading="lazy" decoding="async" />
+                        </picture>
+                    </div>
+                    <div class="demo-frame">
+                        <picture>
+                            <source srcset="/img/screenshots/en/historico-auditoria.webp" type="image/webp" />
+                            <img src="/img/screenshots/en/historico-auditoria.png" width="1080" height="1920" alt="The app's Reports screen, History tab: the adjustment history, with every change and the date and time it was recorded" loading="lazy" decoding="async" />
+                        </picture>
+                    </div>
+                    <div class="demo-ring" style="left: 9.9%; top: 56.3%; width: 80.6%; height: 16.7%;" aria-hidden="true"></div>
+                </div>
+            </div>
+            <ol class="demo-steps">
+                <li>
+                    <button type="button" data-frame="0" data-hl="9.9,56.3,80.6,16.7" aria-current="true">
+                        <span class="demo-n">1</span>
+                        <span class="demo-tx"><strong>Marina asks for the swap</strong><span class="demo-d">The request arrives with the day, the caregiver she proposes and the exact time it was made: 23 Aug 2026, 7:59 AM.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-frame="0" data-hl="9.8,84.5,39.3,4.9" aria-current="false">
+                        <span class="demo-n">2</span>
+                        <span class="demo-tx"><strong>Rafael decides</strong><span class="demo-d">A swap only counts once the other caregiver approves it. While the request is open, the day stays frozen exactly as it was.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-frame="1" data-hl="9.3,36.0,83.3,14.1" aria-current="false">
+                        <span class="demo-n">3</span>
+                        <span class="demo-tx"><strong>The change becomes a record</strong><span class="demo-d">Every change lands in the Adjustment history with its date and time. The log only ever grows: nothing there can be edited or deleted — not even by you.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+            </ol>
         </div>
     </div>
 </section>
@@ -860,6 +967,80 @@
 
     show(0);
     play();
+})();
+</script>
+
+<script>
+// Demo "o histórico sendo escrito" (L-17): sequência dirigida sobre os frames
+// reais do app. Não é um player — os três passos já estão legíveis parados, o
+// recorte do primeiro beat vem inline no HTML, e isto aqui só acrescenta o
+// avanço automático. Sem JS, sem movimento e sem nada quebrado.
+// Autoplay só quando a seção está à vista: ela mora abaixo da dobra, e uma
+// sequência que já terminou antes de o visitante chegar não mostra nada.
+(function () {
+    var root = document.getElementById('demo');
+    if (!root) return;
+
+    var ring = root.querySelector('.demo-ring');
+    var frames = Array.prototype.slice.call(root.querySelectorAll('.demo-frame'));
+    var steps = Array.prototype.slice.call(root.querySelectorAll('.demo-steps button'));
+    if (!ring || steps.length < 2) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, timer = null, DELAY = 3800;
+
+    function show(n) {
+        i = (n + steps.length) % steps.length;
+        var b = steps[i];
+        var f = parseInt(b.getAttribute('data-frame'), 10) || 0;
+        var hl = (b.getAttribute('data-hl') || '').split(',');
+
+        for (var k = 0; k < steps.length; k++) steps[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+        for (var j = 0; j < frames.length; j++) frames[j].classList.toggle('is-active', j === f);
+        if (hl.length === 4) {
+            ring.style.left = hl[0] + '%';
+            ring.style.top = hl[1] + '%';
+            ring.style.width = hl[2] + '%';
+            ring.style.height = hl[3] + '%';
+        }
+
+        var bar = b.querySelector('.demo-bar i');
+        if (!bar) return;
+        bar.style.transition = 'none';
+        bar.style.width = '0';
+        if (timer) {
+            void bar.offsetWidth; // reflow: sem isto a barra não recomeça do zero
+            bar.style.transition = 'width ' + DELAY + 'ms linear';
+            bar.style.width = '100%';
+        }
+    }
+    function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+        root.classList.remove('is-playing');
+    }
+    function play() {
+        if (reduce) return;
+        stop();
+        root.classList.add('is-playing');
+        timer = setInterval(function () { show(i + 1); }, DELAY);
+        show(i);
+    }
+
+    steps.forEach(function (b, k) { b.addEventListener('click', function () { show(k); play(); }); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', play);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', play);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+
+    show(0);
+    if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
+        }, { threshold: 0.35 }).observe(root);
+    } else {
+        play();
+    }
 })();
 </script>
 

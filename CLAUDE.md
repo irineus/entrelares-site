@@ -2,12 +2,16 @@
 
 ## Overview
 **entrelares.app** — the static marketing/landing site for **Entrelares** (rebranded from
-"Guarda Compartilhada" in F-54/L-22, Aug 2026 — production still shows the old brand until
-the landing's next `preview`→`main` promotion), a shared-custody PWA. Hand-written static
+"Guarda Compartilhada" in F-54/L-22, Aug 2026 — promoted to production since, so both
+`main` and `preview` carry the new brand), a shared-custody app. Hand-written static
 HTML/CSS (no framework, no build step), served by a **Cloudflare Worker with static assets**
-(`wrangler.jsonc`, `wrangler deploy`), deployed by GitHub Actions. The application itself
-lives in the sibling repo **`entrelares-app`** (Blazor WASM + Supabase), served at
-`web.entrelares.app`. The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
+(`wrangler.jsonc`, `wrangler deploy`), deployed by GitHub Actions. The product itself
+lives in the sibling repo **`entrelares-flutter`** (Flutter + Supabase) and runs on **both
+channels**: the Play package `com.entrelares.app` and `web.entrelares.app`, the latter served
+by the Cloudflare Pages project `entrelares-web`. **The Blazor client that used to live in
+`entrelares-app` was shut down and that repo ARCHIVED on 25/08/2026** (app items T-53/T-56);
+nothing is deployed from it and nothing there needs to be read to work here — but the local
+checkout is still required by the mirror generator (see the Roadmap section). The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
 cutover (12/08/2026), which also flipped the e-mail SENDER to `materiais@entrelares.app` —
 the Resend Free plan verifies ONE domain, so the old one had to be deleted before the new
 one could exist.
@@ -76,7 +80,7 @@ is that it deploys exactly what is in the repo.
   item" — `git log --format='%(trailers:key=Backlog,valueonly)'` reads it with no regex and no
   false positives; mentioning an ID in prose stays free and never counts as a delivery. **The
   trailer lives at the END of the PR template body**, so the squash-merge commit inherits it
-  automatically. Same convention as the app repo (`entrelares-app/CLAUDE.md`), because
+  automatically. Same convention as the app repo (`entrelares-flutter/CLAUDE.md`), because
   the Notion board is shared and reads both histories the same way.
 
 ## Working agreement — branches, review, deploy (settled July 2026, mirrors the app)
@@ -107,17 +111,25 @@ is that it deploys exactly what is in the repo.
   `userDefined:ID`, and dates, which split into `date:<prop>:start` / `:is_datetime`.
 - `ROADMAP.md` — the growth/conversion roadmap's **rationale** + the full per-item records
   (L-01…L-12); companion to the app's Phase 6 (Growth, Analytics & Monetization) in
-  `entrelares-app/backlog/README.md`. Cross-repo prerequisites are noted per item.
+  `entrelares-flutter/backlog/README.md` — the backlog MOVED there with the archiving
+  (app T-56, 24/08/2026). Cross-repo prerequisites are noted per item.
   **Closing an item = its record here + the Notion row, in the same delivery.**
 - **The Notion page BODY is a mirror, not a second source.** Each row's page carries the full
   record from `ROADMAP.md` plus an **Entregas** section with the item's PRs and commits, all
   generated FROM this repo — the markdown stays the source of truth. Regenerate after closing
-  an item rather than hand-editing the Notion body. The generator lives in the **app** repo and
-  reads both (the board is shared):
+  an item rather than hand-editing the Notion body. The generator moved with the backlog: it is
+  **`entrelares-flutter/tool/notion_mirror.py`** (underscores now, not hyphens), it reads all three
+  repos because the board is shared, and its defaults assume the sibling-checkout layout — so run
+  it from the flutter checkout with no paths:
   ```
-  python3 ../entrelares-app/tools/notion-mirror.py \
-      --app ../entrelares-app --landing . -o mirror.json
+  cd ../entrelares-flutter && python tool/notion_mirror.py -o mirror.json
   ```
+  **It still needs the `entrelares-app` checkout to exist locally** (it reads that history for the
+  pre-cutover items and refuses to start without the `.git`), even though the repo is archived and
+  nothing deploys from it.
+  **It reads this repo at `origin/preview`, not your working branch.** Regenerate a page body
+  only AFTER the squash-merge to `preview`: run it before, and it silently rebuilds the page from
+  the pre-merge markdown — publishing the item's OLD record over the one you just closed.
 - **Before writing code for an `L-` item, read its Notion row** — `Status`, `Grupo roadmap`/`Ordem`
   and the page body are the current truth about whether it is still wanted and what was already
   spent on it.
@@ -174,15 +186,29 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   touching the endpoint; static/HTML-only changes don't affect it.
 
 ## Legal pages (Privacy & Terms) — cross-repo sync (MUST)
-`public/privacidade.html` + `public/termos.html` are the **same legal documents for the same
-product** as the app's `Pages/Privacy.razor` (`/privacy`) + `Pages/Terms.razor` (`/terms`) in the
-`entrelares-app` repo. They **must stay in sync**: any change to policy/terms **content**
-here must be mirrored in the app repo **in the same delivery**, and vice-versa. The two documents
-differ in structure/section numbering — mirror the **substance**, not line-for-line. Bump the
-"Última atualização" date (and the landing "Versão N.N" label) on both sides for material changes;
-the app additionally bumps `Helpers/PolicyVersions.cs` (S-13 demonstrable consent). **Since S-15
-(July 2026) the two sides are ALIGNED** — the old "landing is the more up-to-date source of truth"
-no longer holds; treat them as equals and change both together. The external legal review (app
+**These two files are the ONLY copy of the legal text.** There is no longer a second one to
+mirror: the app has no `/privacy` route of its own (lote 4 decision) and links straight here —
+`entrelares-flutter/apps/entrelares_app/lib/deep_link_urls.dart` points at `/privacidade` and
+`/termos`. The old instruction to sync `Pages/Privacy.razor` / `Pages/Terms.razor` in
+`entrelares-app` is dead with that repo.
+
+**The cross-repo obligation did not go away, it changed shape.** A **material** change is still
+one delivery spanning both repos, but what the app side carries is the CONSENT MACHINERY, not
+prose — all four, or the gate breaks:
+1. `PolicyVersions.current` in `entrelares-flutter/packages/entrelares_core/lib/src/policy_versions.dart`;
+2. `PolicyVersions.enforceFrom` = **the date the text becomes VISIBLE to users, plus 15 days**.
+   Visible means the PRODUCTION publish — and this repo is deploy-on-demand, so that is the
+   `preview`→`main` promotion, never the merge to `preview`;
+3. the matching `policy.current_version` **and** `policy.enforce_from` rows in `app_settings`, via
+   migration. **Miss this one and the RPC refuses every accept in production**: users are told to
+   update an app that is already current, and nobody gets through;
+4. an entry in `changeSummary` **and** `changeSummaryEn`, which the acceptance screen renders.
+
+**A NON-material edit must NOT bump the version** — it would drag the whole user base through a
+blocking screen for nothing. Only the "Última atualização" date (and the "Versão N.N" label) moves.
+
+**Since S-15 (July 2026) the two sides are ALIGNED** — the old "landing is the more up-to-date
+source of truth" no longer holds. The external legal review (app
 item S-15) is **done**: 19 findings, all implemented.
 
 **The S-15 lesson: check every sentence against the CODE before publishing it.** Applying that to
