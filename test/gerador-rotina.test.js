@@ -12,9 +12,15 @@ import {
   PRESET_IDS,
   presetBlocks,
   cycleLength,
+  clampDays,
+  customBlocks,
   buildSchedule,
   countDays,
 } from "../public/js/gerador-rotina.js";
+
+// The PAGE's menu offers only the named presets (7-7, 14-14, 1-1) plus the
+// custom-blocks option; the module keeps ALL five app presets on purpose —
+// the mirror below is about wizard_rules.dart, not about what the menu shows.
 
 // ── preset expansions (the app mirror — keep byte-identical to wizard_rules.dart)
 
@@ -102,6 +108,31 @@ test("5-2-2-5 with firstParent=1 gives parent 1 the first five days", () => {
   assert.deepEqual(plan.slice(0, 7).map((d) => d.parent),
     [1, 1, 1, 1, 1, 0, 0]);
   assert.deepEqual(countDays(plan), [7, 7]);
+});
+
+// ── custom blocks (the page's "Customizado" option) ─────────────────────────
+
+test("customBlocks: two fields make a two-block cycle, third is optional", () => {
+  assert.deepEqual(customBlocks(5, 2), [[0, 5], [1, 2]]);
+  assert.deepEqual(customBlocks(5, 2, 2), [[0, 5], [1, 2], [0, 2]]);
+  assert.deepEqual(customBlocks(3, 4, 0), [[0, 3], [1, 4]]);
+});
+
+test("customBlocks clamps each block to the app's 1..60 (clampBlockDays)", () => {
+  assert.equal(clampDays(0), 1);
+  assert.equal(clampDays(61), 60);
+  assert.deepEqual(customBlocks(0, 99), [[0, 1], [1, 60]]);
+});
+
+test("buildSchedule with explicit blocks follows the custom cycle", () => {
+  const plan = buildSchedule({
+    blocks: customBlocks(5, 2, 2), start: START, days: 18,
+  });
+  // 9-day cycle: 5 with parent 0, 2 with parent 1, 2 with parent 0, repeat.
+  assert.deepEqual(plan.slice(0, 9).map((d) => d.parent),
+    [0, 0, 0, 0, 0, 1, 1, 0, 0]);
+  for (let i = 0; i < 9; i++) assert.equal(plan[i].parent, plan[i + 9].parent);
+  assert.deepEqual(countDays(plan), [14, 4]);
 });
 
 test("month and year boundaries advance correctly", () => {

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerador de rotina de guarda compartilhada — grátis e sem cadastro</title>
-    <meta name="description" content="Monte grátis o calendário de convivência dos filhos: semana alternada, quinzenal, 2-2-3 e 5-2-2-5. Veja a divisão de dias, imprima ou salve em PDF — sem cadastro." />
+    <meta name="description" content="Monte grátis o calendário de convivência dos filhos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Veja a divisão de dias, imprima ou salve em PDF — sem cadastro." />
     <link rel="canonical" href="https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda.html" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
     <meta name="theme-color" content="#03173d" />
@@ -12,7 +12,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
     <meta property="og:title" content="Gerador de rotina de guarda compartilhada — grátis" />
-    <meta property="og:description" content="Monte o calendário de convivência dos filhos em segundos: semana alternada, quinzenal, 2-2-3 e 5-2-2-5. Imprima ou salve em PDF, sem cadastro." />
+    <meta property="og:description" content="Monte o calendário de convivência dos filhos em segundos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Imprima ou salve em PDF, sem cadastro." />
     <meta property="og:url" content="https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda.html" />
     <meta property="og:image" content="https://entrelares.app/og-cover.png" />
     <script type="application/ld+json">
@@ -26,7 +26,7 @@
       "inLanguage": "pt-BR",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
-      "description": "Ferramenta gratuita que gera o calendário de convivência da guarda compartilhada a partir dos modelos mais usados — semana alternada (7/7), quinzenal (14/14), 2-2-3, 5-2-2-5 e dia sim/dia não — com impressão e PDF."
+      "description": "Ferramenta gratuita que gera o calendário de convivência da guarda compartilhada — semana alternada (7/7), quinzenal (14/14), dia sim/dia não ou um ciclo personalizado — com impressão e PDF."
     }
     </script>
     <script type="application/ld+json">
@@ -167,7 +167,7 @@
 <main>
     <span class="kicker">Ferramenta gratuita</span>
     <h1>Gerador de rotina de guarda compartilhada</h1>
-    <p class="lead intro">Escolha um modelo de convivência — semana alternada, quinzenal, 2-2-3, 5-2-2-5 ou dia sim/dia não —, informe quem começa e a data de início, e veja o calendário pronto. Imprima ou salve em PDF. Sem cadastro.</p>
+    <p class="lead intro">Escolha um modelo de convivência — semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado —, informe quem começa e a data de início, e veja o calendário pronto. Imprima ou salve em PDF. Sem cadastro.</p>
 
     <div class="tool">
         <form class="tool-form" id="gerador" novalidate>
@@ -184,13 +184,25 @@
                 <select id="g-modelo" name="modelo">
                     <option value="7-7" selected>Semana alternada (7/7)</option>
                     <option value="14-14">Quinzenal (14/14)</option>
-                    <option value="2-2-3">2-2-3</option>
-                    <option value="5-2-2-5">5-2-2-5</option>
                     <option value="1-1">Dia sim, dia não (1/1)</option>
+                    <option value="custom">Customizado (eu defino os blocos)</option>
                 </select>
-                <span class="hint">Os mesmos modelos do app Entrelares. Não sabe qual escolher? <a href="/blog/modelos-de-rotina-guarda-compartilhada.html">Veja o guia de modelos</a>.</span>
+                <span class="hint">Não sabe qual escolher? <a href="/blog/modelos-de-rotina-guarda-compartilhada.html">Veja o guia de modelos</a>.</span>
             </div>
-            <div class="field">
+            <div class="field g-custom" hidden>
+                <label for="g-dias-1">Dias com Responsável 1</label>
+                <input id="g-dias-1" name="dias1" type="number" min="1" max="60" inputmode="numeric" placeholder="ex.: 5" />
+            </div>
+            <div class="field g-custom" hidden>
+                <label for="g-dias-2">Dias com Responsável 2</label>
+                <input id="g-dias-2" name="dias2" type="number" min="1" max="60" inputmode="numeric" placeholder="ex.: 2" />
+            </div>
+            <div class="field g-custom" hidden>
+                <label for="g-dias-3">Dias com Responsável 1 de novo (opcional)</label>
+                <input id="g-dias-3" name="dias3" type="number" min="1" max="60" inputmode="numeric" placeholder="deixe vazio para ciclo de 2 blocos" />
+                <span class="hint">Preenchido, o ciclo vira três blocos (ex.: 5-2-2) antes de recomeçar. Precisa gerar um modelo de rotina diferente? <a href="https://web.entrelares.app/signup" data-umami-event="gerador-cta-modelo">Conheça o aplicativo Entrelares</a>.</span>
+            </div>
+            <div class="field" id="g-campo-comeca">
                 <label for="g-comeca">Quem começa</label>
                 <select id="g-comeca" name="comeca">
                     <option value="0" selected>Responsável 1</option>
@@ -237,9 +249,8 @@
         <ul>
             <li><strong>Semana alternada (7/7):</strong> o modelo mais comum — uma semana em cada casa, uma única troca por semana.</li>
             <li><strong>Quinzenal (14/14):</strong> períodos mais longos, menos trocas — comum quando as casas são distantes.</li>
-            <li><strong>2-2-3:</strong> dois dias com um, dois com o outro, três com o primeiro — e a ordem inverte na semana seguinte. Divisão 50/50 com no máximo três dias longe de cada casa; pede boa logística.</li>
-            <li><strong>5-2-2-5:</strong> dias fixos na semana (segunda e terça numa casa, quarta e quinta na outra) e fins de semana alternados — rotina previsível para a escola.</li>
             <li><strong>Dia sim, dia não (1/1):</strong> troca diária — raro na prática, mas útil para visualizar.</li>
+            <li><strong>Customizado:</strong> você define os blocos do ciclo — tantos dias com um, tantos com o outro e, se quiser, mais um bloco com o primeiro antes de recomeçar (ex.: 5-2-2). Padrões que mudam de semana para semana, como o 2-2-3 e o 5-2-2-5, e regras de feriado e férias são o terreno do <a href="https://web.entrelares.app/signup" data-umami-event="gerador-cta-modelo">app Entrelares</a>.</li>
         </ul>
         <p class="meta">A prévia é uma ferramenta de organização e ponto de partida para conversa entre os responsáveis — não substitui o plano de convivência formalizado no seu acordo ou decisão judicial.</p>
     </div>
@@ -290,7 +301,7 @@
 </footer>
 
 <script type="module">
-    import { buildSchedule, countDays } from "/js/gerador-rotina.js";
+    import { buildSchedule, customBlocks, countDays } from "/js/gerador-rotina.js";
 
     const $ = (id) => document.getElementById(id);
     const form = $("gerador");
@@ -323,9 +334,25 @@
         "7-7": "Semana alternada (7/7)",
         "14-14": "Quinzenal (14/14)",
         "1-1": "Dia sim, dia não (1/1)",
-        "5-2-2-5": "5-2-2-5",
-        "2-2-3": "2-2-3",
     };
+
+    // Customizado: reveal the block fields, hide "Quem começa" (the fields
+    // already say who starts) and follow the typed names in the labels.
+    const modelo = $("g-modelo");
+    function syncCustomFields() {
+        const on = modelo.value === "custom";
+        document.querySelectorAll(".g-custom").forEach((f) => { f.hidden = !on; });
+        $("g-campo-comeca").hidden = on;
+        const a = $("g-nome-a").value.trim() || "Responsável 1";
+        const b = $("g-nome-b").value.trim() || "Responsável 2";
+        document.querySelector('label[for="g-dias-1"]').textContent = "Dias com " + a;
+        document.querySelector('label[for="g-dias-2"]').textContent = "Dias com " + b;
+        document.querySelector('label[for="g-dias-3"]').textContent = "Dias com " + a + " de novo (opcional)";
+    }
+    modelo.addEventListener("change", syncCustomFields);
+    $("g-nome-a").addEventListener("input", syncCustomFields);
+    $("g-nome-b").addEventListener("input", syncCustomFields);
+    syncCustomFields();
 
     form.addEventListener("submit", (ev) => {
         ev.preventDefault();
@@ -348,8 +375,24 @@
         ];
         const troca = $("g-troca").value; // "HH:MM" or ""
 
-        const plan = buildSchedule({ preset, start, days: weeks * 7, firstParent });
-        render(plan, names, troca, preset, weeks);
+        let plan, modelLabel;
+        if (preset === "custom") {
+            const d1 = Number($("g-dias-1").value);
+            const d2 = Number($("g-dias-2").value);
+            const d3 = Number($("g-dias-3").value) || 0;
+            if (!(d1 >= 1) || !(d2 >= 1)) {
+                err.textContent = "No modelo customizado, preencha os dias dos dois responsáveis (mínimo 1).";
+                err.classList.add("on");
+                return;
+            }
+            const blocks = customBlocks(d1, d2, d3);
+            plan = buildSchedule({ blocks, start, days: weeks * 7 });
+            modelLabel = "Customizado (" + blocks.map((b) => b[1]).join("-") + ")";
+        } else {
+            plan = buildSchedule({ preset, start, days: weeks * 7, firstParent });
+            modelLabel = MODEL_LABELS[preset];
+        }
+        render(plan, names, troca, modelLabel, weeks);
         preview.classList.add("on");
         printBtn.hidden = false;
         preview.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -357,13 +400,13 @@
 
     printBtn.addEventListener("click", () => window.print());
 
-    function render(plan, names, troca, preset, weeks) {
+    function render(plan, names, troca, modelLabel, weeks) {
         const total = plan.length;
         const [da, db] = countDays(plan);
         const pct = (n) => Math.round((n / total) * 100);
 
         $("g-titulo").textContent =
-            `${MODEL_LABELS[preset]} · ${weeks} semanas a partir de ` +
+            `${modelLabel} · ${weeks} semanas a partir de ` +
             plan[0].date.toLocaleDateString("pt-BR");
 
         $("g-balanco").innerHTML =

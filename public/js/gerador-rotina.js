@@ -35,6 +35,24 @@ export function cycleLength(preset) {
     .reduce((sum, [, d]) => sum + d, 0);
 }
 
+/** Mirror of the app's `clampBlockDays` — a block holds 1..60 days. */
+export function clampDays(days) {
+  return days < 1 ? 1 : (days > 60 ? 60 : days);
+}
+
+/**
+ * Custom cycle from the page's three fields: days with caregiver 1, days with
+ * caregiver 2, and optionally days with caregiver 1 again before the cycle
+ * restarts (mirrors the app wizard's free-form blocks, capped at the same
+ * 1..60 per block). `d3` empty/0 → a two-block cycle.
+ * @returns {Array<[number, number]>}
+ */
+export function customBlocks(d1, d2, d3 = 0) {
+  const blocks = [[0, clampDays(d1)], [1, clampDays(d2)]];
+  if (d3 > 0) blocks.push([0, clampDays(d3)]);
+  return blocks;
+}
+
 /**
  * Generates the day-by-day plan.
  * `isTransition` mirrors the app's T-27 rule: true when the day's caregiver
@@ -42,14 +60,18 @@ export function cycleLength(preset) {
  * first day has no D-1 inside the plan, so it is never a transition.
  *
  * @param {object} opts
- * @param {string} opts.preset       preset id (see PRESET_IDS)
+ * @param {string} [opts.preset]     preset id (see PRESET_IDS)
+ * @param {Array<[number, number]>} [opts.blocks] explicit cycle blocks — wins
+ *                                   over `preset` (e.g. from customBlocks)
  * @param {Date}   opts.start        first day of the plan (time-of-day ignored)
  * @param {number} opts.days         how many days to generate (> 0)
  * @param {number} [opts.firstParent] 0 or 1 — who takes the first block
+ *                                   (preset expansion only; explicit blocks
+ *                                   already say who is who)
  * @returns {Array<{date: Date, parent: number, isTransition: boolean}>}
  */
-export function buildSchedule({ preset, start, days, firstParent = 0 }) {
-  const blocks = presetBlocks(preset, firstParent);
+export function buildSchedule({ preset, blocks: explicit, start, days, firstParent = 0 }) {
+  const blocks = explicit ?? presetBlocks(preset, firstParent);
   const plan = [];
   const cursor = new Date(start.getFullYear(), start.getMonth(), start.getDate());
   let block = 0;
