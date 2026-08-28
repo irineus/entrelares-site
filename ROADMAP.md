@@ -268,6 +268,17 @@ acquisition channel in BR; also a natural home for the L-09 lead magnet.
 **Files:** new `public/blog/*.html` articles (+ sitemap entries + internal links); a new
 `public/ferramentas/` tool page (static + tiny JS).
 
+**Delivery — 2 PRs.** PR 1 (28/08/2026) shipped the tool: `public/ferramentas/`
+`gerador-de-rotina-de-guarda.html` + the pure module `public/js/gerador-rotina.js`, a MIRROR of
+the app wizard's presets (`wizard_rules.dart` — 7-7, 14-14, 1-1, 5-2-2-5, 2-2-3, same expansion,
+same T-27 transition rule for the handoff time), covered by `test/gerador-rotina.test.js` on the
+same zero-dependency `node --test` lane as the Worker suite. Preview + print/PDF (`@media print`),
+names/who-starts/start-date/duration inputs, per-caregiver day counts, Umami events
+(`gerador-gerar`/`gerador-imprimir`), the L-09 materiais box, and internal links from home
+(footer), blog index (card) and the two calendar articles. PT-BR only, like the blog — `/en/`
+deliberately does not link it. PR 2 (the articles, informed by an owner-provided parenting-plan
+document whose personal data never reaches the site) closes the item.
+
 ---
 
 ### L-07 — Sitemap hygiene
