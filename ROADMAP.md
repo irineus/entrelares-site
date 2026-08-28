@@ -257,7 +257,7 @@ Core Web Vitals and SEO.
 ### L-05 — Expand SEO content cluster + interactive tool
 
 **Order 8** · `medium` · `medium` · `high` · mirrors the app's rotation wizard ·
-**Status: `completed` (28/08/2026, 2 PRs)**
+**Status: `completed` (28/08/2026, 3 PRs)**
 
 Grow the existing 4-article cluster with high-intent long-tail: *"modelo de acordo de guarda
 compartilhada"*, *"guarda compartilhada e pensão"*, *"rotina 7/7 vs 14/14"*. Add **one
@@ -288,6 +288,12 @@ three fixation forms, the trinômio, and the three-category expense split with a
 day) and *rotina-7-7-vs-14-14* (side-by-side comparison with an inline SVG of four weeks in each
 rhythm, funnelling into the generator). Blog index gained the three cards, every related page
 cross-links the cluster, and the sitemap carries the three new URLs with honest `lastmod`s.
+**PR 3 (#68, same day, owner QA feedback):** the tool's menu keeps only the named models
+(7/7, 14/14, 1/1) and gains a **custom-blocks** option — three fields (days with caregiver 1,
+days with caregiver 2, optionally caregiver 1 again; the app-wizard 1..60 clamp per block) —
+with the "Precisa gerar um modelo de rotina diferente? Conheça o aplicativo Entrelares" hook at
+exactly that moment (`gerador-cta-modelo`). The JS module keeps all five presets on purpose: the
+`wizard_rules.dart` mirror stays whole; only the menu narrowed.
 
 ---
 
