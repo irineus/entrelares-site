@@ -541,6 +541,31 @@ the captures themselves are T-57's)
 > trigger only**. The copy stays on *inalterável* and never revives the retired "à prova de
 > disputa" promise (L-10 update 2).
 >
+> **Correction, same day — the third beat used to be incoherent.** As first shipped, beat 3
+> pointed at the audit log as it stood *before* the swap existed: its entries read "Rafael criou
+> um novo agendamento", with no connection to the 31/08 request that beats 1 and 2 set up. The
+> sequence asserted a chain the image did not support — the captions were each true in isolation,
+> which is exactly why it survived review. The owner caught it. The fix was to perform the swap
+> for real and re-shoot: the audit log now opens with **"Dia: 31/08/2026 — Rafael atualizou o
+> agendamento para este dia"**, carrying the F-45 origin banner (*"Alteração originada da troca
+> solicitada por Marina e aprovada por Rafael"*) and stamped 28/08/2026 18:22. Same day, same
+> request, one chain — and beat 3's caption can now quote the origin instead of talking around it.
+>
+> **The near-miss worth remembering: the coherent screen is not always the truthful one.** The
+> first fix on offer was the *notification* history (Avisos → Histórico), which shows "Nova
+> solicitação de troca" and "Troca confirmada" for 31/08 and is beautifully coherent. It is also
+> **not immutable**: `notifications` carries an UPDATE policy for the recipient
+> (`notifications_update_own`, the whole row — not just `is_read`), and `purge_old_notifications()`
+> deletes read rows older than six months by cron. Putting *"nada ali pode ser editado nem
+> apagado"* over that screen would have traded a coherence defect for a **false claim** — the S-15
+> failure mode. The immutable record is `activity_logs`, and the screen that shows it is
+> Relatórios → Histórico. Check which table a screenshot photographs before captioning it.
+>
+> **The re-shoot also changed the shared asset.** `historico-auditoria.{png,webp}` was replaced in
+> both languages, and per `entrelares-flutter/store/README.md` the landing and the **Play listing**
+> share one set — so the Console's frame 4 is now stale until someone re-uploads it. The file names
+> are unchanged, which is what keeps the `<picture>` elements and their `alt` text valid.
+>
 > **Details worth keeping.** Autoplay runs only while the section is in view
 > (`IntersectionObserver`): it lives below the fold, and a sequence that finished before the
 > visitor arrived shows nothing. The hero stays the LCP element. `/en/` carries **two coordinates
@@ -586,11 +611,21 @@ generator**, which is the point: the demo is made of frames that already existed
 be re-recorded when the UI changes is `img/screenshots/{,en/}` itself, and T-57's capture note
 already owns that.
 
-**The coordinates are the fragile part.** Each beat's spotlight is a `data-hl` of
-`left,top,width,height` in **percent of the 1080×1920 frame**; re-shoot a screenshot and the
-numbers have to be re-measured against the new one, or the highlight lands on the wrong element
-while every test stays green. They are the only place where this section knows something about
-the *inside* of an image.
+**The coordinates are the fragile part, and it was proven the same day.** Each beat's spotlight
+is a `data-hl` of `left,top,width,height` in **percent of the 1080×1920 frame**; re-shoot a
+screenshot and the numbers have to be re-measured against the new one, or the highlight lands on
+the wrong element while every test stays green. The beat-3 re-shoot moved its box from
+`9.3,36.0,83.3,14.1` to `9.3,36.4,83.3,22.8` — the entry grew because it now carries the origin
+banner. They are the only place where this section knows something about the *inside* of an image.
+
+**And re-processing a capture is not a resize.** The frames come off the phone at 1440×3088 (20∶9)
+and the set is 1080×1920 (9∶16). The obvious move — crop height until the ratio fits — is WRONG:
+there are ~2850 rows of app content for a 2560-row budget, so it silently eats either the screen
+title or the bottom navigation bar (it ate the title first). The T-57 pipeline **widens** instead,
+replicating the edge column, which works only because the app's side edges are flat: crop just the
+OS chrome (status bar above, gesture pill below), pad left/right to 9∶16, then resize. The frame
+already in the repo is the spec — it carries 84 px of replicated column on the left and 90 on the
+right, which is how the pipeline was recovered rather than guessed.
 
 ---
 
