@@ -40,7 +40,7 @@ funnel with the app (landing CTR → app signups), so several items coordinate c
 `ROADMAP.md`). The SEO foundation is strong out of the box — JSON-LD
 (`SoftwareApplication`/`Organization`/`FAQPage` + per-article `Article`/`BreadcrumbList`),
 canonicals, reciprocal `hreflang` across the two languages, `sitemap.xml`, `robots.txt`, and a
-4-article blog cluster.
+7-article blog cluster and an interactive routine generator.
 
 Only `public/` is uploaded as site assets — **never widen `assets.directory` to the repo root**,
 or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADMAP.md`,
@@ -71,11 +71,15 @@ entrelares-site/
 │   │   ├── screenshots/        # L-03 real product screenshots (WebP + PNG)
 │   │   │   └── en/             # T-57 — the same eight frames, English UI
 │   │   └── founder.webp/.jpg   # L-06 founder photo
-│   └── blog/                   # 4-article SEO cluster (+ index, img/) with the L-09 opt-in block
+│   ├── blog/                   # 7-article SEO cluster (+ index, img/) with the L-09 opt-in block
+│   ├── ferramentas/
+│   │   └── gerador-de-rotina-de-guarda.html  # L-05 interactive tool (presets mirror the app wizard)
+│   └── js/gerador-rotina.js    # the tool's pure rules (ESM, no DOM) — tested by node --test
 ├── src/
 │   └── index.js                # Cloudflare Worker entrypoint: serves ASSETS + POST /api/subscribe
 ├── test/
-│   └── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
+│   ├── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
+│   └── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
 ├── assets-src/                 # generators — NOT served
 │   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
 │   │                           #   store/brand-icons.py; never edited here (T-57)
@@ -238,9 +242,13 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
       opt-in evidence log in KV, plus the §3 correction it forced).
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; no image optimiser available
       in-environment, deferred).
-- [ ] **Remaining on-site roadmap:** L-05 (SEO content + interactive tool), L-04 (blog image
-      optimization), L-15 (company identity — gated on the CNPJ existing). See
+- [ ] **Remaining on-site roadmap:** L-04 (blog image optimization), L-15 (company identity —
+      gated on the CNPJ existing), plus the L-17/L-18/L-19/L-20 review items. See
       [`ROADMAP.md`](ROADMAP.md).
+- [x] **SEO cluster expansion + interactive tool** (**L-05**, 28/08/2026) — three new articles
+      (acordo/plano de parentalidade, pensão, 7/7 vs 14/14) and the *Gerador de rotina de
+      guarda* at `public/ferramentas/`, whose pure logic mirrors the app wizard's presets and is
+      covered by `test/gerador-rotina.test.js`.
 - [x] **English screenshots for `/en/`** (**L-21**, absorbed by the app repo's **T-57** and
       delivered 28/08/2026) — `/en/` serves its own set from `img/screenshots/en/`, and the
       PT-BR set was re-shot in the same sitting. Both are the **Flutter** app under the U-27

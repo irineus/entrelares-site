@@ -168,7 +168,8 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   the section class is `.materiais-box`, the PDF title is set). Internal `.lm-*` style hooks stay.
 - **Tests:** `src/index.js` exports its pure helpers (`isHoneypot`/`normalizeEmail`/`isValidEmail`)
   and `handleSubscribe`; `test/subscribe.test.js` covers them with Node's built-in runner (**zero
-  deps** — `npm test` / `node --test`, global `fetch` stubbed). `.github/workflows/test.yml` gates
+  deps** — `npm test` / `node --test`, global `fetch` stubbed). The same lane runs
+  `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules. `.github/workflows/test.yml` gates
   every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
   touching the endpoint; static/HTML-only changes don't affect it.
 
@@ -218,5 +219,11 @@ system; an unverified claim is a liability no matter who drafted it.
   master and their brand-row icon is the rendered `icon-192.png`), and **bump the `?v=` on every
   `<link>`/`<meta>` that points at them** — without that the browser keeps serving the old mark
   from cache. Two drawings of one mark is how the two repos drift (T-57, 28/08/2026).
+- **`public/js/gerador-rotina.js` is a MIRROR of the app's rotation-wizard presets** (L-05) —
+  `entrelares-flutter/packages/entrelares_core/lib/src/wizard_rules.dart`, `wizardPresetBlocks`.
+  The tool's whole promise is that the preview equals what the app generates after signup, so a
+  preset change in the app repo must land here in the same delivery. `test/gerador-rotina.test.js`
+  hardcodes the expansion tables on purpose: it fails when THIS side drifts, but nothing fails
+  when the APP side moves — the sync is a convention, like the legal pages.
 - The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
   assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.

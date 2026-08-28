@@ -33,17 +33,16 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Ten** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, and the English version of the site). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: L-05/**L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
+**Eleven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16**/**L-05** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, the English version of the site, and the SEO cluster expansion + routine generator). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
 
-1. **L-05 — SEO content cluster + interactive tool.** Highest durable-acquisition impact: grow the 4-article cluster with high-intent long-tail and add a *"gerador de rotina de guarda"* (mirrors the app's rotation wizard) as a link magnet + intent capture — also the natural home for the L-09 lead magnet.
-2. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
-3. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
-4. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
-5. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-6. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
-7. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+1. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
+2. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
+3. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
+4. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+5. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
+6. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
+With the pricing gate cleared, **L-04 is independent of the app** and can ship whenever there is appetite (**L-05** shipped on 28/08/2026 — tool + three articles). The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -257,7 +256,8 @@ Core Web Vitals and SEO.
 
 ### L-05 — Expand SEO content cluster + interactive tool
 
-**Order 8** · `medium` · `medium` · `high` · mirrors the app's rotation wizard
+**Order 8** · `medium` · `medium` · `high` · mirrors the app's rotation wizard ·
+**Status: `completed` (28/08/2026, 2 PRs)**
 
 Grow the existing 4-article cluster with high-intent long-tail: *"modelo de acordo de guarda
 compartilhada"*, *"guarda compartilhada e pensão"*, *"rotina 7/7 vs 14/14"*. Add **one
@@ -278,6 +278,16 @@ names/who-starts/start-date/duration inputs, per-caregiver day counts, Umami eve
 (footer), blog index (card) and the two calendar articles. PT-BR only, like the blog — `/en/`
 deliberately does not link it. PR 2 (the articles, informed by an owner-provided parenting-plan
 document whose personal data never reaches the site) closes the item.
+
+**PR 2 (28/08/2026) closed it with the three articles**, all built from the same page shell as
+the existing cluster (CSS cloned, Article + BreadcrumbList JSON-LD, the L-09 opt-in block, the
+informative-only disclaimer): *modelo-de-acordo-de-guarda-compartilhada* (the parenting-plan
+checklist, clause by clause — informed by the structure of a real homologated plan, with zero
+personal data carried over), *guarda-compartilhada-e-pensao-alimenticia* (Enunciado 607, the
+three fixation forms, the trinômio, and the three-category expense split with a fixed settlement
+day) and *rotina-7-7-vs-14-14* (side-by-side comparison with an inline SVG of four weeks in each
+rhythm, funnelling into the generator). Blog index gained the three cards, every related page
+cross-links the cluster, and the sitemap carries the three new URLs with honest `lastmod`s.
 
 ---
 
