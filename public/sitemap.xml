@@ -20,7 +20,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://entrelares.app/</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -32,31 +32,55 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda.html</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://entrelares.app/blog/como-montar-calendario-guarda-compartilhada.html</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/guarda-compartilhada-x-guarda-alternada.html</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-funciona-guarda-compartilhada.html</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/modelos-de-rotina-guarda-compartilhada.html</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada.html</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/guarda-compartilhada-e-pensao-alimenticia.html</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/rotina-7-7-vs-14-14.html</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

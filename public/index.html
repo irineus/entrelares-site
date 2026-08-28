@@ -269,6 +269,10 @@
         /* ── Install ────────────────────────────────────────── */
         .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .install-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+        .tool-teaser { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; }
+        .tool-teaser svg { flex: 1 1 320px; min-width: 240px; height: auto; }
+        .tool-teaser .tt-side { flex: 1 1 260px; }
+        .tool-teaser .tt-side p { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
         .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
         .install-card li { margin-bottom: 8px; }
@@ -413,6 +417,7 @@
         </a>
         <nav class="nav-links" aria-label="Seções">
             <a href="#como-funciona">Como funciona</a>
+            <a href="#gerador">Simulador</a>
             <a href="#porque">Por quê</a>
             <a href="#beneficios">Benefícios</a>
             <a href="#instalar">Instalar</a>
@@ -518,6 +523,20 @@
                 <div class="n">3</div>
                 <h3>Precisou trocar um dia? Proponha no app</h3>
                 <p>A troca só vale quando o outro responsável aprova. Nada muda por decisão de um só — e tudo fica registrado, com data e hora.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="gerador">
+    <div class="wrap">
+        <h2>Experimente agora: simule a rotina de convivência</h2>
+        <p class="section-lead">Antes mesmo de criar conta, veja como a rotina fica no calendário. O <strong>gerador de rotina de guarda</strong> é gratuito e não pede cadastro: escolha o modelo — semana alternada, quinzenal, dia sim/dia não ou um ciclo do seu jeito —, veja a divisão de dias de cada responsável e imprima ou salve em PDF.</p>
+        <div class="tool-teaser">
+            <svg viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Duas semanas de rotina alternada no calendário"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><rect x="10" y="6" width="13" height="13" rx="3.5" fill="#c7d2fe" stroke="#4f46e5" stroke-width="2"/><text x="30" y="17" font-size="12.5" fill="#334155">Casa 1</text><rect x="92" y="6" width="13" height="13" rx="3.5" fill="#fbcfe8" stroke="#db2777" stroke-width="2" stroke-dasharray="4 3"/><text x="112" y="17" font-size="12.5" fill="#334155">Casa 2</text><text x="51" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">D</text><text x="147" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><text x="243" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">T</text><text x="339" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">Q</text><text x="435" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">Q</text><text x="531" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><text x="627" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><rect x="10" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="106" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="202" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="298" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="394" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="490" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="586" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="10" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="106" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="202" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="298" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="394" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="490" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="586" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/></svg>
+            <div class="tt-side">
+                <p>É o mesmo motor de rotinas do aplicativo: o que você simular aqui é o que o app monta para a sua família depois — com trocas aprovadas pelos dois e histórico registrado.</p>
+                <a class="btn btn-primary" data-umami-event="gerador-home" href="/ferramentas/gerador-de-rotina-de-guarda.html">Simular minha rotina — grátis</a>
             </div>
         </div>
     </div>
@@ -820,6 +839,7 @@
         <span class="foot-links">
             <a href="/en/" hreflang="en" lang="en">English</a>
             <a href="/blog/">Blog</a>
+            <a href="/ferramentas/gerador-de-rotina-de-guarda.html">Gerador de rotina</a>
             <a href="termos.html">Termos de Uso</a>
             <a href="privacidade.html">Privacidade</a>
             <a href="mailto:suporte@entrelares.app">Suporte</a>
