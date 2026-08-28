@@ -702,6 +702,9 @@ cluster deliberately targets for search) and as history (git, published releases
   `loc`s (all `lastmod` = 2026-08-12 — every page's content really changed), `robots.txt`
   sitemap pointer, app links → `https://web.entrelares.app`.
 - **OG banners regenerated**, and the PT-BR one GAINED a generator: `assets-src/og-cover-pt.html`
+  *(deleted by T-57, 28/08/2026: the F-54 rebrand superseded it with `og-cover.html`, which is what
+  writes `public/og-cover.png`. It survived as a third generator for a two-banner set, still on the
+  pre-rebrand navy — exactly the kind of file a future reader re-runs and regresses the banner with.)*
   (the original L-02 banner predated the generator convention). Both generators now use fixed
   positions instead of flex `space-between` — font metrics differ per platform (Segoe UI vs
   DejaVu) and the metric-dependent layout overflowed the 630px canvas when rendered off-Windows.
