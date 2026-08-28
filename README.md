@@ -243,8 +243,14 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; no image optimiser available
       in-environment, deferred).
 - [ ] **Remaining on-site roadmap:** L-04 (blog image optimization), L-15 (company identity —
-      gated on the CNPJ existing), plus the L-17/L-18/L-19/L-20 review items. See
+      gated on the CNPJ existing), plus the L-18/L-19/L-20 review items. See
       [`ROADMAP.md`](ROADMAP.md).
+- [x] **Demo of the immutable history** (**L-17**, 28/08/2026) — the `#registro` section
+      (`/en/`: `#record`) after `#porque`: three timed beats over the two real T-57 frames, with a
+      spotlight that slides from the swap request to the *Aprovar* button to the stamped line in
+      the *Histórico de ajustes*. Deliberately **not** a video — captions are HTML, so one
+      implementation serves both languages and adds no asset and no request (+2.5 KB gzip on the
+      home). The record explains why that beat the format the item originally specified.
 - [x] **SEO cluster expansion + interactive tool** (**L-05**, 28/08/2026) — three new articles
       (acordo/plano de parentalidade, pensão, 7/7 vs 14/14) and the *Gerador de rotina de
       guarda* at `public/ferramentas/`, whose pure logic mirrors the app wizard's presets and is

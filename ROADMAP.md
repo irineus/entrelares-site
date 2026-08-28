@@ -33,16 +33,15 @@ marketing/distribution activities, tracked here so they are not lost.
 
 ## Roadmap — what's next
 
-**Eleven** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16**/**L-05** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, the English version of the site, and the SEO cluster expansion + routine generator). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-17**/**L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
+**Twelve** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16**/**L-05**/**L-17** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, the English version of the site, the SEO cluster expansion + routine generator, and the demo that finally SHOWS the immutable history instead of asserting it). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
 
-1. **L-17 — Animated demo of the immutable history.** The differentiator is *stated* everywhere on the page and *shown* nowhere: a short muted loop of a swap request being approved and its timestamp landing in a record that cannot be edited. Created 06/08/2026 from an external site review.
-2. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
-3. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
-4. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-5. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
-6. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+1. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
+2. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
+3. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
+4. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
+5. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-04 is independent of the app** and can ship whenever there is appetite (**L-05** shipped on 28/08/2026 — tool + three articles). The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
+With the pricing gate cleared, **L-04 is independent of the app** and can ship whenever there is appetite (**L-05** shipped on 28/08/2026 — tool + three articles, and **L-17** the same day — the demo of the immutable history, built over the T-57 frames rather than as a video, for the reasons written into its record). The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -511,9 +510,69 @@ non-material: no `PolicyVersions` bump).
 
 ### L-17 — Show the immutable history instead of describing it (animated demo)
 
-`high` · `medium` · on-site · **Status: `pending`** · board slot: *Distribuição* · **cross-repo:
-the capture comes from the app** (F-44 swap message + F-45 history origin are what make the
-sequence legible)
+`high` · `medium` · on-site · **Status: `completed` (28/08/2026)** · **cross-repo: the frames
+come from the app** (F-44 swap message + F-45 history origin are what make the sequence legible;
+the captures themselves are T-57's)
+
+> **Done.** The section `#registro` (`/en/`: `#record`) sits right after `#porque` — where the
+> "eu não fiquei sabendo" argument is made, so the demo answers it on the spot. Three timed beats
+> over the two **real** frames from T-57: the swap request arriving, the other caregiver's
+> decision, and the stamped line in the *Histórico de ajustes*. What moves is a spotlight that
+> dims the rest of the screen and slides from one beat to the next — that movement, plus numbered
+> steps and a progress bar, is what makes it read as a sequence rather than as a second slideshow.
+>
+> **The format decision went AGAINST this record, and this is the justification it asked for.**
+> Neither video nor Lottie won: a **directed sequence in CSS/JS over the real stills** did. Text
+> baked into a WebM/MP4 — or into an animated WebP — needs **one binary per language**, which
+> would re-open, in a more prominent slot, the exact defect **L-21** had just closed. On the route
+> taken the captions are HTML; both frames were already fetched by the hero slideshow (**no new
+> request at all; +2.5 KB gzip on the home, +2.8 KB on `/en/`**); `prefers-reduced-motion`
+> collapses to "does not advance on its own", with the three steps still readable standing still;
+> and re-recording when the UI moves is swapping a PNG, not re-encoding a pair of videos. The
+> virtue of this site is that it deploys exactly what is in the repo, and a binary with text
+> burned into it is the one kind of asset that cannot honour that.
+>
+> **What was deliberately NOT done.** The frame *"history BEFORE the line"* does not exist, and it
+> was **not** manufactured by erasing the top entry from the real screenshot — that is invented
+> UI, which is the S-15 rule applied to marketing assets. The sequence ships without it, and the
+> before/after beat is a follow-up for whenever that capture exists (one extra screen, PT and EN,
+> same pipeline as T-57). Every caption states only what is verified in the CODE: a day with an
+> open request is **frozen** (a database rule) and `activity_logs` is **append-only, written by
+> trigger only**. The copy stays on *inalterável* and never revives the retired "à prova de
+> disputa" promise (L-10 update 2).
+>
+> **Correction, same day — the third beat used to be incoherent.** As first shipped, beat 3
+> pointed at the audit log as it stood *before* the swap existed: its entries read "Rafael criou
+> um novo agendamento", with no connection to the 31/08 request that beats 1 and 2 set up. The
+> sequence asserted a chain the image did not support — the captions were each true in isolation,
+> which is exactly why it survived review. The owner caught it. The fix was to perform the swap
+> for real and re-shoot: the audit log now opens with **"Dia: 31/08/2026 — Rafael atualizou o
+> agendamento para este dia"**, carrying the F-45 origin banner (*"Alteração originada da troca
+> solicitada por Marina e aprovada por Rafael"*) and stamped 28/08/2026 18:22. Same day, same
+> request, one chain — and beat 3's caption can now quote the origin instead of talking around it.
+>
+> **The near-miss worth remembering: the coherent screen is not always the truthful one.** The
+> first fix on offer was the *notification* history (Avisos → Histórico), which shows "Nova
+> solicitação de troca" and "Troca confirmada" for 31/08 and is beautifully coherent. It is also
+> **not immutable**: `notifications` carries an UPDATE policy for the recipient
+> (`notifications_update_own`, the whole row — not just `is_read`), and `purge_old_notifications()`
+> deletes read rows older than six months by cron. Putting *"nada ali pode ser editado nem
+> apagado"* over that screen would have traded a coherence defect for a **false claim** — the S-15
+> failure mode. The immutable record is `activity_logs`, and the screen that shows it is
+> Relatórios → Histórico. Check which table a screenshot photographs before captioning it.
+>
+> **The re-shoot also changed the shared asset.** `historico-auditoria.{png,webp}` was replaced in
+> both languages, and per `entrelares-flutter/store/README.md` the landing and the **Play listing**
+> share one set — so the Console's frame 4 is now stale until someone re-uploads it. The file names
+> are unchanged, which is what keeps the `<picture>` elements and their `alt` text valid.
+>
+> **Details worth keeping.** Autoplay runs only while the section is in view
+> (`IntersectionObserver`): it lives below the fold, and a sequence that finished before the
+> visitor arrived shows nothing. The hero stays the LCP element. `/en/` carries **two coordinates
+> of its own** because the *"Requested on"* card wraps to two lines there — a reminder that the
+> two pages are sibling files, not renders of one another. The block stacks at the 820 px
+> breakpoint, the step list becoming a caption under the phone. And with JS off, beat 1 renders
+> complete: the spotlight coordinates are inline in the HTML.
 
 Created 06/08/2026 from an external site review. Since **L-10** the whole positioning rests on one
 claim — *o histórico não pode ser editado nem apagado* — and the page **states** it in the hero, in
@@ -545,9 +604,28 @@ even cheaper fallback. Prefer video; justify Lottie in writing if it wins.
   marketing assets. And the copy around it stays **factual** (L-10 update 2: *inalterável*, never
   the retired "à prova de disputa" promise).
 
-**Files:** `public/index.html` + `public/en/index.html` (hero/gallery block), new
-`public/video/` or `public/img/` assets, an `assets-src/` capture note so it can be re-recorded
-when the UI changes.
+**Files (as delivered):** `public/index.html` + `public/en/index.html` — one CSS block, one
+section and one inline script per file, duplicated on purpose like everything else on the two
+pages — plus the `/en/` `lastmod` in `public/sitemap.xml`. **No new asset and no `assets-src/`
+generator**, which is the point: the demo is made of frames that already existed, so what has to
+be re-recorded when the UI changes is `img/screenshots/{,en/}` itself, and T-57's capture note
+already owns that.
+
+**The coordinates are the fragile part, and it was proven the same day.** Each beat's spotlight
+is a `data-hl` of `left,top,width,height` in **percent of the 1080×1920 frame**; re-shoot a
+screenshot and the numbers have to be re-measured against the new one, or the highlight lands on
+the wrong element while every test stays green. The beat-3 re-shoot moved its box from
+`9.3,36.0,83.3,14.1` to `9.3,36.4,83.3,22.8` — the entry grew because it now carries the origin
+banner. They are the only place where this section knows something about the *inside* of an image.
+
+**And re-processing a capture is not a resize.** The frames come off the phone at 1440×3088 (20∶9)
+and the set is 1080×1920 (9∶16). The obvious move — crop height until the ratio fits — is WRONG:
+there are ~2850 rows of app content for a 2560-row budget, so it silently eats either the screen
+title or the bottom navigation bar (it ate the title first). The T-57 pipeline **widens** instead,
+replicating the edge column, which works only because the app's side edges are flat: crop just the
+OS chrome (status bar above, gesture pill below), pad left/right to 9∶16, then resize. The frame
+already in the repo is the spec — it carries 84 px of replicated column on the left and 90 on the
+right, which is how the pipeline was recovered rather than guessed.
 
 ---
 
@@ -656,9 +734,14 @@ lying. Date the recording in a comment so a future session knows how old it is.
 **Notes**
 - Capture on the real validation device (iPhone 15 Pro Max, per the app's `CLAUDE.md`), Safari,
   in **both languages** (`/en/` has the same section).
-- Same format constraint as **L-17** (muted looping video / animated WebP over a JS animation
-  library) — do the two together if they land in the same window; it is the same capture and
-  compression pipeline.
+- **The L-17 precedent replaces the format constraint this bullet used to carry.** It said
+  "muted looping video / animated WebP over a JS animation library"; L-17 shipped neither, and
+  the reason applies here word for word — this section exists in both languages too, and a
+  binary with text in it means one file per language. But the two items are NOT the same problem:
+  L-17 had real stills to sequence, while an iOS share-sheet gesture is *motion*, and a
+  crossfade between stills cannot show a finger travelling to a button. So read L-17's record for
+  the bilingual and reduced-motion reasoning, then decide the format on its own merits; if it
+  does end up a recording, it is one capture per language, not one per item.
 - **Pairs with the app's F-09:** on iOS, Web Push only exists for a PWA added to the home screen,
   so the app's permission flow sends people through exactly these steps. The two texts must agree.
 
