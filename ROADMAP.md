@@ -257,7 +257,7 @@ Core Web Vitals and SEO.
 ### L-05 — Expand SEO content cluster + interactive tool
 
 **Order 8** · `medium` · `medium` · `high` · mirrors the app's rotation wizard ·
-**Status: `completed` (28/08/2026, 3 PRs)**
+**Status: `completed` (28/08/2026)**
 
 Grow the existing 4-article cluster with high-intent long-tail: *"modelo de acordo de guarda
 compartilhada"*, *"guarda compartilhada e pensão"*, *"rotina 7/7 vs 14/14"*. Add **one
@@ -268,7 +268,7 @@ acquisition channel in BR; also a natural home for the L-09 lead magnet.
 **Files:** new `public/blog/*.html` articles (+ sitemap entries + internal links); a new
 `public/ferramentas/` tool page (static + tiny JS).
 
-**Delivery — 2 PRs.** PR 1 (28/08/2026) shipped the tool: `public/ferramentas/`
+**Delivery — planned as 2 PRs, closed with 4 (all 28/08/2026; the last two are owner-QA refinements).** PR 1 shipped the tool: `public/ferramentas/`
 `gerador-de-rotina-de-guarda.html` + the pure module `public/js/gerador-rotina.js`, a MIRROR of
 the app wizard's presets (`wizard_rules.dart` — 7-7, 14-14, 1-1, 5-2-2-5, 2-2-3, same expansion,
 same T-27 transition rule for the handoff time), covered by `test/gerador-rotina.test.js` on the
@@ -294,6 +294,11 @@ days with caregiver 2, optionally caregiver 1 again; the app-wizard 1..60 clamp 
 with the "Precisa gerar um modelo de rotina diferente? Conheça o aplicativo Entrelares" hook at
 exactly that moment (`gerador-cta-modelo`). The JS module keeps all five presets on purpose: the
 `wizard_rules.dart` mirror stays whole; only the menu narrowed.
+**PR 4 (#69):** the tool was reachable only from a footer link — invisible for the link-magnet
+role the item gives it. The home gained the `#gerador` section right after "Como funciona" (a
+two-week SVG calendar, the same-engine line and the "Simular minha rotina — grátis" button,
+event `gerador-home`) and a "Simulador" entry in the nav; `/en/` stays without the link, like
+all PT-only content.
 
 ---
 
