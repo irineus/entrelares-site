@@ -6,12 +6,14 @@
 <!--
   F-54 — generator for public/og-cover.png (the PT-BR social-sharing banner).
 
-  Identity "O Emblema" (F-54): the official brand artwork (assets-src/brand-emblema.png,
-  1024x1024 text-free, AI-generated, approved by the owner — no vector source) shown
-  as a framed card on the cream layout, navy #2F4156 for text. The card's
-  square framed card shows the TEXT-FREE square master 1:1 (the favicon derives
-  from the flat variant brand-emblema-flat.png — see brand-icons.py). The brand-row icon is the RENDERED public/icon-192.png, so it always
-  matches the shipped icon (see assets-src/brand-icons.py). The English sibling is
+  Identity: the U-29 mark (26/08/2026) — a calendar card whose day cells draw the
+  two interlocked houses, on the brand indigo #4F46E5. The plaque is
+  assets-src/brand-marca.png shown 1:1, at the Android squircle radius; the
+  brand-row icon is the RENDERED public/icon-192.png, so neither can drift from
+  the mark the site serves. Run assets-src/brand-icons.py BEFORE re-rendering.
+  Palette: the app's U-27 tokens — surface #F9FAFB, text #111827, muted #6B7280,
+  outline #E5E7EB, accent #4F46E5, swapped amber #D97706. The cream/navy of the
+  F-54 clay era went with the emblem it framed (T-57, 28/08/2026). The English sibling is
   og-cover-en.html.
 
   NOT served: this file lives in assets-src/, like the lead-magnet PDF generator.
@@ -38,11 +40,11 @@
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
     font-family: "Segoe UI", "Liberation Sans", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f2e7;
+    background: #f9fafb;
     background-image:
-      radial-gradient(760px 480px at 92% 0%, rgba(118,143,122,0.10) 0%, rgba(118,143,122,0) 60%),
-      radial-gradient(640px 440px at 4% 100%, rgba(212,160,129,0.14) 0%, rgba(212,160,129,0) 58%);
-    color: #2f4156;
+      radial-gradient(760px 480px at 92% 0%, rgba(79,70,229,0.12) 0%, rgba(79,70,229,0) 60%),
+      radial-gradient(640px 440px at 4% 100%, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0) 58%);
+    color: #111827;
     padding: 48px 70px 54px;
     position: relative;
   }
@@ -56,18 +58,18 @@
   .mid { position: absolute; top: 172px; left: 70px; right: 452px; }
   h1 {
     font-size: 61px; font-weight: 800; line-height: 1.12; letter-spacing: -0.025em;
-    color: #2f4156; margin-bottom: 24px;
+    color: #111827; margin-bottom: 24px;
   }
-  .sub { font-size: 27px; line-height: 1.42; color: #56636e; }
-  .sub b { color: #2f4156; font-weight: 700; }
+  .sub { font-size: 27px; line-height: 1.42; color: #6b7280; }
+  .sub b { color: #111827; font-weight: 700; }
 
   /* the brand plaque, framed: the square text-free master, shown 1:1 */
   .art {
     position: absolute; top: 148px; right: 66px;
     width: 316px; height: 316px;
-    border-radius: 24px; overflow: hidden;
-    box-shadow: 0 12px 32px rgba(93, 79, 54, 0.18);
-    background: url(brand-emblema.png) no-repeat #f2f0ec;
+    border-radius: 76px; overflow: hidden;   /* o squircle do Android */
+    box-shadow: 0 12px 32px rgba(17, 24, 39, 0.16);
+    background: url(brand-marca.png) no-repeat #4f46e5;
     background-size: 100% 100%;
   }
 
@@ -75,14 +77,14 @@
           display: flex; align-items: center; gap: 16px; }
   .chip {
     background: #ffffff;
-    border: 1px solid #e4dcc8;
+    border: 1px solid #e5e7eb;
     border-radius: 999px;
     padding: 11px 22px;
     font-size: 21px;
     font-weight: 600;
-    color: #44525e;
+    color: #374151;
   }
-  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #a8642f; }
+  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #4f46e5; }
 </style>
 </head>
 <body>

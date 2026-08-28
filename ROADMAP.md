@@ -43,7 +43,7 @@ marketing/distribution activities, tracked here so they are not lost.
 6. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
 7. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
 
-With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames are still the PT-BR captures. That was **L-21**, and since 24/08/2026 it is the app repo's **T-57**: the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages, owned by the repo the app lives in.
+With the pricing gate cleared, **L-05 and L-04 are independent of the app** and can ship in any order, whenever there is appetite. The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
 
 **Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
 
@@ -441,11 +441,13 @@ files, not a templating layer — so `/en/` is a full sibling of `/`, and the de
   `"price": "14.90"` while the visible price had been **R$ 5,49** since L-14, so the structured
   data was telling Google a price the page contradicts.
 
-**Known follow-up — [L-21](#l-21--english-screenshots-for-en), absorbed by the app repo's T-57 on 24/08/2026.** The phone
-screenshots on `/en/` are the **PT-BR captures**, so an English reader sees a Portuguese UI inside
-the frames. Re-capturing them needed a running English build of the app, which is exactly what the
-promotion gate above was waiting for — that gate fell on 07/08/2026, so the follow-up became
-executable and was written up as its own item on the day of the promotion.
+**Follow-up, now CLOSED — [L-21](#l-21--english-screenshots-for-en).** The phone screenshots on
+`/en/` were the **PT-BR captures**, so an English reader saw a Portuguese UI inside the frames.
+Re-capturing them needed a running English build of the app, which is exactly what the promotion
+gate above was waiting for; that gate fell on 07/08/2026, the item was written up on the day of
+the promotion, absorbed by the app repo's **T-57** on 24/08 once the cutover made both sets stale,
+and **delivered on 28/08/2026** — `/en/` serves `img/screenshots/en/` and the PT-BR page keeps its
+own.
 
 **Deliberately NOT in this item:** translating the blog cluster (it targets Brazilian search
 intent — translating it buys nothing for recruitment and would compete with itself), the L-09
@@ -503,10 +505,10 @@ even cheaper fallback. Prefer video; justify Lottie in writing if it wins.
   poster/still, not a paused video element).
 - **Weight and LCP** — the hero is the LCP element today. The demo must not become it: lazy-load
   below the fold, or keep the poster as the painted frame.
-- **Both languages.** `/en/` exists since **L-16** and already carries a known follow-up (its
-  screenshots are PT-BR captures). A demo of a PT-BR UI on the English page repeats that defect in
-  a more prominent slot — so either capture both, or make the sequence readable without text and
-  say so.
+- **Both languages.** `/en/` exists since **L-16** and has served its own English frames since
+  **T-57** (28/08/2026). A demo recorded only in PT-BR would re-open, in a more prominent slot,
+  exactly the defect L-21 closed — so either record both, or make the sequence readable without
+  text and say so.
 - **Honest content.** Fictional names, real UI, no invented numbers — the S-15 rule applied to
   marketing assets. And the copy around it stays **factual** (L-10 update 2: *inalterável*, never
   the retired "à prova de disputa" promise).
@@ -547,7 +549,18 @@ keep working.
 
 `medium` · `low` · on-site · **Status: `skipped` — absorbed by the app repo's
 [T-57](https://github.com/irineus/entrelares-flutter/blob/main/backlog/technical.md)
-(24/08/2026)** · **follow-up of L-16**
+(24/08/2026), and **DELIVERED by it on 28/08/2026**** · **follow-up of L-16**
+
+> **Done.** `public/img/screenshots/en/` exists with the eight frames in English, `/en/`
+> points at it, and the PT-BR set was re-shot in the same sitting — both from the **Flutter**
+> app in production configuration, family *Neves* (Rafael/Marina/Nair). Every constraint below
+> was honoured: parallel directory, `webp`+`png` pair at 1080×1920 with the `loading`/`width`/
+> `height` attributes untouched, real running UI, and English `alt` text — three of which were
+> corrected to match the English screen that now actually appears (*Decline*→*Reject*,
+> *handoff*→*handover*, *parent*→*caregiver*). The frames were captured on an Android device at
+> 1440×3088; the OS status bar and the gesture pill were cropped and the result fitted to
+> 1080×1920 by edge replication, because a 20:9 phone screen cannot become 9:16 without either
+> losing content or letterboxing — and 9:16 is what Play takes and what L-03 established here.
 
 > **Why it was absorbed rather than done.** This record was written on 10/08/2026 on a premise
 > that has since died: that the PT-BR captures were current and only the English set was
@@ -689,6 +702,9 @@ cluster deliberately targets for search) and as history (git, published releases
   `loc`s (all `lastmod` = 2026-08-12 — every page's content really changed), `robots.txt`
   sitemap pointer, app links → `https://web.entrelares.app`.
 - **OG banners regenerated**, and the PT-BR one GAINED a generator: `assets-src/og-cover-pt.html`
+  *(deleted by T-57, 28/08/2026: the F-54 rebrand superseded it with `og-cover.html`, which is what
+  writes `public/og-cover.png`. It survived as a third generator for a two-banner set, still on the
+  pre-rebrand navy — exactly the kind of file a future reader re-runs and regresses the banner with.)*
   (the original L-02 banner predated the generator convention). Both generators now use fixed
   positions instead of flex `space-between` — font metrics differ per platform (Segoe UI vs
   DejaVu) and the metric-dependent layout overflowed the 630px canvas when rendered off-Windows.

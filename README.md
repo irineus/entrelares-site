@@ -69,6 +69,7 @@ entrelares-site/
 │   │   └── modelos-rotina-guarda-compartilhada.pdf  # L-09 lead magnet (generated, versioned)
 │   ├── img/
 │   │   ├── screenshots/        # L-03 real product screenshots (WebP + PNG)
+│   │   │   └── en/             # T-57 — the same eight frames, English UI
 │   │   └── founder.webp/.jpg   # L-06 founder photo
 │   └── blog/                   # 4-article SEO cluster (+ index, img/) with the L-09 opt-in block
 ├── src/
@@ -76,8 +77,12 @@ entrelares-site/
 ├── test/
 │   └── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
 ├── assets-src/                 # generators — NOT served
+│   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
+│   │                           #   store/brand-icons.py; never edited here (T-57)
+│   ├── brand-icons.py          # favicon + icon-192 + icon-512, resized from the master
 │   ├── modelos-rotina.html     # the lead-magnet PDF (headless Chromium)
-│   └── og-cover-en.html        # the English OG banner (headless Chrome; command in the file)
+│   ├── og-cover.html           # the PT-BR OG banner (headless Chrome; command in the file)
+│   └── og-cover-en.html        # the English OG banner (same command, other language)
 ├── wrangler.jsonc              # Workers config (main + assets + vars; two envs)
 ├── package.json                # `type: module` + `test` script (no runtime deps; NOT served)
 ├── .github/workflows/
@@ -236,10 +241,10 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **Remaining on-site roadmap:** L-05 (SEO content + interactive tool), L-04 (blog image
       optimization), L-15 (company identity — gated on the CNPJ existing). See
       [`ROADMAP.md`](ROADMAP.md).
-- [ ] **English screenshots for `/en/`** (**L-21**, the L-16 follow-up) — the phone frames on the
-      English page still show the PT-BR captures. The gate that held it (the app's **U-13** in
-      production) fell on 07/08/2026, so it is executable now: re-shoot `img/screenshots/*` from
-      the app in English.
+- [x] **English screenshots for `/en/`** (**L-21**, absorbed by the app repo's **T-57** and
+      delivered 28/08/2026) — `/en/` serves its own set from `img/screenshots/en/`, and the
+      PT-BR set was re-shot in the same sitting. Both are the **Flutter** app under the U-27
+      visual system; the previous captures were the Blazor client, from 23/07/2026.
 - [x] Analytics (L-01), Open Graph banner (L-02), real screenshots (L-03), audit-log repositioning
       (L-10), founder note (L-06), lead-magnet/newsletter (L-09), pricing (L-08), trust signals
       (L-14), sitemap hygiene (L-07), English version (L-16) — shipped.

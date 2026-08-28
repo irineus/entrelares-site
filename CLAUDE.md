@@ -207,8 +207,16 @@ system; an unverified claim is a liability no matter who drafted it.
   (`git log -1 --format=%ad --date=short -- <file>`). Never bump it globally: a sitemap claiming
   every page changed today teaches the crawler to ignore the field.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
-  lead-magnet PDF (`modelos-rotina.html`) and the English OG banner (`og-cover-en.html`, rendered
-  with headless Chrome at 1200×630). Re-render when the copy they show changes; a banner whose
-  text no longer matches the page is worse than no banner.
+  lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
+  `og-cover-en.html`, headless Chrome at 1200×630) and the three icons (`brand-icons.py`).
+  Re-render when the copy they show changes; a banner whose text no longer matches the page is
+  worse than no banner.
+- **The brand mark is NOT drawn in this repo.** Its geometry lives in the app repo
+  (`entrelares-flutter/store/brand-icons.py`, U-29); what lives here is one rendered master,
+  `assets-src/brand-marca.png`, plus the resizing. To change the art: edit the app repo's script,
+  re-render the master from it, run `brand-icons.py`, re-render both banners (their plaque is the
+  master and their brand-row icon is the rendered `icon-192.png`), and **bump the `?v=` on every
+  `<link>`/`<meta>` that points at them** — without that the browser keeps serving the old mark
+  from cache. Two drawings of one mark is how the two repos drift (T-57, 28/08/2026).
 - The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
   assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.
