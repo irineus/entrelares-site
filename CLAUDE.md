@@ -10,8 +10,7 @@ lives in the sibling repo **`entrelares-flutter`** (Flutter + Supabase) and runs
 channels**: the Play package `com.entrelares.app` and `web.entrelares.app`, the latter served
 by the Cloudflare Pages project `entrelares-web`. **The Blazor client that used to live in
 `entrelares-app` was shut down and that repo ARCHIVED on 25/08/2026** (app items T-53/T-56);
-nothing is deployed from it and nothing there needs to be read to work here — but the local
-checkout is still required by the mirror generator (see the Roadmap section). The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
+nothing is deployed from it and nothing there needs to be read to work here. The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
 cutover (12/08/2026), which also flipped the e-mail SENDER to `materiais@entrelares.app` —
 the Resend Free plan verifies ONE domain, so the old one had to be deleted before the new
 one could exist.
@@ -75,13 +74,10 @@ is that it deploys exactly what is in the repo.
 - **UI / legal copy: PT-BR** (and the English mirror at `/en/`, per the section above). File
   names/titles and commit bodies' technical terms: English is fine.
 - **Commit messages: PT-BR**, conventional-commit style (`feat(...)`, `fix(...)`, `docs(...)`).
-- **Every commit that DELIVERS a roadmap item ends with the trailer `Backlog: <ID>`**
-  (several comma-separated). That trailer is the ONLY mark meaning "this commit delivers this
-  item" — `git log --format='%(trailers:key=Backlog,valueonly)'` reads it with no regex and no
-  false positives; mentioning an ID in prose stays free and never counts as a delivery. **The
-  trailer lives at the END of the PR template body**, so the squash-merge commit inherits it
-  automatically. Same convention as the app repo (`entrelares-flutter/CLAUDE.md`), because
-  the Notion board is shared and reads both histories the same way.
+- The `Backlog: <ID>` commit trailer was **dropped on 07/09/2026 (app T-63)**, together with its
+  only reader — the mirror generator. Naming the item in the commit body stays useful for a human
+  reading `git log`; nothing machine-reads it any more. Same convention as `entrelares-flutter`,
+  because the board is shared.
 
 ## Working agreement — branches, review, deploy (settled July 2026, mirrors the app)
 - **Per item:** analysis + gap questions BEFORE any code; once decisions are locked, implement,
@@ -97,55 +93,40 @@ is that it deploys exactly what is in the repo.
   merge, never on my own initiative. `main` stays the single production source of truth.
 - **Never commit directly to `preview` or `main`.**
 
-## Roadmap
-- **Status board = Notion (since July 2026), not markdown.** Database *"Backlog"* under
+## Roadmap — the CARD is the record (changed 07/09/2026, app T-63)
+
+- **The board is the record of every item.** Database *"Backlog"* under
   [Entrelares — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
-  reachable through the **Notion MCP connector**. It is **shared with the app repo** — the `L-*`
-  rows carry `Repo = landing`, the app's `F-`/`U-`/`T-`/`S-` rows `Repo = app` — and owns
-  **status, the roadmap slot (`Grupo roadmap` + `Ordem` — pending `L-*` items sit in the SAME
-  groups as the app's, forming the integrated roadmap; the first row of the board's "A fazer"
-  view is always the next item to execute) and effort spent** (`Esforço gasto (h)`, `Início`,
-  `Conclusão`). The `ID` property is the join key with this repo. **If the connector is not
-  enabled in a session, say so instead of guessing the status** — `ROADMAP.md` no longer carries
-  a status summary. Property keys via MCP are the schema names except `ID`, which is
-  `userDefined:ID`, and dates, which split into `date:<prop>:start` / `:is_datetime`.
-- `ROADMAP.md` — the growth/conversion roadmap's **rationale** + the full per-item records
-  (L-01…L-12); companion to the app's Phase 6 (Growth, Analytics & Monetization) in
-  `entrelares-flutter/backlog/README.md` — the backlog MOVED there with the archiving
-  (app T-56, 24/08/2026). Cross-repo prerequisites are noted per item.
-  **Closing an item = its record here + the Notion row, in the same delivery.**
-- **The Notion page BODY is a mirror, not a second source.** Each row's page carries the full
-  record from `ROADMAP.md` plus an **Entregas** section with the item's PRs and commits, all
-  generated FROM this repo — the markdown stays the source of truth. Regenerate after closing
-  an item rather than hand-editing the Notion body. The generator moved with the backlog: it is
-  **`entrelares-flutter/tool/notion_mirror.py`** (underscores now, not hyphens), it reads all three
-  repos because the board is shared, and its defaults assume the sibling-checkout layout — so run
-  it from the flutter checkout with no paths:
-  ```
-  cd ../entrelares-flutter && python tool/notion_mirror.py -o mirror.json
-  ```
-  **It still needs the `entrelares-app` checkout to exist locally** (it reads that history for the
-  pre-cutover items and refuses to start without the `.git`), even though the repo is archived and
-  nothing deploys from it.
-  **It reads this repo at `origin/preview`, not your working branch.** Regenerate a page body
-  only AFTER the squash-merge to `preview`: run it before, and it silently rebuilds the page from
-  the pre-merge markdown — publishing the item's OLD record over the one you just closed.
-- **Before writing code for an `L-` item, read its Notion row** — `Status`, `Grupo roadmap`/`Ordem`
-  and the page body are the current truth about whether it is still wanted and what was already
-  spent on it.
+  data source `109b1b02-5b6b-48ef-b3b6-990374a3d10f`, reached through the **Notion MCP connector**.
+  It is **shared with the app repo** — `L-*` rows carry `Repo = landing`. There is **no mirror and
+  no generator** any more: `notion_mirror.py` was deleted, and the `entrelares-app` checkout it used
+  to require is not needed by anything. **Read and write the card directly.**
+- **Read the Decisões vigentes page before deciding anything**:
+  Notion page `3d42f3f4-b9b2-819d-b0d8-c845b7aa1ae5`, sections 1 to 6. It holds the product's
+  standing decisions and **wins over any document in either repository**.
+- **If the connector is not enabled in a session, say so instead of guessing the status** —
+  `ROADMAP.md` carries no status summary and no pending records.
+- **The queue** is `Fase` + `Ordem`, interleaved with the app's items in the same groups — that
+  integrated order is the whole point:
   ```
   query_data_sources → mode "sql", data_source_urls
     ["collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"]
-  SELECT "userDefined:ID", "Item", "Status", "Grupo roadmap", "Ordem", "Esforço gasto (h)", url
+  SELECT "userDefined:ID", "Item", "Status", "Fase", "Ordem", "Notas", url
   FROM "collection://109b1b02-5b6b-48ef-b3b6-990374a3d10f"
-  WHERE "Repo" = 'landing' AND "Status" = 'pending' ORDER BY "Grupo roadmap", "Ordem"
+  WHERE "Repo" = 'landing' AND "Status" IN ('pending','in-progress')
+  ORDER BY CAST(substr("Fase", 1, 2) AS INTEGER), "Ordem"
   ```
   The column is `"userDefined:ID"`, never `ID`, and a column alias does not work in `WHERE` —
   repeat the full name or the query silently returns nothing.
-- **On close, in the SAME delivery:** the record in `ROADMAP.md` + the Notion row (`Status`,
-  `Conclusão`, `Esforço gasto (h)`, clear `Grupo roadmap`/`Ordem`) + regenerate the page body.
-  A row left behind is worse than no row: every future session reads it as current. Landing rows
-  never set `Fase` — the phases are the app's development history.
+- **On close, in the SAME delivery:** `Status = completed`, `Conclusão` = today, `Tamanho`/`Tipo`
+  if still empty, the `CONCLUÍDO <data>:` line at the top of `Notas` (read the current value first —
+  `update_properties` overwrites the whole field), and any extensive result as a **sub-page of the
+  card**. **`Fase` is not cleared** — it says which group delivered the item. **Nothing moves in
+  `ROADMAP.md`**, which is now history: the delivered items' records plus the plan's rationale.
+- **Creating an item = creating a card**, with `Fase`, `Ordem`, `Tipo`, `Tamanho` and an
+  `Origem:` line in `Notas`. Never a record in markdown.
+- Frozen since T-63, as history rather than fields to fill: `Esforço gasto (h)`,
+  `Esforço estimado (h)`, `Link`, `Início`.
 
 ## Worker endpoint — materials / newsletter (L-09)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
