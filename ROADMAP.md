@@ -1,8 +1,9 @@
 # Landing Page — Backlog & Growth Roadmap
 
-The **forward plan + full per-item records** for `entrelares.app` (the marketing
-site). Companion to the app-side plan in
-[`entrelares-app/backlog/README.md`](../entrelares-app/backlog/README.md).
+The **forward plan** for `entrelares.app` (the marketing site). The per-item **records**
+live in the Notion card since 07/09/2026 — see *Where the record lives* below. Companion
+to the app-side plan in
+[`entrelares-flutter/backlog/README.md`](https://github.com/irineus/entrelares-flutter/blob/main/backlog/README.md).
 The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
 several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
 own items: `L-*` here, `F-/U-/T-/S-*` in the app.
