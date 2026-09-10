@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excluir sua conta · Delete your account — Entrelares</title>
+    <meta name="description" content="Como pedir a exclusão da sua conta e dos seus dados no Entrelares, com ou sem o aplicativo instalado. How to request deletion of your Entrelares account and data." />
+    <link rel="canonical" href="https://entrelares.app/exclusao-de-conta.html" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=6" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png?v=6" />
+    <meta name="theme-color" content="#03173d" />
+    <style>
+        /* S-19 — the account-deletion request page. BILINGUAL AND SINGLE, like
+           404.html and for the same reason: whoever arrives here may come from
+           the Play listing's data-safety link (a reviewer reading English) or
+           from the PT-BR policy, and there is no language we can trust up front.
+           A sibling at /en/ would also mean two files to keep true forever, and
+           every sentence here is a claim about the code (the S-15 rule).
+           Design tokens copied from privacidade.html + 404.html (no build step). */
+        :root {
+            --ink: #1e293b;
+            --muted: #475569;
+            --soft: #64748b;
+            --indigo: #4f46e5;
+            --bg: #f8fafc;
+            --bg-tint: #eef2ff;
+            --card: #ffffff;
+            --line: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color: var(--ink); background: var(--bg); line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+        header { border-bottom: 1px solid var(--line); background: rgba(248, 250, 252, 0.92); }
+        header .wrap { display: flex; align-items: center; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--ink); text-decoration: none; }
+        .brand img { width: 32px; height: 32px; border-radius: 8px; }
+        main .wrap { padding-top: 40px; padding-bottom: 72px; }
+        h1 { font-size: clamp(24px, 5vw, 30px); letter-spacing: -0.02em; margin-bottom: 8px; }
+        h2 { font-size: 19px; margin: 28px 0 10px; }
+        h3 { font-size: 16px; margin: 20px 0 6px; }
+        p, li { color: var(--muted); font-size: 15.5px; margin-bottom: 12px; }
+        ul, ol { padding-left: 22px; }
+        li { margin-bottom: 8px; }
+        a { color: var(--indigo); }
+        a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+        strong { color: var(--ink); }
+        .updated { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
+        .lang-tag {
+            display: inline-block; background: var(--bg-tint); color: var(--indigo); font-size: 12px;
+            font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 4px 12px;
+            border-radius: 999px; margin-bottom: 10px;
+        }
+        .lang-block { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 30px 28px; }
+        .lang-block + .lang-block { margin-top: 20px; }
+        .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; font-size: 14px; }
+        .jump a { text-decoration: none; font-weight: 600; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px; }
+        .note { background: var(--bg-tint); border-radius: 12px; padding: 14px 16px; margin: 14px 0; }
+        .note p:last-child { margin-bottom: 0; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 22px; border-radius: 10px; font-size: 15px; font-weight: 600;
+            text-decoration: none; background: var(--indigo); color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); margin: 4px 0 18px;
+        }
+        table { border-collapse: collapse; width: 100%; margin: 4px 0 16px; font-size: 14.5px; }
+        th, td { border: 1px solid var(--line); padding: 9px 11px; text-align: left; vertical-align: top; color: var(--muted); }
+        th { background: #f1f5f9; color: var(--ink); font-weight: 600; }
+        .tbl-wrap { overflow-x: auto; }
+        footer { border-top: 1px solid var(--line); font-size: 13.5px; color: var(--soft); }
+        footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 18px; padding-bottom: 18px; }
+        footer a { color: var(--soft); text-decoration: none; }
+        footer a:hover { color: var(--ink); }
+        @media (max-width: 520px) {
+            .lang-block { padding: 24px 20px; }
+            .btn { width: 100%; }
+        }
+    </style>
+    <!-- L-01: cookieless product analytics (Umami) — pageviews only; no cookies, no PII -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+</head>
+<body>
+
+<header>
+    <div class="wrap">
+        <a class="brand" href="/">
+            <img src="/icon-192.png?v=6" alt="" width="32" height="32" />
+            Entrelares
+        </a>
+    </div>
+</header>
+
+<main>
+<div class="wrap">
+
+    <h1>Excluir sua conta <span aria-hidden="true">·</span> Delete your account</h1>
+    <p class="updated">Última atualização: 10 de setembro de 2026 · Last updated: 10 September 2026</p>
+
+    <div class="jump">
+        <a href="#pt">Português</a>
+        <a href="#en">English</a>
+    </div>
+
+    <section class="lang-block" lang="pt-BR" id="pt">
+        <span class="lang-tag">Português</span>
+        <h2>Como pedir a exclusão da sua conta</h2>
+        <p>Você pode excluir a sua conta do Entrelares <strong>sem ter o aplicativo instalado</strong>: o
+            Entrelares funciona também no navegador, no mesmo endereço, com a mesma conta.</p>
+
+        <a class="btn" href="https://web.entrelares.app">Entrar no Entrelares pelo navegador</a>
+
+        <ol>
+            <li>Entre com o e-mail e a senha da sua conta.</li>
+            <li>Abra <strong>Perfil</strong>.</li>
+            <li>Toque em <strong>Sair da família…</strong> — ou em <strong>Excluir família…</strong>, se você
+                for o único responsável ativo da família.</li>
+            <li>Leia as consequências, confirme e confirme a sua senha quando for pedido.</li>
+        </ol>
+
+        <div class="note">
+            <p><strong>Se você entra com a sua conta do Google</strong>, a sua conta não tem senha — e a
+                confirmação acima pede uma. Nesse caso, escreva para
+                <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a> a partir do endereço
+                da conta e nós conduzimos a exclusão para você.</p>
+        </div>
+
+        <h3>Se você não consegue entrar</h3>
+        <p>Escreva para <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>, de
+            preferência a partir do e-mail cadastrado, informando o seu nome e que deseja excluir a conta.
+            Poderemos pedir informações adicionais para confirmar a sua identidade antes de executar o pedido —
+            é o que protege a sua conta de um pedido feito por outra pessoa. O pedido é gratuito.</p>
+
+        <h2>O que acontece depois do pedido</h2>
+        <div class="tbl-wrap">
+            <table>
+                <tr>
+                    <th>Quando</th>
+                    <th>O que acontece</th>
+                </tr>
+                <tr>
+                    <td><strong>Na hora</strong></td>
+                    <td>Os seus dias futuros são liberados: os que você era o responsável planejado são
+                        apagados, e os dias em que você era o responsável real de uma troca aprovada voltam ao
+                        responsável planejado. As suas solicitações de troca pendentes são canceladas, e a sua
+                        vaga na família é liberada — a pessoa administradora pode convidar alguém no seu lugar.
+                        Os demais responsáveis são avisados no app e por e-mail.</td>
+                </tr>
+                <tr>
+                    <td><strong>Nos 30 dias seguintes</strong></td>
+                    <td>A conta fica congelada: ao entrar, você vê apenas a tela de cancelar a saída ou
+                        aguardar. Você pode <strong>cancelar</strong> nesse período, desde que ainda haja vaga
+                        na família.</td>
+                </tr>
+                <tr>
+                    <td><strong>Depois de 30 dias</strong></td>
+                    <td>A conta de acesso é apagada definitivamente e o seu e-mail é eliminado dos nossos
+                        registros. A partir daí não há como voltar atrás.</td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>O que permanece, e por quê</h3>
+        <ul>
+            <li><strong>O seu nome continua atrelado ao histórico das ações passadas</strong> no calendário
+                (quem planejou, quem trocou, quem aprovou), enquanto a família existir. Esse registro é o que
+                garante os direitos dos demais responsáveis, e por isso não é apagado com a saída de uma
+                pessoa. Ele desaparece quando a família inteira é excluída.</li>
+            <li><strong>Registros de acesso à aplicação</strong> são mantidos por 6 meses, como exige o art. 15
+                do Marco Civil da Internet — o mesmo prazo de retenção das notificações já lidas.</li>
+        </ul>
+
+        <h2>Apagar dados sem excluir a conta</h2>
+        <p>Você não precisa excluir a conta para exercer os seus direitos sobre os dados. Pedidos de
+            correção, de anonimização, de eliminação de dados desnecessários ou tratados em desconformidade,
+            e de portabilidade são feitos por
+            <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>, gratuitamente, como
+            descreve o <a href="/privacidade.html#retencao">§13 da Política de Privacidade</a>. Uma exceção
+            está explicada lá: o histórico das ações no calendário é inalterável por concepção, e a correção
+            é feita <strong>por anotação</strong> — o dado correto entra como registro novo, sem apagar o
+            anterior, porque esse registro fundamenta os direitos dos demais responsáveis.</p>
+
+        <h2>Excluir a família inteira (todos os dados)</h2>
+        <p>Apagar o calendário, o histórico e as contas de todos é uma decisão da família, não de uma pessoa
+            só. Uma pessoa administradora pede a exclusão em <strong>Perfil</strong>, e todos os demais
+            responsáveis ativos são avisados no app e por e-mail. <strong>Qualquer recusa cancela o
+            pedido.</strong> Se ninguém recusar em 30 dias — ou se todos concordarem antes disso, quando um
+            administrador pode executar na hora — os dados da família são apagados definitivamente.</p>
+
+        <h2>Dúvidas e outros direitos</h2>
+        <p>O detalhamento da retenção e da exclusão está na
+            <a href="/privacidade.html#retencao">Política de Privacidade</a> (§11 e §13), incluindo os demais
+            direitos que você pode exercer pela LGPD. O Encarregado pelo Tratamento de Dados (DPO) responde em
+            <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>.</p>
+    </section>
+
+    <section class="lang-block" lang="en" id="en">
+        <span class="lang-tag">English</span>
+        <h2>How to request deletion of your account</h2>
+        <p>You can delete your Entrelares account <strong>without having the app installed</strong>: Entrelares
+            also runs in the browser, at the same address, with the same account.</p>
+
+        <a class="btn" href="https://web.entrelares.app">Open Entrelares in your browser</a>
+
+        <ol>
+            <li>Sign in with your account's e-mail and password.</li>
+            <li>Open <strong>Perfil</strong> (Profile).</li>
+            <li>Tap <strong>Sair da família…</strong> (Leave the family) — or <strong>Excluir família…</strong>
+                (Delete the family), if you are the only active caregiver.</li>
+            <li>Read the consequences, confirm, and confirm your password when asked.</li>
+        </ol>
+
+        <div class="note">
+            <p><strong>If you sign in with your Google account</strong>, your account has no password — and the
+                confirmation above asks for one. In that case, write to
+                <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a> from the account's
+                address and we will carry out the deletion for you.</p>
+        </div>
+
+        <h3>If you cannot sign in</h3>
+        <p>Write to <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>, preferably from
+            the registered e-mail address, stating your name and that you want your account deleted. We may ask
+            for additional information to confirm your identity before carrying out the request — that is what
+            protects your account from a request made by someone else. There is no charge.</p>
+
+        <h2>What happens after the request</h2>
+        <div class="tbl-wrap">
+            <table>
+                <tr>
+                    <th>When</th>
+                    <th>What happens</th>
+                </tr>
+                <tr>
+                    <td><strong>Immediately</strong></td>
+                    <td>Your future days are released: days you were the planned caregiver for are deleted, and
+                        days where you were the real caregiver of an approved swap revert to the planned
+                        caregiver. Your pending swap requests are cancelled, and your seat in the family is
+                        freed — the admin can invite someone in your place. The other caregivers are notified
+                        in the app and by e-mail.</td>
+                </tr>
+                <tr>
+                    <td><strong>For the next 30 days</strong></td>
+                    <td>The account is frozen: signing in shows only the screen to cancel the departure or
+                        wait. You may <strong>cancel</strong> during this period, as long as a seat is still
+                        free in the family.</td>
+                </tr>
+                <tr>
+                    <td><strong>After 30 days</strong></td>
+                    <td>The sign-in account is permanently deleted and your e-mail address is erased from our
+                        records. From then on there is no way back.</td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>What remains, and why</h3>
+        <ul>
+            <li><strong>Your name stays attached to the record of past actions</strong> in the calendar (who
+                planned, who swapped, who approved), for as long as the family exists. That record is what
+                safeguards the other caregivers' rights, which is why one person's departure does not erase it.
+                It disappears when the whole family is deleted.</li>
+            <li><strong>Application access logs</strong> are kept for 6 months, as required by article 15 of the
+                Brazilian Internet Civil Framework (Marco Civil da Internet) — the same retention period as
+                notifications already read.</li>
+        </ul>
+
+        <h2>Deleting data without deleting your account</h2>
+        <p>You do not have to delete your account to exercise your rights over your data. Requests to
+            correct, anonymise, erase unnecessary or unlawfully processed data, and data-portability requests
+            go to <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>, free of charge,
+            as described in <a href="/privacidade.html#retencao">§13 of the Privacy Policy</a>. One exception
+            is explained there: the record of calendar actions is unalterable by design, and corrections are
+            made <strong>by annotation</strong> — the correct value is added as a new entry rather than
+            overwriting the old one, because that record safeguards the other caregivers' rights.</p>
+
+        <h2>Deleting the whole family (all data)</h2>
+        <p>Erasing the calendar, the history and everyone's accounts is a decision for the family, not for one
+            person. An admin requests the deletion under <strong>Perfil</strong> (Profile), and every other
+            active caregiver is notified in the app and by e-mail. <strong>Any refusal cancels the
+            request.</strong> If nobody refuses within 30 days — or if everyone agrees before that, in which
+            case an admin may execute it right away — the family's data is permanently erased.</p>
+
+        <h2>Questions and other rights</h2>
+        <p>Retention and erasure are described in full in the
+            <a href="/privacidade.html#retencao">Privacy Policy</a> (§11 and §13), in Portuguese, which is the
+            binding text, together with the other rights you may exercise under the Brazilian data-protection
+            law (LGPD). The Data Protection Officer answers at
+            <a href="mailto:privacidade@entrelares.app">privacidade@entrelares.app</a>.</p>
+    </section>
+
+</div>
+</main>
+
+<footer>
+    <div class="wrap">
+        <a href="/">Início</a>
+        <a href="/en/" hreflang="en" lang="en">English</a>
+        <a href="/termos.html">Termos de Uso</a>
+        <a href="/privacidade.html">Privacidade</a>
+        <a href="mailto:suporte@entrelares.app">Suporte · Support</a>
+    </div>
+</footer>
+
+</body>
+</html>
