@@ -27,15 +27,13 @@
 ## Checklist
 - [ ] Branch criada do `preview` atual (não reusa branch mesclada)
 - [ ] Copy/legal em PT-BR
-- [ ] Roadmap atualizado (registro em `ROADMAP.md` + linha no Notion)
+- [ ] Card do Notion atualizado (`Status`, `Conclusão`, `Notas`) — `ROADMAP.md` é história, não se edita
 - [ ] Sem segredos (RESEND_API_KEY etc.) no diff
 - [ ] Ciente: merge em `preview` ≠ produção; `main` só sob demanda
 
 ## Itens entregues
-<!-- MANTENHA ESTA SEÇÃO NO FIM DO CORPO. O GitHub pré-preenche a mensagem do commit de
-     squash com o corpo do PR, então a linha abaixo vira o trailer do commit sozinha.
-     Só itens que ESTE PR entrega — itens citados como contexto ficam na prosa acima e
-     nunca contam como entrega. Vários itens: `Backlog: L-04, L-07`.
-     Sem item de roadmap (ajuste de infra, dependência)? Apague a linha. -->
+<!-- Desde o app T-63 (07/09/2026) NÃO existe mais o trailer `Backlog:` — o seu único leitor,
+     o gerador do espelho, foi apagado. Nomeie o item aqui em prosa, para quem lê o `git log`,
+     e feche o card no Notion (Status, Conclusão, Notas), que é o registro. -->
 
-Backlog: L-NN
+L-NN — <o que este PR entrega>

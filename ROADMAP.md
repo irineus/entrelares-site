@@ -1,8 +1,9 @@
 # Landing Page — Backlog & Growth Roadmap
 
-The **forward plan + full per-item records** for `entrelares.app` (the marketing
-site). Companion to the app-side plan in
-[`entrelares-app/backlog/README.md`](../entrelares-app/backlog/README.md).
+The **forward plan** for `entrelares.app` (the marketing site). The per-item **records**
+live in the Notion card since 07/09/2026 — see *Where the record lives* below. Companion
+to the app-side plan in
+[`entrelares-flutter/backlog/README.md`](https://github.com/irineus/entrelares-flutter/blob/main/backlog/README.md).
 The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
 several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
 own items: `L-*` here, `F-/U-/T-/S-*` in the app.
@@ -16,38 +17,46 @@ distribution** — not the SEO base.
 > **Status values:** `pending` · `in-progress` · `completed`
 > IDs (`L-` + number) are stable and never reused.
 
-## Where the status lives (changed July 2026)
+## Where the record lives (changed 07/09/2026 — T-63)
 
-The **live status board moved to Notion** — database *"Backlog"* under
+**The Notion CARD is the single record of an item**, on the board *"Backlog"* under
 [Entrelares — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
-maintained through the Notion MCP connector. It is **shared with the app repo**: the `L-*` rows
-sit next to the app's `F-`/`U-`/`T-`/`S-` rows (filter by `Repo = landing`), which is what makes
-the one-funnel view possible in a single place. It owns **status, execution order (`Ordem`) and
-the effort actually spent** (`Esforço gasto (h)`, `Início`, `Conclusão`).
+reached through the Notion MCP connector. The board is **shared with the app repo**: the `L-*` rows
+sit next to the app's `F-`/`U-`/`T-`/`S-` rows (filter by `Repo = landing`), which is what makes the
+one-funnel view possible in a single place.
 
-**The old summary table in this file is gone** — it duplicated by hand what Notion now tracks.
-What stays here is what belongs next to the code: the **rationale** below and the **full per-item
-records** further down. IDs (`L-` + number) remain stable, never reused, and are the join key with
-the Notion row. **On-site** items are code/content in this repo; **off-site** items are
-marketing/distribution activities, tracked here so they are not lost.
+There is no longer a mirror in markdown, and no generator between the two —
+`entrelares-flutter/tool/notion_mirror.py` was deleted after its last run, which is what migrated
+the pending `L-*` records into their card bodies. *Why:* an item used to exist in three places, and
+the owner's verdict on 07/09/2026 was *"replicação desnecessária"*.
+
+What this file still is: the **rationale** of the growth/conversion plan, and the **records of the
+items already delivered** — history, kept because it explains how the site got here. IDs (`L-` +
+number) remain stable, never reused, and are the join key with the card. **Do not add a record for
+a new item here** — create the card.
 
 ## Roadmap — what's next
 
-**Twelve** on-site items have shipped (L-01/L-02/L-03/L-06/**L-08**/**L-07**/L-09/L-10/**L-14**/**L-16**/**L-05**/**L-17** — analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note, the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust signals next to the price, the English version of the site, the SEO cluster expansion + routine generator, and the demo that finally SHOWS the immutable history instead of asserting it). L-08 was the last item gated by the app track: the app's **billing (T-39) is built** (v1.6.29–1.6.31), so the price is decided and published here — what remains on the app side is its go-live/ops step, not landing work. **Since Aug 2026 the pending `L-*` items hold slots in the shared Notion roadmap groups** (the integrated app+site queue: **L-19**/**L-20**/L-11/L-12 in *Distribuição*, L-04/**L-18** in *Polimento*, **L-15** in *Início da monetização*) — the board's (`Grupo roadmap`, `Ordem`) is the authoritative order; the list below is the landing-side rationale. **The site is in production with both languages since 10/08/2026** (`preview`→`main`, carrying L-16 + L-07). Remaining on-site work:
+**The authoritative queue is the board** (`Fase` + `Ordem`), which interleaves the pending `L-*`
+items with the app's in the same groups — that integrated order is the point, and reproducing it
+here by hand is what T-63 removed. Open the board and filter by `Repo = landing`.
 
-1. **L-19 — Animated iOS install guide.** Same review: the written steps stay, the animation is added on top — the friction it removes is the one that costs an install.
-2. **L-20 — E-mail sequence for the L-09 lead magnet.** Same review. **Read its record before scheduling anything**: the Resend allowance is per account and shared with the app's production sign-up e-mails (app T-49), so this is a quota/legal decision as much as a copy one.
-3. **L-04 — Blog image optimization** (WebP/AVIF + `srcset` on the article pages) for Core Web Vitals / SEO.
-4. **L-18 — Founder note higher on the page + calmer typography.** Same review. A placement *bet*, so it ships with the L-01 measurement that judges it.
-5. **L-15 — Company identity (CNPJ) on the site** — the half of L-14 that had to wait: the owner has no CNPJ yet and will not expose his personal identity instead. Board slot: *Início da monetização* (group 8), **cross-repo pair of the app's F-49, same delivery**, gated on the company existing.
+**Twelve** on-site items have shipped (L-01/L-02/L-03/L-06/L-08/L-07/L-09/L-10/L-14/L-16/L-05/L-17
+— analytics, the OG banner, real screenshots, the immutable-history repositioning, the founder note,
+the real free-vs-premium pricing section, sitemap hygiene, the lead-magnet/newsletter, the trust
+signals next to the price, the English version of the site, the SEO cluster expansion + routine
+generator, and the demo that finally SHOWS the immutable history instead of asserting it). Their
+records are below. **The site is in production with both languages since 10/08/2026**
+(`preview`→`main`, carrying L-16 + L-07).
 
-With the pricing gate cleared, **L-04 is independent of the app** and can ship whenever there is appetite (**L-05** shipped on 28/08/2026 — tool + three articles, and **L-17** the same day — the demo of the immutable history, built over the T-57 frames rather than as a video, for the reasons written into its record). The one cross-repo holdout is **L-15** (pair of app F-49), gated on the CNPJ existing — an owner decision, not development debt. **L-16's cross-repo gate is closed**: the English page could not be promoted before the app's **U-13** was in production, and it now is (`v1.8.0`, 07/08/2026) — the promotion happened on 10/08 and left one visible piece behind — the screenshots inside the frames were still the PT-BR captures. That was **L-21**, absorbed on 24/08/2026 by the app repo's **T-57** (the cutover made the PT-BR set as stale as the English one was absent, so the re-shoot became one session for both languages) and **delivered on 28/08/2026**: `/en/` now serves `img/screenshots/en/`, and both sets are the Flutter app under the U-27 visual system.
+Two standing notes that outlive any single item, because they are constraints and not tasks:
 
-**Off-site (ongoing; slotted in the board's *Distribuição* group so they are not lost):** **L-11** community channels and **L-12** lawyer/mediator partnerships (pairs with the app's **F-33** — "Relatório do histórico em PDF") — marketing activities, not code changes. Landing arrivals from both are measured by L-01.
-
-**Off-site (planned, board group *Polimento e melhoria progressiva*, last slot):** **L-13** — outreach discovery, a time-boxed comparison of where promotion effort should actually go, whose output is a ranked shortlist that becomes real items. The owner placed it at the END of that group (Aug 2026): choosing *where to spend* is worth more once the product depth ahead of it has landed.
-
-> **Cross-repo:** the app's forward plan lives in [`entrelares-app/backlog/README.md`](../entrelares-app/backlog/README.md). The landing and the app are **one funnel** and items reference each other (e.g. L-08 ↔ app **T-39** billing; L-03 → app **T-38** Play listing), but **each repo owns its own items** (`L-*` here, `F-/U-/T-/S-*` there).
+- **The Resend allowance is per ACCOUNT** and shared with the app's production sign-up e-mails
+  (app T-49), so any drip campaign competes with sign-up confirmations. That is a quota decision as
+  much as a copy one.
+- **Cross-repo pairs ship in the same delivery.** The landing and the app are one funnel and items
+  reference each other; each repo still owns its own items (`L-*` here, `F-`/`U-`/`T-`/`S-*` in
+  `entrelares-flutter`).
 
 ---
 
@@ -238,18 +247,6 @@ preview worker to test the live flow) — see the PR notes.
 `assets-src/modelos-rotina.html`, `src/index.js`, `test/subscribe.test.js`, `package.json`,
 `.github/workflows/test.yml`, `wrangler.jsonc`, `public/privacidade.html`; cross-repo: app
 `Pages/Privacy.razor` + version bump.
-
----
-
-### L-04 — Optimize blog images (WebP/AVIF + srcset)
-
-**Order 7** · `medium` · `low` · `medium`
-
-Blog JPEGs are 1600px, 200–330 KB each, no responsive `srcset`, no next-gen format. The landing
-home page is image-light (fast LCP), so this is scoped to the **article pages** — improves their
-Core Web Vitals and SEO.
-
-**Files:** `public/blog/img/*` → add WebP/AVIF; `<picture>`/`srcset` in `public/blog/*.html`.
 
 ---
 
@@ -493,21 +490,6 @@ price), `public/sitemap.xml`.
 
 ---
 
-### L-15 — Company identity (CNPJ) on the site
-
-`low` · `medium` · on-site · **cross-repo pair of app F-49 — MUST ship in the same delivery** · **gated: waits for the CNPJ to exist (roadmap group 8, Início da monetização)**
-
-The half of L-14 that could not ship in Aug 2026: **CNPJ + razão social in the footer of
-every page** (landing, legal pages, blog). Paying a site with no legal identity is the trust
-leap Brazilian users rightly refuse; naming the company closes it for the cost of a footer
-line. Blocked on the owner opening the company — a deliberate group-8 decision alongside
-T-36/S-17, not development debt. When it ships, mirror the same identity block on the app's
-payment surfaces (F-49) and check whether the Terms' "Prestador do serviço" wording needs the
-CNPJ added (that half IS legal-page substance — sync both repos, but identity disclosure is
-non-material: no `PolicyVersions` bump).
-
----
-
 ### L-17 — Show the immutable history instead of describing it (animated demo)
 
 `high` · `medium` · on-site · **Status: `completed` (28/08/2026)** · **cross-repo: the frames
@@ -629,32 +611,6 @@ right, which is how the pipeline was recovered rather than guessed.
 
 ---
 
-### L-18 — Founder note higher on the page + calmer typography
-
-`medium` · `low` · on-site · **Status: `pending`** · board slot: *Polimento*
-
-Created 06/08/2026 from an external site review: the `#fundador` section (**L-06**) is the part
-of the page that earns empathy, and it sits **fifth**, after `como-funciona`, `galeria`, `porque`
-and `beneficios`. The review asks to move it right below *Como funciona*, with more whitespace and
-a lighter, more spaced sans-serif — "transmitindo calma e proximidade".
-
-**Take it as a bet, not as a fact.** Moving the founder note above the product proof buys empathy
-earlier and delays the *what is this* payoff for a visitor who arrived from a search result and
-does not yet care who built it. Both effects are real and the page already has the instrument to
-tell them apart: **L-01/Umami** records the CTA events (`cta-signup`). So the item ships **with**
-its measurement — the current CTA rate is the baseline, and the note goes back down if the new
-placement costs conversions. Without that reading, this is a preference, and preferences do not
-belong in a roadmap.
-
-**Scope:** the section move (`#fundador` between `#como-funciona` and `#galeria`, keeping the
-values strip with it), typography/whitespace pass on that section only, and the same change on
-`/en/` (L-16) so the two pages do not drift apart. Anchor links (`#fundador`) and the nav must
-keep working.
-
-**Files:** `public/index.html`, `public/en/index.html`.
-
----
-
 ### L-21 — English screenshots for `/en/`
 
 `medium` · `low` · on-site · **Status: `skipped` — absorbed by the app repo's
@@ -715,85 +671,6 @@ same running app, and doing it twice is the expensive part.
 sources and alt text).
 
 ---
-
-### L-19 — Animated iOS install guide
-
-`medium` · `low` · on-site · **Status: `pending`** · board slot: *Distribuição* · **cross-repo:
-the same instructions live in the app's F-09 opt-in flow**
-
-Created 06/08/2026 from an external site review. `#instalar` already carries the correct written
-steps (*Compartilhar → Adicionar à Tela de Início*), but for an iPhone user who has never
-installed a PWA, a share-sheet icon described in words is exactly the friction that ends the
-visit. A ~6-second screen recording removes it.
-
-**The written steps stay.** The animation is **added**, never substituted: it is what a
-screen-reader user, a `prefers-reduced-motion` visitor and anyone on a slow connection falls back
-to — and it is also what stays correct when Apple moves a button and the video silently starts
-lying. Date the recording in a comment so a future session knows how old it is.
-
-**Notes**
-- Capture on the real validation device (iPhone 15 Pro Max, per the app's `CLAUDE.md`), Safari,
-  in **both languages** (`/en/` has the same section).
-- **The L-17 precedent replaces the format constraint this bullet used to carry.** It said
-  "muted looping video / animated WebP over a JS animation library"; L-17 shipped neither, and
-  the reason applies here word for word — this section exists in both languages too, and a
-  binary with text in it means one file per language. But the two items are NOT the same problem:
-  L-17 had real stills to sequence, while an iOS share-sheet gesture is *motion*, and a
-  crossfade between stills cannot show a finger travelling to a button. So read L-17's record for
-  the bilingual and reduced-motion reasoning, then decide the format on its own merits; if it
-  does end up a recording, it is one capture per language, not one per item.
-- **Pairs with the app's F-09:** on iOS, Web Push only exists for a PWA added to the home screen,
-  so the app's permission flow sends people through exactly these steps. The two texts must agree.
-
-**Files:** `public/index.html` + `public/en/index.html` (`#instalar`), new asset(s).
-
----
-
-### L-20 — E-mail sequence for the routine-models material (L-09 follow-up)
-
-`medium` · `medium` · on-site (Worker) · **Status: `pending`** · board slot: *Distribuição* ·
-**⚠ carries a production risk and a consent question — read before scheduling anything**
-
-Created 06/08/2026 from an external review, which asked for a 3-step automation after the
-**L-09** download: day 1 the PDF, day 3 a tip about organizing holidays, day 5 an invitation to
-plan the calendar in the app. Today only the first exists (the welcome e-mail with the PDF link,
-sent by `src/index.js` via Resend).
-
-**Two things must be settled before a single e-mail is scheduled — both discovered in the app
-repo, and neither is visible from the site.**
-
-1. **The Resend allowance is per ACCOUNT, and it is shared with production sign-ups (app T-49).**
-   One team, one verified domain, six API keys — this Worker, both projects' Edge Functions and
-   **both projects' GoTrue SMTP** — all drawing on the free plan's **100 e-mails/day**. The app's
-   test suite alone once measured 86 in a day. A drip campaign adds *scheduled* volume to that
-   same bucket, and the failure it courts is not a missed marketing e-mail: it is a **429 on a
-   sign-up confirmation or a password reset**, i.e. a real user who cannot get into the app, with
-   nothing on screen explaining why. So this item starts with the capacity decision — a paid
-   Resend plan (platform spend, which the app roadmap's group 8 says waits for revenue), a
-   separate account/subdomain for marketing, or a hard daily send cap in the Worker — and only
-   then with the copy.
-2. **The consent purpose is what was announced at the opt-in (app S-15/C-6).** The material is
-   collected under **single opt-in with a logged consent** (date, time and IP in KV) for a purpose
-   the form states. Turning "receba os modelos" into a sequence must stay **inside** that stated
-   purpose — the cheap and honest way is to say so at the opt-in ("os modelos + alguns e-mails
-   sobre rotina de guarda"), which is a copy change on the form and a matching line in
-   `privacidade.html` §3/§4 — **and the app's Privacy mirrors it in the same delivery** (standing
-   cross-repo MUST). Check against the app's S-15 rules whether the wording change is material:
-   if it is, it costs a `PolicyVersions` bump, which drags the entire app user base through a
-   blocking re-consent screen. Designing the sequence to fit the purpose already announced is
-   almost certainly cheaper than the alternative — decide it deliberately, not by accident.
-   Every message keeps the unsubscribe line the welcome e-mail already has.
-
-**Implementation shape** (after the two decisions): a Cloudflare **Cron Trigger** on the existing
-Worker plus a KV queue keyed by the opt-in (the namespace pattern already exists for the consent
-log), or Resend's own scheduled send — whichever keeps the daily cap enforceable **in our code**,
-because the cap is the safety property. Unsubscribes and bounces must stop the sequence, and a
-subscriber who creates an account should stop receiving the "come try it" step.
-
-**Files:** `src/index.js` (schedule handler + queue), `wrangler.jsonc` (cron trigger, KV binding),
-`public/index.html` + blog opt-in copy, `public/privacidade.html`; cross-repo: the app's
-`Pages/Privacy.razor`. Tests belong in `test/subscribe.test.js`'s neighbourhood — the send cap and
-the stop conditions are logic, not copy.
 
 ### L-22 — Rebranding to "Entrelares" (site half of the app's F-54)
 
@@ -879,65 +756,7 @@ dashboard.
 
 ## Off-site items — detail
 
-### L-11 — Community channels
+The off-site items (L-11 community channels, L-12 lawyer/mediator
+partnerships, L-13 outreach discovery) live on the board — since T-63 the CARD is the
+record.
 
-`medium` · `medium` · **non-code, ongoing** · → drives signups to the app
-
-Build presence where the audience already is: separated-parents and co-parenting groups and
-forums (Facebook groups, Reddit-equivalents, parenting communities). Share the blog content and
-the interactive tool (L-05) rather than hard-selling. Landing arrivals are measured by L-01.
-
-**Not a repo change** — a marketing activity tracked here so it is not lost.
-
----
-
-### L-12 — Lawyer / mediator referral partnerships (B2B2C)
-
-`medium` · `high` · **non-code, ongoing** · → high-intent signups; pairs with app **F-33**
-
-Family lawyers and mediators advise exactly the people who need this product. Build a referral
-relationship ("recommend this to your clients"), possibly with a simple co-branded one-pager. The
-app's F-33 report ("Relatório do histórico em PDF") is a natural hook — it makes their job easier, so the
-partnership is mutually useful. Highest-intent acquisition channel available.
-
-**Not a repo change** — a partnership/distribution activity tracked here so it is not lost.
-
----
-
-### L-13 — Outreach discovery: where to spend promotion effort
-
-`medium` · `high` · **discovery, time-boxed** · → decides what the next acquisition items are
-
-Created Aug 2026 at the owner's request, in the board's *Polimento e melhoria progressiva* group
-(**last slot**). Everything the roadmap does for acquisition today was chosen one channel at a
-time — SEO (**L-05**), communities (**L-11**), lawyer/mediator partnerships (**L-12**), the Play
-listing (app **T-38**). None was chosen by comparing it against the alternatives, and none has a
-cost-per-signup attached. This item is that comparison: an exploration whose deliverable is a
-**ranked shortlist**, not a channel.
-
-**What to look at** (a starting point, not the answer):
-- **The loop the product already has.** Every family invites a co-parent — the app's invitation
-	flow (F-15/F-28) puts a second adult in front of the product on *every* signup, and nobody has
-	measured what fraction of invitees convert or what they do next. Cheapest thing on this list
-	and the only one that compounds; measure it before buying an audience anywhere.
-- **Product-led surfaces:** the app's F-33 PDF report leaves the product and lands in front of
-	lawyers and mediators — an artifact that already travels. What does it say about its origin?
-- **Search intent not yet covered** beyond L-05's cluster: comparison/alternative queries,
-	regional and legal-vocabulary variants.
-- **Store presence:** ASO for the Play listing (app **T-38**) — title, description, screenshots.
-- **Paid acquisition as a MEASUREMENT, not a channel:** a small budget buys a cost-per-signup
-	number that makes the organic options comparable. Decide after seeing it, not before.
-- **Press / institutional:** family-law associations, mediation councils, parenting media.
-
-**Constraint that shapes the answer:** the product charges (billing live since 29/07/2026) but
-the platform still runs on free tiers, and the owner's rule is that additional platform spend
-waits for revenue — that is what the app roadmap's group **8 · Início da monetização** exists to
-say. So the shortlist ranks options by *cost*, and a zero-cost option that compounds beats a paid
-one that does not.
-
-**Definition of done:** a written comparison (here or in a linked doc) covering, per option, the
-expected reach, the cost, the effort and how it would be measured with L-01/Umami — plus the top
-two turned into real backlog items with IDs. Explicitly **not** satisfied by "we should do more
-marketing".
-
-**Not a repo change by itself** — a discovery activity; the items it produces are the change.
