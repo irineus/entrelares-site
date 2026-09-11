@@ -309,7 +309,8 @@
         /* camada 1: a página aberta no navegador, só o suficiente para dizer
            "você está no site" — marca, linhas de texto e a barra de baixo. */
         .iosd-page { position: absolute; inset: 0 0 13% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
-        .iosd-mark { width: 24px; height: 24px; border-radius: 7px; background: linear-gradient(135deg, var(--indigo), var(--pink)); margin-bottom: 3px; }
+        .iosd-mark { display: block; width: 24px; height: 24px; border-radius: 7px; }
+        .iosd-name { display: block; font-weight: 700; color: var(--ink); font-size: 9px; margin-bottom: 2px; }
         .iosd-page i { display: block; height: 4px; border-radius: 2px; background: var(--line); }
         .iosd-page i:nth-child(3) { width: 85%; }
         .iosd-page i:nth-child(4) { width: 65%; }
@@ -322,10 +323,13 @@
         /* camada 2: a folha. Ela cobre quase a tela inteira, como a de verdade. */
         .iosd-sheet { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.14); padding: 7px 7px 0; display: flex; flex-direction: column; gap: 6px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
         .iosd-head { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px; }
-        .iosd-fav { flex: none; width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, var(--indigo), var(--pink)); }
-        .iosd-headtx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-        .iosd-headtx b { display: block; height: 4px; border-radius: 2px; background: #d4d4dc; }
-        .iosd-headtx b:last-child { width: 58%; background: #e5e5ea; }
+        .iosd-fav { flex: none; display: block; width: 17px; height: 17px; border-radius: 4px; }
+        /* o cartão mostra o SITE que está sendo compartilhado — então mostra o
+           nosso, com o mesmo título que web.entrelares.app serve (<title>
+           Entrelares) e o mesmo ícone que o apple-touch-icon entrega. */
+        .iosd-headtx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
+        .iosd-headtx b { font-weight: 700; color: var(--ink); white-space: nowrap; }
+        .iosd-headtx i { font-style: normal; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .iosd-x { flex: none; width: 13px; height: 13px; border-radius: 50%; background: #e5e5ea; }
         .iosd-apps, .iosd-acts { flex: none; display: flex; gap: 7px; padding: 0 2px; }
         .iosd-apps span, .iosd-acts span { flex: 1; aspect-ratio: 1; }
@@ -358,6 +362,9 @@
         .iosd.is-b2 .iosd-row-target .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
         @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
         .iosd.is-b2 .iosd-sheet { transform: translateY(0); }
+        /* a página atrás escurece quando a folha sobe, como no aparelho */
+        .iosd-page, .iosd-bar { transition: opacity .4s ease; }
+        .iosd.is-b2 .iosd-page, .iosd.is-b2 .iosd-bar { opacity: .4; }
         .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); color: var(--indigo-deep); }
         .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
         .iosd.is-b3 .iosd-home { opacity: 1; }
@@ -368,7 +375,8 @@
         .iosd-steps li.is-now { color: var(--ink); }
         .iosd-note { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.5; }
         @media (prefers-reduced-motion: reduce) {
-            .iosd-sheet, .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li { transition: none; }
+            .iosd-sheet, .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li,
+            .iosd-page, .iosd-bar { transition: none; }
             .iosd-dot::after { animation: none; }
         }
 
@@ -881,7 +889,8 @@
                         <div class="iosd-phone">
                             <div class="iosd-scr">
                                 <div class="iosd-page">
-                                    <span class="iosd-mark"></span>
+                                    <img class="iosd-mark" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
+                                    <span class="iosd-name">Entrelares</span>
                                     <i></i><i></i><i></i>
                                 </div>
                                 <div class="iosd-bar">
@@ -890,8 +899,8 @@
                                 </div>
                                 <div class="iosd-sheet">
                                     <div class="iosd-head">
-                                        <span class="iosd-fav"></span>
-                                        <span class="iosd-headtx"><b></b><b></b></span>
+                                        <img class="iosd-fav" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
+                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
                                         <span class="iosd-x"></span>
                                     </div>
                                     <div class="iosd-apps"><span></span><span></span><span></span><span></span></div>
@@ -906,7 +915,7 @@
                                     <div class="iosd-list"><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div></div>
                                 </div>
                                 <div class="iosd-home">
-                                    <img src="icon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async" />
+                                    <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
                                     <span>Entrelares</span>
                                 </div>
                             </div>
