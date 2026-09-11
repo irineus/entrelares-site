@@ -286,54 +286,66 @@
         .install-card li { margin-bottom: 8px; }
         .install-card li strong { color: var(--ink); }
         /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
-           nosso próprio visual, que mostra o CAMINHO do toque sem afirmar como a
-           tela do Safari está hoje. Essa distinção é o item inteiro — ninguém no
-           projeto tem iPhone para conferir (11/09/2026), e um desenho que se
-           passasse por screenshot envelheceria calado. Por isso o diagrama é
-           aria-hidden e os passos escritos ao lado seguem sendo O conteúdo:
-           leitor de tela, prefers-reduced-motion e JS desligado leem a lista.
-           Os rótulos são os mesmos do app (layoutInstallIosShare /
-           layoutInstallIosAddToHome em entrelares-app) — os dois textos têm de
-           concordar, e é por isso que eles estão escritos aqui por extenso.
-           Ao contrário do L-17, este bloco NÃO guarda coordenada nenhuma: cada
-           ponto de toque é filho do próprio controle que ele aponta, então ele
-           não tem como sair do lugar quando o desenho muda. */
+           nosso próprio visual. A ESTRUTURA da folha de compartilhamento foi
+           conferida contra o guia oficial da Apple em 11/09/2026 (iOS 26,
+           pt-BR: support.apple.com/pt-br/guide/iphone/iph42ab2f3a7/ios) — daí
+           virem, nesta ordem, o cartão do site, a fileira de apps, a fileira de
+           ações redondas e a lista agrupada com "Adicionar à Tela de Início"
+           lá embaixo, que é por que o passo escrito manda ROLAR. Só o rótulo
+           que interessa tem texto: o resto é barra neutra de propósito, porque
+           desenhar nome de app de terceiro seria inventar o que não conferimos.
+           Quem reconferir o guia e achar diferente, ajusta aqui e troca a data
+           da linha abaixo do card — é ela que diz quando isto foi visto.
+           Os passos escritos ao lado seguem sendo O conteúdo: o diagrama é
+           aria-hidden, e leitor de tela, prefers-reduced-motion e JS desligado
+           leem a lista. Ao contrário do L-17, este bloco NÃO guarda coordenada
+           nenhuma: cada ponto de toque é filho do controle que ele aponta. */
         .iosd-wrap { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
-        .iosd { flex: 0 0 150px; }
+        .iosd { flex: 0 0 180px; }
         .iosd-steps { flex: 1 1 200px; min-width: 0; }
-        .iosd-phone { background: #0f172a; border-radius: 22px; padding: 5px; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18); }
-        .iosd-scr { position: relative; overflow: hidden; border-radius: 18px; background: #fff; aspect-ratio: 9 / 16; font-size: 8.5px; }
+        .iosd-phone { background: #0f172a; border-radius: 24px; padding: 5px; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18); }
+        .iosd-scr { position: relative; overflow: hidden; border-radius: 20px; background: #fff; aspect-ratio: 9 / 16; font-size: 7.5px; }
 
         /* camada 1: a página aberta no navegador, só o suficiente para dizer
            "você está no site" — marca, linhas de texto e a barra de baixo. */
-        .iosd-page { position: absolute; inset: 0 0 14% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
-        .iosd-mark { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--indigo), var(--pink)); margin-bottom: 3px; }
+        .iosd-page { position: absolute; inset: 0 0 13% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
+        .iosd-mark { width: 24px; height: 24px; border-radius: 7px; background: linear-gradient(135deg, var(--indigo), var(--pink)); margin-bottom: 3px; }
         .iosd-page i { display: block; height: 4px; border-radius: 2px; background: var(--line); }
         .iosd-page i:nth-child(3) { width: 85%; }
         .iosd-page i:nth-child(4) { width: 65%; }
         .iosd-page i:nth-child(5) { width: 78%; }
-        .iosd-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14%; border-top: 1px solid var(--line); background: #f8fafc; display: flex; align-items: center; gap: 5px; padding: 0 7px; }
+        .iosd-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 13%; border-top: 1px solid var(--line); background: #f8fafc; display: flex; align-items: center; gap: 5px; padding: 0 7px; }
         .iosd-url { flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 6px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .iosd-share { position: relative; flex: none; width: 15px; height: 15px; color: var(--indigo); }
         .iosd-share svg { display: block; width: 100%; height: 100%; }
 
-        /* camada 2: a folha que sobe. Só a linha que interessa tem texto — as
-           outras são barras neutras de propósito, porque não sabemos o que mais
-           mora nessa folha hoje, e o que não se sabe não se desenha. */
-        .iosd-sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 64%; background: #f1f5f9; border-radius: 16px 16px 18px 18px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.12); padding: 7px; display: flex; flex-direction: column; gap: 5px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
-        .iosd-grip { flex: none; width: 26px; height: 3px; border-radius: 2px; background: #cbd5e1; margin: 0 auto 3px; }
-        .iosd-row { flex: none; display: flex; align-items: center; gap: 5px; background: #fff; border: 1px solid transparent; border-radius: 7px; padding: 5px 6px; min-height: 20px; }
-        .iosd-row b { display: block; height: 4px; border-radius: 2px; background: var(--line); flex: 1; }
-        .iosd-row svg { flex: none; width: 12px; height: 12px; color: var(--muted); }
-        .iosd-row-target { position: relative; color: var(--ink); line-height: 1.3; padding-right: 22px; transition: background .3s ease, border-color .3s ease, color .3s ease; }
+        /* camada 2: a folha. Ela cobre quase a tela inteira, como a de verdade. */
+        .iosd-sheet { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.14); padding: 7px 7px 0; display: flex; flex-direction: column; gap: 6px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
+        .iosd-head { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px; }
+        .iosd-fav { flex: none; width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, var(--indigo), var(--pink)); }
+        .iosd-headtx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+        .iosd-headtx b { display: block; height: 4px; border-radius: 2px; background: #d4d4dc; }
+        .iosd-headtx b:last-child { width: 58%; background: #e5e5ea; }
+        .iosd-x { flex: none; width: 13px; height: 13px; border-radius: 50%; background: #e5e5ea; }
+        .iosd-apps, .iosd-acts { flex: none; display: flex; gap: 7px; padding: 0 2px; }
+        .iosd-apps span, .iosd-acts span { flex: 1; aspect-ratio: 1; }
+        /* cor só para dizer "aqui é a fileira de apps" — nenhum app nomeado */
+        .iosd-apps span { border-radius: 7px; background: #c7c7cc; }
+        .iosd-acts span { border-radius: 50%; background: #e5e5ea; }
+        .iosd-list { flex: none; background: #fff; border-radius: 9px; overflow: hidden; }
+        .iosd-row { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-top: 1px solid #ececf0; }
+        .iosd-row:first-child { border-top: 0; }
+        .iosd-row b { display: block; height: 4px; border-radius: 2px; background: #dcdce2; flex: 1; }
+        .iosd-row svg { flex: none; width: 11px; height: 11px; color: #8e8e93; }
+        .iosd-row-target { position: relative; color: var(--ink); line-height: 1.25; padding-right: 20px; transition: background .3s ease, color .3s ease; }
         .iosd-row-target svg { color: var(--ink); }
         /* o ponto da linha encosta na borda: centrado, ele tapava justamente o
            rótulo que o passo manda procurar. */
         .iosd-row-target .iosd-dot { left: auto; right: 4px; margin-left: 0; }
 
         /* camada 3: a recompensa — o ícone na tela inicial. */
-        .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, #e0e7ff, #fce7f3); padding: 14px 10px; opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-        .iosd-home img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22); }
+        .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, #e0e7ff, #fce7f3); opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+        .iosd-home img { width: 38px; height: 38px; border-radius: 11px; box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22); }
         .iosd-home span { color: var(--ink); font-weight: 600; }
 
         /* o ponto de toque: um por controle, filho dele. Não há coordenada a
@@ -346,7 +358,7 @@
         .iosd.is-b2 .iosd-row-target .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
         @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
         .iosd.is-b2 .iosd-sheet { transform: translateY(0); }
-        .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); border-color: var(--indigo); color: var(--indigo-deep); }
+        .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); color: var(--indigo-deep); }
         .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
         .iosd.is-b3 .iosd-home { opacity: 1; }
 
@@ -877,11 +889,21 @@
                                     <span class="iosd-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg><span class="iosd-dot"></span></span>
                                 </div>
                                 <div class="iosd-sheet">
-                                    <span class="iosd-grip"></span>
-                                    <div class="iosd-row"><b></b></div>
-                                    <div class="iosd-row iosd-row-target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><path d="M12 8.4v7.2M8.4 12h7.2"/></svg><span>Add to Home Screen</span><span class="iosd-dot"></span></div>
-                                    <div class="iosd-row"><b></b></div>
-                                    <div class="iosd-row"><b></b></div>
+                                    <div class="iosd-head">
+                                        <span class="iosd-fav"></span>
+                                        <span class="iosd-headtx"><b></b><b></b></span>
+                                        <span class="iosd-x"></span>
+                                    </div>
+                                    <div class="iosd-apps"><span></span><span></span><span></span><span></span></div>
+                                    <div class="iosd-acts"><span></span><span></span><span></span><span></span></div>
+                                    <div class="iosd-list">
+                                        <div class="iosd-row"><b></b></div>
+                                        <div class="iosd-row"><b></b></div>
+                                        <div class="iosd-row"><b></b></div>
+                                        <div class="iosd-row"><b></b></div>
+                                        <div class="iosd-row iosd-row-target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><path d="M12 8.4v7.2M8.4 12h7.2"/></svg><span>Add to Home Screen</span><span class="iosd-dot"></span></div>
+                                    </div>
+                                    <div class="iosd-list"><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div></div>
                                 </div>
                                 <div class="iosd-home">
                                     <img src="icon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async" />
@@ -893,12 +915,12 @@
                     <div class="iosd-steps">
                         <ol id="iosd-steps">
                             <li>Go to <strong>web.entrelares.app</strong> in Safari.</li>
-                            <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up).</li>
-                            <li>Choose <strong>Add to Home Screen</strong> and confirm.</li>
+                            <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up). If you can’t see it, tap <strong>⋯</strong> and choose <strong>Share</strong>.</li>
+                            <li><strong>Scroll the list</strong> to <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.</li>
                         </ol>
                     </div>
                 </div>
-                <p class="iosd-note">The animation is an <strong>illustration of the steps</strong>: your iPhone’s screen may look different, and that is fine. What does not change are the button names above.</p>
+                <p class="iosd-note">The drawing is an <strong>illustration of the steps</strong>, checked against <a href="https://support.apple.com/en-us/guide/iphone/iph42ab2f3a7/ios" rel="noopener">Apple’s official guide</a> on 11/09/2026 (iOS 26). Your iPhone’s screen may vary with the iOS version — the button names above are what matter.</p>
             </div>
         </div>
     </div>
