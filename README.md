@@ -8,9 +8,9 @@ the application itself lives in the sibling repo
 `web.entrelares.app`.
 
 Hand-written static HTML/CSS (no framework, no build step) served by a **Cloudflare Worker
-with static assets**. The site is *almost* fully static — `src/index.js` adds **one** dynamic
-route (`POST /api/subscribe`) for the lead-magnet / newsletter opt-in; everything else is
-served from `public/`.
+with static assets**. The site is *almost* fully static — `src/index.js` adds **two** dynamic
+routes: `POST /api/subscribe` for the materials / newsletter opt-in, and
+`GET|POST /api/unsubscribe` for the way out (L-20); everything else is served from `public/`.
 
 - **Planning:** [`ROADMAP.md`](ROADMAP.md) — the landing backlog + forward plan (`L-*` items).
 - **Agent context:** [`CLAUDE.md`](CLAUDE.md) — conventions, environments, deploy flow, gotchas.
@@ -76,9 +76,14 @@ entrelares-site/
 │   │   └── gerador-de-rotina-de-guarda.html  # L-05 interactive tool (presets mirror the app wizard)
 │   └── js/gerador-rotina.js    # the tool's pure rules (ESM, no DOM) — tested by node --test
 ├── src/
-│   └── index.js                # Cloudflare Worker entrypoint: serves ASSETS + POST /api/subscribe
+│   ├── index.js                # Cloudflare Worker entrypoint: ASSETS + /api/subscribe + /api/unsubscribe
+│   ├── sequence.js             # L-20 — the 3-step sequence: steps, the pure due-rule, the bodies
+│   └── email-layout.js         # the shell every message shares (header, signature, footer)
 ├── test/
 │   ├── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
+│   ├── unsubscribe.test.js     # L-20 — the one-click way out, and that it fails closed
+│   ├── sequence.test.js        # L-20 — the due-rule, the cron walk, the STOP and the CAP
+│   ├── kv-stub.js              # the shared KV double (NOT a *.test.js — hooks would merge)
 │   └── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
 ├── assets-src/                 # generators — NOT served
 │   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
@@ -154,10 +159,21 @@ Scripts:Edit** (vars ship with the script; the Worker secret is set out-of-band 
 > re-run the workflow manually (**Run workflow** / `workflow_dispatch`). Confirm the deploy ran
 > before assuming a change is live.
 
-## Worker endpoint — materials / newsletter (L-09)
+## Worker endpoint — materials / newsletter (L-09, L-20)
 
-`src/index.js` serves the `ASSETS` binding for everything and adds one dynamic route,
-**`POST /api/subscribe`**, for the opt-in (`public/js/materiais.js` posts to it). The Worker
+`src/index.js` serves the `ASSETS` binding for everything and adds two dynamic routes.
+**`POST /api/subscribe`** is the opt-in (`public/js/materiais.js` posts to it).
+**`GET|POST /api/unsubscribe`** is the way out: the e-mail carries a link whose token is an
+opaque KV key — no signing secret, and no address in the URL. **GET only shows a confirmation
+page** (mail clients and scanners fetch every link; a GET that acted would unsubscribe people on
+their behalf) and **POST performs it**, which is also the RFC 8058 one-click target. The stop is
+recorded in our own KV before Resend is told, and an unreadable tombstone is read as *stopped*.
+
+After the welcome e-mail the subscriber enters a **3-step sequence** (`src/sequence.js`): a tip on
+day 3, an invitation on day 5. Its only clock is a Cloudflare **Cron Trigger**, declared for
+production only. Two safety properties live in our code rather than at the provider — the **stop**
+(checked before a message is rendered) and a **daily cap**, because the Resend allowance is per
+account and shared with the product's own transactional e-mail. The Worker
 registers the e-mail **as a contact in Resend** (they appear under **Audience** in the Resend
 dashboard — there is no separately-named segment) and sends a **welcome e-mail** with the
 *Modelos de rotina* PDF (`public/downloads/…`, generated from `assets-src/modelos-rotina.html`

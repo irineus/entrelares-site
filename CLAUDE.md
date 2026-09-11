@@ -140,10 +140,11 @@ is that it deploys exactly what is in the repo.
 - Frozen since T-63, as history rather than fields to fill: `Esforço gasto (h)`,
   `Esforço estimado (h)`, `Link`, `Início`.
 
-## Worker endpoint — materials / newsletter (L-09)
+## Worker endpoint — materials / newsletter (L-09, L-20)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
-`wrangler.jsonc`). It serves the `ASSETS` binding for everything and adds ONE dynamic route,
-**`POST /api/subscribe`**, for the opt-in (`public/js/materiais.js` posts to it). The Worker
+`wrangler.jsonc`). It serves the `ASSETS` binding for everything and adds TWO dynamic routes:
+**`POST /api/subscribe`**, the opt-in (`public/js/materiais.js` posts to it), and
+**`GET|POST /api/unsubscribe`**, the way out (L-20). The Worker
 registers the e-mail **as a contact in Resend** (the `RESEND_SEGMENT_ID` var — the contacts
 appear under **Audience** in the Resend dashboard; there is no separately-named segment) and
 sends a **welcome e-mail** with the *Modelos de rotina* PDF (`public/downloads/…`, generated from
@@ -168,12 +169,59 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   (prod `guardacompartilhada-optin-log`, preview `…-preview` — the NAMES keep the old brand on
   purpose: the ids are what `wrangler.jsonc` binds, and renaming would fork the evidence log),
   declared in `wrangler.jsonc`, so preview submissions never mix into the production evidence. Disclosed in `privacidade.html` §3.
+- **The way OUT is machine-actionable (L-20, 11/09/2026)** — `/api/unsubscribe` is a
+  **prerequisite of the sequence, not part of it**: with one welcome e-mail a mailto honours §4's
+  "descadastro em cada mensagem" (the message is delivered before anyone reads the request), but a
+  message queued for day 5 goes out after a stop on day 2 unless the stop is in code. The token is
+  the capability — 128 random bits that ARE the KV key holding the address (`unsub:<token>`), so
+  there is **no signing secret to set or rotate** and **no address in the URL**: a forwarded e-mail
+  leaks a revocation, never an inbox. **GET only shows a confirmation page**, because mail clients
+  and security scanners fetch every link and a GET that acts would unsubscribe people on their
+  behalf; **POST acts**, and is also the RFC 8058 one-click target named by `List-Unsubscribe-Post`,
+  so Gmail's own button lands there. The stop is written to `stop:<email>` in OUR KV **before**
+  Resend is told, and `hasStopped()` **fails closed** — an unreadable tombstone reads as stopped,
+  never as consent. A re-subscribe deletes it: a second opt-in is a second act of consent, the same
+  reasoning that gives the evidence log one key per submission.
+- **The sequence (L-20, 11/09/2026)** — three messages: the welcome e-mail is **step 1, sent
+  synchronously** (it is what the person asked for and must not wait for a cron), then a tip about
+  holidays on **day 3** and an invitation to the app on **day 5**. `src/sequence.js` holds the
+  steps, the pure `dueStep()` rule and both message bodies; `src/index.js` holds the queue
+  (`seq:<email>`, one key per address, so a re-subscribe RESTARTS rather than running two) and the
+  `scheduled()` walk. The cron is declared in `wrangler.jsonc` `triggers` for **production only**
+  (`0 12 * * *` = 09:00 in São Paulo); preview declares `"crons": []` explicitly and has no Resend
+  key, and **`runSequence` refuses to advance state it did not actually send** — a dry run that
+  marked everybody as done would be the worst possible bug here.
+  Two safety properties, both enforced in OUR code rather than at the provider, both pinned by test:
+  **the STOP** (`hasStopped` is read before a message is even rendered, and an unreadable tombstone
+  reads as *stopped*) and **the CAP** (`DAILY_CAP = 20`; an unreadable counter reads as *day
+  already spent*). The 100/day Resend allowance is per ACCOUNT and shared with both Supabase
+  projects' GoTrue SMTP — and, since 02/09/2026, with **a second product** (`gestaoim360.com` is
+  verified on the same account). What the cap defers is never lost: the state records WHICH steps
+  went out, never when the cron last ran.
+  **Step 3 is written for two readers on purpose** — the landing cannot know whether somebody
+  already created an account, and finding out would mean handing the marketing site a credential to
+  the product's database. It is true either way instead of pretending to know.
 - Umami events: `materiais-baixar` (button click) and `materiais-inscricao` (success).
+- **One shell for every message** — `src/email-layout.js` carries the header bar, the signature, the
+  footer and the tokens; each message contributes only its own rows. Extracted when the second and
+  third messages arrived, because three copies of a 600px table layout is how one of them silently
+  stops matching the brand — which is exactly what the welcome e-mail's plain-text body did,
+  carrying "app Guarda Compartilhada" for a month after the F-54/L-22 rebrand. A test now pins the
+  brand in BOTH bodies.
 - Neutral naming: no user-visible artifact says "lead-magnet" (files are `materiais.css`/`materiais.js`,
   the section class is `.materiais-box`, the PDF title is set). Internal `.lm-*` style hooks stay.
 - **Tests:** `src/index.js` exports its pure helpers (`isHoneypot`/`normalizeEmail`/`isValidEmail`)
   and `handleSubscribe`; `test/subscribe.test.js` covers them with Node's built-in runner (**zero
-  deps** — `npm test` / `node --test`, global `fetch` stubbed). The same lane runs
+  deps** — `npm test` / `node --test`, global `fetch` stubbed). `test/unsubscribe.test.js` (L-20)
+  covers the way out: the token's shape and that it carries no address, GET acting on nothing,
+  POST's order (our tombstone before Resend), the fail-closed lookup, idempotency, the RFC 8058
+  headers, and that the welcome e-mail says *Entrelares* in BOTH bodies. `test/sequence.test.js`
+  covers the scheduling rule and the cron walk — the two safety properties have a test each with
+  the reason written above the assertion. The Map-backed KV double
+  lives in `test/kv-stub.js` — **not** exported from a `*.test.js`, because importing one test file
+  from another merges their hooks and the second `fetch` stub wins. Its `list()` **pages in small
+  pages on purpose**: a stub that answered everything at once would leave the caller's cursor loop
+  unexercised, and an unexercised cursor loop is how a queue silently stops at its first page. The same lane runs
   `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules. `.github/workflows/test.yml` gates
   every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
   touching the endpoint; static/HTML-only changes don't affect it.
