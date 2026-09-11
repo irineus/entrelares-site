@@ -3,7 +3,7 @@
 The **forward plan** for `entrelares.app` (the marketing site). The per-item **records**
 live in the Notion card since 07/09/2026 — see *Where the record lives* below. Companion
 to the app-side plan in
-[`entrelares-flutter/backlog/README.md`](https://github.com/irineus/entrelares-flutter/blob/main/backlog/README.md).
+[`entrelares-app/backlog/README.md`](https://github.com/irineus/entrelares-app/blob/main/backlog/README.md).
 The landing and the app funnel are **one funnel** (landing CTR feeds app signups), so
 several items have **cross-repo prerequisites** — flagged per item. Each repo owns its
 own items: `L-*` here, `F-/U-/T-/S-*` in the app.
@@ -26,7 +26,7 @@ sit next to the app's `F-`/`U-`/`T-`/`S-` rows (filter by `Repo = landing`), whi
 one-funnel view possible in a single place.
 
 There is no longer a mirror in markdown, and no generator between the two —
-`entrelares-flutter/tool/notion_mirror.py` was deleted after its last run, which is what migrated
+`entrelares-app/tool/notion_mirror.py` was deleted after its last run, which is what migrated
 the pending `L-*` records into their card bodies. *Why:* an item used to exist in three places, and
 the owner's verdict on 07/09/2026 was *"replicação desnecessária"*.
 
@@ -56,7 +56,7 @@ Two standing notes that outlive any single item, because they are constraints an
   much as a copy one.
 - **Cross-repo pairs ship in the same delivery.** The landing and the app are one funnel and items
   reference each other; each repo still owns its own items (`L-*` here, `F-`/`U-`/`T-`/`S-*` in
-  `entrelares-flutter`).
+  `entrelares-app`).
 
 ---
 
@@ -544,7 +544,7 @@ the captures themselves are T-57's)
 > Relatórios → Histórico. Check which table a screenshot photographs before captioning it.
 >
 > **The re-shoot also changed the shared asset.** `historico-auditoria.{png,webp}` was replaced in
-> both languages, and per `entrelares-flutter/store/README.md` the landing and the **Play listing**
+> both languages, and per `entrelares-app/store/README.md` the landing and the **Play listing**
 > share one set — so the Console's frame 4 is now stale until someone re-uploads it. The file names
 > are unchanged, which is what keeps the `<picture>` elements and their `alt` text valid.
 >
@@ -614,7 +614,7 @@ right, which is how the pipeline was recovered rather than guessed.
 ### L-21 — English screenshots for `/en/`
 
 `medium` · `low` · on-site · **Status: `skipped` — absorbed by the app repo's
-[T-57](https://github.com/irineus/entrelares-flutter/blob/main/backlog/technical.md)
+[T-57](https://github.com/irineus/entrelares-app/blob/main/backlog/technical.md)
 (24/08/2026), and **DELIVERED by it on 28/08/2026**** · **follow-up of L-16**
 
 > **Done.** `public/img/screenshots/en/` exists with the eight frames in English, `/en/`

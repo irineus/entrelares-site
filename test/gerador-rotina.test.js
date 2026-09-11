@@ -1,5 +1,5 @@
 // L-05 — tests for the routine-generator's pure rules (public/js/gerador-rotina.js).
-// The module is a MIRROR of the app's wizard presets (entrelares-flutter,
+// The module is a MIRROR of the app's wizard presets (entrelares-app,
 // packages/entrelares_core/lib/src/wizard_rules.dart) — the expansion tables
 // asserted here are copied from that file's `wizardPresetBlocks`, so a drift
 // between the tool's preview and the app's generation fails this suite.

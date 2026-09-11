@@ -6,10 +6,10 @@
 `main` and `preview` carry the new brand), a shared-custody app. Hand-written static
 HTML/CSS (no framework, no build step), served by a **Cloudflare Worker with static assets**
 (`wrangler.jsonc`, `wrangler deploy`), deployed by GitHub Actions. The product itself
-lives in the sibling repo **`entrelares-flutter`** (Flutter + Supabase) and runs on **both
+lives in the sibling repo **`entrelares-app`** (Flutter + Supabase) and runs on **both
 channels**: the Play package `com.entrelares.app` and `web.entrelares.app`, the latter served
 by the Cloudflare Pages project `entrelares-web`. **The Blazor client that used to live in
-`entrelares-app` was shut down and that repo ARCHIVED on 25/08/2026** (app items T-53/T-56);
+`entrelares-app-legacy` was shut down and that repo ARCHIVED on 25/08/2026** (app items T-53/T-56);
 nothing is deployed from it and nothing there needs to be read to work here. The pre-rebrand hosts are permanent 301s since the F-54 promotion-A
 cutover (12/08/2026), which also flipped the e-mail SENDER to `materiais@entrelares.app` —
 the Resend Free plan verifies ONE domain, so the old one had to be deleted before the new
@@ -68,8 +68,8 @@ is that it deploys exactly what is in the repo.
   10/09/2026 (app item S-21)**, when the app's sudo gate learned a second proof: a one-time code
   mailed to the account. It is the promotion gate below in its sharpest form. The page describes a
   path a STRANGER has to be able to walk, so the paragraph could only change once the app could
-  actually honour it — and until `preview` is promoted, production still carries the old text,
-  which is the honest state while the app's own web channel is still rolling out.
+  actually honour it. **Promoted to production in #83**; verified on the live page —
+  `entrelares.app/exclusao-de-conta` serves the code-by-e-mail wording, not the old caveat.
 - **`public/404.html` is bilingual and single**: Cloudflare's `not_found_handling: "404-page"`
   serves ONE file for the whole site, and a visitor who mistyped a URL has no language we can
   trust. `noindex`, and never in the sitemap.
@@ -88,7 +88,7 @@ is that it deploys exactly what is in the repo.
 - **Commit messages: PT-BR**, conventional-commit style (`feat(...)`, `fix(...)`, `docs(...)`).
 - The `Backlog: <ID>` commit trailer was **dropped on 07/09/2026 (app T-63)**, together with its
   only reader — the mirror generator. Naming the item in the commit body stays useful for a human
-  reading `git log`; nothing machine-reads it any more. Same convention as `entrelares-flutter`,
+  reading `git log`; nothing machine-reads it any more. Same convention as `entrelares-app`,
   because the board is shared.
 
 ## Working agreement — branches, review, deploy (settled July 2026, mirrors the app)
@@ -111,7 +111,7 @@ is that it deploys exactly what is in the repo.
   [Entrelares — Backlog & Roadmap](https://app.notion.com/p/3ae2f3f4b9b28169acd9e642ad4760aa),
   data source `109b1b02-5b6b-48ef-b3b6-990374a3d10f`, reached through the **Notion MCP connector**.
   It is **shared with the app repo** — `L-*` rows carry `Repo = landing`. There is **no mirror and
-  no generator** any more: `notion_mirror.py` was deleted, and the `entrelares-app` checkout it used
+  no generator** any more: `notion_mirror.py` was deleted, and the `entrelares-app-legacy` checkout it used
   to require is not needed by anything. **Read and write the card directly.**
 - **Read the Decisões vigentes page before deciding anything**:
   Notion page `3d42f3f4-b9b2-819d-b0d8-c845b7aa1ae5`, sections 1 to 6. It holds the product's
@@ -181,14 +181,14 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
 ## Legal pages (Privacy & Terms) — cross-repo sync (MUST)
 **These two files are the ONLY copy of the legal text.** There is no longer a second one to
 mirror: the app has no `/privacy` route of its own (lote 4 decision) and links straight here —
-`entrelares-flutter/apps/entrelares_app/lib/deep_link_urls.dart` points at `/privacidade` and
+`entrelares-app/app/lib/deep_link_urls.dart` points at `/privacidade` and
 `/termos`. The old instruction to sync `Pages/Privacy.razor` / `Pages/Terms.razor` in
-`entrelares-app` is dead with that repo.
+`entrelares-app-legacy` is dead with that repo.
 
 **The cross-repo obligation did not go away, it changed shape.** A **material** change is still
 one delivery spanning both repos, but what the app side carries is the CONSENT MACHINERY, not
 prose — all four, or the gate breaks:
-1. `PolicyVersions.current` in `entrelares-flutter/packages/entrelares_core/lib/src/policy_versions.dart`;
+1. `PolicyVersions.current` in `entrelares-app/packages/entrelares_core/lib/src/policy_versions.dart`;
 2. `PolicyVersions.enforceFrom` = **the date the text becomes VISIBLE to users, plus 15 days**.
    Visible means the PRODUCTION publish — and this repo is deploy-on-demand, so that is the
    `preview`→`main` promotion, never the merge to `preview`;
@@ -238,14 +238,14 @@ system; an unverified claim is a liability no matter who drafted it.
   Re-render when the copy they show changes; a banner whose text no longer matches the page is
   worse than no banner.
 - **The brand mark is NOT drawn in this repo.** Its geometry lives in the app repo
-  (`entrelares-flutter/store/brand-icons.py`, U-29); what lives here is one rendered master,
+  (`entrelares-app/store/brand-icons.py`, U-29); what lives here is one rendered master,
   `assets-src/brand-marca.png`, plus the resizing. To change the art: edit the app repo's script,
   re-render the master from it, run `brand-icons.py`, re-render both banners (their plaque is the
   master and their brand-row icon is the rendered `icon-192.png`), and **bump the `?v=` on every
   `<link>`/`<meta>` that points at them** — without that the browser keeps serving the old mark
   from cache. Two drawings of one mark is how the two repos drift (T-57, 28/08/2026).
 - **`public/js/gerador-rotina.js` is a MIRROR of the app's rotation-wizard presets** (L-05) —
-  `entrelares-flutter/packages/entrelares_core/lib/src/wizard_rules.dart`, `wizardPresetBlocks`.
+  `entrelares-app/packages/entrelares_core/lib/src/wizard_rules.dart`, `wizardPresetBlocks`.
   The tool's whole promise is that the preview equals what the app generates after signup, so a
   preset change in the app repo must land here in the same delivery. `test/gerador-rotina.test.js`
   hardcodes the expansion tables on purpose: it fails when THIS side drifts, but nothing fails
