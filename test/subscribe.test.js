@@ -12,6 +12,7 @@ import {
   isValidEmail,
   logOptIn,
 } from "../src/index.js";
+import { kvStub } from "./kv-stub.js";
 
 // ── fetch stub ──────────────────────────────────────────────────────────────
 
@@ -20,17 +21,6 @@ let calls; // recorded outbound requests: { url, method, headers, body }
 let responders; // { contacts: () => Response, emails: () => Response }
 let optInLog; // S-15/C-6 KV stub, replaced per test
 
-/** Minimal KV double: only .put() is used by the Worker. */
-function kvStub({ failing = false } = {}) {
-  const store = new Map();
-  return {
-    store,
-    async put(key, value) {
-      if (failing) throw new Error("kv unavailable");
-      store.set(key, value);
-    },
-  };
-}
 
 beforeEach(() => {
   calls = [];
@@ -78,6 +68,11 @@ const LIVE_ENV = {
 
 async function body(res) {
   return JSON.parse(await res.text());
+}
+
+/** Consent records only. The namespace also carries the L-20 opt-OUT keys. */
+function optInKeys(kv) {
+  return [...kv.store.keys()].filter((k) => k.startsWith("optin:"));
 }
 
 // ── pure helpers ──────────────────────────────────────────────────────────
@@ -287,9 +282,10 @@ test("opt-in log: records email, timestamp and IP on a valid subscribe", async (
 
   await handleSubscribe(request, LIVE_ENV);
 
-  assert.equal(optInLog.store.size, 1);
-  const [key, raw] = [...optInLog.store.entries()][0];
-  const entry = JSON.parse(raw);
+  const keys = optInKeys(optInLog);
+  assert.equal(keys.length, 1);
+  const key = keys[0];
+  const entry = JSON.parse(optInLog.store.get(key));
 
   // Normalized, same as what goes to Resend — the evidence must match the contact.
   assert.equal(entry.email, "ana@exemplo.com");
@@ -306,12 +302,12 @@ test("opt-in log: written even in dry-run (no RESEND_API_KEY)", async () => {
 
   assert.equal(res.status, 200);
   assert.deepEqual(await body(res), { ok: true, dryRun: true });
-  assert.equal(kv.store.size, 1);
+  assert.equal(optInKeys(kv).length, 1);
 });
 
 test("opt-in log: nothing recorded for a honeypot submission", async () => {
   await handleSubscribe(req({ email: "bot@spam.com", empresa: "Acme" }), LIVE_ENV);
-  assert.equal(optInLog.store.size, 0);
+  assert.equal(optInLog.store.size, 0); // nothing at all, not even a token
 });
 
 test("opt-in log: nothing recorded for an invalid e-mail", async () => {
@@ -326,7 +322,7 @@ test("opt-in log: one key per submission, so a re-subscribe is not overwritten",
   await new Promise((r) => setTimeout(r, 2)); // distinct ISO timestamps
   await handleSubscribe(req({ email: "dup@y.com" }), LIVE_ENV);
 
-  assert.equal(optInLog.store.size, 2);
+  assert.equal(optInKeys(optInLog).length, 2);
 });
 
 test("opt-in log: a KV outage does not fail the subscription", async () => {
