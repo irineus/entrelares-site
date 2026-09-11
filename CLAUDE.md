@@ -68,8 +68,8 @@ is that it deploys exactly what is in the repo.
   10/09/2026 (app item S-21)**, when the app's sudo gate learned a second proof: a one-time code
   mailed to the account. It is the promotion gate below in its sharpest form. The page describes a
   path a STRANGER has to be able to walk, so the paragraph could only change once the app could
-  actually honour it — and until `preview` is promoted, production still carries the old text,
-  which is the honest state while the app's own web channel is still rolling out.
+  actually honour it. **Promoted to production in #83**; verified on the live page —
+  `entrelares.app/exclusao-de-conta` serves the code-by-e-mail wording, not the old caveat.
 - **`public/404.html` is bilingual and single**: Cloudflare's `not_found_handling: "404-page"`
   serves ONE file for the whole site, and a visitor who mistyped a URL has no language we can
   trust. `noindex`, and never in the sitemap.
