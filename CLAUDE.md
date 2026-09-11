@@ -65,7 +65,7 @@ is that it deploys exactly what is in the repo.
   **it must never move, never 404 and never go `noindex`** — it is indexed and in the sitemap on
   purpose (somebody who uninstalled the app searches for it), unlike `privacidade`/`termos`.
   Its Google caveat — *"your account has no password, write to privacidade@"* — was **removed on
-  11/09/2026 (app item S-21)**, when the app's sudo gate learned a second proof: a one-time code
+  10/09/2026 (app item S-21)**, when the app's sudo gate learned a second proof: a one-time code
   mailed to the account. It is the promotion gate below in its sharpest form. The page describes a
   path a STRANGER has to be able to walk, so the paragraph could only change once the app could
   actually honour it — and until `preview` is promoted, production still carries the old text,
