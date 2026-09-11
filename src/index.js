@@ -37,6 +37,12 @@
 //                        None of the three expires: evidence of what a person asked
 //                        for has to outlive the list it justifies, in both directions.
 
+import {
+  button, footerHtml, footerText, INDIGO, INDIGO_DEEP, INK, li, MUTED, FONT,
+  shell, SIGNATURE_TEXT, strong,
+} from "./email-layout.js";
+import { DAILY_CAP, dueStep, isFinished, renderStep } from "./sequence.js";
+
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -51,6 +57,13 @@ export default {
     }
     // Not our endpoint → let the static assets answer (keeps 404-page handling).
     return env.ASSETS.fetch(request);
+  },
+
+  // L-20 — the sequence's only clock. Declared in wrangler.jsonc `triggers`
+  // for PRODUCTION only: preview has neither a cron nor a Resend key, so a
+  // preview submission gets the dry-run welcome and no drip at all.
+  async scheduled(event, env, ctx) {
+    await runSequence(env, new Date(event.scheduledTime ?? Date.now()));
   },
 };
 
@@ -351,6 +364,193 @@ function htmlPage(status, title, inner) {
   });
 }
 
+// ── L-20 — the sequence's queue and its clock ───────────────────────────────
+
+/**
+ * Put a fresh subscriber in the queue. One key per address (`seq:<email>`), so
+ * a re-subscribe restarts the sequence rather than running two of them.
+ *
+ * The unsubscribe URL is stored WITH the state instead of being minted per
+ * message: the reader should be able to leave from any of the three e-mails
+ * with the same link, and a token that stops working after the next one would
+ * be a way out that expires.
+ */
+export async function enqueueSequence(env, email, unsubUrl) {
+  if (!env.OPTIN_LOG) return false;
+  try {
+    await env.OPTIN_LOG.put(`seq:${email}`, JSON.stringify({
+      email,
+      startedAt: new Date().toISOString(),
+      lastStep: 1, // the welcome e-mail, already sent synchronously
+      unsubUrl,
+    }));
+    return true;
+  } catch (err) {
+    console.error("sequence: enqueue failed", err);
+    return false;
+  }
+}
+
+/**
+ * Walk the queue once. Called by `scheduled()` — nothing else may send.
+ *
+ * The order of the guards is the whole design:
+ *   1. no key           → do not pretend. Preview has no key and must not
+ *                         advance state it never actually sent.
+ *   2. per subscriber, `hasStopped` FIRST, before anything is rendered or sent.
+ *   3. the cap, checked before each send and never after — a run that stops at
+ *      the cap leaves the rest of the queue untouched and due tomorrow.
+ */
+export async function runSequence(env, now = new Date()) {
+  if (!env.OPTIN_LOG) {
+    console.warn("sequence: no OPTIN_LOG binding — nothing to walk");
+    return { walked: 0, sent: 0, stopped: 0, capped: false };
+  }
+  if (!env.RESEND_API_KEY) {
+    // Dry-run means "send nothing", not "mark everything as sent".
+    console.warn("sequence: RESEND_API_KEY not set — skipping the whole run");
+    return { walked: 0, sent: 0, stopped: 0, capped: false };
+  }
+
+  const day = now.toISOString().slice(0, 10);
+  let budget = DAILY_CAP - (await readCap(env, day));
+  const result = { walked: 0, sent: 0, stopped: 0, capped: false };
+
+  for (const key of await listSequenceKeys(env)) {
+    if (budget <= 0) {
+      result.capped = true;
+      console.warn(`sequence: daily cap of ${DAILY_CAP} reached — the rest is due tomorrow`);
+      break;
+    }
+
+    const state = await readJson(env, key);
+    if (!state) continue;
+    result.walked++;
+
+    // The stop wins over everything, and is read before a message is built.
+    if (await hasStopped(env, state.email)) {
+      await env.OPTIN_LOG.delete(key);
+      result.stopped++;
+      continue;
+    }
+
+    if (isFinished(state)) {
+      await env.OPTIN_LOG.delete(key);
+      continue;
+    }
+
+    const step = dueStep(state, now);
+    if (!step) continue;
+
+    const sent = await sendSequenceStep(env, state, step.step);
+    if (!sent) continue; // leave the state alone; the step is due again tomorrow
+
+    budget--;
+    result.sent++;
+    await env.OPTIN_LOG.put(key, JSON.stringify({ ...state, lastStep: step.step }));
+    await bumpCap(env, day);
+  }
+
+  return result;
+}
+
+async function listSequenceKeys(env) {
+  try {
+    const out = [];
+    let cursor;
+    do {
+      const page = await env.OPTIN_LOG.list({ prefix: "seq:", cursor });
+      out.push(...page.keys.map((k) => k.name));
+      cursor = page.list_complete ? null : page.cursor;
+    } while (cursor);
+    return out;
+  } catch (err) {
+    console.error("sequence: listing the queue failed", err);
+    return [];
+  }
+}
+
+async function readJson(env, key) {
+  try {
+    const raw = await env.OPTIN_LOG.get(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    console.error("sequence: unreadable state at", key, err);
+    return null;
+  }
+}
+
+/**
+ * The cap counter, one key per UTC day. Best-effort like everything else here,
+ * but it fails in the SAFE direction: an unreadable counter is read as a full
+ * day's worth already spent, so an outage stops the drip instead of letting it
+ * run unmetered against the allowance that real sign-ups depend on.
+ */
+async function readCap(env, day) {
+  try {
+    const raw = await env.OPTIN_LOG.get(`cap:${day}`);
+    const n = raw ? Number(JSON.parse(raw).sent) : 0;
+    return Number.isFinite(n) ? n : DAILY_CAP;
+  } catch (err) {
+    console.error("sequence: cap unreadable — treating the day as spent", err);
+    return DAILY_CAP;
+  }
+}
+
+async function bumpCap(env, day) {
+  try {
+    const current = await readCap(env, day);
+    // 7 days is plenty to audit a run; the counter is not evidence, unlike the
+    // three keys above, so this is the one that is allowed to expire.
+    await env.OPTIN_LOG.put(`cap:${day}`, JSON.stringify({ sent: current + 1 }),
+      { expirationTtl: 604800 });
+  } catch (err) {
+    console.error("sequence: cap bump failed", err);
+  }
+}
+
+/** Render and send one step. Returns false on anything short of accepted. */
+async function sendSequenceStep(env, state, step) {
+  let message;
+  try {
+    message = renderStep(step, {
+      unsubUrl: state.unsubUrl ?? null,
+      unsubscribeMailto: "privacidade@entrelares.app",
+      appUrl: "https://entrelares.app/",
+    });
+  } catch (err) {
+    console.error("sequence: could not render step", step, err);
+    return false;
+  }
+
+  try {
+    const res = await fetch(`${RESEND_API}/emails`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: env.FROM_EMAIL || "Entrelares <materiais@entrelares.app>",
+        to: [state.email],
+        reply_to: env.REPLY_TO || "contato@entrelares.app",
+        subject: message.subject,
+        headers: unsubHeaders(state.unsubUrl ?? null, "privacidade@entrelares.app"),
+        text: message.text,
+        html: message.html,
+      }),
+    });
+    if (!res.ok) {
+      console.error("sequence: send failed", step, res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("sequence: send threw", step, err);
+    return false;
+  }
+}
+
 export async function handleSubscribe(request, env, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204 });
   if (request.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405);
@@ -457,6 +657,8 @@ export async function handleSubscribe(request, env, ctx) {
     return json({ ok: true, emailQueued: false });
   }
 
+  // The welcome e-mail landed, so the sequence may start counting from here.
+  await enqueueSequence(env, email, unsubUrl);
   return json({ ok: true, emailQueued: true });
 }
 
@@ -486,106 +688,64 @@ function emailText(pdfUrl, unsubscribe, unsubUrl) {
     "",
     "Conheça o app: https://entrelares.app/",
     "",
-    "Um abraço,",
-    "Irineu — Entrelares",
+    ...SIGNATURE_TEXT,
     "",
-    "—",
-    "Você recebeu este e-mail porque se inscreveu em entrelares.app.",
-    unsubUrl
-      ? "Para sair da lista, é só abrir: " + unsubUrl
-      : "Para sair da lista, é só responder a este e-mail ou escrever para " + unsubscribe + ".",
+    ...footerText(unsubscribe, unsubUrl),
   ].join("\n");
 }
 
+// The chrome (header bar, signature, footer) comes from `shell`; what lives
+// here is only what makes THIS message the welcome e-mail.
 function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
-  const brand = "#03173d", indigo = "#4f46e5", indigoDeep = "#3730a3";
-  const ink = "#1e293b", muted = "#475569", line = "#e6e8ef";
-  const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
-  const li = (emoji, text) =>
-    `<tr>
-       <td valign="top" style="padding:6px 10px 6px 0;font-size:18px;line-height:1.5;">${emoji}</td>
-       <td valign="top" style="padding:6px 0;font-size:15px;line-height:1.5;color:${muted};">${text}</td>
-     </tr>`;
-  const button = (href, label, bg) =>
-    `<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-       <td bgcolor="${bg}" style="border-radius:10px;">
-         <a href="${href}" style="display:inline-block;padding:14px 26px;font-family:${font};font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">${label}</a>
-       </td>
-     </tr></table>`;
-
-  return `<!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Seu guia de rotinas de guarda compartilhada</title></head>
-<body style="margin:0;padding:0;background:#eef2ff;">
-  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Seu guia com 5 modelos de rotina — e como dar mais previsibilidade para os filhos.</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#eef2ff;">
-    <tr><td align="center" style="padding:24px 12px;">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid ${line};font-family:${font};">
-
-        <!-- header -->
-        <tr><td align="center" bgcolor="${brand}" style="background:${brand};padding:26px 24px;">
-          <div style="font-family:${font};font-size:17px;font-weight:700;color:#ffffff;letter-spacing:.01em;">📅 Entrelares</div>
-        </td></tr>
-
+  const content = `
         <!-- hero -->
         <tr><td style="padding:32px 32px 8px;">
-          <h1 style="margin:0 0 12px;font-family:${font};font-size:23px;line-height:1.3;color:${ink};">Prontinho — aqui está o seu guia 🎉</h1>
-          <p style="margin:0 0 20px;font-family:${font};font-size:15px;line-height:1.65;color:${muted};">Que bom ter você por aqui. Organizar a convivência dos filhos depois da separação é um dos maiores desafios do dia a dia — e este guia é um bom ponto de partida para vocês combinarem a rotina a partir de exemplos claros.</p>
+          <h1 style="margin:0 0 12px;font-family:${FONT};font-size:23px;line-height:1.3;color:${INK};">Prontinho — aqui está o seu guia 🎉</h1>
+          <p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:1.65;color:${MUTED};">Que bom ter você por aqui. Organizar a convivência dos filhos depois da separação é um dos maiores desafios do dia a dia — e este guia é um bom ponto de partida para vocês combinarem a rotina a partir de exemplos claros.</p>
         </td></tr>
 
         <!-- download card -->
         <tr><td style="padding:0 32px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f7ff;border:1px solid #e0e7ff;border-radius:12px;">
             <tr><td style="padding:22px 22px 24px;">
-              <div style="font-family:${font};font-size:16px;font-weight:700;color:${ink};margin-bottom:6px;">📘 Modelos de rotina de guarda compartilhada</div>
-              <p style="margin:0 0 18px;font-family:${font};font-size:14px;line-height:1.6;color:${muted};">Um guia visual com as formas mais comuns de dividir os dias — e um roteiro para férias e feriados.</p>
-              ${button(pdfUrl, "Baixar o guia (PDF)", indigo)}
+              <div style="font-family:${FONT};font-size:16px;font-weight:700;color:${INK};margin-bottom:6px;">📘 Modelos de rotina de guarda compartilhada</div>
+              <p style="margin:0 0 18px;font-family:${FONT};font-size:14px;line-height:1.6;color:${MUTED};">Um guia visual com as formas mais comuns de dividir os dias — e um roteiro para férias e feriados.</p>
+              ${button(pdfUrl, "Baixar o guia (PDF)", INDIGO)}
             </td></tr>
           </table>
         </td></tr>
 
         <!-- what's inside -->
         <tr><td style="padding:26px 32px 6px;">
-          <div style="font-family:${font};font-size:15px;font-weight:700;color:${ink};margin-bottom:6px;">O que você vai encontrar</div>
+          <div style="font-family:${FONT};font-size:15px;font-weight:700;color:${INK};margin-bottom:6px;">O que você vai encontrar</div>
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            ${li("🗓️", "<strong style=\"color:" + ink + "\">5 modelos prontos</strong> — das semanas alternadas às opções para crianças pequenas")}
-            ${li("👀", "Um <strong style=\"color:" + ink + "\">calendário visual de duas semanas</strong> para cada modelo")}
-            ${li("⚖️", "Os <strong style=\"color:" + ink + "\">prós e contras</strong> de cada rotina, em linguagem simples")}
-            ${li("🏖️", "Um roteiro para combinar <strong style=\"color:" + ink + "\">férias, feriados e datas especiais</strong>")}
+            ${li("🗓️", `${strong("5 modelos prontos")} — das semanas alternadas às opções para crianças pequenas`)}
+            ${li("👀", `Um ${strong("calendário visual de duas semanas")} para cada modelo`)}
+            ${li("⚖️", `Os ${strong("prós e contras")} de cada rotina, em linguagem simples`)}
+            ${li("🏖️", `Um roteiro para combinar ${strong("férias, feriados e datas especiais")}`)}
           </table>
         </td></tr>
 
         <!-- app intro -->
         <tr><td style="padding:14px 20px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border-top:1px solid ${line};border-radius:0 0 4px 4px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border-top:1px solid #e6e8ef;border-radius:0 0 4px 4px;">
             <tr><td style="padding:26px 12px 4px;">
-              <h2 style="margin:0 0 8px;font-family:${font};font-size:18px;line-height:1.35;color:${ink};">E quando vocês escolherem a rotina?</h2>
-              <p style="margin:0 0 14px;font-family:${font};font-size:14.5px;line-height:1.6;color:${muted};">Coloque-a no app Entrelares — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
+              <h2 style="margin:0 0 8px;font-family:${FONT};font-size:18px;line-height:1.35;color:${INK};">E quando vocês escolherem a rotina?</h2>
+              <p style="margin:0 0 14px;font-family:${FONT};font-size:14.5px;line-height:1.6;color:${MUTED};">Coloque-a no app Entrelares — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                ${li("📅", "De quem é o dia, <strong style=\"color:" + ink + "\">sempre à vista</strong>")}
-                ${li("🤝", "Trocas de dia só valem com a <strong style=\"color:" + ink + "\">aprovação dos dois</strong>")}
-                ${li("📜", "Histórico com data e hora, que <strong style=\"color:" + ink + "\">não pode ser editado nem apagado</strong>")}
+                ${li("📅", `De quem é o dia, ${strong("sempre à vista")}`)}
+                ${li("🤝", `Trocas de dia só valem com a ${strong("aprovação dos dois")}`)}
+                ${li("📜", `Histórico com data e hora, que ${strong("não pode ser editado nem apagado")}`)}
               </table>
-              <div style="padding:18px 0 4px;">${button("https://entrelares.app/", "Conhecer o app", indigoDeep)}</div>
+              <div style="padding:18px 0 4px;">${button("https://entrelares.app/", "Conhecer o app", INDIGO_DEEP)}</div>
             </td></tr>
           </table>
-        </td></tr>
+        </td></tr>`;
 
-        <!-- signature -->
-        <tr><td style="padding:22px 32px 4px;">
-          <p style="margin:0;font-family:${font};font-size:15px;line-height:1.6;color:${muted};">Um abraço,<br><strong style="color:${ink};">Irineu</strong> — fundador do Entrelares</p>
-        </td></tr>
-
-        <!-- footer -->
-        <tr><td style="padding:20px 32px 30px;">
-          <div style="border-top:1px solid ${line};padding-top:16px;">
-            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em entrelares.app. ${unsubUrl
-              ? `<a href="${unsubUrl}" style="color:#94a3b8;text-decoration:underline;">Sair da lista</a>.`
-              : `Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.`}</p>
-          </div>
-        </td></tr>
-
-      </table>
-    </td></tr>
-  </table>
-</body></html>`;
+  return shell(
+    "Seu guia de rotinas de guarda compartilhada",
+    "Seu guia com 5 modelos de rotina — e como dar mais previsibilidade para os filhos.",
+    content,
+    footerHtml(unsubscribe, unsubUrl),
+  );
 }

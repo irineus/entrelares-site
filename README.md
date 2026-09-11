@@ -76,10 +76,13 @@ entrelares-site/
 │   │   └── gerador-de-rotina-de-guarda.html  # L-05 interactive tool (presets mirror the app wizard)
 │   └── js/gerador-rotina.js    # the tool's pure rules (ESM, no DOM) — tested by node --test
 ├── src/
-│   └── index.js                # Cloudflare Worker entrypoint: ASSETS + /api/subscribe + /api/unsubscribe
+│   ├── index.js                # Cloudflare Worker entrypoint: ASSETS + /api/subscribe + /api/unsubscribe
+│   ├── sequence.js             # L-20 — the 3-step sequence: steps, the pure due-rule, the bodies
+│   └── email-layout.js         # the shell every message shares (header, signature, footer)
 ├── test/
 │   ├── subscribe.test.js       # Worker unit tests (node:test, zero deps — `npm test`)
 │   ├── unsubscribe.test.js     # L-20 — the one-click way out, and that it fails closed
+│   ├── sequence.test.js        # L-20 — the due-rule, the cron walk, the STOP and the CAP
 │   ├── kv-stub.js              # the shared KV double (NOT a *.test.js — hooks would merge)
 │   └── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
 ├── assets-src/                 # generators — NOT served
@@ -164,7 +167,13 @@ Scripts:Edit** (vars ship with the script; the Worker secret is set out-of-band 
 opaque KV key — no signing secret, and no address in the URL. **GET only shows a confirmation
 page** (mail clients and scanners fetch every link; a GET that acted would unsubscribe people on
 their behalf) and **POST performs it**, which is also the RFC 8058 one-click target. The stop is
-recorded in our own KV before Resend is told, and an unreadable tombstone is read as *stopped*. The Worker
+recorded in our own KV before Resend is told, and an unreadable tombstone is read as *stopped*.
+
+After the welcome e-mail the subscriber enters a **3-step sequence** (`src/sequence.js`): a tip on
+day 3, an invitation on day 5. Its only clock is a Cloudflare **Cron Trigger**, declared for
+production only. Two safety properties live in our code rather than at the provider — the **stop**
+(checked before a message is rendered) and a **daily cap**, because the Resend allowance is per
+account and shared with the product's own transactional e-mail. The Worker
 registers the e-mail **as a contact in Resend** (they appear under **Audience** in the Resend
 dashboard — there is no separately-named segment) and sends a **welcome e-mail** with the
 *Modelos de rotina* PDF (`public/downloads/…`, generated from `assets-src/modelos-rotina.html`

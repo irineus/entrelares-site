@@ -6,7 +6,7 @@
 // and the second one to install a fetch stub would win.
 
 /** Minimal KV double: the surface the Worker actually uses. */
-export function kvStub({ failing = false } = {}) {
+export function kvStub({ failing = false, pageSize = 10 } = {}) {
   const store = new Map();
   return {
     store,
@@ -21,6 +21,28 @@ export function kvStub({ failing = false } = {}) {
     async delete(key) {
       if (failing) throw new Error("kv unavailable");
       store.delete(key);
+    },
+
+    /**
+     * Real KV shape: `{ keys: [{ name }], list_complete, cursor }`, lexicographic.
+     *
+     * It PAGES on purpose, in small pages. A stub that answered everything in
+     * one `list_complete: true` would leave the caller's cursor loop unexercised
+     * — and an unexercised cursor loop is how a queue silently stops at the
+     * first page once it outgrows one.
+     */
+    async list({ prefix = "", cursor, limit = pageSize } = {}) {
+      if (failing) throw new Error("kv unavailable");
+      const all = [...store.keys()].filter((k) => k.startsWith(prefix)).sort();
+      const start = cursor ? all.indexOf(cursor) + 1 : 0;
+      const page = all.slice(start, start + limit);
+      const last = page[page.length - 1];
+      const complete = start + page.length >= all.length;
+      return {
+        keys: page.map((name) => ({ name })),
+        list_complete: complete,
+        cursor: complete ? undefined : last,
+      };
     },
   };
 }

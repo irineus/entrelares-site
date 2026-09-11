@@ -33,6 +33,14 @@
   "observability": {
     "enabled": true
   },
+  // L-20: the sequence's only clock. Once a day, 12:00 UTC (09:00 in
+  // America/Sao_Paulo) — a marketing e-mail should land in the morning, and a
+  // daily tick is all a 3-step sequence measured in DAYS can possibly need.
+  // The Worker's `scheduled()` walks the queue; DAILY_CAP in src/sequence.js is
+  // what keeps it from ever eating the transactional allowance.
+  "triggers": {
+    "crons": ["0 12 * * *"]
+  },
   // S-15/C-6: opt-in evidence log (date, time, IP) for the newsletter consent.
   // The legal review accepted plain opt-in ONLY on condition that this log exists.
   // One namespace PER ENVIRONMENT so preview submissions never mix into the
@@ -63,6 +71,14 @@
       },
       "observability": {
         "enabled": true
+      },
+      // NO cron on preview, stated rather than inherited — the file already
+      // re-declares everything explicitly to stay clear of wrangler's
+      // config-inheritance nuances. Preview has no RESEND_API_KEY either, and
+      // `runSequence` refuses to advance state it did not actually send, so
+      // preview is silent on both counts.
+      "triggers": {
+        "crons": []
       },
       "kv_namespaces": [
         { "binding": "OPTIN_LOG", "id": "752b58df98dc4a889e89615838ac1fe6" }
