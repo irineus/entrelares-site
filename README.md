@@ -243,8 +243,18 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; no image optimiser available
       in-environment, deferred).
 - [ ] **Remaining on-site roadmap:** L-04 (blog image optimization), L-15 (company identity —
-      gated on the CNPJ existing), plus the L-18/L-19/L-20 review items. See
+      gated on the CNPJ existing), plus the L-18/L-20 review items. See
       [`ROADMAP.md`](ROADMAP.md).
+- [x] **Animated iOS install guide** (**L-19**, 11/09/2026) — the iPhone card in `#instalar`
+      (`/en/`: `#install`) gained a three-beat diagram: the tap on **Compartilhar**, the sheet
+      rising with **Adicionar à Tela de Início** lit, and the icon landing on the home screen.
+      The written steps stay and remain the content — the drawing is `aria-hidden`, so a screen
+      reader, `prefers-reduced-motion` and JS-off all read the list. It is deliberately **not** a
+      screenshot: nobody on the project has an iPhone to check today's Safari against, so the
+      guide is a schematic in our own visual language and the page says so in one line. Captions
+      are HTML, so one implementation serves both languages (+2.8 KB gzip on the home, +2.9 KB on
+      `/en/`, below the fold). Unlike L-17 it stores **no coordinates** — each tap dot is a child
+      of the control it points at.
 - [x] **Demo of the immutable history** (**L-17**, 28/08/2026) — the `#registro` section
       (`/en/`: `#record`) after `#porque`: three timed beats over the two real T-57 frames, with a
       spotlight that slides from the swap request to the *Aprovar* button to the stamped line in
