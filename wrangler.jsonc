@@ -74,8 +74,11 @@
       },
       // NO cron on preview, stated rather than inherited — the file already
       // re-declares everything explicitly to stay clear of wrangler's
-      // config-inheritance nuances. Preview has no RESEND_API_KEY either, and
-      // `runSequence` refuses to advance state it did not actually send, so
+      // config-inheritance nuances. An EMPTY array is the documented way to say
+      // it: "If the crons property is an empty array then all the Cron Triggers
+      // are removed" (developers.cloudflare.com/workers/configuration/
+      // cron-triggers/, read 11/09/2026). Preview has no RESEND_API_KEY either,
+      // and `runSequence` refuses to advance state it did not actually send, so
       // preview is silent on both counts.
       "triggers": {
         "crons": []
