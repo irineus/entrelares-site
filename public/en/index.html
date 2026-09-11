@@ -285,6 +285,80 @@
         .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
         .install-card li { margin-bottom: 8px; }
         .install-card li strong { color: var(--ink); }
+        /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
+           nosso próprio visual, que mostra o CAMINHO do toque sem afirmar como a
+           tela do Safari está hoje. Essa distinção é o item inteiro — ninguém no
+           projeto tem iPhone para conferir (11/09/2026), e um desenho que se
+           passasse por screenshot envelheceria calado. Por isso o diagrama é
+           aria-hidden e os passos escritos ao lado seguem sendo O conteúdo:
+           leitor de tela, prefers-reduced-motion e JS desligado leem a lista.
+           Os rótulos são os mesmos do app (layoutInstallIosShare /
+           layoutInstallIosAddToHome em entrelares-app) — os dois textos têm de
+           concordar, e é por isso que eles estão escritos aqui por extenso.
+           Ao contrário do L-17, este bloco NÃO guarda coordenada nenhuma: cada
+           ponto de toque é filho do próprio controle que ele aponta, então ele
+           não tem como sair do lugar quando o desenho muda. */
+        .iosd-wrap { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+        .iosd { flex: 0 0 150px; }
+        .iosd-steps { flex: 1 1 200px; min-width: 0; }
+        .iosd-phone { background: #0f172a; border-radius: 22px; padding: 5px; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18); }
+        .iosd-scr { position: relative; overflow: hidden; border-radius: 18px; background: #fff; aspect-ratio: 9 / 16; font-size: 8.5px; }
+
+        /* camada 1: a página aberta no navegador, só o suficiente para dizer
+           "você está no site" — marca, linhas de texto e a barra de baixo. */
+        .iosd-page { position: absolute; inset: 0 0 14% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
+        .iosd-mark { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--indigo), var(--pink)); margin-bottom: 3px; }
+        .iosd-page i { display: block; height: 4px; border-radius: 2px; background: var(--line); }
+        .iosd-page i:nth-child(3) { width: 85%; }
+        .iosd-page i:nth-child(4) { width: 65%; }
+        .iosd-page i:nth-child(5) { width: 78%; }
+        .iosd-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14%; border-top: 1px solid var(--line); background: #f8fafc; display: flex; align-items: center; gap: 5px; padding: 0 7px; }
+        .iosd-url { flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 6px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .iosd-share { position: relative; flex: none; width: 15px; height: 15px; color: var(--indigo); }
+        .iosd-share svg { display: block; width: 100%; height: 100%; }
+
+        /* camada 2: a folha que sobe. Só a linha que interessa tem texto — as
+           outras são barras neutras de propósito, porque não sabemos o que mais
+           mora nessa folha hoje, e o que não se sabe não se desenha. */
+        .iosd-sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 64%; background: #f1f5f9; border-radius: 16px 16px 18px 18px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.12); padding: 7px; display: flex; flex-direction: column; gap: 5px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
+        .iosd-grip { flex: none; width: 26px; height: 3px; border-radius: 2px; background: #cbd5e1; margin: 0 auto 3px; }
+        .iosd-row { flex: none; display: flex; align-items: center; gap: 5px; background: #fff; border: 1px solid transparent; border-radius: 7px; padding: 5px 6px; min-height: 20px; }
+        .iosd-row b { display: block; height: 4px; border-radius: 2px; background: var(--line); flex: 1; }
+        .iosd-row svg { flex: none; width: 12px; height: 12px; color: var(--muted); }
+        .iosd-row-target { position: relative; color: var(--ink); line-height: 1.3; padding-right: 22px; transition: background .3s ease, border-color .3s ease, color .3s ease; }
+        .iosd-row-target svg { color: var(--ink); }
+        /* o ponto da linha encosta na borda: centrado, ele tapava justamente o
+           rótulo que o passo manda procurar. */
+        .iosd-row-target .iosd-dot { left: auto; right: 4px; margin-left: 0; }
+
+        /* camada 3: a recompensa — o ícone na tela inicial. */
+        .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, #e0e7ff, #fce7f3); padding: 14px 10px; opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+        .iosd-home img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22); }
+        .iosd-home span { color: var(--ink); font-weight: 600; }
+
+        /* o ponto de toque: um por controle, filho dele. Não há coordenada a
+           manter em dia — é o que o L-17 aprendeu do jeito caro. */
+        .iosd-dot { position: absolute; left: 50%; top: 50%; width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; border-radius: 50%; background: rgba(79, 70, 229, 0.22); border: 2px solid var(--indigo); opacity: 0; transform: scale(.45) translateY(7px); transition: opacity .26s ease, transform .4s cubic-bezier(.34, 1.3, .5, 1); pointer-events: none; }
+        .iosd-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--indigo); opacity: 0; }
+        .iosd.is-b1 .iosd-share .iosd-dot,
+        .iosd.is-b2 .iosd-row-target .iosd-dot { opacity: 1; transform: scale(1) translateY(0); }
+        .iosd.is-b1 .iosd-share .iosd-dot::after,
+        .iosd.is-b2 .iosd-row-target .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
+        @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
+        .iosd.is-b2 .iosd-sheet { transform: translateY(0); }
+        .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); border-color: var(--indigo); color: var(--indigo-deep); }
+        .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
+        .iosd.is-b3 .iosd-home { opacity: 1; }
+
+        /* o passo escrito que corresponde ao quadro acende junto — é o que liga o
+           desenho às palavras sem repetir as palavras. Sem JS, nada acende. */
+        .iosd-steps li { transition: color .3s ease; }
+        .iosd-steps li.is-now { color: var(--ink); }
+        .iosd-note { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+        @media (prefers-reduced-motion: reduce) {
+            .iosd-sheet, .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li { transition: none; }
+            .iosd-dot::after { animation: none; }
+        }
 
         /* ── Pricing ────────────────────────────────────────── */
         #pricing { background: linear-gradient(170deg, var(--bg-tint) 0%, var(--bg) 100%); }
@@ -790,11 +864,41 @@
             </div>
             <div class="install-card">
                 <h3>🍎 iPhone and iPad (Safari)</h3>
-                <ol>
-                    <li>Go to <strong>web.entrelares.app</strong> in Safari.</li>
-                    <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up).</li>
-                    <li>Choose <strong>Add to Home Screen</strong> and confirm.</li>
-                </ol>
+                <div class="iosd-wrap">
+                    <div class="iosd is-b1" id="iosd" aria-hidden="true">
+                        <div class="iosd-phone">
+                            <div class="iosd-scr">
+                                <div class="iosd-page">
+                                    <span class="iosd-mark"></span>
+                                    <i></i><i></i><i></i>
+                                </div>
+                                <div class="iosd-bar">
+                                    <span class="iosd-url">web.entrelares.app</span>
+                                    <span class="iosd-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg><span class="iosd-dot"></span></span>
+                                </div>
+                                <div class="iosd-sheet">
+                                    <span class="iosd-grip"></span>
+                                    <div class="iosd-row"><b></b></div>
+                                    <div class="iosd-row iosd-row-target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><path d="M12 8.4v7.2M8.4 12h7.2"/></svg><span>Add to Home Screen</span><span class="iosd-dot"></span></div>
+                                    <div class="iosd-row"><b></b></div>
+                                    <div class="iosd-row"><b></b></div>
+                                </div>
+                                <div class="iosd-home">
+                                    <img src="icon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async" />
+                                    <span>Entrelares</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iosd-steps">
+                        <ol id="iosd-steps">
+                            <li>Go to <strong>web.entrelares.app</strong> in Safari.</li>
+                            <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up).</li>
+                            <li>Choose <strong>Add to Home Screen</strong> and confirm.</li>
+                        </ol>
+                    </div>
+                </div>
+                <p class="iosd-note">The animation is an <strong>illustration of the steps</strong>: your iPhone’s screen may look different, and that is fine. What does not change are the button names above.</p>
             </div>
         </div>
     </div>
@@ -1039,6 +1143,42 @@
         new IntersectionObserver(function (entries) {
             entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
         }, { threshold: 0.35 }).observe(root);
+    } else {
+        play();
+    }
+})();
+</script>
+
+<script>
+// L-19: o guia de instalação no iPhone, desenhado. Isto aqui NÃO é um player e
+// não carrega nada — o HTML já nasce no quadro 1 (o dedo sobre o botão
+// Compartilhar), que é o único que precisa estar de pé parado, porque é ele que
+// responde "qual botão é esse". O resto é ganho.
+// prefers-reduced-motion vira "não avança sozinho", exatamente como a sequência
+// do L-17 logo acima — mesmo precedente, mesma expectativa.
+(function () {
+    var root = document.getElementById('iosd');
+    if (!root) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var steps = Array.prototype.slice.call(document.querySelectorAll('#iosd-steps li'));
+    var BEATS = ['is-b0', 'is-b1', 'is-b2', 'is-b3'];
+    var STEP_OF = [0, 1, 2, 2]; // o último quadro ainda é o passo 3: confirmar
+    var i = 1, timer = null, DELAY = 2600;
+
+    function show(n) {
+        i = (n + BEATS.length) % BEATS.length;
+        for (var k = 0; k < BEATS.length; k++) root.classList.toggle(BEATS[k], k === i);
+        for (var s = 0; s < steps.length; s++) steps[s].classList.toggle('is-now', s === STEP_OF[i]);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function play() { stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
+
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+    if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
+        }, { threshold: 0.4 }).observe(root);
     } else {
         play();
     }
