@@ -1,12 +1,18 @@
 // Cloudflare Worker for the landing site.
 //
 // The site is 99% static assets (served by the `ASSETS` binding). This Worker
-// adds ONE dynamic endpoint — POST /api/subscribe — for the L-09 materials /
-// newsletter opt-in: it registers the e-mail in a Resend segment (the launch /
-// premium-announcement list) and sends the "Modelos de rotina" PDF by e-mail.
+// adds TWO dynamic endpoints:
 //
-// Everything that is not /api/subscribe is delegated to the static assets, so
-// the existing 404-page handling and asset routing are preserved unchanged.
+//   · POST /api/subscribe    — the L-09 materials / newsletter opt-in: registers
+//     the e-mail in a Resend segment (the launch / premium-announcement list)
+//     and sends the "Modelos de rotina" PDF by e-mail.
+//   · GET|POST /api/unsubscribe — L-20: the one-click way OUT, which the privacy
+//     policy §4 promises ("revogável a qualquer tempo, com link/contato para
+//     descadastro em cada mensagem") and which a scheduled sequence makes
+//     mandatory rather than merely polite. See `handleUnsubscribe`.
+//
+// Everything else is delegated to the static assets, so the existing 404-page
+// handling and asset routing are preserved unchanged.
 //
 // Config (wrangler.jsonc `vars`, non-secret):
 //   RESEND_SEGMENT_ID  — the Resend segment the contact is added to.
@@ -24,6 +30,12 @@
 //                        ONLY on condition that this log is kept, so it is written
 //                        even in dry-run: the consent happened when the form was
 //                        submitted, regardless of whether the e-mail went out.
+//                        The same namespace carries the L-20 opt-OUT keys:
+//                          `optin:<email>:<iso>` — consent evidence (never overwritten)
+//                          `unsub:<token>`       — opaque token → the address it releases
+//                          `stop:<email>`        — the tombstone the sequence obeys
+//                        None of the three expires: evidence of what a person asked
+//                        for has to outlive the list it justifies, in both directions.
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +45,9 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/subscribe") {
       return handleSubscribe(request, env, ctx);
+    }
+    if (url.pathname === "/api/unsubscribe") {
+      return handleUnsubscribe(request, env, ctx);
     }
     // Not our endpoint → let the static assets answer (keeps 404-page handling).
     return env.ASSETS.fetch(request);
@@ -99,6 +114,243 @@ export async function logOptIn(env, email, request) {
   }
 }
 
+// ── L-20 — the way out ──────────────────────────────────────────────────────
+//
+// §4 of the privacy policy declares the legal basis for this list as consent,
+// "revogável a qualquer tempo, com link/contato para descadastro em cada
+// mensagem". Until now the only channel was a mailto, and for ONE welcome
+// e-mail that is defensible: the message is already delivered by the time the
+// request is read, so a human turnaround costs the reader nothing.
+//
+// A SCHEDULED sequence breaks that. A message queued for day 5 goes out after
+// somebody asked to stop on day 2 unless the stop lives in code, so the way out
+// has to be machine-actionable BEFORE the first drip is scheduled — which is why
+// it ships ahead of the sequence rather than with it.
+//
+// The token is the capability: an opaque 128-bit random string that IS the KV
+// key holding the address. No signing secret, therefore no new secret for the
+// owner to set, nothing to rotate, and no address in the URL — a forwarded
+// e-mail leaks a revocation, never an inbox.
+
+const UNSUB_TOKEN_BYTES = 16;
+
+/** Opaque, unguessable, URL-safe. */
+export function newUnsubToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(UNSUB_TOKEN_BYTES));
+  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Mint the token that releases `email` and hand back its absolute URL.
+ *
+ * Best-effort, exactly like `logOptIn`: a KV outage must not cost the reader
+ * their material. When it fails the caller falls back to the mailto footer,
+ * which is what every message carried before this existed.
+ */
+export async function issueUnsubUrl(env, email, origin) {
+  if (!env.OPTIN_LOG) return null;
+  const token = newUnsubToken();
+  try {
+    await env.OPTIN_LOG.put(`unsub:${token}`, JSON.stringify({ email, ts: new Date().toISOString() }));
+    return `${origin}/api/unsubscribe?t=${token}`;
+  } catch (err) {
+    console.error("unsubscribe: token write failed", err);
+    return null;
+  }
+}
+
+/**
+ * The tombstone the future sequence reads before scheduling anything. Kept on
+ * OUR side on purpose: "the cap and the stop are enforceable in our code" is the
+ * safety property this item is built around, and a stop that only exists in the
+ * provider's account is one API outage away from sending anyway.
+ */
+export async function hasStopped(env, email) {
+  if (!env.OPTIN_LOG) return false;
+  try {
+    return (await env.OPTIN_LOG.get(`stop:${email}`)) !== null;
+  } catch (err) {
+    // Fail CLOSED: an unreadable tombstone must never be read as consent.
+    console.error("unsubscribe: stop lookup failed — treating as stopped", err);
+    return true;
+  }
+}
+
+/**
+ * GET  — shows a confirmation page with a button. It does NOT unsubscribe:
+ *        mail clients and security scanners fetch every link in a message, and
+ *        a GET that acts would let a scanner drop somebody off the list.
+ * POST — performs it. This is also the RFC 8058 one-click target named by the
+ *        `List-Unsubscribe-Post` header, so Gmail's own "Unsubscribe" button
+ *        lands here directly.
+ */
+export async function handleUnsubscribe(request, env, ctx) {
+  const url = new URL(request.url);
+  const token = (url.searchParams.get("t") || "").trim();
+
+  if (!/^[0-9a-f]{32}$/.test(token)) {
+    return htmlPage(400, "Link inválido", `
+      <p>Este link de descadastro não é válido — ele pode ter sido cortado pelo
+      programa de e-mail ao ser copiado.</p>
+      <p>Escreva para <a href="mailto:privacidade@entrelares.app?subject=descadastro">privacidade@entrelares.app</a>
+      que tiramos você da lista na mão.</p>`);
+  }
+
+  if (request.method === "GET") {
+    return htmlPage(200, "Sair da lista", `
+      <p>Quer parar de receber os materiais e novidades do Entrelares neste e-mail?</p>
+      <form method="post" action="/api/unsubscribe?t=${token}">
+        <button type="submit">Confirmar descadastro</button>
+      </form>
+      <p class="fine">Seus dados da conta do aplicativo não são afetados — isto vale
+      apenas para a lista de materiais e novidades do site.</p>`);
+  }
+
+  if (request.method !== "POST") {
+    return json({ ok: false, error: "method_not_allowed" }, 405);
+  }
+
+  const email = await resolveUnsubToken(env, token);
+  if (!email) {
+    // Three ways to get here: the token never existed, KV is down, or the write
+    // has not propagated yet — KV is eventually consistent, so a click within
+    // seconds of the welcome e-mail can miss a token that does exist. All three
+    // look the same to the reader, and all three deserve the address of a human
+    // rather than a stack trace. (The realistic click is minutes to days later.)
+    return htmlPage(404, "Não encontramos essa inscrição", `
+      <p>Não localizamos uma inscrição para este link. Se você continuar recebendo
+      nossas mensagens, escreva para
+      <a href="mailto:privacidade@entrelares.app?subject=descadastro">privacidade@entrelares.app</a>.</p>`);
+  }
+
+  // OUR record first, the provider second — the order `logOptIn` already
+  // established. If Resend is unreachable the person is still stopped here, and
+  // here is what the sequence consults.
+  await recordStop(env, email);
+  await markContactUnsubscribed(env, email);
+
+  return htmlPage(200, "Pronto, você saiu da lista", `
+    <p>Não vamos mais enviar materiais nem novidades para <strong>${escapeHtml(email)}</strong>.</p>
+    <p class="fine">Isto não cancela nem apaga uma conta do aplicativo. Para isso, veja
+    <a href="/exclusao-de-conta">exclusão de conta</a>.</p>`);
+}
+
+/** The token → address lookup. Returns null when absent or unreadable. */
+async function resolveUnsubToken(env, token) {
+  if (!env.OPTIN_LOG) return null;
+  try {
+    const raw = await env.OPTIN_LOG.get(`unsub:${token}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return typeof parsed?.email === "string" ? parsed.email : null;
+  } catch (err) {
+    console.error("unsubscribe: token lookup failed", err);
+    return null;
+  }
+}
+
+/** The stop tombstone. Never expires — see the OPTIN_LOG note at the top. */
+async function recordStop(env, email) {
+  if (!env.OPTIN_LOG) return false;
+  try {
+    await env.OPTIN_LOG.put(`stop:${email}`, JSON.stringify({ email, ts: new Date().toISOString() }));
+    return true;
+  } catch (err) {
+    console.error("unsubscribe: stop write failed", err);
+    return false;
+  }
+}
+
+/** Lift a stop, so a fresh opt-in is honoured. Best-effort, like its siblings. */
+export async function clearStop(env, email) {
+  if (!env.OPTIN_LOG) return false;
+  try {
+    await env.OPTIN_LOG.delete(`stop:${email}`);
+    return true;
+  } catch (err) {
+    console.error("unsubscribe: stop clear failed", err);
+    return false;
+  }
+}
+
+/**
+ * Best-effort mirror into Resend, so the provider's own list agrees with ours.
+ *
+ * `PATCH /contacts/{id|email}` — addressing by e-mail is supported and no
+ * audience/segment id belongs in the path (resend.com/docs/api-reference/
+ * contacts/update-contact, read 11/09/2026). Dated because it is somebody
+ * else's API: the next session can re-check instead of re-deriving.
+ *
+ * A failure here is logged and swallowed ON PURPOSE — the stop that matters was
+ * already written on our side, and that is the one the sequence reads.
+ */
+async function markContactUnsubscribed(env, email) {
+  if (!env.RESEND_API_KEY) return false;
+  try {
+    const res = await fetch(`${RESEND_API}/contacts/${encodeURIComponent(email)}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ unsubscribed: true }),
+    });
+    if (!res.ok) console.error("unsubscribe: contact patch failed", res.status, await res.text());
+    return res.ok;
+  } catch (err) {
+    console.error("unsubscribe: contact patch threw", err);
+    return false;
+  }
+}
+
+/**
+ * RFC 8058 one-click when we have a URL: the `-Post` header is what turns
+ * Gmail's own "Unsubscribe" control into a POST to our endpoint instead of a
+ * suggestion that the reader hunt for a link. The mailto stays as the second
+ * URI for clients that do not implement it.
+ */
+export function unsubHeaders(unsubUrl, mailto) {
+  const mailtoUri = `<mailto:${mailto}?subject=descadastro>`;
+  if (!unsubUrl) return { "List-Unsubscribe": mailtoUri };
+  return {
+    "List-Unsubscribe": `<${unsubUrl}>, ${mailtoUri}`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
+}
+
+export function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/** A small self-contained page — the Worker serves these, not the asset pipeline. */
+function htmlPage(status, title, inner) {
+  return new Response(`<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>${escapeHtml(title)} — Entrelares</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#eef2ff; font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:#1e293b; }
+  main { max-width:34rem; margin:0 auto; padding:48px 20px; }
+  .card { background:#fff; border:1px solid #e6e8ef; border-radius:16px; padding:28px 26px; }
+  h1 { margin:0 0 14px; font-size:22px; line-height:1.3; }
+  p { margin:0 0 14px; color:#475569; }
+  .fine { font-size:13px; color:#94a3b8; }
+  a { color:#4f46e5; }
+  button { margin:6px 0 16px; padding:13px 24px; font:inherit; font-weight:700; color:#fff; background:#4f46e5; border:0; border-radius:10px; cursor:pointer; }
+  .brand { text-align:center; margin-bottom:18px; font-weight:700; color:#03173d; }
+</style>
+</head><body><main>
+  <div class="brand"><a href="/" style="color:inherit;text-decoration:none;">Entrelares</a></div>
+  <div class="card"><h1>${escapeHtml(title)}</h1>${inner}</div>
+</main></body></html>`, {
+    status,
+    headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
+  });
+}
+
 export async function handleSubscribe(request, env, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204 });
   if (request.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405);
@@ -127,6 +379,12 @@ export async function handleSubscribe(request, env, ctx) {
   // any provider call so the evidence survives a Resend failure — and recorded in
   // dry-run too, where the act is just as real even though no e-mail is sent.
   await logOptIn(env, email, request);
+
+  // A re-subscribe is a SECOND act of consent (the same reasoning that gives the
+  // evidence log one key per submission), so it lifts an earlier stop. Without
+  // this, somebody who left and came back would be silently ignored by the
+  // sequence while the form told them "pronto!".
+  await clearStop(env, email);
 
   // Dry-run when no key is configured (e.g. the preview worker without the secret).
   if (!env.RESEND_API_KEY) {
@@ -169,6 +427,9 @@ export async function handleSubscribe(request, env, ctx) {
   const from = env.FROM_EMAIL || "Entrelares <materiais@entrelares.app>";
   const replyTo = env.REPLY_TO || "contato@entrelares.app";
   const unsubscribe = "privacidade@entrelares.app";
+  // Null when KV is unavailable — the footer then degrades to the mailto that
+  // every message carried before L-20, never to no way out at all.
+  const unsubUrl = await issueUnsubUrl(env, email, origin);
 
   try {
     const res = await fetch(`${RESEND_API}/emails`, {
@@ -179,11 +440,9 @@ export async function handleSubscribe(request, env, ctx) {
         to: [email],
         reply_to: replyTo,
         subject: "Seu guia de rotinas de guarda compartilhada 🎉",
-        headers: {
-          "List-Unsubscribe": `<mailto:${unsubscribe}?subject=descadastro>`,
-        },
-        text: emailText(pdfUrl, unsubscribe),
-        html: emailHtml(pdfUrl, unsubscribe),
+        headers: unsubHeaders(unsubUrl, unsubscribe),
+        text: emailText(pdfUrl, unsubscribe, unsubUrl),
+        html: emailHtml(pdfUrl, unsubscribe, unsubUrl),
       }),
     });
     if (!res.ok) {
@@ -201,7 +460,7 @@ export async function handleSubscribe(request, env, ctx) {
   return json({ ok: true, emailQueued: true });
 }
 
-function emailText(pdfUrl, unsubscribe) {
+function emailText(pdfUrl, unsubscribe, unsubUrl) {
   return [
     "Que bom ter você por aqui :)",
     "",
@@ -218,9 +477,9 @@ function emailText(pdfUrl, unsubscribe) {
     "  - os prós e contras de cada rotina, em linguagem simples;",
     "  - um roteiro para combinar férias, feriados e datas especiais.",
     "",
-    "E quando vocês escolherem a rotina, é só colocá-la no app Guarda",
-    "Compartilhada — grátis. Ele mantém o calendário num lugar só, igual para",
-    "os dois responsáveis:",
+    "E quando vocês escolherem a rotina, é só colocá-la no app Entrelares —",
+    "grátis. Ele mantém o calendário num lugar só, igual para os dois",
+    "responsáveis:",
     "  - de quem é o dia, sempre à vista;",
     "  - trocas de dia com a aprovação dos dois;",
     "  - histórico com data e hora, que não pode ser editado nem apagado.",
@@ -232,11 +491,13 @@ function emailText(pdfUrl, unsubscribe) {
     "",
     "—",
     "Você recebeu este e-mail porque se inscreveu em entrelares.app.",
-    "Para sair da lista, é só responder a este e-mail ou escrever para " + unsubscribe + ".",
+    unsubUrl
+      ? "Para sair da lista, é só abrir: " + unsubUrl
+      : "Para sair da lista, é só responder a este e-mail ou escrever para " + unsubscribe + ".",
   ].join("\n");
 }
 
-function emailHtml(pdfUrl, unsubscribe) {
+function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
   const brand = "#03173d", indigo = "#4f46e5", indigoDeep = "#3730a3";
   const ink = "#1e293b", muted = "#475569", line = "#e6e8ef";
   const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
@@ -317,7 +578,9 @@ function emailHtml(pdfUrl, unsubscribe) {
         <!-- footer -->
         <tr><td style="padding:20px 32px 30px;">
           <div style="border-top:1px solid ${line};padding-top:16px;">
-            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em entrelares.app. Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.</p>
+            <p style="margin:0;font-family:${font};font-size:12px;line-height:1.55;color:#94a3b8;">Você recebeu este e-mail porque se inscreveu em entrelares.app. ${unsubUrl
+              ? `<a href="${unsubUrl}" style="color:#94a3b8;text-decoration:underline;">Sair da lista</a>.`
+              : `Para sair da lista, é só responder a este e-mail ou escrever para <a href="mailto:${unsubscribe}?subject=descadastro" style="color:#94a3b8;">${unsubscribe}</a>.`}</p>
           </div>
         </td></tr>
 
