@@ -58,6 +58,18 @@ is that it deploys exactly what is in the repo.
   states it plainly instead of hiding it.
 - **One Umami `website-id` for both** — the URL rides on every pageview and event, so `/en/` is
   already separable; a second website would mean the paid tier.
+- **`public/exclusao-de-conta.html` is bilingual and single too (S-19, 10/09/2026)**, and it is
+  the exception that proves the rule above: it is a legal-adjacent page, but the Play listing's
+  data-safety field points a REVIEWER at it in English while a user arrives from the PT-BR policy,
+  and there is no language to trust at the door. Its URL is declared in the Play Console, so
+  **it must never move, never 404 and never go `noindex`** — it is indexed and in the sitemap on
+  purpose (somebody who uninstalled the app searches for it), unlike `privacidade`/`termos`.
+  Its Google caveat — *"your account has no password, write to privacidade@"* — was **removed on
+  10/09/2026 (app item S-21)**, when the app's sudo gate learned a second proof: a one-time code
+  mailed to the account. It is the promotion gate below in its sharpest form. The page describes a
+  path a STRANGER has to be able to walk, so the paragraph could only change once the app could
+  actually honour it — and until `preview` is promoted, production still carries the old text,
+  which is the honest state while the app's own web channel is still rolling out.
 - **`public/404.html` is bilingual and single**: Cloudflare's `not_found_handling: "404-page"`
   serves ONE file for the whole site, and a visitor who mistyped a URL has no language we can
   trust. `noindex`, and never in the sitemap.
@@ -207,6 +219,12 @@ system; an unverified claim is a liability no matter who drafted it.
   Plausible to avoid its subscription; PostHog reconsidered for later experimentation.)
 
 ## Gotchas
+- **The served URL has no `.html`.** Cloudflare's static assets strip the extension:
+  `/privacidade.html` redirects and `/privacidade` is the 200 — which is why the app links
+  `/privacidade` without it. Internal `href`s carry the extension and the redirect absorbs it,
+  but **a `canonical`, a sitemap `<loc>` or a URL declared to a third party must name the form
+  that answers**, not the one that bounces. The sitemap still lists nine bouncing URLs; that is
+  **L-23**, and the S-19 entry was already born extensionless.
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,
   so they are never served — safe to edit without touching the published site.
 - **`sitemap.xml` carries its own rules in a header comment (L-07)** — only indexable pages belong
