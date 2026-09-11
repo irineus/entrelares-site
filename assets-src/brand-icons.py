@@ -9,7 +9,7 @@ day. Background: the brand indigo `#4F46E5`. Every colour is a token from the
 app's `lib/theme/tokens.dart` — the icon is the calendar screen, abstracted.
 
 **This script is NOT the source of the mark.** The geometry lives in the app
-repo, in `entrelares-flutter/store/brand-icons.py`, which draws it from data and
+repo, in `entrelares-app/store/brand-icons.py`, which draws it from data and
 also writes `store/brand-calendario.svg` as the vector artifact. What lives here
 is ONE master rendered by that script — `assets-src/brand-marca.png`, 1024²
 full-bleed — plus the resizing below. **To change the art: edit the app repo's

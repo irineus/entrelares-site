@@ -1,5 +1,5 @@
 // L-05 — pure rules of the "Gerador de rotina de guarda" (public/ferramentas/).
-// MIRROR of the app's Rotation Wizard presets — entrelares-flutter,
+// MIRROR of the app's Rotation Wizard presets — entrelares-app,
 // packages/entrelares_core/lib/src/wizard_rules.dart (`wizardPresetBlocks`):
 // the preset ids are pattern ids (never localized) and the block expansion must
 // stay IDENTICAL to the app's, so what a visitor previews here is exactly what
