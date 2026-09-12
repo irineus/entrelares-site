@@ -265,6 +265,20 @@ system; an unverified claim is a liability no matter who drafted it.
   one website per account), so the landing and app have distinct `website-id`s. The landing's
   `data-website-id` is live in every page. Disclosed in `privacidade.html` §7/§9. (Switched from
   Plausible to avoid its subscription; PostHog reconsidered for later experimentation.)
+- **Which account holds which site (L-26, 12/09/2026)** — two Umami Cloud accounts, one provider,
+  and nothing said which login held which until L-25 paid a round trip for it:
+
+  | Account (login) | Website id | Serves |
+  |---|---|---|
+  | `irineus.adp@gmail.com` | `8b182992-68ce-4f2e-abb9-e798c33e48d8` | the **landing**, `entrelares.app` (this repo's `data-website-id`) |
+  | `irineus@gmail.com` | `6fdd6c5a-4bce-449f-8188-3b7399a859d8` | the **app**, `web.entrelares.app` (`umamiWebsiteId` in the app's `env.dart`) |
+
+  **Never create a new website and never change an id** — the id is what every page and `env.dart`
+  send, and a new website starts the history from zero. Umami keys collection on the id, not on the
+  dashboard's name/domain fields, which is why both sites kept counting through the rebrand.
+- **Umami Cloud Hobby has no API** ("API access requires a Pro plan", verified 12/09/2026). Every
+  reading of these numbers is the owner's dashboard: a session asks for a **screenshot** of the
+  view it needs, never for an API key.
 
 ## Gotchas
 - **The served URL has no `.html`.** Cloudflare's static assets strip the extension:
