@@ -216,6 +216,10 @@ clicks carry `data-umami-event` (e.g. `cta-signup`). No cookies, no PII, no cons
 provider as the app (separate accounts — the free tier allows one website per account, so the
 landing and app have distinct `website-id`s). The landing's `data-website-id` is live in every
 page and disclosed in `privacidade.html`. (Switched from Plausible to avoid its subscription.)
+The landing's site (`8b182992-68ce-4f2e-abb9-e798c33e48d8`, `entrelares.app`) lives in the
+`irineus.adp@gmail.com` account; the app's (`6fdd6c5a-4bce-449f-8188-3b7399a859d8`,
+`web.entrelares.app`) in `irineus@gmail.com` — see `CLAUDE.md` (L-26). Umami Cloud Hobby has no
+API, so readings are dashboard screenshots from the owner.
 
 ## Legal pages — cross-repo sync
 
