@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Responsive variants of the blog article images (L-04, 14/09/2026).
+"""Responsive variants of the blog article images (L-04, 13/09/2026).
 
 The four 1600 px JPEG masters in `public/blog/img/` are NOT touched: each one is the
 `og:image`, the `twitter:image` and the JSON-LD `image` of its article, and social
@@ -38,7 +38,7 @@ IMG_DIR = ROOT / "public" / "blog" / "img"
 WIDTHS = (480, 720, 1080, 1440)
 ASPECT = (16, 9)
 
-# Quality settings measured on the four masters on 14/09/2026 — see the PR for the table.
+# Quality settings measured on the four masters on 13/09/2026 — see the PR for the table.
 JPEG_OPTS = {"quality": 78, "optimize": True, "progressive": True}
 WEBP_OPTS = {"quality": 78, "method": 6}
 AVIF_OPTS = {"quality": 60, "speed": 4}

@@ -305,7 +305,7 @@ system; an unverified claim is a liability no matter who drafted it.
   disagree or when an article names a file that is not on disk.
   Re-render when the copy they show changes; a banner whose text no longer matches the page is
   worse than no banner.
-- **An `<img>` with a `height` attribute ignores `aspect-ratio` (L-04, 14/09/2026).** The
+- **An `<img>` with a `height` attribute ignores `aspect-ratio` (L-04, 13/09/2026).** The
   attribute is a presentational hint for the CSS `height` property, and `aspect-ratio` only
   applies while height is `auto` — so `.post-img img{width:100%;aspect-ratio:16/9}` rendered
   every article image 675 px tall whatever its width (680×675 on desktop, a portrait crop on a

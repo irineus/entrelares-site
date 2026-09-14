@@ -274,7 +274,7 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
       L-04, so the blocker is gone; still not done).
 - [ ] **Remaining on-site roadmap:** L-15 (company identity — gated on the CNPJ existing), plus
       the L-18/L-20 review items. See [`ROADMAP.md`](ROADMAP.md).
-- [x] **Responsive blog images** (**L-04**, 14/09/2026) — the four illustrated articles serve
+- [x] **Responsive blog images** (**L-04**, 13/09/2026) — the four illustrated articles serve
       AVIF, WebP and JPEG at 480/720/1080/1440 px through `<picture>` + `srcset`/`sizes`,
       centre-cropped to the 16:9 the article CSS already showed (the one portrait master was
       shipping 60 % of its pixels to be discarded). On a phone the heaviest article drops from
