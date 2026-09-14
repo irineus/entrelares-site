@@ -296,7 +296,13 @@ system; an unverified claim is a liability no matter who drafted it.
   every page changed today teaches the crawler to ignore the field.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
-  `og-cover-en.html`, headless Chrome at 1200×630) and the three icons (`brand-icons.py`).
+  `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
+  blog articles' responsive set (`blog-images.py`, L-04, Pillow: AVIF + WebP + JPEG at four
+  widths, centre-cropped to the 16:9 the article CSS shows, written BESIDE the four 1600 px
+  masters in `public/blog/img/`). The masters are never rewritten — each one is its article's
+  `og:image`, and social scrapers want a JPEG at a URL that never moves. Adding a width means
+  the generator AND the four `<picture>` blocks; `test/blog-images.test.js` fails when they
+  disagree or when an article names a file that is not on disk.
   Re-render when the copy they show changes; a banner whose text no longer matches the page is
   worse than no banner.
 - **The brand mark is NOT drawn in this repo.** Its geometry lives in the app repo
