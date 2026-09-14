@@ -483,19 +483,28 @@
         .demo-bar i { display: block; height: 100%; width: 0; background: var(--indigo); }
         @media (prefers-reduced-motion: reduce) { .demo-frame, .demo-ring { transition: none; } }
 
-        /* ── Founder note + values (L-06) ───────────────────── */
-        .founder { max-width: 760px; margin: 0 auto; }
-        .founder-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--indigo); border-radius: var(--radius); padding: 32px 34px; }
-        .founder-card p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 15px; }
+        /* ── Founder note + values (L-06; calmer since L-18) ─────
+           L-18: the one section that speaks in first person reads like a letter, not
+           like a feature block — one narrow column (heading, lead and card share it),
+           more air above and below, regular weight, longer line-height, no heavy accent
+           bar. System font on purpose: a web font would add a request and a FOUT to buy
+           a tone that spacing already buys. */
+        .founder-section { padding: 96px 0; }
+        .founder-section .wrap { max-width: 720px; }
+        .founder-section h2 { font-weight: 600; letter-spacing: -0.01em; }
+        .founder-section .section-lead { margin-bottom: 36px; }
+        .founder { margin: 0 auto; }
+        .founder-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 44px 48px; }
+        .founder-card p { color: #475569; font-size: 17.5px; font-weight: 400; line-height: 1.85; letter-spacing: 0.003em; margin-bottom: 1.1em; }
         .founder-card p:last-of-type { margin-bottom: 0; }
-        .founder-card strong { color: var(--ink); }
-        .founder-sign { display: flex; align-items: center; gap: 13px; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+        .founder-card strong { color: var(--ink); font-weight: 600; }
+        .founder-sign { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
         .founder-avatar { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: block; background: var(--bg-tint); box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
         .founder-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .founder-sign .who { font-weight: 700; color: var(--ink); font-size: 15px; line-height: 1.3; }
         .founder-sign .who span { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
-        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
-        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid #e0e7ff; border-radius: 999px; padding: 9px 16px; font-size: 14px; font-weight: 600; }
+        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 40px; }
+        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid #e0e7ff; border-radius: 999px; padding: 8px 15px; font-size: 14px; font-weight: 500; }
 
         /* ── Final CTA + footer ─────────────────────────────── */
         .cta-final { text-align: center; background: #03173d; color: #fff; }
@@ -535,8 +544,9 @@
             .price-card { padding: 30px 22px; }
             footer .wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
 
-            .founder-card { padding: 26px 22px; }
-            .founder-card p { font-size: 15.5px; }
+            .founder-section { padding: 64px 0; }
+            .founder-card { padding: 30px 22px; }
+            .founder-card p { font-size: 16.5px; line-height: 1.8; }
             .values { justify-content: flex-start; }
         }
 
@@ -589,7 +599,7 @@
                 o que foi combinado, <em>preservado exatamente como foi feito</em>.
             </p>
             <div class="hero-ctas">
-                <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/signup">Criar conta grátis</a>
+                <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a>
                 <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
             </div>
             <div class="trust">
@@ -683,6 +693,41 @@
                 <p>É o mesmo motor de rotinas do aplicativo: o que você simular aqui é o que o app monta para a sua família depois — com trocas aprovadas pelos dois e histórico registrado.</p>
                 <a class="btn btn-primary" data-umami-event="gerador-home" href="/ferramentas/gerador-de-rotina-de-guarda">Simular minha rotina — grátis</a>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- L-18 — a nota do fundador sobe: logo depois de "Como funciona" e do simulador,
+     ANTES de toda a prova do produto (galeria, porquê, registro, benefícios). É uma
+     APOSTA de posicionamento, não um fato: ganha empatia mais cedo e atrasa o "o que é
+     isso" para quem chegou de busca. O card L-18 guarda a linha de base de cta-signup
+     (Umami, datada) e o critério para a nota voltar para baixo. Mesma posição relativa
+     em /en/ — mudar aqui é mudar lá. -->
+<section id="fundador" class="founder-section">
+    <div class="wrap">
+        <h2>De pai para pais: por que criei o Entrelares</h2>
+        <p class="section-lead">Este app não nasceu numa reunião de negócios. Nasceu de uma necessidade real, dentro da minha própria família.</p>
+        <div class="founder">
+            <div class="founder-card">
+                <p>Fui casado por 20 anos, e desse casamento veio o bem mais precioso da minha vida: meu filho. Quando a mãe dele e eu entendemos que não seguiríamos juntos, escolhemos a separação pensando no bem de todos — e, principalmente, no dele.</p>
+                <p>De repente, tudo era novo: casa, rotina, hábitos. Mas uma coisa não mudou — a vontade de estar presente na vida do meu filho. Em meio aos atritos naturais de uma separação recente, o que mais nos fazia falta era justamente o que parecia mais difícil: dar <strong>estabilidade e previsibilidade</strong> a uma criança pequena, conciliando tudo isso com a rotina de trabalho intensa da mãe dele.</p>
+                <p>Nós dois precisávamos saber com clareza <strong>de quem era cada dia</strong>. Tentei uma planilha — ajudou no começo, mas logo ficou complicada e nunca estava à mão na hora certa. Tentei um calendário comum — trabalhoso demais de manter. Então criei uma solução própria, simples, que foi crescendo até se tornar uma verdadeira parceira na convivência com meu filho.</p>
+                <p>Conversando com outros pais e mães que passaram pela separação, percebi que a falta era a mesma. Por isso decidi abrir a ferramenta para outras famílias — para tirar esse atrito do caminho num momento tão delicado, que se atravessa com carinho, amor e, acima de tudo, <strong>respeito entre todos os envolvidos</strong>.</p>
+                <div class="founder-sign">
+                    <picture class="founder-avatar">
+                        <source srcset="/img/founder.webp" type="image/webp" />
+                        <img src="/img/founder.jpg" alt="Irineu, fundador do Entrelares" width="56" height="56" loading="lazy" />
+                    </picture>
+                    <span class="who">Irineu<span>Fundador e pai</span></span>
+                </div>
+            </div>
+            <ul class="values" aria-label="Nossos compromissos">
+                <li class="value-badge">🇧🇷 Feito no Brasil</li>
+                <li class="value-badge">🔒 Em conformidade com a LGPD</li>
+                <li class="value-badge">🚫 Sem anúncios, sem venda de dados</li>
+                <li class="value-badge">📜 Histórico inalterável</li>
+                <li class="value-badge">💙 O essencial é grátis</li>
+            </ul>
         </div>
     </div>
 </section>
@@ -845,35 +890,6 @@
     </div>
 </section>
 
-<section id="fundador">
-    <div class="wrap">
-        <h2>De um pai para outro: por que criei o Entrelares</h2>
-        <p class="section-lead">Este app não nasceu numa reunião de negócios. Nasceu de uma necessidade real, dentro da minha própria família.</p>
-        <div class="founder">
-            <div class="founder-card">
-                <p>Fui casado por 20 anos, e dessa união veio o bem mais precioso da minha vida: meu filho. Quando eu e a mãe dele entendemos que o casamento não seguiria, escolhemos a separação pensando no bem de todos — inclusive no dele.</p>
-                <p>De repente, tudo era novo: casa, rotina, hábitos. Mas uma coisa não mudou — a vontade de estar presente na vida do meu filho. No meio dos atritos naturais de uma separação recente, o que mais precisávamos era justamente o que parecia mais difícil: dar <strong>estabilidade e previsibilidade</strong> a uma criança pequena, com a rotina de trabalho intensa da mãe dele.</p>
-                <p>Precisávamos, os dois, saber com clareza <strong>de quem era cada dia</strong>. Tentei uma planilha — ajudou no começo, mas logo ficou complicada e nunca estava à mão na hora certa. Tentei um calendário comum — complexo demais de manter. Então criei uma solução própria, simples, que foi crescendo até virar um verdadeiro parceiro na convivência com meu filho.</p>
-                <p>Conversando com outros pais e mães que passaram pela separação, senti a mesma carência. Por isso decidi abrir esta ferramenta para mais famílias — para tirar esse atrito do caminho num momento tão delicado, que se supera com carinho, amor e, acima de tudo, <strong>respeito entre todas as partes</strong>.</p>
-                <div class="founder-sign">
-                    <picture class="founder-avatar">
-                        <source srcset="/img/founder.webp" type="image/webp" />
-                        <img src="/img/founder.jpg" alt="Irineu, fundador do Entrelares" width="56" height="56" loading="lazy" />
-                    </picture>
-                    <span class="who">Irineu<span>Fundador e pai</span></span>
-                </div>
-            </div>
-            <ul class="values" aria-label="Nossos compromissos">
-                <li class="value-badge">🇧🇷 Feito no Brasil</li>
-                <li class="value-badge">🔒 Em conformidade com a LGPD</li>
-                <li class="value-badge">🚫 Sem anúncios, sem venda de dados</li>
-                <li class="value-badge">📜 Histórico inalterável</li>
-                <li class="value-badge">💙 O essencial é grátis</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
 <section id="instalar">
     <div class="wrap">
         <h2>Instale no seu celular em 30 segundos</h2>
@@ -956,7 +972,7 @@
                     <li>Notificações em tempo real e por e-mail</li>
                     <li>Planejamento de até 6 meses à frente</li>
                 </ul>
-                <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://web.entrelares.app/signup">Criar conta grátis</a>
+                <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a>
             </div>
             <div class="price-card">
                 <div class="price-badge">Premium</div>
@@ -1069,7 +1085,7 @@
     <div class="wrap">
         <h2>Menos discussão. Mais convivência.</h2>
         <p>Crie a conta, monte o calendário e convide o outro responsável. Em dez minutos, a rotina dos seus filhos sai do bate-boca e entra num combinado claro.</p>
-        <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/signup">Começar agora — é grátis</a>
+        <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Começar agora — é grátis</a>
     </div>
 </section>
 

@@ -16,6 +16,27 @@ export const LINE = "#e6e8ef";
 export const FONT =
   "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
+/**
+ * Where a message sends somebody who wants the product (L-27, 14/09/2026).
+ *
+ * It is `/register` and not `/signup`, which is what every page of this site
+ * used to say and what the app has never served: `app/web/_redirects` answers
+ * 200 with `index.html` for ANY path, so nothing 404s at the CDN — the app
+ * boots and `RouteRules.redirect` decides, sending a signed-out visitor to
+ * `/login` (the sign-in form, not the sign-up one the button promised) and a
+ * signed-in one to the T-64 not-found screen. Neither is the sign-up.
+ *
+ * `/register` is the address that serves BOTH readers the sequence's step 3 is
+ * written for: it is `public`, so a visitor with no account gets the form, and
+ * it is in `anonymousOnlyRoutes`, so a visitor who already signed up is sent to
+ * their calendar instead of a form that cannot apply to them.
+ *
+ * Same convention as `public/js/gerador-rotina.js`: the app's route list lives
+ * in the other repo and nothing here fails when it moves. `test/app-links.test.js`
+ * catches drift on THIS side, which is the side that has been wrong.
+ */
+export const APP_SIGNUP_URL = "https://web.entrelares.app/register";
+
 /** One emoji + text row. */
 export function li(emoji, text) {
   return `<tr>

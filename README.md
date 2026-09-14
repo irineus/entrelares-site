@@ -87,7 +87,8 @@ entrelares-site/
 │   ├── kv-stub.js              # the shared KV double (NOT a *.test.js — hooks would merge)
 │   ├── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
 │   ├── blog-images.test.js     # L-04 — every <picture> file exists; widths match the generator
-│   └── sitemap.test.js         # L-23 — sitemap, canonical and links name the 200 form, no .html
+│   ├── sitemap.test.js         # L-23 — sitemap, canonical and links name the 200 form, no .html
+│   └── app-links.test.js       # L-27 — every link into the app names a path the app serves
 ├── assets-src/                 # generators — NOT served
 │   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
 │   │                           #   store/brand-icons.py; never edited here (T-57)
@@ -224,6 +225,14 @@ And `test/sitemap.test.js` (L-23) reads `public/` the way the server maps it: no
 same address as its `canonical`, `og:url` and JSON-LD `mainEntityOfPage`, no page links to a
 `.html` address, and every internal page link resolves to a file. So an HTML-only change
 **does** run through this lane — a renamed page or a typo in a footer link goes red here.
+
+`test/app-links.test.js` (L-27) does the same for the links that LEAVE this site for the app:
+every `https://web.entrelares.app…` address, in `public/` and in the three e-mails, must name a
+path the app actually serves. Nothing 404s when it doesn't — the app's `_redirects` answers 200
+with `index.html` for any path, so a wrong address just routes the reader somewhere else — which
+is why sixteen "Criar conta grátis" buttons pointed at `/signup` for weeks. The route list here
+is a **mirror** of the app repo's (like the `gerador-rotina` presets): it catches drift on this
+side, never on theirs.
 
 ## Analytics (L-01)
 
