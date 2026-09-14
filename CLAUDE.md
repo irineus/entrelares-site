@@ -284,6 +284,13 @@ system; an unverified claim is a liability no matter who drafted it.
 - **Umami Cloud Hobby has no API** ("API access requires a Pro plan", verified 12/09/2026). Every
   reading of these numbers is the owner's dashboard: a session asks for a **screenshot** of the
   view it needs, never for an API key.
+- **The landing's dashboard deep links (owner's browser, 14/09/2026, L-18)** — the Cloud URLs
+  carry a region segment, so they cannot be guessed from the website id alone:
+  `https://cloud.umami.is/analytics/us/websites/8b182992-68ce-4f2e-abb9-e798c33e48d8` (Overview)
+  and `…/events` (Events). A date range rides as `?date=range%3A<startMs>%3A<endMs>` (epoch ms),
+  so a handoff can pre-fill the exact window it wants photographed. **The Events tab has no URL
+  filter in practice** — its counts are site-wide, so a rate built from them divides by the
+  site's visitors, not one page's.
 
 ## Gotchas
 - **A link into the app must name a path the APP serves, and nothing here will 404 if it doesn't
