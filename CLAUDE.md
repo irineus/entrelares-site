@@ -157,7 +157,10 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   (`RESEND_SEGMENT_ID`, `FROM_EMAIL`, `REPLY_TO`) lives in `wrangler.jsonc` `vars`.
 - Deploys need Wrangler **4.x** (already pinned in both workflows) — 3.x can't deploy a Worker
   with a `main` entrypoint. The CI `CLOUDFLARE_API_TOKEN` needs only Workers Scripts:Edit (vars
-  ship with the script; the secret is set out-of-band), same scope as before.
+  ship with the script; the secret is set out-of-band), same scope as before — and that scope
+  **also writes cron triggers**, measured in L-20's deploy (`Deployed entrelares-site triggers …
+  schedule: 0 12 * * *`) when the vendor's docs would not say; no token change is needed the next
+  time a schedule lands on either worker.
 - **KV binding `OPTIN_LOG` (S-15/C-6)** — the opt-in evidence log. The legal review accepted
   plain opt-in as the consent mechanism for the newsletter **only on condition that a log of
   date, time and IP is kept**, so `logOptIn()` writes one key per submission
@@ -222,7 +225,9 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   from another merges their hooks and the second `fetch` stub wins. Its `list()` **pages in small
   pages on purpose**: a stub that answered everything at once would leave the caller's cursor loop
   unexercised, and an unexercised cursor loop is how a queue silently stops at its first page. The same lane runs
-  `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules. `.github/workflows/test.yml` gates
+  `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules, and
+  `test/app-links.test.js` (L-27): every `web.entrelares.app` link — in `public/` AND in the three
+  e-mails — names a path the app actually serves. `.github/workflows/test.yml` gates
   every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
   touching the endpoint; static/HTML-only changes don't affect it.
 
@@ -281,6 +286,21 @@ system; an unverified claim is a liability no matter who drafted it.
   view it needs, never for an API key.
 
 ## Gotchas
+- **A link into the app must name a path the APP serves, and nothing here will 404 if it doesn't
+  (L-27, 14/09/2026).** The app's `web/_redirects` answers **200 with `index.html`** for every
+  path, so a wrong address boots the app and lets `RouteRules.redirect` decide: signed out goes
+  to `/login`, signed in to the T-64 not-found screen. Sixteen links in ten files said
+  `web.entrelares.app/signup` — a route that has never existed; the sign-up is **`/register`**,
+  which also sends an already-signed-in reader to their calendar (it is in `anonymousOnlyRoutes`).
+  The e-mails read one constant, `APP_SIGNUP_URL` in `src/email-layout.js`. `test/app-links.test.js`
+  pins the list, which is a **mirror** of the app repo's routes, like `gerador-rotina.js`: it
+  catches drift here, never there. Same family as S-19 and L-23 — an address we publish is a
+  claim about somebody else's system.
+- **A `utm_*` on an app link measures nothing (L-27).** The app's `sanitizeAnalyticsPath` (T-37)
+  cuts the string at the first `?`/`#` before the pageview leaves, on purpose, so the query never
+  reaches Umami. Tagging links to **this** site works (the standard Umami script sends the whole
+  URL); tagging links to `web.entrelares.app` does not, and a parameter that looks like
+  measurement and measures nothing is worse than none.
 - **The served URL has no `.html`, and the site never names that form (L-23, 14/09/2026).**
   Cloudflare's static assets strip the extension: `/privacidade` is the 200 and
   `/privacidade.html` answers a **307** — a *temporary* redirect, so a crawler keeps treating the
