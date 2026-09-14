@@ -89,7 +89,7 @@ test('the article CSS lets aspect-ratio win over the height attribute', () => {
   // The `height` attribute on <img> is a presentational hint for the CSS `height` property, and
   // `aspect-ratio` only applies while height is auto. Without `height:auto` in the rule, every
   // article image rendered 675 px tall whatever its width — a near-square crop on desktop and a
-  // portrait one on a phone — while the stylesheet said 16:9 (measured on production, 14/09/2026).
+  // portrait one on a phone — while the stylesheet said 16:9 (measured on production, 13/09/2026).
   for (const { file, html } of withPictures) {
     const rule = html.match(/\.post-img img\{([^}]*)\}/)?.[1];
     assert.ok(rule, `${file}: has the .post-img img rule`);
