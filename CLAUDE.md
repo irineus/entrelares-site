@@ -281,12 +281,19 @@ system; an unverified claim is a liability no matter who drafted it.
   view it needs, never for an API key.
 
 ## Gotchas
-- **The served URL has no `.html`.** Cloudflare's static assets strip the extension:
-  `/privacidade.html` redirects and `/privacidade` is the 200 — which is why the app links
-  `/privacidade` without it. Internal `href`s carry the extension and the redirect absorbs it,
-  but **a `canonical`, a sitemap `<loc>` or a URL declared to a third party must name the form
-  that answers**, not the one that bounces. The sitemap still lists nine bouncing URLs; that is
-  **L-23**, and the S-19 entry was already born extensionless.
+- **The served URL has no `.html`, and the site never names that form (L-23, 14/09/2026).**
+  Cloudflare's static assets strip the extension: `/privacidade` is the 200 and
+  `/privacidade.html` answers a **307** — a *temporary* redirect, so a crawler keeps treating the
+  bouncing address as the real one. Every sitemap `<loc>`, `canonical`, `og:url`, JSON-LD
+  `mainEntityOfPage`/`url` and internal `href` names the extensionless form (`/blog/<slug>`,
+  `/termos`, `/blog/` for a directory index), and so does any URL declared to a third party.
+  Until L-23 eight pages listed the `.html` form in the sitemap AND as their own canonical —
+  canonical → 307 → a page whose canonical points back. `test/sitemap.test.js` pins all of it,
+  including that every internal page link resolves to a file. **The cost, accepted on purpose:**
+  the local `python -m http.server` preview does not map `/x` to `x.html`, so internal links
+  404 there — check navigation on `preview.entrelares.app` (or `npx wrangler dev`), not locally.
+  The L-23 rewrite moved **no `lastmod`**: changing a page's address is not a change to its
+  content (rule 2 of the sitemap header).
 - `ROADMAP.md`, `README.md` and `CLAUDE.md` live at the repo root and are **not** under `public/`,
   so they are never served — safe to edit without touching the published site.
 - **`sitemap.xml` carries its own rules in a header comment (L-07)** — only indexable pages belong

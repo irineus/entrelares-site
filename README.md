@@ -86,7 +86,8 @@ entrelares-site/
 │   ├── sequence.test.js        # L-20 — the due-rule, the cron walk, the STOP and the CAP
 │   ├── kv-stub.js              # the shared KV double (NOT a *.test.js — hooks would merge)
 │   ├── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
-│   └── blog-images.test.js     # L-04 — every <picture> file exists; widths match the generator
+│   ├── blog-images.test.js     # L-04 — every <picture> file exists; widths match the generator
+│   └── sitemap.test.js         # L-23 — sitemap, canonical and links name the 200 form, no .html
 ├── assets-src/                 # generators — NOT served
 │   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
 │   │                           #   store/brand-icons.py; never edited here (T-57)
@@ -210,13 +211,19 @@ regression in the subscribe endpoint **blocks the merge before** the deploy work
 suite covers: method/payload guards (204/405/413/400), the honeypot short-circuit, e-mail
 validation, the no-key **dry-run**, the happy path (contact + welcome e-mail, payload shaping,
 origin-tracked PDF link), a tolerated duplicate (409), and every provider-failure branch
-(contact 5xx → 502, e-mail failure → partial success). Pure static/HTML changes don't touch it.
+(contact 5xx → 502, e-mail failure → partial success).
 
 The same lane runs `test/gerador-rotina.test.js` (L-05, the routine generator's pure rules)
 and `test/blog-images.test.js` (L-04): every file the blog `<picture>` blocks name is on
 disk, the three formats list exactly the widths `assets-src/blog-images.py` declares, and
 each article's `og:image` still points at the untouched 1600 px master. A `srcset` typo is
 a 404 the browser swallows by falling back to a worse candidate — this is what goes red.
+
+And `test/sitemap.test.js` (L-23) reads `public/` the way the server maps it: no sitemap
+`<loc>` names the `.html` form (that form answers a **307**), each listed page declares the
+same address as its `canonical`, `og:url` and JSON-LD `mainEntityOfPage`, no page links to a
+`.html` address, and every internal page link resolves to a file. So an HTML-only change
+**does** run through this lane — a renamed page or a typo in a footer link goes red here.
 
 ## Analytics (L-01)
 
