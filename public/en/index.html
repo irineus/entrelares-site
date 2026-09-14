@@ -489,19 +489,28 @@
         .demo-bar i { display: block; height: 100%; width: 0; background: var(--indigo); }
         @media (prefers-reduced-motion: reduce) { .demo-frame, .demo-ring { transition: none; } }
 
-        /* ── Founder note + values (L-06) ───────────────────── */
-        .founder { max-width: 760px; margin: 0 auto; }
-        .founder-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--indigo); border-radius: var(--radius); padding: 32px 34px; }
-        .founder-card p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 15px; }
+        /* ── Founder note + values (L-06; calmer since L-18) ─────
+           L-18: the one section that speaks in first person reads like a letter, not
+           like a feature block — one narrow column (heading, lead and card share it),
+           more air above and below, regular weight, longer line-height, no heavy accent
+           bar. System font on purpose: a web font would add a request and a FOUT to buy
+           a tone that spacing already buys. */
+        .founder-section { padding: 96px 0; }
+        .founder-section .wrap { max-width: 720px; }
+        .founder-section h2 { font-weight: 600; letter-spacing: -0.01em; }
+        .founder-section .section-lead { margin-bottom: 36px; }
+        .founder { margin: 0 auto; }
+        .founder-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 44px 48px; }
+        .founder-card p { color: #475569; font-size: 17.5px; font-weight: 400; line-height: 1.85; letter-spacing: 0.003em; margin-bottom: 1.1em; }
         .founder-card p:last-of-type { margin-bottom: 0; }
-        .founder-card strong { color: var(--ink); }
-        .founder-sign { display: flex; align-items: center; gap: 13px; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+        .founder-card strong { color: var(--ink); font-weight: 600; }
+        .founder-sign { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
         .founder-avatar { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: block; background: var(--bg-tint); box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
         .founder-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .founder-sign .who { font-weight: 700; color: var(--ink); font-size: 15px; line-height: 1.3; }
         .founder-sign .who span { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
-        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
-        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid #e0e7ff; border-radius: 999px; padding: 9px 16px; font-size: 14px; font-weight: 600; }
+        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 40px; }
+        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid #e0e7ff; border-radius: 999px; padding: 8px 15px; font-size: 14px; font-weight: 500; }
 
         /* ── Final CTA + footer ─────────────────────────────── */
         .cta-final { text-align: center; background: #03173d; color: #fff; }
@@ -544,8 +553,9 @@
             .price-card { padding: 30px 22px; }
             footer .wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
 
-            .founder-card { padding: 26px 22px; }
-            .founder-card p { font-size: 15.5px; }
+            .founder-section { padding: 64px 0; }
+            .founder-card { padding: 30px 22px; }
+            .founder-card p { font-size: 16.5px; line-height: 1.8; }
             .values { justify-content: flex-start; }
         }
 
@@ -676,6 +686,40 @@
                 <h3>Need to swap a day? Propose it in the app</h3>
                 <p>The swap only takes effect once the other parent approves. Nothing changes on one person's say-so — and everything is recorded, with date and time.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- L-18 — the founder note moves up: right after "How it works", BEFORE all of the
+     product proof (gallery, why, record, features). It is a positioning BET, not a fact:
+     empathy earlier, the "what is this" payoff later for a visitor from search. Card L-18
+     holds the dated cta-signup baseline (Umami) and the criterion for moving the note
+     back down. Same relative position on the PT-BR home — change one, change both. -->
+<section id="founder" class="founder-section">
+    <div class="wrap">
+        <h2>From one parent to another: why I built Entrelares</h2>
+        <p class="section-lead">This app wasn't born in a business meeting. It was born out of a real need, inside my own family.</p>
+        <div class="founder">
+            <div class="founder-card">
+                <p>I was married for 20 years, and that marriage gave me the most precious thing in my life: my son. When his mother and I realized we would not stay together, we chose to separate with everyone's good in mind — his above all.</p>
+                <p>Suddenly everything was new: the house, the routine, the habits. But one thing didn't change — wanting to be present in my son's life. Amid the natural friction of a recent separation, what we needed most was exactly what seemed hardest: giving a small child <strong>stability and predictability</strong>, while fitting everything around his mother's demanding work schedule.</p>
+                <p>We both needed to know clearly <strong>whose day each day was</strong>. I tried a spreadsheet — it helped at first, but it soon got complicated and was never at hand when it mattered. I tried an ordinary calendar — too much work to keep up. So I built something of my own, something simple, and it grew until it became a true partner in the time I share with my son.</p>
+                <p>Talking with other mothers and fathers who had been through a separation, I found the same gap. That's why I decided to open the tool to other families — to take that friction out of the way at such a delicate moment, one you get through with care, love and, above all, <strong>respect between everyone involved</strong>.</p>
+                <div class="founder-sign">
+                    <picture class="founder-avatar">
+                        <source srcset="/img/founder.webp" type="image/webp" />
+                        <img src="/img/founder.jpg" alt="Irineu, founder of Entrelares" width="56" height="56" loading="lazy" />
+                    </picture>
+                    <span class="who">Irineu<span>Founder and father</span></span>
+                </div>
+            </div>
+            <ul class="values" aria-label="Our commitments">
+                <li class="value-badge">🇧🇷 Made in Brazil</li>
+                <li class="value-badge">🔒 LGPD compliant</li>
+                <li class="value-badge">🚫 No ads, no data selling</li>
+                <li class="value-badge">📜 History that can't be altered</li>
+                <li class="value-badge">💙 The essentials are free</li>
+            </ul>
         </div>
     </div>
 </section>
@@ -836,35 +880,6 @@
                 <h3>Privacy first</h3>
                 <p>Your family's data is visible only to the people who belong to it. No ads, no data selling.</p>
             </div>
-        </div>
-    </div>
-</section>
-
-<section id="founder">
-    <div class="wrap">
-        <h2>From one parent to another: why I built Entrelares</h2>
-        <p class="section-lead">This app wasn't born in a business meeting. It was born out of a real need, inside my own family.</p>
-        <div class="founder">
-            <div class="founder-card">
-                <p>I was married for 20 years, and from that marriage came the most precious thing in my life: my son. When his mother and I understood that the marriage would not go on, we chose to divorce with everyone's good in mind — his above all.</p>
-                <p>Suddenly everything was new: the house, the routine, the habits. But one thing didn't change — the wish to be present in my son's life. Amid the natural friction of a recent divorce, what we needed most was exactly what seemed hardest: giving <strong>stability and predictability</strong> to a small child, around his mother's demanding work schedule.</p>
-                <p>Both of us needed to know clearly <strong>whose day each day was</strong>. I tried a spreadsheet — it helped at first, but it soon got complicated and was never at hand when it mattered. I tried a regular calendar — too much work to keep up. So I built something of my own, simple, and it grew until it became a real partner in the time I spend with my son.</p>
-                <p>Talking with other parents who had been through a divorce, I heard the same gap. That's why I decided to open this tool up to more families — to take that friction out of the way at such a delicate moment, one that is overcome with care, love and, above all, <strong>respect between everyone involved</strong>.</p>
-                <div class="founder-sign">
-                    <picture class="founder-avatar">
-                        <source srcset="/img/founder.webp" type="image/webp" />
-                        <img src="/img/founder.jpg" alt="Irineu, founder of Entrelares" width="56" height="56" loading="lazy" />
-                    </picture>
-                    <span class="who">Irineu<span>Founder and father</span></span>
-                </div>
-            </div>
-            <ul class="values" aria-label="Our commitments">
-                <li class="value-badge">🇧🇷 Made in Brazil</li>
-                <li class="value-badge">🔒 LGPD compliant</li>
-                <li class="value-badge">🚫 No ads, no data selling</li>
-                <li class="value-badge">📜 History that can't be altered</li>
-                <li class="value-badge">💙 The essentials are free</li>
-            </ul>
         </div>
     </div>
 </section>
