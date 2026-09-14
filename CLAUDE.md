@@ -296,9 +296,21 @@ system; an unverified claim is a liability no matter who drafted it.
   every page changed today teaches the crawler to ignore the field.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
-  `og-cover-en.html`, headless Chrome at 1200×630) and the three icons (`brand-icons.py`).
+  `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
+  blog articles' responsive set (`blog-images.py`, L-04, Pillow: AVIF + WebP + JPEG at four
+  widths, centre-cropped to the 16:9 the article CSS shows, written BESIDE the four 1600 px
+  masters in `public/blog/img/`). The masters are never rewritten — each one is its article's
+  `og:image`, and social scrapers want a JPEG at a URL that never moves. Adding a width means
+  the generator AND the four `<picture>` blocks; `test/blog-images.test.js` fails when they
+  disagree or when an article names a file that is not on disk.
   Re-render when the copy they show changes; a banner whose text no longer matches the page is
   worse than no banner.
+- **An `<img>` with a `height` attribute ignores `aspect-ratio` (L-04, 14/09/2026).** The
+  attribute is a presentational hint for the CSS `height` property, and `aspect-ratio` only
+  applies while height is `auto` — so `.post-img img{width:100%;aspect-ratio:16/9}` rendered
+  every article image 675 px tall whatever its width (680×675 on desktop, a portrait crop on a
+  phone), measured on production. Keep `width`/`height` on the tag (the layout-shift hint is
+  worth it) and `height:auto` in the rule; `test/blog-images.test.js` pins it for the articles.
 - **The brand mark is NOT drawn in this repo.** Its geometry lives in the app repo
   (`entrelares-app/store/brand-icons.py`, U-29); what lives here is one rendered master,
   `assets-src/brand-marca.png`, plus the resizing. To change the art: edit the app repo's script,

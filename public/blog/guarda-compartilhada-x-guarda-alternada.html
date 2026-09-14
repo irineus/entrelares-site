@@ -97,7 +97,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -165,7 +165,11 @@
     <p>Vale citar o terceiro regime para não confundir. Na <strong>guarda unilateral</strong>, a guarda fica com <strong>um dos genitores</strong>, e é nele que se concentra o <strong>poder de decisão do dia a dia</strong>. O outro não perde o vínculo: mantém o <strong>poder familiar</strong>, o direito de conviver e de <strong>fiscalizar</strong> a criação, além de participar das decisões mais importantes. É reservada a situações específicas — hoje, a regra é a compartilhada.</p>
 
     <figure class="post-img">
-      <img src="/blog/img/crianca-pais.jpg" alt="Criança de mãos dadas com o pai e a mãe" width="1200" height="675" loading="lazy" />
+      <picture>
+        <source type="image/avif" srcset="/blog/img/crianca-pais-480.avif 480w, /blog/img/crianca-pais-720.avif 720w, /blog/img/crianca-pais-1080.avif 1080w, /blog/img/crianca-pais-1440.avif 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" />
+        <source type="image/webp" srcset="/blog/img/crianca-pais-480.webp 480w, /blog/img/crianca-pais-720.webp 720w, /blog/img/crianca-pais-1080.webp 1080w, /blog/img/crianca-pais-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" />
+        <img src="/blog/img/crianca-pais-1080.jpg" srcset="/blog/img/crianca-pais-480.jpg 480w, /blog/img/crianca-pais-720.jpg 720w, /blog/img/crianca-pais-1080.jpg 1080w, /blog/img/crianca-pais-1440.jpg 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" alt="Criança de mãos dadas com o pai e a mãe" width="1440" height="810" loading="lazy" decoding="async" />
+      </picture>
       <figcaption>O nome do regime importa menos do que a clareza da convivência.</figcaption>
     </figure>
 
