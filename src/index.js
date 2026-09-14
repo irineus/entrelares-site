@@ -38,8 +38,8 @@
 //                        for has to outlive the list it justifies, in both directions.
 
 import {
-  button, footerHtml, footerText, INDIGO, INDIGO_DEEP, INK, li, MUTED, FONT,
-  shell, SIGNATURE_TEXT, strong,
+  APP_SIGNUP_URL, button, footerHtml, footerText, INDIGO, INDIGO_DEEP, INK, li,
+  MUTED, FONT, shell, SIGNATURE_TEXT, strong,
 } from "./email-layout.js";
 import { DAILY_CAP, dueStep, isFinished, renderStep } from "./sequence.js";
 
@@ -516,7 +516,7 @@ async function sendSequenceStep(env, state, step) {
     message = renderStep(step, {
       unsubUrl: state.unsubUrl ?? null,
       unsubscribeMailto: "privacidade@entrelares.app",
-      appUrl: "https://entrelares.app/",
+      appUrl: APP_SIGNUP_URL,
     });
   } catch (err) {
     console.error("sequence: could not render step", step, err);
@@ -686,7 +686,7 @@ function emailText(pdfUrl, unsubscribe, unsubUrl) {
     "  - trocas de dia com a aprovação dos dois;",
     "  - histórico com data e hora, que não pode ser editado nem apagado.",
     "",
-    "Conheça o app: https://entrelares.app/",
+    "Criar sua conta grátis: " + APP_SIGNUP_URL,
     "",
     ...SIGNATURE_TEXT,
     "",
@@ -737,7 +737,7 @@ function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
                 ${li("🤝", `Trocas de dia só valem com a ${strong("aprovação dos dois")}`)}
                 ${li("📜", `Histórico com data e hora, que ${strong("não pode ser editado nem apagado")}`)}
               </table>
-              <div style="padding:18px 0 4px;">${button("https://entrelares.app/", "Conhecer o app", INDIGO_DEEP)}</div>
+              <div style="padding:18px 0 4px;">${button(APP_SIGNUP_URL, "Criar conta grátis", INDIGO_DEEP)}</div>
             </td></tr>
           </table>
         </td></tr>`;
