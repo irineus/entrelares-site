@@ -12,6 +12,11 @@
      bumped globally: a sitemap that claims every page changed today teaches the
      crawler to ignore the field. `git log -1 --format=%ad --date=short -- <file>`
      gives the honest value.
+  3. (L-23) Every loc names the address that answers 200: WITHOUT `.html`. The static
+     assets serve `/blog/<slug>` and answer the `.html` form with a 307, so listing it
+     spends crawl budget on a temporary redirect. The same address is each page's
+     `canonical`; test/sitemap.test.js fails when either side names the other form.
+     Dropping the extension in Sep 2026 moved no `lastmod` — an address is not content.
 
   L-16 — the English version is listed as its own URL. The PT-BR/EN pairing is
   declared by the reciprocal <link rel="alternate" hreflang> tags in each page's
@@ -37,7 +42,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda.html</loc>
+    <loc>https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -49,43 +54,43 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/como-montar-calendario-guarda-compartilhada.html</loc>
+    <loc>https://entrelares.app/blog/como-montar-calendario-guarda-compartilhada</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/guarda-compartilhada-x-guarda-alternada.html</loc>
+    <loc>https://entrelares.app/blog/guarda-compartilhada-x-guarda-alternada</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/como-funciona-guarda-compartilhada.html</loc>
+    <loc>https://entrelares.app/blog/como-funciona-guarda-compartilhada</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/modelos-de-rotina-guarda-compartilhada.html</loc>
+    <loc>https://entrelares.app/blog/modelos-de-rotina-guarda-compartilhada</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada.html</loc>
+    <loc>https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/guarda-compartilhada-e-pensao-alimenticia.html</loc>
+    <loc>https://entrelares.app/blog/guarda-compartilhada-e-pensao-alimenticia</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://entrelares.app/blog/rotina-7-7-vs-14-14.html</loc>
+    <loc>https://entrelares.app/blog/rotina-7-7-vs-14-14</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
