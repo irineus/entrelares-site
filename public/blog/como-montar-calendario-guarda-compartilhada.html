@@ -97,7 +97,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -151,7 +151,11 @@
     <p>O <strong>calendário de convivência</strong> (também chamado de regime de convivência) é o combinado que define <strong>com quem a criança fica em cada dia</strong>. Ele traduz, no dia a dia, o que os responsáveis acordaram entre si ou o que foi determinado judicialmente. Um bom calendário é <strong>previsível para a criança</strong> e <strong>igual para os dois responsáveis</strong> — sem versões diferentes na cabeça de cada um.</p>
 
     <figure class="post-img">
-      <img src="/blog/img/calendario-familia.jpg" alt="Mãe e filho olhando juntos o calendário no celular" width="1200" height="675" loading="lazy" />
+      <picture>
+        <source type="image/avif" srcset="/blog/img/calendario-familia-480.avif 480w, /blog/img/calendario-familia-720.avif 720w, /blog/img/calendario-familia-1080.avif 1080w, /blog/img/calendario-familia-1440.avif 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" />
+        <source type="image/webp" srcset="/blog/img/calendario-familia-480.webp 480w, /blog/img/calendario-familia-720.webp 720w, /blog/img/calendario-familia-1080.webp 1080w, /blog/img/calendario-familia-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" />
+        <img src="/blog/img/calendario-familia-1080.jpg" srcset="/blog/img/calendario-familia-480.jpg 480w, /blog/img/calendario-familia-720.jpg 720w, /blog/img/calendario-familia-1080.jpg 1080w, /blog/img/calendario-familia-1440.jpg 1440w" sizes="(max-width: 720px) calc(100vw - 40px), 680px" alt="Mãe e filho olhando juntos o calendário no celular" width="1440" height="810" loading="lazy" decoding="async" />
+      </picture>
       <figcaption>Combinar os dias por escrito é o primeiro passo para acabar com o “de quem é hoje?”.</figcaption>
     </figure>
 
