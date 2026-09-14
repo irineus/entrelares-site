@@ -51,8 +51,9 @@ or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADM
 ```
 entrelares-site/
 ├── public/                     # the ONLY directory uploaded as site assets
-│   ├── index.html              # landing page (PT-BR): hero slideshow, how-it-works, benefits,
-│   │                           #   founder note (L-06), #materiais opt-in (L-09), pricing, FAQ
+│   ├── index.html              # landing page (PT-BR): hero slideshow, how-it-works, simulator,
+│   │                           #   founder note (L-06, moved up by L-18), gallery, benefits,
+│   │                           #   pricing, FAQ, #materiais opt-in (L-09)
 │   ├── en/index.html           # L-16: the English version of the conversion path. A SIBLING of
 │   │                           #   index.html, not a template — the design system is copied, so
 │   │                           #   a styling change must be applied to both. No #materiais block.
@@ -288,8 +289,13 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
 - [ ] **`icon-512.png` recompression** (L-02 micro-follow-up — 396 KB; deferred when no image
       optimiser was available in-environment. Pillow with AVIF/WebP is on the dev machine since
       L-04, so the blocker is gone; still not done).
-- [ ] **Remaining on-site roadmap:** L-15 (company identity — gated on the CNPJ existing), plus
-      the L-18/L-20 review items. See [`ROADMAP.md`](ROADMAP.md).
+- [ ] **Remaining on-site roadmap:** L-15 (company identity — gated on the CNPJ existing). The
+      board is the queue; see the card, not [`ROADMAP.md`](ROADMAP.md), which is history.
+- [x] **Founder note higher + calmer** (**L-18**, 14/09/2026, promoted in #102) — `#fundador` sits
+      right after *Como funciona* + the simulator (`/en/`: after *How it works*), before all of the
+      product proof, in one narrow column with more air and regular-weight type (system font, no
+      new request). A positioning **bet**: the dated `cta-signup` baseline and the reversal rule
+      live on the L-18 card, with a sample floor — the site's traffic (L-25) cannot judge it yet.
 - [x] **Responsive blog images** (**L-04**, 13/09/2026) — the four illustrated articles serve
       AVIF, WebP and JPEG at 480/720/1080/1440 px through `<picture>` + `srcset`/`sizes`,
       centre-cropped to the 16:9 the article CSS already showed (the one portrait master was
