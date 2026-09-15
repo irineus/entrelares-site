@@ -75,7 +75,10 @@ entrelares-site/
 │   ├── blog/                   # 7-article SEO cluster (+ index, img/) with the L-09 opt-in block
 │   │   └── img/                # 4 masters (1600 px JPEG = og:image) + the L-04 AVIF/WebP/JPEG set at 480/720/1080/1440
 │   ├── ferramentas/
-│   │   └── gerador-de-rotina-de-guarda.html  # L-05 interactive tool (presets mirror the app wizard)
+│   │   └── gerador-de-rotina-de-guarda.html  # L-05 interactive tool (presets mirror the app wizard);
+│   │                           #   L-30: shareable — the routine rides in the URL fragment
+│   ├── relatorio.html          # L-30: where the app's PDF report points (F-63) — bilingual, noindex,
+│   │                           #   not in the sitemap: its pageviews ARE that channel's measurement
 │   └── js/gerador-rotina.js    # the tool's pure rules (ESM, no DOM) — tested by node --test
 ├── src/
 │   ├── index.js                # Cloudflare Worker entrypoint: ASSETS + /api/subscribe + /api/unsubscribe
@@ -87,6 +90,8 @@ entrelares-site/
 │   ├── sequence.test.js        # L-20 — the due-rule, the cron walk, the STOP and the CAP
 │   ├── kv-stub.js              # the shared KV double (NOT a *.test.js — hooks would merge)
 │   ├── gerador-rotina.test.js  # L-05 tool rules — asserts the app-wizard preset mirror
+│   ├── rotina-compartilhada.test.js # L-30 — the share link round trip, and no name reaches Umami
+│   ├── relatorio.test.js       # L-30 — /relatorio exists, is noindex and out of the sitemap
 │   ├── blog-images.test.js     # L-04 — every <picture> file exists; widths match the generator
 │   ├── sitemap.test.js         # L-23 — sitemap, canonical and links name the 200 form, no .html
 │   └── app-links.test.js       # L-27 — every link into the app names a path the app serves
@@ -221,6 +226,13 @@ disk, the three formats list exactly the widths `assets-src/blog-images.py` decl
 each article's `og:image` still points at the untouched 1600 px master. A `srcset` typo is
 a 404 the browser swallows by falling back to a worse candidate — this is what goes red.
 
+`test/rotina-compartilhada.test.js` (L-30) covers the generator's share link: a routine survives
+the fragment byte for byte (names with `&`, `#`, accents), a hand-edited link renders nothing
+rather than a different calendar, and the page's Umami tag keeps `data-exclude-hash="true"` —
+the names live in the fragment, and the tracker sends it unless told not to.
+`test/relatorio.test.js` pins `/relatorio`: the file exists, it is `noindex` with no canonical,
+the sitemap does not list it, and both CTAs name `/register`.
+
 And `test/sitemap.test.js` (L-23) reads `public/` the way the server maps it: no sitemap
 `<loc>` names the `.html` form (that form answers a **307**), each listed page declares the
 same address as its `canonical`, `og:url` and JSON-LD `mainEntityOfPage`, no page links to a
@@ -246,6 +258,14 @@ The landing's site (`8b182992-68ce-4f2e-abb9-e798c33e48d8`, `entrelares.app`) li
 `irineus.adp@gmail.com` account; the app's (`6fdd6c5a-4bce-449f-8188-3b7399a859d8`,
 `web.entrelares.app`) in `irineus@gmail.com` — see `CLAUDE.md` (L-26). Umami Cloud Hobby has no
 API, so readings are dashboard screenshots from the owner.
+
+**The tracker sends the query AND the fragment** unless the tag says `data-exclude-search` /
+`data-exclude-hash` (read in `cloud.umami.is/script.js`, 15/09/2026) — this site has no
+sanitizer; that is the app's. The generator's tag excludes the hash because a shared routine
+carries the typed names there (L-30). Its events: `gerador-gerar`, `gerador-imprimir`,
+`gerador-compartilhar` (share button), `gerador-rotina-recebida` (a shared link opened — counted
+as an event because the fragment never reaches the pageview), and `cta-signup` with the property
+`origem` = `rotina-recebida` on the received routine's note and `relatorio` on `/relatorio`.
 
 ## Legal pages — cross-repo sync
 

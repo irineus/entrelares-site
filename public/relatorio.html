@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O relatório do Entrelares · The Entrelares report</title>
+    <meta name="description" content="O que é o relatório em PDF do Entrelares, como ele é produzido e por que o histórico não pode ser editado. What the Entrelares PDF report is, how it is produced and why its history cannot be edited." />
+    <!-- L-30 — the page the app's PDF report points at (F-63). NOINDEX and OUT of the
+         sitemap on purpose: its pageviews are the measurement of that channel, and
+         organic search landing here would mix into the one number this page exists to
+         give (L-13: a channel is measurable only through its own path). Hence no
+         canonical either — a canonical on a noindex page asks for the opposite.
+         BILINGUAL AND SINGLE, like exclusao-de-conta.html and 404.html: the PDF prints
+         this same address in both languages, so there is no language to trust at the
+         door. Every sentence below is a claim about the app's code (the S-15 rule),
+         checked on 15/09/2026 against entrelares-app: report_pdf.dart,
+         reports_pdf_tab.dart, audit_rules.dart and the activity_logs migrations. -->
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=6" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png?v=6" />
+    <meta name="theme-color" content="#03173d" />
+    <style>
+        /* Design tokens copied from exclusao-de-conta.html (no build step). */
+        :root {
+            --ink: #1e293b;
+            --muted: #475569;
+            --soft: #64748b;
+            --indigo: #4f46e5;
+            --bg: #f8fafc;
+            --bg-tint: #eef2ff;
+            --card: #ffffff;
+            --line: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color: var(--ink); background: var(--bg); line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+        header { border-bottom: 1px solid var(--line); background: rgba(248, 250, 252, 0.92); }
+        header .wrap { display: flex; align-items: center; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--ink); text-decoration: none; }
+        .brand img { width: 32px; height: 32px; border-radius: 8px; }
+        main .wrap { padding-top: 40px; padding-bottom: 72px; }
+        h1 { font-size: clamp(24px, 5vw, 30px); letter-spacing: -0.02em; margin-bottom: 8px; }
+        h2 { font-size: 19px; margin: 28px 0 10px; }
+        p, li { color: var(--muted); font-size: 15.5px; margin-bottom: 12px; }
+        ul { padding-left: 22px; }
+        li { margin-bottom: 8px; }
+        a { color: var(--indigo); }
+        a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+        strong { color: var(--ink); }
+        .lead { font-size: 17px; margin-bottom: 22px; }
+        .lang-tag {
+            display: inline-block; background: var(--bg-tint); color: var(--indigo); font-size: 12px;
+            font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 4px 12px;
+            border-radius: 999px; margin-bottom: 10px;
+        }
+        .lang-block { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 30px 28px; }
+        .lang-block + .lang-block { margin-top: 20px; }
+        .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; font-size: 14px; }
+        .jump a { text-decoration: none; font-weight: 600; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px; }
+        .note { background: var(--bg-tint); border-radius: 12px; padding: 18px 18px 4px; margin: 22px 0 0; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 22px; border-radius: 10px; font-size: 15px; font-weight: 600;
+            text-decoration: none; background: var(--indigo); color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); margin: 4px 0 14px;
+        }
+        footer { border-top: 1px solid var(--line); font-size: 13.5px; color: var(--soft); }
+        footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 18px; padding-bottom: 18px; }
+        footer a { color: var(--soft); text-decoration: none; }
+        footer a:hover { color: var(--ink); }
+        @media (max-width: 520px) {
+            .lang-block { padding: 24px 20px; }
+            .btn { width: 100%; }
+        }
+    </style>
+    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+</head>
+<body>
+
+<header>
+    <div class="wrap">
+        <a class="brand" href="/">
+            <img src="/icon-192.png?v=6" alt="" width="32" height="32" />
+            Entrelares
+        </a>
+    </div>
+</header>
+
+<main>
+<div class="wrap">
+
+    <h1>O relatório do Entrelares <span aria-hidden="true">·</span> The Entrelares report</h1>
+
+    <div class="jump">
+        <a href="#pt">Português</a>
+        <a href="#en">English</a>
+    </div>
+
+    <section class="lang-block" lang="pt-BR" id="pt">
+        <span class="lang-tag">Português</span>
+        <p class="lead">Se você recebeu um PDF com o título <strong>Relatório de Guarda Compartilhada</strong>, ele
+            foi gerado pelo <strong>Entrelares</strong>: um calendário de guarda compartilhada em que os responsáveis
+            por uma criança registram com quem ela fica em cada dia e combinam as trocas entre eles.</p>
+
+        <h2>O que o relatório mostra</h2>
+        <ul>
+            <li><strong>Resumo do período</strong> — para cada responsável, os dias planejados, os dias realizados
+                e as trocas que cedeu e que recebeu. Quem gera pode incluir também as trocas futuras
+                já aceitas.</li>
+            <li><strong>Responsáveis e acesso ao aplicativo</strong> — as datas registradas em que cada responsável
+                foi adicionado ao calendário, foi convidado e criou a conta no aplicativo.</li>
+            <li><strong>Histórico de alterações</strong> — cada alteração de um dia do período, com data e hora,
+                quem a fez e o que mudou. Quando a alteração veio de uma troca, aparecem as mensagens de quem pediu
+                e de quem aprovou. Quando foi feita diretamente pela pessoa administradora da família, ou quando um
+                responsável ainda não tinha conta no aplicativo naquele momento, a linha diz isso.</li>
+        </ul>
+
+        <h2>Como ele é produzido</h2>
+        <ul>
+            <li>Um responsável de uma família com o plano Premium escolhe o período — um mês, um ano ou datas
+                personalizadas — e o PDF é montado no próprio aparelho, a partir dos registros da família.</li>
+            <li>O cabeçalho diz quem gerou e quando; o rodapé traz a versão do aplicativo. O documento sai no
+                idioma do aplicativo de quem gerou, português ou inglês.</li>
+            <li>O arquivo não fica guardado nos nossos servidores: quem gerou decide com quem compartilha.</li>
+        </ul>
+
+        <h2>Por que o histórico não pode ser editado</h2>
+        <ul>
+            <li>O histórico não é escrito por quem usa o aplicativo. É o próprio banco de dados que grava uma linha
+                a cada vez que um dia do calendário é criado, alterado ou apagado.</li>
+            <li>Nenhum responsável — nem a pessoa administradora da família — pode editar ou apagar essas linhas.
+                Se um dia foi registrado errado, corrigi-lo grava uma linha nova, e a anterior continua lá.</li>
+            <li>Quem sai da família continua com o nome nas ações que fez. O histórico só é apagado junto com a
+                família inteira, como explica a página de <a href="/exclusao-de-conta">exclusão de conta</a>.</li>
+        </ul>
+
+        <h2>O que o relatório não é</h2>
+        <p>O PDF não tem assinatura digital nem código de verificação: ele representa o registro no momento em
+            que foi gerado. Para conferir, peça a quem o gerou que gere de novo, para o mesmo período. E ele
+            registra o que foi feito no aplicativo — não substitui o plano de convivência do acordo ou da decisão
+            judicial.</p>
+
+        <div class="note">
+            <p><strong>Cuida de uma criança em duas casas?</strong> No Entrelares, os responsáveis veem o mesmo
+                calendário e as trocas são propostas e aprovadas no aplicativo. Criar a conta é grátis; o relatório
+                faz parte do plano Premium.</p>
+            <a class="btn" href="https://web.entrelares.app/register" data-umami-event="cta-signup" data-umami-event-origem="relatorio">Criar conta grátis</a>
+        </div>
+    </section>
+
+    <section class="lang-block" lang="en" id="en">
+        <span class="lang-tag">English</span>
+        <p class="lead">If you received a PDF titled <strong>Shared Custody Report</strong>, it was generated by
+            <strong>Entrelares</strong>: a shared-custody calendar where a child's caregivers record who the child
+            is with on each day and agree on swaps between them.</p>
+
+        <h2>What the report shows</h2>
+        <ul>
+            <li><strong>Summary of the period</strong> — for each caregiver, the planned days, the realized days
+                and the swaps they gave and received. Whoever generates it may also include future swaps
+                already accepted.</li>
+            <li><strong>Caregivers and app access</strong> — the recorded dates on which each caregiver was added
+                to the calendar, was invited and created the app account.</li>
+            <li><strong>Change history</strong> — every change to a day in the period, with date and time, who
+                made it and what changed. When the change came from a swap, the messages of the person who asked
+                and of the person who approved are shown. When it was made directly by the family's administrator,
+                or when a caregiver did not yet have an app account at that moment, the line says so.</li>
+        </ul>
+
+        <h2>How it is produced</h2>
+        <ul>
+            <li>A caregiver in a family on the Premium plan picks the period — a month, a year or custom dates — and
+                the PDF is built on their own device, from the family's records.</li>
+            <li>The header says who generated it and when; the footer carries the app version. The document comes
+                out in the app language of whoever generated it, Portuguese or English.</li>
+            <li>The file is not kept on our servers: whoever generated it decides who it is shared with.</li>
+        </ul>
+
+        <h2>Why the history cannot be edited</h2>
+        <ul>
+            <li>The history is not written by the people using the app. The database itself records a line every
+                time a calendar day is created, changed or deleted.</li>
+            <li>No caregiver — not even the family's administrator — can edit or delete those lines. If a day was
+                recorded wrongly, correcting it records a new line, and the previous one stays.</li>
+            <li>Someone who leaves the family keeps their name on the actions they took. The history is erased only
+                together with the whole family, as the <a href="/exclusao-de-conta">account deletion</a> page
+                explains.</li>
+        </ul>
+
+        <h2>What the report is not</h2>
+        <p>The PDF carries no digital signature and no verification code: it represents the record at the moment
+            it was generated. To check it, ask whoever generated it to generate it again for the same period. And it
+            records what was done in the app — it does not replace the parenting plan in the agreement or the court
+            decision.</p>
+
+        <div class="note">
+            <p><strong>Caring for a child across two homes?</strong> In Entrelares, caregivers see the same calendar
+                and swaps are proposed and approved in the app. Creating an account is free; the report is part of
+                the Premium plan.</p>
+            <a class="btn" href="https://web.entrelares.app/register" data-umami-event="cta-signup" data-umami-event-origem="relatorio">Create a free account</a>
+        </div>
+    </section>
+
+</div>
+</main>
+
+<footer>
+    <div class="wrap">
+        <a href="/">Início</a>
+        <a href="/en/" hreflang="en" lang="en">English</a>
+        <a href="/termos">Termos de Uso</a>
+        <a href="/privacidade">Privacidade</a>
+        <a href="mailto:suporte@entrelares.app">Suporte · Support</a>
+    </div>
+</footer>
+
+</body>
+</html>

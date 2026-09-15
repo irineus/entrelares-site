@@ -225,7 +225,9 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   from another merges their hooks and the second `fetch` stub wins. Its `list()` **pages in small
   pages on purpose**: a stub that answered everything at once would leave the caller's cursor loop
   unexercised, and an unexercised cursor loop is how a queue silently stops at its first page. The same lane runs
-  `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules, and
+  `test/gerador-rotina.test.js` (L-05): the routine generator's pure rules,
+  `test/rotina-compartilhada.test.js` and `test/relatorio.test.js` (L-30): the share link and the
+  report page, and
   `test/app-links.test.js` (L-27): every `web.entrelares.app` link — in `public/` AND in the three
   e-mails — names a path the app actually serves. `.github/workflows/test.yml` gates
   every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
@@ -303,6 +305,23 @@ system; an unverified claim is a liability no matter who drafted it.
   pins the list, which is a **mirror** of the app repo's routes, like `gerador-rotina.js`: it
   catches drift here, never there. Same family as S-19 and L-23 — an address we publish is a
   claim about somebody else's system.
+- **The Umami tracker sends the query AND the fragment of every URL (L-30, 15/09/2026)** —
+  `cloud.umami.is/script.js` reads `location.href` and strips `search`/`hash` only when the tag
+  carries `data-exclude-search="true"` / `data-exclude-hash="true"`. The "sanitizer cuts the
+  query" rule below is the APP's; nothing here sanitizes anything. So the generator's shareable
+  routine rides in the FRAGMENT (never reaches our server) and that page's tag excludes the hash
+  (never reaches analytics) — the link carries the names a parent typed. Its arrival is counted
+  as the event `gerador-rotina-recebida`, not as a pageview. `test/rotina-compartilhada.test.js`
+  pins the attribute; drop it and every opened link puts names in Umami. Any future page that
+  puts user input in its URL needs the same attribute in the same delivery.
+- **`/relatorio` is the address the app's PDF report prints (L-30 + app F-63)** — bilingual and
+  single like `exclusao-de-conta` (the PDF prints ONE address in both languages), `noindex`,
+  no canonical and **out of the sitemap on purpose**: its pageviews are the measurement of that
+  channel, and organic search would mix into it. Every sentence is a claim about the app's code
+  (report is Premium, built on the device, not stored on our servers, no signature or
+  verification code, history erased only with the whole family) — re-check it when the report
+  changes. **It must never move or 404**: once F-63 ships, every PDF generated carries it, and a
+  PDF in someone's hands cannot be re-printed.
 - **A `utm_*` on an app link measures nothing (L-27).** The app's `sanitizeAnalyticsPath` (T-37)
   cuts the string at the first `?`/`#` before the pageview leaves, on purpose, so the query never
   reaches Umami. Tagging links to **this** site works (the standard Umami script sends the whole

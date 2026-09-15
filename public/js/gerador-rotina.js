@@ -104,3 +104,98 @@ export function countDays(plan) {
   for (const day of plan) totals[day.parent] += 1;
   return totals;
 }
+
+// ── L-30: the shareable routine ─────────────────────────────────────────────
+// A routine travels in the URL FRAGMENT, never in the path or the query: the
+// fragment never reaches our server, and the page's Umami tag carries
+// `data-exclude-hash="true"`, so the names a parent typed never reach analytics
+// either. The Umami tracker sends query AND fragment by default — the app's
+// `sanitizeAnalyticsPath` does not exist on this site. Only what the PAGE can
+// show is accepted, so a hand-edited link renders the same routine on every
+// phone or renders nothing.
+
+/** Format version carried as `v` — bump it only together with a decoder for the old one. */
+export const SHARE_VERSION = "1";
+
+/** Presets the page's menu offers (the module keeps all five app presets). */
+export const MENU_PRESETS = ["7-7", "14-14", "1-1"];
+
+/** Preview lengths the page's menu offers, in weeks. */
+export const MENU_WEEKS = [4, 8, 12];
+
+/** Same cap as the page's name inputs (`maxlength="30"`), counted in characters. */
+export const NAME_MAX = 30;
+
+const isDate = (s) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+  const [y, m, d] = s.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+};
+const isTime = (s) => /^([01]\d|2[0-3]):[0-5]\d$/.test(s);
+const cutName = (s) => [...String(s ?? "").trim()].slice(0, NAME_MAX).join("");
+
+/**
+ * Routine → fragment body (without `#`).
+ * @param {object} r
+ * @param {string} r.model     a MENU_PRESETS id or "custom"
+ * @param {number[]} [r.days]  custom only: 2 or 3 block lengths (clamped to 1..60)
+ * @param {number} [r.first]   presets only: 0 or 1, who takes the first block
+ * @param {string} r.start     "yyyy-mm-dd"
+ * @param {string} [r.time]    "HH:MM", or "" for none
+ * @param {number} r.weeks     one of MENU_WEEKS
+ * @param {string[]} [r.names] the two typed names, "" when left blank
+ */
+export function encodeRoutine({ model, days, first = 0, start, time = "", weeks, names = ["", ""] }) {
+  const p = new URLSearchParams();
+  p.set("v", SHARE_VERSION);
+  p.set("m", model);
+  if (model === "custom") p.set("d", days.map(clampDays).join("-"));
+  else p.set("c", first === 1 ? "1" : "0");
+  p.set("i", start);
+  if (time) p.set("t", time);
+  p.set("s", String(weeks));
+  const [a, b] = names.map(cutName);
+  if (a) p.set("a", a);
+  if (b) p.set("b", b);
+  return p.toString();
+}
+
+/**
+ * Fragment (with or without `#`) → routine, or null when anything is missing,
+ * unknown or out of range. Never throws: the input is whatever was pasted.
+ * @returns {null | {model: string, days: number[]|null, first: number,
+ *   start: string, time: string, weeks: number, names: [string, string]}}
+ */
+export function decodeRoutine(fragment) {
+  const raw = String(fragment ?? "").replace(/^#/, "");
+  if (!raw) return null;
+  const p = new URLSearchParams(raw);
+  if (p.get("v") !== SHARE_VERSION) return null;
+
+  const model = p.get("m");
+  let days = null;
+  let first = 0;
+  if (model === "custom") {
+    const parts = (p.get("d") ?? "").split("-");
+    if (parts.length < 2 || parts.length > 3) return null;
+    if (!parts.every((x) => /^\d{1,2}$/.test(x))) return null;
+    days = parts.map(Number);
+    if (!days.every((n) => n >= 1 && n <= 60)) return null;
+  } else if (MENU_PRESETS.includes(model)) {
+    const c = p.get("c");
+    if (c !== "0" && c !== "1") return null;
+    first = Number(c);
+  } else {
+    return null;
+  }
+
+  const start = p.get("i") ?? "";
+  if (!isDate(start)) return null;
+  const time = p.get("t") ?? "";
+  if (time && !isTime(time)) return null;
+  const weeks = Number(p.get("s"));
+  if (!MENU_WEEKS.includes(weeks)) return null;
+
+  return { model, days, first, start, time, weeks, names: [cutName(p.get("a")), cutName(p.get("b"))] };
+}
