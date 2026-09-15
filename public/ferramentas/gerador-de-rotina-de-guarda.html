@@ -84,7 +84,7 @@
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
 
         /* ── the tool ──────────────────────────────────────────────────── */
-        .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;margin:28px 0;}
+        .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;margin:28px 0;display:flex;flex-direction:column;}
         .tool-form{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 18px;}
         .field{display:flex;flex-direction:column;gap:6px;}
         .field label{font-size:14px;font-weight:600;color:var(--ink);}
@@ -94,6 +94,16 @@
         .btn-ghost{background:transparent;color:var(--indigo);border:1px solid #c7d2fe;}
         .tool-error{grid-column:1 / -1;color:#b91c1c;font-size:14.5px;display:none;}
         .tool-error.on{display:block;}
+        .share-status{grid-column:1 / -1;font-size:14.5px;color:var(--indigo-deep);margin:0;}
+        .share-status:empty{display:none;}
+        .share-link{grid-column:1 / -1;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;}
+
+        /* L-30: a routine opened from a shared link — the calendar first, the form below */
+        .recebida-note{display:none;background:var(--bg-tint);border:1px solid #c7d2fe;border-radius:12px;padding:18px 20px;margin-bottom:22px;scroll-margin-top:80px;}
+        .recebida-note h2{margin:0 0 6px;font-size:19px;}
+        .recebida-note p{margin:0 0 14px;font-size:15.5px;color:var(--indigo-deep);}
+        .tool.recebida .recebida-note{display:block;order:-2;}
+        .tool.recebida .preview{order:-1;margin:0 0 26px;}
 
         /* preview */
         .preview{margin-top:26px;display:none;}
@@ -104,7 +114,10 @@
         .dot-a{background:#c7d2fe;border:2px solid var(--indigo);}
         .dot-b{background:#fbcfe8;border:2px dashed var(--pink);}
         .cal-month{font-weight:700;font-size:15px;margin:18px 0 8px;color:var(--ink);text-transform:capitalize;}
-        .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+        /* minmax(0,1fr), never 1fr: a 1fr track grows to the min-content of a nowrap name, and at
+           375 px "Casa da mãe" pushed the week to 573 px — a phone opening a shared link (L-30)
+           scrolled sideways. The name's ellipsis only works once the track may shrink. */
+        .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
         .cal-head{font-size:11.5px;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.04em;padding:2px 0;}
         .cal-day{min-height:56px;border-radius:8px;padding:5px 6px;font-size:12px;line-height:1.35;border:2px solid transparent;background:var(--bg);}
         .cal-day .d{font-weight:700;font-size:12.5px;}
@@ -132,7 +145,7 @@
 
         /* ── print: only the generated calendar, with a credit line ────── */
         @media print{
-          header,.crumbs,.tool-form,.tool-error,.intro,.explain,.cta-box,.related,footer,.lm-mini,.noscript-note{display:none !important;}
+          header,.crumbs,.tool-form,.tool-error,.recebida-note,.intro,.explain,.cta-box,.related,footer,.lm-mini,.noscript-note{display:none !important;}
           body{background:#fff;}
           main{padding:0;}
           .tool{border:none;padding:0;margin:0;}
@@ -143,8 +156,10 @@
           .cal-b{background:#fdf2f8 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
         }
     </style>
-    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII.
+         L-30: data-exclude-hash is load-bearing HERE — a shared routine carries the typed names in
+         the fragment, and the tracker sends the fragment unless told not to. -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8" data-exclude-hash="true"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
 </head>
 <body>
@@ -169,7 +184,12 @@
     <h1>Gerador de rotina de guarda compartilhada</h1>
     <p class="lead intro">Escolha um modelo de convivência — semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado —, informe quem começa e a data de início, e veja o calendário pronto. Imprima ou salve em PDF. Sem cadastro.</p>
 
-    <div class="tool">
+    <div class="tool" id="g-tool">
+        <div class="recebida-note" id="g-recebida">
+            <h2>Rotina compartilhada com você</h2>
+            <p>Esta rotina foi montada no gerador e enviada por link. Confira os dias abaixo; se quiser propor outra, ajuste o formulário e compartilhe de volta. No app Entrelares, os dois responsáveis veem o mesmo calendário e as trocas são propostas e aprovadas no app.</p>
+            <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup" data-umami-event-origem="rotina-recebida">Criar conta grátis</a>
+        </div>
         <form class="tool-form" id="gerador" novalidate>
             <div class="field">
                 <label for="g-nome-a">Responsável 1</label>
@@ -228,8 +248,11 @@
             </div>
             <div class="tool-actions">
                 <button class="btn btn-primary" type="submit" data-umami-event="gerador-gerar">Gerar calendário</button>
+                <button class="btn btn-ghost" type="button" id="g-compartilhar" hidden data-umami-event="gerador-compartilhar">Compartilhar rotina</button>
                 <button class="btn btn-ghost" type="button" id="g-imprimir" hidden data-umami-event="gerador-imprimir">Imprimir / salvar PDF</button>
             </div>
+            <p class="share-status" id="g-share-status" role="status" aria-live="polite"></p>
+            <input class="share-link" id="g-share-link" type="text" readonly hidden aria-label="Link da rotina" />
             <p class="tool-error" id="g-erro" role="alert"></p>
         </form>
 
@@ -301,13 +324,24 @@
 </footer>
 
 <script type="module">
-    import { buildSchedule, customBlocks, countDays } from "/js/gerador-rotina.js";
+    import {
+        buildSchedule, customBlocks, countDays, encodeRoutine, decodeRoutine,
+    } from "/js/gerador-rotina.js";
 
     const $ = (id) => document.getElementById(id);
+    const tool = $("g-tool");
     const form = $("gerador");
     const err = $("g-erro");
     const preview = $("g-preview");
     const printBtn = $("g-imprimir");
+    const shareBtn = $("g-compartilhar");
+    const shareStatus = $("g-share-status");
+    const shareLink = $("g-share-link");
+
+    // The routine on screen, in the shape the link carries (L-30). Both doors —
+    // the form and a shared link — go through show(routine), which is what makes
+    // a link render the same calendar on the phone that receives it.
+    let current = null;
 
     // Default start: today (local).
     const today = new Date();
@@ -354,51 +388,146 @@
     $("g-nome-b").addEventListener("input", syncCustomFields);
     syncCustomFields();
 
-    form.addEventListener("submit", (ev) => {
-        ev.preventDefault();
-        err.classList.remove("on");
+    function fail(message) {
+        err.textContent = message;
+        err.classList.add("on");
+        return null;
+    }
 
-        const inicio = $("g-inicio").value;
-        if (!inicio) {
-            err.textContent = "Escolha a data de início.";
-            err.classList.add("on");
-            return;
-        }
-        const [y, m, d] = inicio.split("-").map(Number);
-        const start = new Date(y, m - 1, d);
-        const preset = $("g-modelo").value;
-        const weeks = Number($("g-semanas").value);
-        const firstParent = Number($("g-comeca").value);
-        const names = [
-            $("g-nome-a").value.trim() || "Responsável 1",
-            $("g-nome-b").value.trim() || "Responsável 2",
-        ];
-        const troca = $("g-troca").value; // "HH:MM" or ""
-
-        let plan, modelLabel;
-        if (preset === "custom") {
+    // Form → routine, or null after showing why not.
+    function readForm() {
+        const start = $("g-inicio").value;
+        if (!start) return fail("Escolha a data de início.");
+        const model = $("g-modelo").value;
+        const routine = {
+            model,
+            days: null,
+            first: Number($("g-comeca").value),
+            start,
+            time: $("g-troca").value, // "HH:MM" or ""
+            weeks: Number($("g-semanas").value),
+            names: [$("g-nome-a").value.trim(), $("g-nome-b").value.trim()],
+        };
+        if (model === "custom") {
             const d1 = Number($("g-dias-1").value);
             const d2 = Number($("g-dias-2").value);
             const d3 = Number($("g-dias-3").value) || 0;
             if (!(d1 >= 1) || !(d2 >= 1)) {
-                err.textContent = "No modelo customizado, preencha os dias dos dois responsáveis (mínimo 1).";
-                err.classList.add("on");
-                return;
+                return fail("No modelo customizado, preencha os dias dos dois responsáveis (mínimo 1).");
             }
-            const blocks = customBlocks(d1, d2, d3);
-            plan = buildSchedule({ blocks, start, days: weeks * 7 });
-            modelLabel = "Customizado (" + blocks.map((b) => b[1]).join("-") + ")";
-        } else {
-            plan = buildSchedule({ preset, start, days: weeks * 7, firstParent });
-            modelLabel = MODEL_LABELS[preset];
+            routine.days = customBlocks(d1, d2, d3).map((b) => b[1]);
         }
-        render(plan, names, troca, modelLabel, weeks);
+        return routine;
+    }
+
+    // Routine → form, so whoever received a link can adjust it and send it back.
+    function fillForm(r) {
+        $("g-nome-a").value = r.names[0];
+        $("g-nome-b").value = r.names[1];
+        $("g-modelo").value = r.model;
+        $("g-comeca").value = String(r.first);
+        if (r.days) {
+            $("g-dias-1").value = r.days[0];
+            $("g-dias-2").value = r.days[1];
+            $("g-dias-3").value = r.days[2] ?? "";
+        }
+        $("g-inicio").value = r.start;
+        $("g-troca").value = r.time;
+        $("g-semanas").value = String(r.weeks);
+        syncStarterLabels();
+        syncCustomFields();
+    }
+
+    function show(r) {
+        const [y, m, d] = r.start.split("-").map(Number);
+        const start = new Date(y, m - 1, d);
+        const days = r.weeks * 7;
+        const names = [r.names[0] || "Responsável 1", r.names[1] || "Responsável 2"];
+        let plan, modelLabel;
+        if (r.model === "custom") {
+            plan = buildSchedule({ blocks: customBlocks(...r.days), start, days });
+            modelLabel = "Customizado (" + r.days.join("-") + ")";
+        } else {
+            plan = buildSchedule({ preset: r.model, start, days, firstParent: r.first });
+            modelLabel = MODEL_LABELS[r.model];
+        }
+        render(plan, names, r.time, modelLabel, r.weeks);
+        current = r;
         preview.classList.add("on");
         printBtn.hidden = false;
+        shareBtn.hidden = false;
+        shareStatus.textContent = "";
+        shareLink.hidden = true;
+    }
+
+    form.addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        err.classList.remove("on");
+        const routine = readForm();
+        if (!routine) return;
+        // Once the reader generates their own, the calendar is theirs — back below the form.
+        tool.classList.remove("recebida");
+        show(routine);
         preview.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
     printBtn.addEventListener("click", () => window.print());
+
+    // Share: the system sheet where there is one (WhatsApp is one tap away on a
+    // phone), the clipboard where there is not, and the link itself, selected,
+    // when even the clipboard is refused. The text carries no name — only the
+    // link does, and only in its fragment.
+    shareBtn.addEventListener("click", async () => {
+        if (!current) return;
+        const url = location.origin + location.pathname + "#" + encodeRoutine(current);
+        shareStatus.textContent = "";
+        shareLink.hidden = true;
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Rotina de guarda compartilhada",
+                    text: "Montei esta rotina de convivência no gerador do Entrelares. Veja os dias:",
+                    url,
+                });
+                return;
+            } catch (e) {
+                if (e && e.name === "AbortError") return; // the reader closed the sheet
+            }
+        }
+        try {
+            await navigator.clipboard.writeText(url);
+            shareStatus.textContent = "Link copiado. Cole na conversa com o outro responsável.";
+        } catch {
+            shareStatus.textContent = "Copie o link abaixo e envie para o outro responsável:";
+            shareLink.value = url;
+            shareLink.hidden = false;
+            shareLink.select();
+        }
+    });
+
+    // Umami loads with `defer` before this module, but a blocker (or the preview
+    // worker, which strips the tag) leaves no `umami` at all — so this never throws.
+    function track(name) {
+        const go = () => window.umami?.track(name);
+        if (window.umami) go();
+        else window.addEventListener("load", go, { once: true });
+    }
+
+    // A shared link: render it, calendar first, and count the arrival as an event
+    // — the fragment is excluded from the pageview on purpose (see the Umami tag).
+    function openShared() {
+        const routine = decodeRoutine(location.hash);
+        if (!routine) return;
+        err.classList.remove("on");
+        fillForm(routine);
+        show(routine);
+        tool.classList.add("recebida");
+        $("g-recebida").scrollIntoView({ block: "start" });
+        track("gerador-rotina-recebida");
+    }
+    openShared();
+    // A second link opened in the same tab changes only the fragment — no reload.
+    window.addEventListener("hashchange", openShared);
 
     function render(plan, names, troca, modelLabel, weeks) {
         const total = plan.length;
