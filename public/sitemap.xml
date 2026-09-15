@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  L-07 — sitemap hygiene. Two rules, both easy to break:
+  Sitemap hygiene. Four rules, all easy to break:
 
-  1. ONLY indexable pages belong here. `termos.html` and `privacidade.html` carry
-     <meta name="robots" content="noindex"> and were listed anyway until Aug 2026 —
-     asking a crawler to fetch a page that then tells it to go away. The 404 page is
-     out for the same reason. If a page gains a `noindex`, remove it from this file
-     in the SAME delivery.
-  2. `lastmod` is the date THAT page's content last changed — updated by hand, in the
-     delivery that changes the page. It is not a build timestamp and must never be
-     bumped globally: a sitemap that claims every page changed today teaches the
-     crawler to ignore the field. `git log -1 --format=%ad --date=short -- <file>`
-     gives the honest value.
+  0. (L-29) THIS COMMENT MUST STAY VALID XML: no two hyphens in a row anywhere in
+     it, and no angle brackets. From 06/08 to 15/09/2026 a git command line with
+     double-hyphen flags sat here, the XML parser stopped at it, and Google read the
+     rest (it quoted a meta tag, a link tag and a head tag) as a page: Search Console
+     reported "Sitemap is HTML" with 0 discovered pages. test/sitemap.test.js refuses
+     both characters now.
+  1. (L-07) ONLY indexable pages belong here. `termos` and `privacidade` carry a
+     robots meta tag with noindex and were listed anyway until Aug 2026, asking a
+     crawler to fetch a page that then tells it to go away. The 404 page is out for
+     the same reason. If a page gains a noindex, remove it from this file in the
+     SAME delivery.
+  2. (L-07) `lastmod` is the date THAT page's content last changed, updated by hand
+     in the delivery that changes the page. It is not a build timestamp and must
+     never be bumped globally: a sitemap that claims every page changed today
+     teaches the crawler to ignore the field. The date of the last commit that
+     touched the page file (git log, one entry, short date) is the honest value.
   3. (L-23) Every loc names the address that answers 200: WITHOUT `.html`. The static
-     assets serve `/blog/<slug>` and answer the `.html` form with a 307, so listing it
+     assets serve /blog/slug and answer the `.html` form with a 307, so listing it
      spends crawl budget on a temporary redirect. The same address is each page's
      `canonical`; test/sitemap.test.js fails when either side names the other form.
-     Dropping the extension in Sep 2026 moved no `lastmod` — an address is not content.
+     Dropping the extension in Sep 2026 moved no `lastmod`: an address is not content.
 
-  L-16 — the English version is listed as its own URL. The PT-BR/EN pairing is
-  declared by the reciprocal <link rel="alternate" hreflang> tags in each page's
-  <head>, which is what Google reads; keeping it out of here keeps this file simple.
+  L-16: the English version is listed as its own URL. The PT-BR/EN pairing is
+  declared by the reciprocal hreflang alternate links in each page's head, which is
+  what Google reads; keeping it out of here keeps this file simple.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
