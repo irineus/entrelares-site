@@ -42,6 +42,39 @@ test('the sitemap is not empty (a broken regex would make every rule below pass)
   assert.ok(locs.length >= 10, `expected the sitemap's pages, found ${locs.length} <loc>`);
 });
 
+// L-29 — the sitemap has to be XML a strict parser accepts, and nothing here parsed it.
+// From 06/08 to 15/09/2026 the explanatory comment at the top quoted a git command with
+// double-hyphen flags; `--` is illegal inside an XML comment, the parser stopped there, and
+// Google read the rest (the comment quoted a meta, a link and a head tag) as HTML: Search
+// Console said "Sitemap is HTML", 0 discovered pages, for the whole life of the blog cluster.
+// Every regex test in this file passed over it, because a regex does not care. No XML
+// dependency exists in this lane, so the check is the well-formedness rules this file can
+// actually break: the declaration first, legal comments, and one balanced tree of the six
+// sitemap elements.
+test('the sitemap is well-formed XML (a regex reading it proves nothing about that)', () => {
+  assert.ok(sitemap.startsWith('<?xml version="1.0" encoding="UTF-8"?>'),
+    'the XML declaration must be the very first bytes (no BOM, no blank line)');
+
+  for (const [, body] of sitemap.matchAll(/<!--([\s\S]*?)-->/g)) {
+    assert.ok(!body.includes('--'), 'two hyphens in a row are illegal inside an XML comment');
+    assert.ok(!body.endsWith('-'), 'a comment may not end in a hyphen before its closing -->');
+    assert.ok(!/[<>]/.test(body),
+      'no angle brackets in a comment: if it ever breaks, the quoted tags are what makes Google read HTML');
+  }
+
+  const tree = sitemap.replace(/^<\?xml[^?]*\?>/, '').replace(/<!--[\s\S]*?-->/g, '');
+  assert.ok(!tree.includes('<!--') && !tree.includes('-->'), 'an unterminated comment');
+  const allowed = new Set(['urlset', 'url', 'loc', 'lastmod', 'changefreq', 'priority']);
+  const stack = [];
+  for (const [tag, close, name] of tree.matchAll(/<(\/?)([^\s>/]+)[^>]*>/g)) {
+    assert.ok(allowed.has(name), `unexpected markup ${tag} — a sitemap holds only its six elements`);
+    if (close) assert.equal(stack.pop(), name, `${tag} closes an element that is not open`);
+    else stack.push(name);
+  }
+  assert.deepEqual(stack, [], `unclosed: ${stack.join(', ')}`);
+  assert.match(tree.trim(), /^<urlset [^>]*>[\s\S]*<\/urlset>$/, 'one <urlset> root and nothing around it');
+});
+
 test('no <loc> names the .html form, and every one maps to a page on disk', () => {
   for (const loc of locs) {
     assert.ok(loc.startsWith(`${ORIGIN}/`), `${loc} is not on ${ORIGIN}`);
