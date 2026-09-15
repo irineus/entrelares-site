@@ -328,6 +328,16 @@ system; an unverified claim is a liability no matter who drafted it.
   `lastmod` is the date THAT page changed, set by hand in the delivery that changes it
   (`git log -1 --format=%ad --date=short -- <file>`). Never bump it globally: a sitemap claiming
   every page changed today teaches the crawler to ignore the field.
+- **That header comment must stay valid XML: no `--` and no `<`/`>` inside it (L-29, 15/09/2026).**
+  The command line quoted just above sat in the comment from #47 (06/08/2026) to #109; `--` is
+  illegal inside an XML comment, the parser stopped there, and Google read the rest — which
+  quoted a meta, a link and a head tag — as HTML. Search Console: *"Sitemap is HTML"*, 0 pages
+  discovered, for the whole life of the blog cluster, while every regex test here stayed green.
+  `test/sitemap.test.js` now checks well-formedness (declaration first, legal comments, one
+  balanced tree of the six sitemap elements). **The proof of a sitemap is the crawler's own
+  report**, not a test: Search Console (property `sc-domain:entrelares.app`) and Bing Webmaster
+  Tools, both on **`irineus@gmail.com`** — URLs and dates in the app repo's `CLAUDE.md` console
+  table. After a sitemap change, the owner resubmits it and reads *Success · 12* back.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
   `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
