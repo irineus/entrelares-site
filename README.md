@@ -333,7 +333,7 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
       are HTML, so one implementation serves both languages (+2.8 KB gzip on the home, +2.9 KB on
       `/en/`, below the fold). Unlike L-17 it stores **no coordinates** — each tap dot is a child
       of the control it points at.
-- [x] **iOS guide: the "Open as Web App" step** (**L-31**, 21/09/2026) — Apple's current guide
+- [x] **iOS guide: the "Open as Web App" step** (**L-33**, 21/09/2026) — Apple's current guide
       (*Transforme um site em um app no Safari do iPhone*, `iphea86e5236`, iOS 27 and iOS 26)
       added a toggle before **Adicionar**: without **Abrir como App da Web** the Home Screen icon
       opens the site as a Safari bookmark, not standalone, and web push can never arrive. The
