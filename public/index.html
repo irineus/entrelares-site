@@ -278,14 +278,22 @@
         .install-card li { margin-bottom: 8px; }
         .install-card li strong { color: var(--ink); }
         /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
-           nosso próprio visual. A ESTRUTURA da folha de compartilhamento foi
-           conferida contra o guia oficial da Apple em 11/09/2026 (iOS 26,
-           pt-BR: support.apple.com/pt-br/guide/iphone/iph42ab2f3a7/ios) — daí
-           virem, nesta ordem, o cartão do site, a fileira de apps, a fileira de
-           ações redondas e a lista agrupada com "Adicionar à Tela de Início"
-           lá embaixo, que é por que o passo escrito manda ROLAR. Só o rótulo
-           que interessa tem texto: o resto é barra neutra de propósito, porque
-           desenhar nome de app de terceiro seria inventar o que não conferimos.
+           nosso próprio visual. A ESTRUTURA foi conferida contra o guia oficial
+           da Apple "Transforme um site em um app no Safari do iPhone" em
+           21/09/2026 (iOS 27 e iOS 26, pt-BR:
+           support.apple.com/pt-br/guide/iphone/iphea86e5236/ios) — daí virem, na
+           folha de compartilhamento, o cartão do site, a fileira de apps, a
+           fileira de ações redondas e a lista agrupada com "Adicionar à Tela de
+           Início" lá embaixo, que é por que o passo escrito manda ROLAR.
+           L-31 (21/09/2026): o guia agora tem um passo que a primeira versão
+           deste desenho não tinha — "Ative a opção Abrir como App da Web" antes
+           de "Adicionar". Sem ela o ícone abre o site como favorito do Safari,
+           não como app, e notificação nenhuma chega. Daí a camada 3, o painel
+           de adicionar. O guia não traz figura desse painel: só o TEXTO nomeia
+           a opção e o botão, então só esses dois têm rótulo e o resto é barra
+           neutra, como na folha.
+           Só o rótulo que interessa tem texto: desenhar nome de app de terceiro
+           seria inventar o que não conferimos.
            Quem reconferir o guia e achar diferente, ajusta aqui e troca a data
            da linha abaixo do card — é ela que diz quando isto foi visto.
            Os passos escritos ao lado seguem sendo O conteúdo: o diagrama é
@@ -339,7 +347,30 @@
            rótulo que o passo manda procurar. */
         .iosd-row-target .iosd-dot { left: auto; right: 4px; margin-left: 0; }
 
-        /* camada 3: a recompensa — o ícone na tela inicial. */
+        /* camada 3 (L-31): o painel de adicionar. Sobe por cima da folha, e a
+           chave liga um instante DEPOIS de o painel chegar — o gesto que o
+           passo 4 pede é justamente virar essa chave. */
+        .iosd-add { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.14); padding: 7px; display: flex; flex-direction: column; gap: 7px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
+        .iosd-addnav { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 2px 2px 0; }
+        .iosd-addnav > b { display: block; width: 26%; height: 4px; border-radius: 2px; background: #dcdce2; }
+        .iosd-addbtn { position: relative; font-weight: 700; color: var(--indigo); padding: 2px 4px; border-radius: 6px; transition: background .3s ease; }
+        .iosd-addcard { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px; }
+        .iosd-addcard img { flex: none; display: block; width: 22px; height: 22px; border-radius: 6px; }
+        .iosd-addtog { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px 7px; color: var(--ink); line-height: 1.25; transition: background .3s ease, color .3s ease; }
+        .iosd-addtog > span:first-child { flex: 1; min-width: 0; }
+        .iosd-sw { position: relative; flex: none; width: 20px; height: 12px; border-radius: 999px; background: #d1d1d6; transition: background .3s ease .7s; }
+        .iosd-sw::before { content: ''; position: absolute; top: 1px; left: 1px; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25); transition: transform .3s ease .7s; }
+        /* como na linha da folha: o ponto encosta AO LADO do controle, senão
+           tapa o rótulo e a chave que o passo manda procurar. */
+        .iosd-addbtn .iosd-dot { left: -20px; margin-left: 0; }
+        .iosd-sw .iosd-dot { left: -17px; margin-left: 0; }
+        .iosd.is-b3 .iosd-add, .iosd.is-b4 .iosd-add { transform: translateY(0); }
+        .iosd.is-b3 .iosd-sw, .iosd.is-b4 .iosd-sw { background: #34c759; }
+        .iosd.is-b3 .iosd-sw::before, .iosd.is-b4 .iosd-sw::before { transform: translateX(8px); }
+        .iosd.is-b3 .iosd-addtog { background: var(--bg-tint); color: var(--indigo-deep); }
+        .iosd.is-b4 .iosd-addbtn { background: var(--bg-tint); }
+
+        /* camada 4: a recompensa — o ícone na tela inicial. */
         .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, #e0e7ff, #fce7f3); opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
         .iosd-home img { width: 38px; height: 38px; border-radius: 11px; box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22); }
         .iosd-home span { color: var(--ink); font-weight: 600; }
@@ -349,17 +380,24 @@
         .iosd-dot { position: absolute; left: 50%; top: 50%; width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; border-radius: 50%; background: rgba(79, 70, 229, 0.22); border: 2px solid var(--indigo); opacity: 0; transform: scale(.45) translateY(7px); transition: opacity .26s ease, transform .4s cubic-bezier(.34, 1.3, .5, 1); pointer-events: none; }
         .iosd-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--indigo); opacity: 0; }
         .iosd.is-b1 .iosd-share .iosd-dot,
-        .iosd.is-b2 .iosd-row-target .iosd-dot { opacity: 1; transform: scale(1) translateY(0); }
+        .iosd.is-b2 .iosd-row-target .iosd-dot,
+        .iosd.is-b3 .iosd-sw .iosd-dot,
+        .iosd.is-b4 .iosd-addbtn .iosd-dot { opacity: 1; transform: scale(1) translateY(0); }
         .iosd.is-b1 .iosd-share .iosd-dot::after,
-        .iosd.is-b2 .iosd-row-target .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
+        .iosd.is-b2 .iosd-row-target .iosd-dot::after,
+        .iosd.is-b3 .iosd-sw .iosd-dot::after,
+        .iosd.is-b4 .iosd-addbtn .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
         @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
-        .iosd.is-b2 .iosd-sheet { transform: translateY(0); }
+        /* a folha fica de pé debaixo do painel de adicionar (b3/b4). */
+        .iosd.is-b2 .iosd-sheet, .iosd.is-b3 .iosd-sheet, .iosd.is-b4 .iosd-sheet { transform: translateY(0); }
         /* a página atrás escurece quando a folha sobe, como no aparelho */
         .iosd-page, .iosd-bar { transition: opacity .4s ease; }
-        .iosd.is-b2 .iosd-page, .iosd.is-b2 .iosd-bar { opacity: .4; }
+        .iosd.is-b2 .iosd-page, .iosd.is-b2 .iosd-bar,
+        .iosd.is-b3 .iosd-page, .iosd.is-b3 .iosd-bar,
+        .iosd.is-b4 .iosd-page, .iosd.is-b4 .iosd-bar { opacity: .4; }
         .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); color: var(--indigo-deep); }
         .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
-        .iosd.is-b3 .iosd-home { opacity: 1; }
+        .iosd.is-b5 .iosd-home { opacity: 1; }
 
         /* o passo escrito que corresponde ao quadro acende junto — é o que liga o
            desenho às palavras sem repetir as palavras. Sem JS, nada acende. */
@@ -367,7 +405,8 @@
         .iosd-steps li.is-now { color: var(--ink); }
         .iosd-note { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.5; }
         @media (prefers-reduced-motion: reduce) {
-            .iosd-sheet, .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li,
+            .iosd-sheet, .iosd-add, .iosd-sw, .iosd-sw::before, .iosd-addtog, .iosd-addbtn,
+            .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li,
             .iosd-page, .iosd-bar { transition: none; }
             .iosd-dot::after { animation: none; }
         }
@@ -935,6 +974,14 @@
                                     </div>
                                     <div class="iosd-list"><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div></div>
                                 </div>
+                                <div class="iosd-add">
+                                    <div class="iosd-addnav"><b></b><span class="iosd-addbtn">Adicionar<span class="iosd-dot"></span></span></div>
+                                    <div class="iosd-addcard">
+                                        <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
+                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
+                                    </div>
+                                    <div class="iosd-addtog"><span>Abrir como App da Web</span><span class="iosd-sw"><span class="iosd-dot"></span></span></div>
+                                </div>
                                 <div class="iosd-home">
                                     <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
                                     <span>Entrelares</span>
@@ -945,12 +992,13 @@
                     <div class="iosd-steps">
                         <ol id="iosd-steps">
                             <li>Acesse <strong>web.entrelares.app</strong> no Safari.</li>
-                            <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima). Se ele não estiver à vista, toque em <strong>⋯</strong> e escolha <strong>Compartilhar</strong>.</li>
-                            <li><strong>Role a lista</strong> até <strong>Adicionar à Tela de Início</strong> e toque em <strong>Adicionar</strong>.</li>
+                            <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima). Se ele não estiver à vista, toque no botão de <strong>menu da página</strong> e escolha <strong>Compartilhar</strong>.</li>
+                            <li><strong>Role a lista</strong> e toque em <strong>Adicionar à Tela de Início</strong>. Se a opção não estiver lá, toque em <strong>Editar Ações</strong>, no fim da lista, e inclua-a.</li>
+                            <li>Ative <strong>Abrir como App da Web</strong> (se a opção aparecer) e toque em <strong>Adicionar</strong>. Sem ela, o ícone abre o site no Safari, e as notificações do app não chegam.</li>
                         </ol>
                     </div>
                 </div>
-                <p class="iosd-note">O desenho é uma <strong>ilustração dos passos</strong>, conferida com o <a href="https://support.apple.com/pt-br/guide/iphone/iph42ab2f3a7/ios" rel="noopener">guia oficial da Apple</a> em 11/09/2026 (iOS 26). A tela do seu iPhone pode variar conforme a versão do iOS — os nomes dos botões acima são o que importa.</p>
+                <p class="iosd-note">O desenho é uma <strong>ilustração dos passos</strong>, conferida com o <a href="https://support.apple.com/pt-br/guide/iphone/iphea86e5236/ios" rel="noopener">guia oficial da Apple</a> em 21/09/2026 (iOS 27 e iOS 26). A tela do seu iPhone pode variar conforme a versão do iOS — os nomes dos botões acima são o que importa.</p>
             </div>
         </div>
     </div>
@@ -1243,8 +1291,10 @@
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var steps = Array.prototype.slice.call(document.querySelectorAll('#iosd-steps li'));
-    var BEATS = ['is-b0', 'is-b1', 'is-b2', 'is-b3'];
-    var STEP_OF = [0, 1, 2, 2]; // o último quadro ainda é o passo 3: confirmar
+    var BEATS = ['is-b0', 'is-b1', 'is-b2', 'is-b3', 'is-b4', 'is-b5'];
+    // b3 (virar a chave) e b4 (Adicionar) são o MESMO passo escrito, o 4 — e o
+    // último quadro ainda é ele: confirmar.
+    var STEP_OF = [0, 1, 2, 3, 3, 3];
     var i = 1, timer = null, DELAY = 2600;
 
     function show(n) {
