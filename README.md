@@ -333,6 +333,16 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
       are HTML, so one implementation serves both languages (+2.8 KB gzip on the home, +2.9 KB on
       `/en/`, below the fold). Unlike L-17 it stores **no coordinates** — each tap dot is a child
       of the control it points at.
+- [x] **iOS guide: the "Open as Web App" step** (**L-33**, 21/09/2026) — Apple's current guide
+      (*Transforme um site em um app no Safari do iPhone*, `iphea86e5236`, iOS 27 and iOS 26)
+      added a toggle before **Adicionar**: without **Abrir como App da Web** the Home Screen icon
+      opens the site as a Safari bookmark, not standalone, and web push can never arrive. The
+      written guide gained a fourth step (plus Apple's *Editar Ações* fallback when the row is
+      missing, and its *menu da página* button instead of our old `⋯`), and the diagram a third
+      layer — the add panel, with the toggle flipping on and **Adicionar** tapped — for six beats
+      in all. Apple's page has no picture of that panel, so only the two names its text gives are
+      labelled; the rest is neutral bars. The cited source, version and date moved to
+      21/09/2026. Found during the app's U-54, which fixed the same step in its own install hint.
 - [x] **Demo of the immutable history** (**L-17**, 28/08/2026) — the `#registro` section
       (`/en/`: `#record`) after `#porque`: three timed beats over the two real T-57 frames, with a
       spotlight that slides from the swap request to the *Aprovar* button to the stamped line in
