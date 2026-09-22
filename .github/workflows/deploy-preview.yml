@@ -36,6 +36,25 @@ jobs:
           # noindex the whole preview site.
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
 
+      # T-79 (app repo, 22/09/2026): the preview's app links go to the QA app,
+      # never to production. `qa.entrelares.app` is the app's `main` built
+      # against the DEV database, so a landing change is tested end to end —
+      # sign-up included — without creating an account in the product. Same
+      # shape as the step above: the ephemeral checkout only, so production
+      # keeps linking `web.entrelares.app`. Fails when it rewrites NOTHING (the
+      # links changed shape and this step went blind) and when anything is
+      # LEFT (a preview reader would cross into production unannounced).
+      - name: Point the app links at the QA app
+        run: |
+          set -euo pipefail
+          before=$(grep -rho 'https://web\.entrelares\.app' public --include='*.html' | wc -l)
+          [ "$before" -gt 0 ] || { echo "::error::no https://web.entrelares.app link found — the rewrite would be blind"; exit 1; }
+          find public -name '*.html' -print0 | xargs -0 sed -i 's#https://web\.entrelares\.app#https://qa.entrelares.app#g'
+          if grep -rl 'https://web\.entrelares\.app' public; then
+            echo "::error::links to the production app survived the rewrite"; exit 1
+          fi
+          echo "Links do app no preview: $before apontam para https://qa.entrelares.app (banco de QA)." >> "$GITHUB_STEP_SUMMARY"
+
       - name: Deploy static assets via Wrangler (preview env)
         uses: cloudflare/wrangler-action@v3
         with:
