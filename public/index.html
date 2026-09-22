@@ -125,7 +125,7 @@
           "name": "Funciona no iPhone e no Android?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sim. O app funciona em qualquer celular com navegador, Android ou iPhone, e pode ser instalado na tela inicial em segundos, sem passar por loja de aplicativos."
+            "text": "Sim. No Android, o app está no Google Play; em qualquer celular com navegador, Android ou iPhone, ele também pode ser instalado direto na tela inicial em segundos."
           }
         },
         {
@@ -276,6 +276,9 @@
         .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
         .install-card li { margin-bottom: 8px; }
+        .play-badge { margin: 0 0 12px; }
+        .play-badge img { height: 56px; width: auto; display: block; }
+        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
         .install-card li strong { color: var(--ink); }
         /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
            nosso próprio visual. A ESTRUTURA foi conferida contra o guia oficial
@@ -645,7 +648,7 @@
                 <span>Grátis no lançamento</span>
                 <span>Sem cartão de crédito</span>
                 <span>Android e iPhone</span>
-                <span>Sem loja de apps</span>
+                <span>No Google Play e na web</span>
             </div>
         </div>
 
@@ -932,10 +935,12 @@
 <section id="instalar">
     <div class="wrap">
         <h2>Instale no seu celular em 30 segundos</h2>
-        <p class="section-lead">O Entrelares é um aplicativo web (PWA): instala direto do navegador, sem loja, e abre como qualquer app — com ícone na tela inicial.</p>
+        <p class="section-lead">No Android, baixe o Entrelares no Google Play. Em qualquer celular, ele também instala direto do navegador e abre como qualquer app — com ícone na tela inicial.</p>
         <div class="install-grid">
             <div class="install-card">
-                <h3>🤖 Android (Chrome)</h3>
+                <h3>🤖 Android</h3>
+                <p class="play-badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-pt-br.png" width="646" height="250" alt="Disponível no Google Play" loading="lazy" decoding="async" /></a></p>
+                <p class="play-badge-alt">Ou pelo navegador (Chrome):</p>
                 <ol>
                     <li>Acesse <strong>web.entrelares.app</strong> no Chrome.</li>
                     <li>Toque em <strong>Instalar</strong> quando o aviso aparecer — ou abra o menu <strong>⋮</strong> e escolha <strong>Instalar aplicativo</strong>.</li>
@@ -1043,16 +1048,12 @@
              suporte@. Pix emphasized: no card data ever leaves the payer's bank app. -->
         <p class="price-guarantee">🛡️ <strong>Garantia de 7 dias</strong>: assinou e se arrependeu? Em até 7 dias após o pagamento, devolvemos <strong>o valor integral</strong> (art. 49 do CDC) — é só escrever para <a href="mailto:suporte@entrelares.app">suporte@entrelares.app</a>.</p>
         <p class="price-note">Pague por <strong>Pix</strong> — QR code pelo aplicativo do seu banco, <strong>sem informar dados de cartão</strong> — ou por cartão de crédito, sempre em ambiente seguro do provedor (Asaas). Cancele quando quiser: o período pago continua valendo até o fim e <strong>nenhum dado é apagado</strong> — os recursos Premium apenas voltam a ficar bloqueados. A assinatura é feita dentro do app, na página da família, por um administrador.</p>
-        <!-- L-14: Google Play badge slot — uncomment when the T-38 listing is LIVE
-             (and add the official badge asset as img/google-play-badge.png first).
-             Reads as legitimacy next to the pricing; the PWA remains the primary
-             install path (see #instalar).
+        <!-- L-14 slot, opened by app item T-59 when the Play listing went public. -->
         <p style="text-align:center; margin-top:18px;">
-            <a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener">
-                <img src="img/google-play-badge.png" alt="Disponível no Google Play" height="56" loading="lazy" />
+            <a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge">
+                <img src="/img/google-play-badge-pt-br.png" width="646" height="250" alt="Disponível no Google Play" style="height:56px; width:auto;" loading="lazy" decoding="async" />
             </a>
         </p>
-        -->
 
     </div>
 </section>
@@ -1088,7 +1089,7 @@
             </details>
             <details>
                 <summary>Funciona no iPhone e no Android?</summary>
-                <div class="a">Sim. O app funciona em qualquer celular com navegador — Android ou iPhone — e pode ser instalado na tela inicial em segundos, sem passar por loja de aplicativos. Veja as <a href="#instalar">instruções de instalação</a>.</div>
+                <div class="a">Sim. O app funciona em qualquer celular com navegador — Android ou iPhone — e pode ser instalado na tela inicial em segundos, e no Android também pelo <a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener">Google Play</a>. Veja as <a href="#instalar">instruções de instalação</a>.</div>
             </details>
             <details>
                 <summary>E se o outro responsável não aprovar uma troca?</summary>

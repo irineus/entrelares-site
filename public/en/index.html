@@ -125,7 +125,7 @@
           "name": "Does it work on iPhone and Android?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. The app runs on any phone with a browser, Android or iPhone, and can be installed on the home screen in seconds, with no app store involved."
+            "text": "Yes. On Android the app is on Google Play; on any phone with a browser, Android or iPhone, it can also be installed straight to the home screen in seconds."
           }
         },
         {
@@ -284,6 +284,9 @@
         .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
         .install-card li { margin-bottom: 8px; }
+        .play-badge { margin: 0 0 12px; }
+        .play-badge img { height: 56px; width: auto; display: block; }
+        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
         .install-card li strong { color: var(--ink); }
         /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
            nosso próprio visual. A ESTRUTURA foi conferida contra o guia oficial
@@ -652,7 +655,7 @@
                 <span>Free plan, no credit card</span>
                 <span>App in English and Portuguese</span>
                 <span>Android and iPhone</span>
-                <span>No app store</span>
+                <span>On Google Play and the web</span>
             </div>
         </div>
 
@@ -926,10 +929,12 @@
 <section id="install">
     <div class="wrap">
         <h2>Install it on your phone in 30 seconds</h2>
-        <p class="section-lead">Entrelares is a web app (PWA): it installs straight from the browser, with no app store, and opens like any other app — with an icon on your home screen.</p>
+        <p class="section-lead">On Android, get Entrelares on Google Play. On any phone it also installs straight from the browser and opens like any other app — with an icon on your home screen.</p>
         <div class="install-grid">
             <div class="install-card">
-                <h3>🤖 Android (Chrome)</h3>
+                <h3>🤖 Android</h3>
+                <p class="play-badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a></p>
+                <p class="play-badge-alt">Or from the browser (Chrome):</p>
                 <ol>
                     <li>Go to <strong>web.entrelares.app</strong> in Chrome.</li>
                     <li>Tap <strong>Install</strong> when the prompt appears — or open the <strong>⋮</strong> menu and choose <strong>Install app</strong>.</li>
@@ -1076,7 +1081,7 @@
             </details>
             <details>
                 <summary>Does it work on iPhone and Android?</summary>
-                <div class="a">Yes. The app runs on any phone with a browser — Android or iPhone — and can be installed on the home screen in seconds, with no app store involved. See the <a href="#install">installation steps</a>.</div>
+                <div class="a">Yes. The app runs on any phone with a browser — Android or iPhone — and can be installed on the home screen in seconds, and on Android from <a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener">Google Play</a> too. See the <a href="#install">installation steps</a>.</div>
             </details>
             <details>
                 <summary>What if the other parent doesn't approve a swap?</summary>
