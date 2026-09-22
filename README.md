@@ -94,7 +94,8 @@ entrelares-site/
 │   ├── relatorio.test.js       # L-30 — /relatorio exists, is noindex and out of the sitemap
 │   ├── blog-images.test.js     # L-04 — every <picture> file exists; widths match the generator
 │   ├── sitemap.test.js         # L-23 — sitemap, canonical and links name the 200 form, no .html
-│   └── app-links.test.js       # L-27 — every link into the app names a path the app serves
+│   ├── app-links.test.js       # L-27 — every link into the app names a path the app serves
+│   └── preview-qa-app.test.js  # T-79 — the preview links the QA app; production never does
 ├── assets-src/                 # generators — NOT served
 │   ├── brand-marca.png         # the U-29 mark, 1024² — rendered by the APP repo's
 │   │                           #   store/brand-icons.py; never edited here (T-57)
@@ -146,16 +147,21 @@ should apply to both has to be made **twice**; the two files carry cross-referen
 
 Mirrors the app's dev/prod split.
 
-| Env | Worker | Domain | Branch → deploy | Analytics | Indexing |
-|---|---|---|---|---|---|
-| **Production** | `entrelares-site` (F-54 — a NEW worker, since worker names are immutable; the domains moved at the 12/08/2026 promotion and the old ones now 301 here) | entrelares.app | `main` → `deploy.yml` | Umami | normal |
-| **Preview** | `entrelares-site-preview` (same F-54 transition) | preview.entrelares.app | `preview` → `deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny) |
+| Env | Worker | Domain | Branch → deploy | Analytics | Indexing | App links |
+|---|---|---|---|---|---|---|
+| **Production** | `entrelares-site` (F-54 — a NEW worker, since worker names are immutable; the domains moved at the 12/08/2026 promotion and the old ones now 301 here) | entrelares.app | `main` → `deploy.yml` | Umami | normal | `web.entrelares.app` |
+| **Preview** | `entrelares-site-preview` (same F-54 transition) | preview.entrelares.app | `preview` → `deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny) | **`qa.entrelares.app`** (rewritten at deploy, T-79) |
 
 **Preview is a stable staging site** — review landing changes live before promoting to production.
 Flow: feature branch → merge to **`preview`** (auto-deploys the preview worker) → eyeball at
 `preview.entrelares.app` → **only on explicit demand**, promote `preview`→`main`
 (production). The preview build strips the Umami loader from every `public/**/*.html` and overwrites
 `robots.txt` to deny all — applied to the CI checkout only, so source and production stay unchanged.
+Since **T-79** (app repo, 22/09/2026) it also rewrites every `https://web.entrelares.app` link to
+**`https://qa.entrelares.app`** — the app's `main` built against the DEV database — so a landing
+change is tested end to end, sign-up included, without creating an account in the product. The step
+fails when it rewrites nothing or leaves a production link behind; `test/preview-qa-app.test.js`
+pins it, and pins that no source file names the QA host.
 
 ## Deploy
 
