@@ -21,6 +21,8 @@ one could exist.
 | **Production** | `entrelares-site` (F-54 — worker names are immutable, so this is a NEW worker; the domains moved at the 12/08/2026 promotion and `guardacompartilhada-site` is now domain-less, pending deletion in the cleanup) | entrelares.app | `main` → `.github/workflows/deploy.yml` | Umami | normal |
 | **Preview** | `entrelares-site-preview` (same transition) | preview.entrelares.app | `preview` → `.github/workflows/deploy-preview.yml` | **none** (stripped at deploy) | **noindex** (robots deny + not attached to sitemap) |
 
+On the preview, every app link is rewritten at deploy to **`https://qa.entrelares.app`** (the app's `main` on the DEV database, T-79) — test sign-up there freely; production keeps `web.entrelares.app`.
+
 - **Preview is a stable staging site** — review landing changes live before promoting to
   production. Flow: feature branch → merge to `preview` (auto-deploys the preview worker) →
   eyeball at preview.entrelares.app → **on the user's explicit demand only**, promote
