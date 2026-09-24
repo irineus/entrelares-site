@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="entrelares-params" data-lang="en" content='{"billing.price_annual_cents":"5490","billing.price_monthly_cents":"549","calendar_months_free":"6","calendar_months_premium":"24","free_caregivers":"2","landing.launch_free_badge":"true","landing.play_badge":"true","landing.promo_price_label":"true"}' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Entrelares: the shared-custody calendar app for divorced parents</title>
     <meta name="description" content="Shared-custody app for divorced parents: a clear parenting calendar, day swaps that only count when both parents approve, and a history with date and time that cannot be edited or deleted. The essentials are free; optional Premium per family." />
@@ -40,7 +41,7 @@
     <meta name="twitter:description" content="Whose day is it today? A parenting calendar both parents share, swaps approved by both, and a history nobody can erase. The essentials are free." />
     <meta name="twitter:image" content="https://entrelares.app/og-cover-en.png?v=3" />
 
-    <script type="application/ld+json">
+    <script type="application/ld+json" data-param-jsonld="billing.price_monthly_cents">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -66,7 +67,7 @@
     }
     </script>
 
-    <script type="application/ld+json">
+    <script type="application/ld+json" data-param-jsonld="billing.price_monthly_cents billing.price_annual_cents calendar_months_premium">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -655,7 +656,8 @@
                 <span>Free plan, no credit card</span>
                 <span>App in English and Portuguese</span>
                 <span>Android and iPhone</span>
-                <span>On Google Play and the web</span>
+                <span data-param-show="landing.play_badge">On Google Play and the web</span>
+                <span data-param-hide="landing.play_badge" hidden>No app store</span>
             </div>
         </div>
 
@@ -929,12 +931,13 @@
 <section id="install">
     <div class="wrap">
         <h2>Install it on your phone in 30 seconds</h2>
-        <p class="section-lead">On Android, get Entrelares on Google Play. On any phone it also installs straight from the browser and opens like any other app — with an icon on your home screen.</p>
+        <p class="section-lead"><span data-param-show="landing.play_badge">On Android, get Entrelares on Google Play. On any phone it also</span><span data-param-hide="landing.play_badge" hidden>On any phone, Entrelares</span> installs straight from the browser and opens like any other app — with an icon on your home screen.</p>
         <div class="install-grid">
             <div class="install-card">
                 <h3>🤖 Android</h3>
-                <p class="play-badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a></p>
-                <p class="play-badge-alt">Or from the browser (Chrome):</p>
+                <p class="play-badge" data-param-show="landing.play_badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a></p>
+                <p class="play-badge-alt" data-param-show="landing.play_badge">Or from the browser (Chrome):</p>
+                <p class="play-badge-alt" data-param-hide="landing.play_badge" hidden>From the browser (Chrome):</p>
                 <ol>
                     <li>Go to <strong>web.entrelares.app</strong> in Chrome.</li>
                     <li>Tap <strong>Install</strong> when the prompt appears — or open the <strong>⋮</strong> menu and choose <strong>Install app</strong>.</li>
@@ -1017,21 +1020,21 @@
                     <li>Day swaps approved by both</li>
                     <li>Immutable history of every decision</li>
                     <li>Real-time and e-mail notifications</li>
-                    <li>Planning up to 6 months ahead</li>
+                    <li>Planning up to <span data-param="calendar_months_free" data-format="months">6 months</span> ahead</li>
                 </ul>
                 <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Create a free account</a>
             </div>
             <div class="price-card">
                 <div class="price-badge">Premium</div>
-                <div class="price">R$ 5,49<small>/month</small></div>
-                <p class="price-cycle">or R$ 54,90/year — 2 months free</p>
-                <p class="price-promo">🎉 Launch price until Dec 31, 2026</p>
+                <div class="price"><span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span><small>/month</small></div>
+                <p class="price-cycle">or <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/year<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=" — "> — 2 months free</span></p>
+                <p class="price-promo" data-param-show="landing.promo_price_label">🎉 Launch price until Dec 31, 2026</p>
                 <p class="price-cycle">Promotion valid until December 31, 2026, only when subscribing on the web version (web.entrelares.app). On Google Play, in the Android app: R$ 5,99/month or R$ 59,90/year.</p>
                 <p>For families that need more people and more range — it covers <strong>every</strong> caregiver.</p>
                 <ul>
                     <li>Grandparents, nanny and other caregivers beyond the couple</li>
                     <li>History report as a PDF (consolidated summary for a period)</li>
-                    <li>Planning beyond 6 months (up to 24)</li>
+                    <li>Planning beyond <span data-param="calendar_months_free" data-format="months">6 months</span> (up to <span data-param="calendar_months_premium" data-format="int">24</span>)</li>
                     <li>Admin mode to correct past days</li>
                     <li>Everything in the Free plan, of course</li>
                 </ul>
@@ -1078,7 +1081,7 @@
             </details>
             <details>
                 <summary>How much does the app cost?</summary>
-                <div class="a">The essentials are free: the calendar for both parents, swaps approved by both, notifications and the history. Premium costs R$ 5,49/month (or R$ 54,90/year, with 2 months free) per family on the web version — a promotional launch price, valid until December 31, 2026 and on that channel only, a single amount that covers every caregiver; on Google Play, in the Android app, it costs R$ 5,99/month or R$ 59,90/year — and unlocks advanced features such as adding grandparents, a nanny and other caregivers beyond the couple, the history report as a PDF and planning up to 24 months ahead. Payment is by Pix (a QR code in your banking app, no card details) or credit card, with a <strong>full refund within 7 days</strong> (article 49 of the Brazilian Consumer Code); cancel whenever you like without losing any data.</div>
+                <div class="a">The essentials are free: the calendar for both parents, swaps approved by both, notifications and the history. Premium costs <span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span>/month (or <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/year<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=", with ">, with 2 months free</span>) per family on the web version — a promotional launch price, valid until December 31, 2026 and on that channel only, a single amount that covers every caregiver; on Google Play, in the Android app, it costs R$ 5,99/month or R$ 59,90/year — and unlocks advanced features such as adding grandparents, a nanny and other caregivers beyond the couple, the history report as a PDF and planning up to <span data-param="calendar_months_premium" data-format="months">24 months</span> ahead. Payment is by Pix (a QR code in your banking app, no card details) or credit card, with a <strong>full refund within 7 days</strong> (article 49 of the Brazilian Consumer Code); cancel whenever you like without losing any data.</div>
             </details>
             <details>
                 <summary>Does it work on iPhone and Android?</summary>

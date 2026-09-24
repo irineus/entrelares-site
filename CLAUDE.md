@@ -235,6 +235,39 @@ generator's `<title>`, so it opens with a proper name, never a file/tool name).
   every PR + push to `preview`/`main` **before** the deploy workflows. Keep the suite green when
   touching the endpoint; static/HTML-only changes don't affect it.
 
+## Live product parameters (L-34, 24/09/2026)
+Prices, plan limits and three launch flags are **not typed** any more: they come from the app's
+public feed (`public-settings`, app item T-81 — anonymous by design; what it may say is the
+`landing_visible` column in the app's `app_settings`, edited from the operator console).
+- **Two layers, one module (`src/params.js`).** Serve time: `src/serve-params.js` rewrites the
+  marked elements with **HTMLRewriter**, values cached **5 minutes** in the colo's Cache API
+  (1.5 s timeout; on failure the last copy, with none the page as deployed). Deploy time:
+  `tool/bake-params.mjs` writes the same values into `public/` on the CI checkout before
+  `wrangler deploy` (both workflows); a feed that does not answer never blocks a deploy. **No
+  scheduled re-bake and no `repository_dispatch`** (owner, 23/09/2026) — the serve layer already
+  follows the console. Preview reads the **dev** project's feed, production the **prod** one
+  (`PARAMS_URL` per env in `wrangler.jsonc`).
+- **Markup contract** (the only way a page takes a parameter): the
+  `<meta name="entrelares-params" data-lang content='{…}'>` right after `<meta charset>` holds the
+  values baked into that file; `<span data-param="<key>" data-format="brl|price|months|int|free_months">`
+  holds TEXT only; `data-param-show` / `data-param-hide` toggle the `hidden` attribute (both variants
+  of a sentence stay in the file, so a flag can flip back); `<script type="application/ld+json"
+  data-param-jsonld="<keys>">` gets the baked text of those keys replaced. The page is correct
+  WITHOUT the Worker — the baked value is real HTML.
+- **Routes.** A page with the meta must be in `assets.run_worker_first` (both envs) — every other
+  asset keeps the fast path. `test/params.test.js` fails when the two lists disagree.
+- **What stays typed, on purpose:** the Google Play prices (R$ 5,99 / R$ 59,90 — Google's, set in
+  the Play Console), the dated promo sentences in the FAQ and the price note, the 7-day refund (CDC),
+  and the **legal pages**, which never carry a parameter (S-15: one copy, one version). The drift
+  guard in `test/params.test.js` refuses any other hand-typed `R$` price, month count or JSON-LD
+  price outside a marked element.
+- **The flags:** `landing.launch_free_badge` rules only the PT sentence "Grátis no lançamento"
+  (hero + the four call-to-action boxes; `/en/`'s "Free plan, no credit card" stays — owner,
+  23/09/2026); `landing.promo_price_label` the price card's launch-price line; `landing.play_badge`
+  the Google Play badges, the hero's "No Google Play e na web" (↔ "Sem loja de apps") and the
+  install section's Play sentence. The free-months badge follows the app's `annualFreeMonths`
+  (U-46) and disappears when the annual price is not a whole number of monthly charges.
+
 ## Legal pages (Privacy & Terms) — cross-repo sync (MUST)
 **These two files are the ONLY copy of the legal text.** There is no longer a second one to
 mirror: the app has no `/privacy` route of its own (lote 4 decision) and links straight here —

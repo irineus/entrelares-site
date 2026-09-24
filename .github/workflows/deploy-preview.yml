@@ -55,6 +55,13 @@ jobs:
           fi
           echo "Links do app no preview: $before apontam para https://qa.entrelares.app (banco de QA)." >> "$GITHUB_STEP_SUMMARY"
 
+      # L-34: bake the app's live parameters into the pages (the dev
+      # project's T-81 feed) — the same rules the Worker applies at serve time.
+      # A feed that does not answer never blocks the deploy: the committed
+      # values ship and the run summary says so.
+      - name: Bake the live parameters
+        run: node tool/bake-params.mjs https://buroanotfjcgvbfmacuh.supabase.co/functions/v1/public-settings public
+
       - name: Deploy static assets via Wrangler (preview env)
         uses: cloudflare/wrangler-action@v3
         with:
