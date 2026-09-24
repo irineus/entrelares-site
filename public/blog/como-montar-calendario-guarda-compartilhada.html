@@ -55,6 +55,14 @@
     </script>
 
     <style>
+
+        /* L-34: a parameter flag hides a block with the `hidden` attribute, and an
+
+           author rule with `display` (.trust span, .price-promo…) beats the browser's
+
+           own [hidden] rule — so both variants of a sentence showed at once. */
+
+        [hidden] { display: none !important; }
         :root{--ink:#1e293b;--muted:#64748b;--indigo:#4f46e5;--indigo-deep:#3730a3;--pink:#db2777;--bg:#f8fafc;--bg-tint:#eef2ff;--card:#fff;--line:#e2e8f0;--radius:16px;}
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}

@@ -138,6 +138,15 @@ test("JSON-LD: a form two keys share is left as baked, never guessed", () => {
 
 // ── Scope ─────────────────────────────────────────────────────────────────────
 
+test("a hidden variant really disappears: every marked page forces [hidden]", () => {
+  // Measured on preview (24/09/2026): `.trust span { display: inline-flex }`
+  // and `.price-promo { display: inline-block }` beat the browser's own
+  // [hidden] rule, so with landing.play_badge off BOTH hero sentences showed.
+  for (const page of PARAM_PAGES) {
+    assert.match(read(page), /\[hidden\]\s*\{\s*display:\s*none\s*!important;?\s*\}/, page);
+  }
+});
+
 test("legal pages carry no parameter at all (S-15: one copy, one version)", () => {
   for (const page of LEGAL) {
     const html = read(page);
