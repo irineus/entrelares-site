@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
+    <meta name="entrelares-params" data-lang="pt" content='{"billing.price_annual_cents":"5490","billing.price_monthly_cents":"549","calendar_months_free":"6","calendar_months_premium":"24","free_caregivers":"2","landing.launch_free_badge":"true","landing.play_badge":"true","landing.promo_price_label":"true"}' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Como montar um calendário de guarda compartilhada (passo a passo)</title>
     <meta name="description" content="Guia prático para montar o calendário de convivência na guarda compartilhada: modelos de divisão de dias, feriados e férias, e como registrar tudo sem conflito." />
@@ -54,6 +55,14 @@
     </script>
 
     <style>
+
+        /* L-34: a parameter flag hides a block with the `hidden` attribute, and an
+
+           author rule with `display` (.trust span, .price-promo…) beats the browser's
+
+           own [hidden] rule — so both variants of a sentence showed at once. */
+
+        [hidden] { display: none !important; }
         :root{--ink:#1e293b;--muted:#64748b;--indigo:#4f46e5;--indigo-deep:#3730a3;--pink:#db2777;--bg:#f8fafc;--bg-tint:#eef2ff;--card:#fff;--line:#e2e8f0;--radius:16px;}
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
@@ -204,7 +213,7 @@
 
     <div class="cta-box">
         <h3>Monte seu calendário em minutos</h3>
-        <p>O app Entrelares faz exatamente isso: calendário único, trocas com aprovação dos dois e histórico com data e hora. Grátis durante o lançamento.</p>
+        <p>O app Entrelares faz exatamente isso: calendário único, trocas com aprovação dos dois e histórico com data e hora. <span data-param-show="landing.launch_free_badge">Grátis durante o lançamento.</span></p>
         <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
     </div>
 

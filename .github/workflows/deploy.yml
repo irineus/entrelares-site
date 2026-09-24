@@ -23,6 +23,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # L-34: bake the app's live parameters into the pages (the production
+      # project's T-81 feed) — the same rules the Worker applies at serve time.
+      # A feed that does not answer never blocks the deploy: the committed
+      # values ship and the run summary says so.
+      - name: Bake the live parameters
+        run: node tool/bake-params.mjs https://jptqbwfziyzlhlmoekzu.supabase.co/functions/v1/public-settings public
+
       - name: Deploy static assets via Wrangler
         uses: cloudflare/wrangler-action@v3
         with:
