@@ -12,9 +12,13 @@
 //     mandatory rather than merely polite. See `handleUnsubscribe`.
 //
 // Everything else is delegated to the static assets, so the existing 404-page
-// handling and asset routing are preserved unchanged.
+// handling and asset routing are preserved unchanged — except that the pages
+// carrying a product parameter leave with its LIVE value (L-34, see
+// src/serve-params.js; the routes are `assets.run_worker_first`).
 //
 // Config (wrangler.jsonc `vars`, non-secret):
+//   PARAMS_URL         — L-34: the app's T-81 feed (`public-settings`) — the dev
+//                        project on preview, production on production.
 //   RESEND_SEGMENT_ID  — the Resend segment the contact is added to.
 //   FROM_EMAIL         — verified-domain sender: "Entrelares <materiais@entrelares.app>"
 //                        (flipped at the F-54 promotion-A cutover, 12/08/2026 — the Resend
@@ -42,6 +46,7 @@ import {
   MUTED, FONT, shell, SIGNATURE_TEXT, strong,
 } from "./email-layout.js";
 import { DAILY_CAP, dueStep, isFinished, renderStep } from "./sequence.js";
+import { serveWithParams } from "./serve-params.js";
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,8 +60,10 @@ export default {
     if (url.pathname === "/api/unsubscribe") {
       return handleUnsubscribe(request, env, ctx);
     }
-    // Not our endpoint → let the static assets answer (keeps 404-page handling).
-    return env.ASSETS.fetch(request);
+    // L-34: the pages that carry a parameter reach the Worker first
+    // (`assets.run_worker_first`) and leave with the live values; every other
+    // path is a miss the static assets answer (keeps 404-page handling).
+    return serveWithParams(request, env, ctx);
   },
 
   // L-20 — the sequence's only clock. Declared in wrangler.jsonc `triggers`

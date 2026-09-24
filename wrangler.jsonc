@@ -28,7 +28,21 @@
     "directory": "./public",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // L-34: the pages that carry a product parameter reach the Worker FIRST,
+    // so it can write the live value in (src/serve-params.js). Only these —
+    // images, CSS and every other page keep the fast path where a hit never
+    // wakes the Worker. A page that gains a `data-param` joins this list in
+    // the same delivery; test/params.test.js fails otherwise.
+    "run_worker_first": [
+      "/",
+      "/en",
+      "/en/",
+      "/blog/como-funciona-guarda-compartilhada",
+      "/blog/como-montar-calendario-guarda-compartilhada",
+      "/blog/modelos-de-rotina-guarda-compartilhada",
+      "/ferramentas/gerador-de-rotina-de-guarda"
+    ]
   },
   "observability": {
     "enabled": true
@@ -55,7 +69,10 @@
   "vars": {
     "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
     "FROM_EMAIL": "Entrelares <materiais@entrelares.app>",
-    "REPLY_TO": "contato@entrelares.app"
+    "REPLY_TO": "contato@entrelares.app",
+    // L-34: the app's public feed (T-81) — PRODUCTION project. Anonymous by
+    // design; the whitelist is a column in the app's database, not a secret.
+    "PARAMS_URL": "https://jptqbwfziyzlhlmoekzu.supabase.co/functions/v1/public-settings"
   },
   "env": {
     "preview": {
@@ -67,7 +84,21 @@
         "directory": "./public",
         "binding": "ASSETS",
         "html_handling": "auto-trailing-slash",
-        "not_found_handling": "404-page"
+        "not_found_handling": "404-page",
+        // L-34: the pages that carry a product parameter reach the Worker FIRST,
+        // so it can write the live value in (src/serve-params.js). Only these —
+        // images, CSS and every other page keep the fast path where a hit never
+        // wakes the Worker. A page that gains a `data-param` joins this list in
+        // the same delivery; test/params.test.js fails otherwise.
+        "run_worker_first": [
+          "/",
+          "/en",
+          "/en/",
+          "/blog/como-funciona-guarda-compartilhada",
+          "/blog/como-montar-calendario-guarda-compartilhada",
+          "/blog/modelos-de-rotina-guarda-compartilhada",
+          "/ferramentas/gerador-de-rotina-de-guarda"
+        ]
       },
       "observability": {
         "enabled": true
@@ -92,7 +123,10 @@
       "vars": {
         "RESEND_SEGMENT_ID": "17fe52ba-a9ef-41a9-94b6-09e1f251503c",
         "FROM_EMAIL": "Entrelares <materiais@entrelares.app>",
-        "REPLY_TO": "contato@entrelares.app"
+        "REPLY_TO": "contato@entrelares.app",
+        // L-34: preview reads the DEV project's feed — the same database the
+        // QA app (qa.entrelares.app) runs on, so a console edit on dev shows here.
+        "PARAMS_URL": "https://buroanotfjcgvbfmacuh.supabase.co/functions/v1/public-settings"
       }
     }
   }
