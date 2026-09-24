@@ -142,6 +142,14 @@
     </script>
 
     <style>
+
+        /* L-34: a parameter flag hides a block with the `hidden` attribute, and an
+
+           author rule with `display` (.trust span, .price-promo…) beats the browser's
+
+           own [hidden] rule — so both variants of a sentence showed at once. */
+
+        [hidden] { display: none !important; }
         /* ─────────────────────────────────────────────────────────────────────
            L-16 — English version of the landing page.
 
