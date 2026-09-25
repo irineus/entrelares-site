@@ -14,10 +14,10 @@ import { join, relative } from "node:path";
 import { tmpdir } from "node:os";
 
 import {
-  annualFreeMonths, formatBrl, formatPrice, readBaked, renderParam, rewriteHtml, substituteJsonLd,
+  annualFreeMonths, fetchFeed, formatBrl, formatPrice, readBaked, renderParam, rewriteHtml, substituteJsonLd,
 } from "../src/params.js";
-import { getLiveParams, paramHandlers, serveWithParams, FRESH_MS } from "../src/serve-params.js";
-import { bake } from "../tool/bake-params.mjs";
+import { getLiveParams, loadLiveParams, paramHandlers, serveWithParams, FRESH_MS } from "../src/serve-params.js";
+import { bake, feedConfig } from "../tool/bake-params.mjs";
 
 const PUBLIC = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const read = (p) => readFileSync(join(PUBLIC, p), "utf8");
@@ -168,8 +168,34 @@ test("every page that takes a parameter is a run_worker_first route, and only th
     for (const page of withMeta) assert.ok(routes.includes(routeOf(page)), `${page} → ${routeOf(page)}`);
     assert.ok(routes.includes("/en"), "the /en redirect source too");
   }
-  assert.match(JSON.stringify(env.preview), /buroanotfjcgvbfmacuh/, "preview reads the DEV feed");
-  assert.match(cfg, /"PARAMS_URL": "https:\/\/jptqbwfziyzlhlmoekzu/, "production reads the PROD feed");
+});
+
+test("Fulcrum 03.4.5: both envs read the feed through the gateway, each with its own tenant key", () => {
+  const prod = feedConfig("production");
+  const preview = feedConfig("preview");
+  assert.equal(prod.url, "https://api.entrelares.app/functions/v1/public-settings", "production → the prod gateway");
+  assert.equal(preview.url, "https://api-dev.entrelares.app/functions/v1/public-settings", "preview → the DEV gateway");
+  for (const { url, key } of [prod, preview]) {
+    assert.ok(!new URL(url).host.endsWith("supabase.co"), `${url}: never the project directly`);
+    assert.match(key, /^[0-9a-f]{64}$/, "the gateway's TENANT_PUBLIC_KEY, not a Supabase key");
+  }
+  assert.notEqual(prod.key, preview.key, "one key per env: preview must not open the production gateway");
+  // The bake reads the same file: nothing in the workflows may name a feed.
+  for (const wf of ["deploy.yml", "deploy-preview.yml"]) {
+    const text = readFileSync(new URL(`../.github/workflows/${wf}`, import.meta.url), "utf8");
+    assert.ok(!/public-settings|supabase\.co/.test(text), `${wf} must not type the feed URL again`);
+  }
+});
+
+test("the feed call carries the tenant key in `apikey`, and nothing without one", async () => {
+  const seen = [];
+  const fetchImpl = async (url, init) => { seen.push(init.headers); return new Response(JSON.stringify({ values: {} })); };
+  await fetchFeed("https://api.entrelares.app/functions/v1/public-settings", { fetchImpl, apiKey: "k" });
+  await fetchFeed("https://api.entrelares.app/functions/v1/public-settings", { fetchImpl });
+  assert.equal(seen[0].apikey, "k");
+  assert.equal(seen[0].accept, "application/json");
+  assert.ok(!("apikey" in seen[1]));
+  assert.ok(!("authorization" in seen[0]) && !("Authorization" in seen[0]), "the key rides apikey only");
 });
 
 test("drift guard: no hand-typed price or month count outside a marked element", async () => {
@@ -209,7 +235,24 @@ function fakeCache() {
   };
 }
 const feed = (values) => async () => new Response(JSON.stringify({ values }), { status: 200 });
-const env = { PARAMS_URL: "https://x.supabase.co/functions/v1/public-settings" };
+const env = { PARAMS_URL: "https://api.example/functions/v1/public-settings", PARAMS_KEY: "tenant-key" };
+
+test("the source of the values is told apart: fresh, cached, stale, baked", async () => {
+  const cache = fakeCache();
+  const down = async () => { throw new Error("down"); };
+  assert.equal((await loadLiveParams(env, null, { cache, fetchImpl: feed({ a: "1" }), now: 0 })).source, "fresh");
+  assert.equal((await loadLiveParams(env, null, { cache, fetchImpl: down, now: 1 })).source, "cached");
+  assert.equal((await loadLiveParams(env, null, { cache, fetchImpl: down, now: FRESH_MS * 2 })).source, "stale");
+  assert.equal((await loadLiveParams(env, null, { cache: fakeCache(), fetchImpl: down, now: 0 })).source, "baked");
+  assert.equal((await loadLiveParams({}, null, { cache: fakeCache(), fetchImpl: down })).source, "baked");
+});
+
+test("serve time sends the env's PARAMS_KEY with the feed call", async () => {
+  let headers;
+  const fetchImpl = async (url, init) => { headers = init.headers; return feed({ a: "1" })(); };
+  await getLiveParams(env, null, { cache: fakeCache(), fetchImpl, now: 0 });
+  assert.equal(headers.apikey, "tenant-key");
+});
 
 test("the feed is cached for five minutes, then refreshed", async () => {
   const cache = fakeCache();
