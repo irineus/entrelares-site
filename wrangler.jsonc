@@ -72,7 +72,12 @@
     "REPLY_TO": "contato@entrelares.app",
     // L-34: the app's public feed (T-81) — PRODUCTION project. Anonymous by
     // design; the whitelist is a column in the app's database, not a secret.
-    "PARAMS_URL": "https://jptqbwfziyzlhlmoekzu.supabase.co/functions/v1/public-settings"
+    // Fulcrum 03.4.5: reached through the Fulcrum gateway, which answers 401
+    // without its tenant key — PARAMS_KEY is that key for the `entrelares`
+    // env (PUBLIC by design; the same one the app ships). Read by the Worker
+    // (src/serve-params.js) AND by the deploy's bake (tool/bake-params.mjs).
+    "PARAMS_URL": "https://api.entrelares.app/functions/v1/public-settings",
+    "PARAMS_KEY": "6cc0c37647edce18502b231522b60f861e753a92da1929df6386c7b7a444127e"
   },
   "env": {
     "preview": {
@@ -126,7 +131,9 @@
         "REPLY_TO": "contato@entrelares.app",
         // L-34: preview reads the DEV project's feed — the same database the
         // QA app (qa.entrelares.app) runs on, so a console edit on dev shows here.
-        "PARAMS_URL": "https://buroanotfjcgvbfmacuh.supabase.co/functions/v1/public-settings"
+        // Fulcrum 03.4.5: through the gateway's DEV env, with its tenant key.
+        "PARAMS_URL": "https://api-dev.entrelares.app/functions/v1/public-settings",
+        "PARAMS_KEY": "6a6abea8f2bb37df2412172620f5d9ab2742e7715c2efd8d42f10e59fc32772a"
       }
     }
   }
