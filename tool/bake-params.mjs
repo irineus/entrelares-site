@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 // L-34 — deploy time: bake the app's live parameters into the pages.
 //
-//   node tool/bake-params.mjs <public-settings URL> [public dir]
+//   node tool/bake-params.mjs <production|preview> [public dir]
+//
+// Fulcrum 03.4.5: the feed's URL and the gateway's tenant key are READ from
+// wrangler.jsonc (`vars.PARAMS_URL` / `vars.PARAMS_KEY` for production,
+// `env.preview.vars.*` for preview) — the same two values the Worker uses at
+// serve time, written once. They used to be typed again in each deploy
+// workflow, which is how a URL change could reach the Worker and not the bake.
 //
 // Runs in deploy.yml / deploy-preview.yml right before `wrangler deploy`, on
 // the CI checkout only (nothing is committed back). It rewrites every page that
@@ -15,6 +21,7 @@
 // exits 0 in that case on purpose.
 
 import { readdir, readFile, writeFile, appendFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fetchFeed, rewriteHtml } from "../src/params.js";
 
@@ -31,10 +38,22 @@ async function summary(line) {
   if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, line + "\n");
 }
 
-export async function bake(url, dir, { fetchImpl = fetch, log = summary } = {}) {
+/**
+ * `{ url, key }` of the feed for [envName] (`production` or `preview`), read
+ * from wrangler.jsonc. Whole-line `//` comments are the only JSONC this file
+ * uses (the tests read it the same way).
+ */
+export function feedConfig(envName, path = new URL("../wrangler.jsonc", import.meta.url)) {
+  const cfg = JSON.parse(readFileSync(path, "utf8").replace(/^\s*\/\/.*$/gm, ""));
+  const vars = envName === "production" ? cfg.vars : cfg.env?.[envName]?.vars;
+  if (!vars?.PARAMS_URL) throw new Error(`wrangler.jsonc: no PARAMS_URL for "${envName}"`);
+  return { url: vars.PARAMS_URL, key: vars.PARAMS_KEY };
+}
+
+export async function bake(url, dir, { fetchImpl = fetch, log = summary, apiKey } = {}) {
   let values;
   try {
-    ({ values } = await fetchFeed(url, { fetchImpl, timeoutMs: 10000 }));
+    ({ values } = await fetchFeed(url, { fetchImpl, timeoutMs: 10000, apiKey }));
   } catch (error) {
     await log(`⚠️ L-34: o feed de parâmetros não respondeu (${error.message}) — o deploy segue com os valores do repositório.`);
     return { changed: [], values: null };
@@ -55,10 +74,11 @@ export async function bake(url, dir, { fetchImpl = fetch, log = summary } = {}) 
 
 // Run only when invoked as a script — the tests import `bake`.
 if (process.argv[1]?.endsWith("bake-params.mjs")) {
-  const [url, dir = "public"] = process.argv.slice(2);
-  if (!url) {
-    console.error("uso: node tool/bake-params.mjs <URL do public-settings> [pasta public]");
+  const [envName, dir = "public"] = process.argv.slice(2);
+  if (envName !== "production" && envName !== "preview") {
+    console.error("uso: node tool/bake-params.mjs <production|preview> [pasta public]");
     process.exit(2);
   }
-  await bake(url, dir);
+  const { url, key } = feedConfig(envName);
+  await bake(url, dir, { apiKey: key });
 }

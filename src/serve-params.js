@@ -27,7 +27,19 @@ const CACHE_KEY_HOST = "https://entrelares-params.cache";
  * `now`.
  */
 export async function getLiveParams(env, ctx, deps = {}) {
-  if (!env.PARAMS_URL) return null;
+  return (await loadLiveParams(env, ctx, deps)).values;
+}
+
+/**
+ * [getLiveParams] plus WHERE the values came from — `fresh` (the feed answered
+ * now), `cached` (a copy younger than five minutes), `stale` (the feed failed,
+ * an older copy served) or `baked` (nothing live; the deploy's values stand).
+ * Fulcrum 03.4.5: the page reports it in `x-entrelares-params`, because a
+ * Worker that cannot reach the gateway serves a perfectly good BAKED page and
+ * nothing else outside the Worker's own log would tell the two apart.
+ */
+export async function loadLiveParams(env, ctx, deps = {}) {
+  if (!env.PARAMS_URL) return { values: null, source: "baked" };
   const cache = deps.cache ?? (typeof caches !== "undefined" ? caches.default : null);
   const now = deps.now ?? Date.now();
   const key = new Request(`${CACHE_KEY_HOST}/${encodeURIComponent(env.PARAMS_URL)}`);
@@ -38,7 +50,7 @@ export async function getLiveParams(env, ctx, deps = {}) {
     if (hit) {
       const fetchedAt = Number(hit.headers.get("x-fetched-at")) || 0;
       stale = await hit.json();
-      if (now - fetchedAt < FRESH_MS) return stale;
+      if (now - fetchedAt < FRESH_MS) return { values: stale, source: "cached" };
     }
   }
 
@@ -46,6 +58,7 @@ export async function getLiveParams(env, ctx, deps = {}) {
     const { values } = await fetchFeed(env.PARAMS_URL, {
       fetchImpl: deps.fetchImpl ?? fetch,
       timeoutMs: FEED_TIMEOUT_MS,
+      apiKey: env.PARAMS_KEY,
     });
     if (cache) {
       // A day of retention: the five minutes decide FRESHNESS, not presence —
@@ -57,10 +70,10 @@ export async function getLiveParams(env, ctx, deps = {}) {
       if (ctx?.waitUntil) ctx.waitUntil(put);
       else await put;
     }
-    return values;
+    return { values, source: "fresh" };
   } catch (error) {
     console.warn("L-34: public-settings unavailable, serving", stale ? "the cached copy" : "the baked page", String(error));
-    return stale;
+    return stale ? { values: stale, source: "stale" } : { values: null, source: "baked" };
   }
 }
 
@@ -144,12 +157,19 @@ export async function serveWithParams(request, env, ctx, deps = {}) {
   if (request.method !== "GET" || response.status !== 200) return response;
   if (!(response.headers.get("content-type") || "").includes("text/html")) return response;
 
-  const live = await getLiveParams(env, ctx, deps);
-  if (!live) return response;
+  const { values: live, source } = await loadLiveParams(env, ctx, deps);
+  if (!live) return withSource(response, source);
 
   const Rewriter = deps.HTMLRewriter ?? globalThis.HTMLRewriter;
-  if (!Rewriter) return response;
+  if (!Rewriter) return withSource(response, "baked");
   let rewriter = new Rewriter();
   for (const [selector, handler] of paramHandlers(live)) rewriter = rewriter.on(selector, handler);
-  return rewriter.transform(response);
+  return withSource(rewriter.transform(response), source);
+}
+
+/** The page, with where its values came from (see [loadLiveParams]). */
+function withSource(response, source) {
+  const out = new Response(response.body, response);
+  out.headers.set("x-entrelares-params", source);
+  return out;
 }

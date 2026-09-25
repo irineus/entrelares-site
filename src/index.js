@@ -17,7 +17,8 @@
 // src/serve-params.js; the routes are `assets.run_worker_first`).
 //
 // Config (wrangler.jsonc `vars`, non-secret):
-//   PARAMS_URL         — L-34: the app's T-81 feed (`public-settings`) — the dev
+//   PARAMS_URL         — L-34: the app's T-81 feed (`public-settings`), through the
+//                        Fulcrum gateway since Fulcrum 03.4.5 — the dev
 //                        project on preview, production on production.
 //   RESEND_SEGMENT_ID  — the Resend segment the contact is added to.
 //   FROM_EMAIL         — verified-domain sender: "Entrelares <materiais@entrelares.app>"

@@ -227,12 +227,19 @@ export function rewriteHtml(html, live) {
 /**
  * Reads the T-81 feed. Resolves to `{ values }` or throws; [timeoutMs] bounds
  * the wait so a slow backend never holds a page.
+ *
+ * Fulcrum 03.4.5: the feed is reached through the Fulcrum gateway
+ * (`api.entrelares.app`), which answers 401 to a request without its tenant
+ * key. [apiKey] is that key — PUBLIC by design, one per env, the same one the
+ * app ships — and goes in the `apikey` header, nowhere else.
  */
-export async function fetchFeed(url, { fetchImpl = fetch, timeoutMs = 1500 } = {}) {
+export async function fetchFeed(url, { fetchImpl = fetch, timeoutMs = 1500, apiKey } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const headers = { accept: "application/json" };
+  if (apiKey) headers.apikey = apiKey;
   try {
-    const res = await fetchImpl(url, { signal: controller.signal, headers: { accept: "application/json" } });
+    const res = await fetchImpl(url, { signal: controller.signal, headers });
     if (!res.ok) throw new Error(`public-settings answered ${res.status}`);
     const body = await res.json();
     if (!body || typeof body.values !== "object" || body.values === null) {
