@@ -41,9 +41,15 @@ test("both CTAs open the app's sign-up and say they came from the report", () =>
   }
 });
 
-test("the page makes no claim the PDF cannot back: no signature, no verification code", () => {
-  // Nothing in entrelares-app signs or hashes the report (checked 15/09/2026; a QR mirror is
-  // a future card). The page SAYS so — this pins that it never starts saying the opposite.
-  assert.match(html, /não tem assinatura digital nem código de verificação/);
-  assert.match(html, /carries no digital signature and no verification code/);
+test("the page describes the F-64 verification — and never calls it a signature", () => {
+  // Since F-64 (entrelares-app #273/#274, published with S-22) a PDF generated with
+  // verification carries a QR code: a public page, a summary without names and the
+  // file's SHA-256 compared on the checker's device. The page says so, and still says
+  // the report is not a digital signature — nothing in the app signs it.
+  assert.match(html, /QR code/);
+  assert.match(html, /o PDF não é enviado a nós/);
+  assert.match(html, /the PDF is never sent to us/);
+  assert.match(html, /não é assinatura digital/);
+  assert.match(html, /is not a digital signature/);
+  assert.doesNotMatch(html, /não tem assinatura digital nem código de verificação/);
 });
