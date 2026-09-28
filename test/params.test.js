@@ -39,6 +39,8 @@ const PARAM_PAGES = [
   "blog/como-montar-calendario-guarda-compartilhada.html",
   "blog/modelos-de-rotina-guarda-compartilhada.html",
   "ferramentas/gerador-de-rotina-de-guarda.html",
+  "para-toda-familia.html",
+  "en/for-every-family.html",
 ];
 const LEGAL = ["termos.html", "privacidade.html", "exclusao-de-conta.html"];
 
