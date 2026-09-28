@@ -50,7 +50,7 @@
       "operatingSystem": "Web, Android, iOS",
       "applicationCategory": "LifestyleApplication",
       "inLanguage": "pt-BR",
-      "description": "Aplicativo para pais separados organizarem o calendário de convivência dos filhos, com trocas de dia aprovadas pelos dois responsáveis e histórico completo.",
+      "description": "Aplicativo para pais separados organizarem o calendário de convivência dos filhos, com trocas de dia aprovadas pelos dois responsáveis, histórico completo, agenda da criança, despesas compartilhadas e conversa da família.",
       "offers": [ { "@type": "Offer", "price": "0", "priceCurrency": "BRL", "name": "Gratuito" }, { "@type": "Offer", "price": "5.49", "priceCurrency": "BRL", "name": "Premium (mensal, por família)" } ],
       "url": "https://entrelares.app/"
     }
@@ -102,7 +102,7 @@
           "name": "O histórico serve como prova na justiça?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O app registra permanentemente todas as trocas, aprovações e alterações, com data e hora, num histórico que não pode ser editado ou apagado. Esse registro pode ser útil para documentar o cumprimento do acordo de convivência, mas o valor de qualquer documento como prova é sempre uma decisão do juiz. Na dúvida, converse com seu advogado."
+            "text": "O app registra permanentemente todas as trocas, aprovações e alterações, com data e hora, num histórico que não pode ser editado ou apagado. O relatório em PDF do período (Premium) traz um QR code com o qual quem o recebe confere que o arquivo não foi alterado. Esse registro pode ser útil para documentar o cumprimento do acordo de convivência, mas o valor de qualquer documento como prova é sempre uma decisão do juiz. Na dúvida, converse com seu advogado."
           }
         },
         {
@@ -118,7 +118,31 @@
           "name": "Quanto custa o app de guarda compartilhada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O essencial é gratuito: calendário do casal, trocas com aprovação dos dois e histórico. O plano Premium custa R$ 5,49/mês (ou R$ 54,90/ano) por família na versão web — preço promocional de lançamento, válido até 31/12/2026 e só por esse canal, que cobre todos os responsáveis; pelo Google Play, no app Android, custa R$ 5,99/mês ou R$ 59,90/ano — e libera recursos avançados como cuidadores além do casal, relatório do histórico em PDF e planejamento de até 24 meses. Pagamento por Pix (sem informar cartão) ou cartão de crédito, com garantia de reembolso integral em até 7 dias (art. 49 do CDC); cancele quando quiser sem perder dados."
+            "text": "O essencial é gratuito: calendário do casal, trocas com aprovação dos dois e histórico. O plano Premium custa R$ 5,49/mês (ou R$ 54,90/ano) por família na versão web — preço promocional de lançamento, válido até 31/12/2026 e só por esse canal, que cobre todos os responsáveis; pelo Google Play, no app Android, custa R$ 5,99/mês ou R$ 59,90/ano — e libera recursos avançados como cuidadores além do casal, a agenda completa da criança, as despesas compartilhadas, escrever na Conversa da família, o relatório em PDF verificável por QR code e planejamento de até 24 meses. Pagamento por Pix (sem informar cartão) ou cartão de crédito, com garantia de reembolso integral em até 7 dias (art. 49 do CDC); cancele quando quiser sem perder dados."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Dá para organizar também a agenda e as despesas dos filhos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. A agenda da criança reúne escola, saúde, remédios e atividades de cada filho, com rotinas que se repetem e lembretes; a nota do dia é gratuita, e o resto da agenda faz parte do Premium. As despesas compartilhadas (Premium) dividem cada gasto em partes iguais, por valor, por porcentagem ou por cotas, mostram o saldo de cada um e o menor número de pagamentos para acertar. Um pagamento só conta quando quem recebe confirma, e o app não movimenta dinheiro."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Avós ou a babá podem só acompanhar, sem mexer em nada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, como visualizador: vê o calendário, a agenda e os relatórios e recebe as notificações informativas no app, mas não altera nada, não entra em trocas e não vê as mensagens das trocas nem as despesas. O plano gratuito já inclui visualizador; o Premium permite mais."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Existe uma conversa entre os responsáveis dentro do app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. A Conversa da família é uma só, para todos, e nenhuma mensagem pode ser editada nem apagada; cada uma mostra quem já leu. Escrever faz parte do Premium; sem ele, o que já foi dito continua disponível para leitura. Quem gera o relatório em PDF pode incluir a conversa do período."
           }
         },
         {
@@ -270,6 +294,9 @@
         .feature .ico { font-size: 26px; margin-bottom: 10px; }
         .feature h3 { font-size: 16.5px; margin-bottom: 6px; }
         .feature p { font-size: 14.5px; color: var(--muted); }
+        /* L-38 — the phase-6 modules: vector icons, no screenshots (L-21 stays out). */
+        .feature .ico svg { width: 28px; height: 28px; color: var(--indigo); display: block; }
+        .feature .module-tag { display: inline-block; font-size: 12px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 999px; padding: 2px 10px; margin-bottom: 8px; }
 
         /* ── Install ────────────────────────────────────────── */
         .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -938,6 +965,48 @@
     </div>
 </section>
 
+<!-- L-38 — the five phase-6 modules (S-22). Each sentence cites its code in the PR. The Free/Premium
+     split is typed from agenda/expenses/chat.premium_only and free_viewers: none of them is on the
+     public-settings feed, so a change there means editing this block and its twin in the other language. -->
+<section id="modulos">
+    <div class="wrap">
+        <h2>Além do calendário: a rotina inteira da criança</h2>
+        <p class="section-lead">O que a família combina e registra, num lugar só — só para quem faz parte dela, sem anúncios.</p>
+        <div class="features">
+            <div class="feature">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg></div>
+                <p class="module-tag">Nota do dia grátis · agenda completa no Premium</p>
+                <h3>Agenda da criança</h3>
+                <p>Escola, saúde, remédios e atividades de cada filho, com rotinas que se repetem e lembretes para quem você escolher.</p>
+            </div>
+            <div class="feature">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/></svg></div>
+                <p class="module-tag">Premium</p>
+                <h3>Despesas compartilhadas</h3>
+                <p>Cada gasto dividido em partes iguais, por valor, por porcentagem ou por cotas, com o saldo de cada um e o menor número de pagamentos para acertar. Um pagamento só conta quando quem recebe confirma — o app não movimenta dinheiro.</p>
+            </div>
+            <div class="feature">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg></div>
+                <p class="module-tag">Escrever no Premium · ler é sempre possível</p>
+                <h3>Conversa da família</h3>
+                <p>Uma conversa só, para todos da família, que ninguém edita nem apaga, mostrando quem já leu cada mensagem. Sem o Premium, o que já foi dito continua disponível para leitura.</p>
+            </div>
+            <div class="feature">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <p class="module-tag">Grátis · mais visualizadores no Premium</p>
+                <h3>Visualizador</h3>
+                <p>Para quem acompanha sem decidir — a avó, a babá: vê o calendário, a agenda e os relatórios e recebe as notificações informativas. Não altera nada, não entra em trocas e não vê as mensagens das trocas nem as despesas.</p>
+            </div>
+            <div class="feature">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                <p class="module-tag">Premium</p>
+                <h3>Relatório em PDF verificável</h3>
+                <p>O relatório do período traz um QR code: quem o recebe confere que o arquivo não foi alterado, e o documento não fica guardado nos nossos servidores.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="instalar">
     <div class="wrap">
         <h2>Instale no seu celular em 30 segundos</h2>
@@ -1092,7 +1161,7 @@
             </details>
             <details>
                 <summary>O histórico serve como prova na justiça?</summary>
-                <div class="a">O app registra permanentemente todas as trocas, aprovações e alterações, com data e hora, num histórico que não pode ser editado ou apagado. Esse registro pode ser útil para documentar o cumprimento do acordo de convivência — mas o valor de qualquer documento como prova é sempre uma decisão do juiz. Na dúvida, converse com seu advogado.</div>
+                <div class="a">O app registra permanentemente todas as trocas, aprovações e alterações, com data e hora, num histórico que não pode ser editado ou apagado. O relatório em PDF do período (Premium) traz um QR code com o qual quem o recebe confere que o arquivo não foi alterado. Esse registro pode ser útil para documentar o cumprimento do acordo de convivência — mas o valor de qualquer documento como prova é sempre uma decisão do juiz. Na dúvida, converse com seu advogado.</div>
             </details>
             <details>
                 <summary>Meus dados e os dos meus filhos estão seguros?</summary>
@@ -1100,7 +1169,19 @@
             </details>
             <details>
                 <summary>Quanto custa o app de guarda compartilhada?</summary>
-                <div class="a">O essencial é gratuito: o calendário do casal, as trocas com aprovação dos dois, as notificações e o histórico. O plano Premium custa <span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span>/mês (ou <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/ano<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=", com ">, com 2 meses grátis</span>) por família na versão web — preço promocional de lançamento, válido até 31/12/2026 e só por esse canal, um valor único que cobre todos os responsáveis; pelo Google Play, no app Android, custa R$ 5,99/mês ou R$ 59,90/ano — e libera recursos avançados como incluir avós, babá e outros cuidadores além do casal, o relatório do histórico em PDF e o planejamento de até <span data-param="calendar_months_premium" data-format="months">24 meses</span>. Pagamento por Pix (QR code pelo app do seu banco, sem informar cartão) ou cartão de crédito, com <strong>garantia de reembolso integral em até 7 dias</strong> (art. 49 do CDC); cancele quando quiser sem perder nenhum dado.</div>
+                <div class="a">O essencial é gratuito: o calendário do casal, as trocas com aprovação dos dois, as notificações e o histórico. O plano Premium custa <span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span>/mês (ou <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/ano<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=", com ">, com 2 meses grátis</span>) por família na versão web — preço promocional de lançamento, válido até 31/12/2026 e só por esse canal, um valor único que cobre todos os responsáveis; pelo Google Play, no app Android, custa R$ 5,99/mês ou R$ 59,90/ano — e libera recursos avançados como incluir avós, babá e outros cuidadores além do casal, a agenda completa da criança, as despesas compartilhadas, escrever na Conversa da família, o relatório em PDF verificável por QR code e o planejamento de até <span data-param="calendar_months_premium" data-format="months">24 meses</span>. Pagamento por Pix (QR code pelo app do seu banco, sem informar cartão) ou cartão de crédito, com <strong>garantia de reembolso integral em até 7 dias</strong> (art. 49 do CDC); cancele quando quiser sem perder nenhum dado.</div>
+            </details>
+            <details>
+                <summary>Dá para organizar também a agenda e as despesas dos filhos?</summary>
+                <div class="a">Sim. A agenda da criança reúne escola, saúde, remédios e atividades de cada filho, com rotinas que se repetem e lembretes; a nota do dia é gratuita, e o resto da agenda faz parte do Premium. As despesas compartilhadas (Premium) dividem cada gasto em partes iguais, por valor, por porcentagem ou por cotas, mostram o saldo de cada um e o menor número de pagamentos para acertar. Um pagamento só conta quando quem recebe confirma, e o app não movimenta dinheiro.</div>
+            </details>
+            <details>
+                <summary>Avós ou a babá podem só acompanhar, sem mexer em nada?</summary>
+                <div class="a">Sim, como visualizador: vê o calendário, a agenda e os relatórios e recebe as notificações informativas no app, mas não altera nada, não entra em trocas e não vê as mensagens das trocas nem as despesas. O plano gratuito já inclui visualizador; o Premium permite mais.</div>
+            </details>
+            <details>
+                <summary>Existe uma conversa entre os responsáveis dentro do app?</summary>
+                <div class="a">Sim. A Conversa da família é uma só, para todos, e nenhuma mensagem pode ser editada nem apagada; cada uma mostra quem já leu. Escrever faz parte do Premium; sem ele, o que já foi dito continua disponível para leitura. Quem gera o relatório em PDF pode incluir a conversa do período.</div>
             </details>
             <details>
                 <summary>Funciona no iPhone e no Android?</summary>
