@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Entrelares para advogados e mediadores de família</title>
+<meta name="author" content="Entrelares" />
+<meta name="subject" content="Folheto para advogados e mediadores de família" />
+<!--
+  L-36 — the one-page handout served at /downloads/folheto-entrelares-advogados.pdf.
+
+  Same claims as public/advogados.html, in short form; every sentence is cited in the PR
+  that shipped it (S-15). No price, no personal name (company identity waits on L-15), no
+  competitor. The QR below is INLINE on purpose, so re-rendering needs no QR library: it
+  encodes https://entrelares.app/advogados#folheto (segno 1.6.6, error level M, the
+  navy of the brand); the fragment is what makes the arrival an Umami event apart from
+  search (L-30 pattern). To change the target, regenerate the path with segno and paste it.
+
+  Render (Chrome or Edge, from the repository root):
+    chrome headless print-to-pdf of assets-src/folheto-advogados.html into
+    public/downloads/folheto-entrelares-advogados.pdf, with no header or footer.
+  test/advogados.test.js checks the PDF exists, is ONE page and that this file and the
+  page carry the not-legal-advice sentence.
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root { --ink: #1e293b; --muted: #475569; --indigo: #4f46e5; --indigo-deep: #3730a3; --navy: #03173d; --bg-tint: #eef2ff; --line: #e2e8f0; }
+  @page { size: A4; margin: 0; }
+  html, body { font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Liberation Sans", sans-serif; color: var(--ink); line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .band { background: linear-gradient(120deg, var(--navy) 0%, #12235c 55%, var(--indigo-deep) 100%); color: #fff; padding: 16mm 18mm 12mm; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+  .brand img { width: 30px; height: 30px; border-radius: 8px; background: #fff; }
+  h1 { font-size: 27px; line-height: 1.15; letter-spacing: -0.02em; margin: 10mm 0 4mm; }
+  .band p { font-size: 13.5px; opacity: .9; max-width: 160mm; }
+  main { padding: 9mm 18mm 0; flex: 1; }
+  h2 { font-size: 15px; color: var(--indigo-deep); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4mm; }
+  ul { list-style: none; }
+  li { font-size: 13px; color: var(--muted); padding: 2.6mm 0 2.6mm 7mm; border-bottom: 1px solid var(--line); position: relative; }
+  li::before { content: ""; position: absolute; left: 0; top: 4.4mm; width: 3mm; height: 3mm; border-radius: 1mm; background: var(--indigo); }
+  li strong { color: var(--ink); }
+  .note { margin-top: 6mm; background: var(--bg-tint); border-left: 3px solid var(--indigo); padding: 4mm 5mm; font-size: 12.5px; color: var(--indigo-deep); border-radius: 0 6px 6px 0; }
+  .foot { display: flex; align-items: center; gap: 9mm; padding: 8mm 18mm 13mm; border-top: 1px solid var(--line); margin-top: 7mm; }
+  .qr { width: 36mm; height: 36mm; flex: none; padding: 2.5mm; border: 1px solid var(--line); border-radius: 3mm; background: #fff; }
+  .qr svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
+  .foot h3 { font-size: 15px; margin-bottom: 2mm; }
+  .foot p { font-size: 12.5px; color: var(--muted); }
+  .foot .url { font-weight: 700; color: var(--indigo-deep); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="band">
+    <div class="brand"><img src="../public/icon-192.png" alt="" /> Entrelares</div>
+    <h1>O calendário de convivência que registra o que cada responsável fez</h1>
+    <p>Para advogados e mediadores de família: o que o app registra numa família em guarda compartilhada — e o que ele não é.</p>
+  </div>
+  <main>
+    <h2>O que o app registra</h2>
+    <ul>
+      <li><strong>De quem é cada dia</strong> — o planejado e quem de fato ficou com a criança quando houve troca.</li>
+      <li><strong>Trocas combinadas pelos dois lados</strong>, com a mensagem de quem pediu e de quem respondeu. Sem resposta, o pedido é aprovado no prazo que o lembrete informa, e o registro diz que foi por falta de resposta.</li>
+      <li><strong>Um histórico que nenhum membro edita nem apaga</strong>, com data, hora, autor e o que mudou. Correção é uma linha nova; a alteração feita por um administrador sozinho aparece como tal.</li>
+      <li><strong>O relato do dia</strong>: o que aconteceu num dia que passou, anexado e nunca editado.</li>
+      <li><strong>Relatório em PDF verificável por QR code</strong> (Premium): quem recebe confere que o arquivo não foi alterado; o documento não fica guardado nos nossos servidores.</li>
+      <li><strong>Visualizador</strong>: quem a família convida para acompanhar vê o calendário, a agenda e os relatórios, sem alterar nada nem ver as mensagens das trocas e as despesas.</li>
+    </ul>
+    <div class="note"><strong>O Entrelares não é aconselhamento jurídico e não toma partido.</strong> O relatório não é assinatura digital e não substitui o acordo nem a decisão judicial; o valor de qualquer documento como prova é decisão do juiz.</div>
+  </main>
+  <div class="foot">
+    <div class="qr"><svg role="img" aria-label="QR code: entrelares.app/advogados" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#03173d" d="M0 0.5h7m2 0h3m1 0h1m2 0h4m2 0h7m-29 1h1m5 0h1m3 0h1m1 0h1m2 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m3 0h2m5 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h4m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m4 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h3m3 0h3m1 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m1 0h3m1 0h1m1 0h1m-17 1h1m1 0h5m3 0h5m2 0h1m2 0h1m1 0h5m-26 1h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m3 0h1m-28 1h7m3 0h1m2 0h2m4 0h1m-20 1h1m3 0h1m2 0h1m3 0h1m3 0h1m1 0h1m5 0h2m1 0h1m-28 1h2m1 0h1m1 0h3m1 0h1m3 0h3m1 0h1m5 0h1m1 0h2m-25 1h4m5 0h3m2 0h1m2 0h6m3 0h1m-29 1h2m2 0h3m2 0h9m4 0h1m1 0h3m-26 1h3m1 0h1m2 0h1m2 0h2m1 0h1m3 0h4m1 0h2m2 0h1m-27 1h1m4 0h2m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h2m-27 1h1m2 0h1m6 0h2m5 0h3m1 0h4m1 0h1m1 0h1m-29 1h1m1 0h6m1 0h1m1 0h2m2 0h3m2 0h2m4 0h1m-27 1h1m1 0h1m4 0h1m4 0h1m6 0h1m3 0h1m3 0h1m-28 1h1m3 0h3m2 0h2m4 0h3m2 0h5m1 0h3m-21 1h2m3 0h1m2 0h1m1 0h3m3 0h5m-29 1h7m2 0h1m1 0h1m1 0h5m1 0h2m1 0h1m1 0h3m-27 1h1m5 0h1m1 0h6m2 0h1m2 0h2m3 0h1m2 0h1m-28 1h1m1 0h3m1 0h1m1 0h2m4 0h1m2 0h1m2 0h5m1 0h3m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m5 0h1m1 0h2m5 0h4m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m2 0h2m2 0h6m-28 1h1m5 0h1m5 0h2m1 0h2m3 0h2m1 0h3m1 0h1m-28 1h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1"/></svg></div>
+    <div>
+      <h3>Aponte a câmera para saber mais</h3>
+      <p class="url">entrelares.app/advogados</p>
+      <p>Para indicar ao cliente: entrelares.app — Google Play no Android, app web em qualquer celular. Criar a conta é grátis.</p>
+      <p>Para profissionais: <strong>contato@entrelares.app</strong></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
