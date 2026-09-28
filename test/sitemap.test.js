@@ -117,3 +117,21 @@ test('every internal page link resolves to a file — the extensionless rewrite 
     }
   }
 });
+
+// L-39 — "Para toda família" is an INDEXED page with an English twin: both are in the
+// sitemap, both answer extensionless (a file on disk), and they name each other through
+// reciprocal hreflang with x-default on the PT-BR page, the L-16 pattern.
+test('L-39: /para-toda-familia and /en/for-every-family are listed, served and paired', () => {
+  const pair = { pt: '/para-toda-familia', en: '/en/for-every-family' };
+  for (const path of Object.values(pair)) {
+    assert.ok(locs.includes(`${ORIGIN}${path}`), `${path} is missing from the sitemap`);
+    assert.ok(fileFor(path), `${path} has no file on disk`);
+  }
+  for (const path of Object.values(pair)) {
+    const html = readFileSync(join(PUBLIC, fileFor(path)), 'utf8');
+    assert.ok(!/<meta[^>]+noindex/i.test(html), `${path} must stay indexable`);
+    assert.match(html, new RegExp(`hreflang="pt-BR" href="${ORIGIN}${pair.pt}"`));
+    assert.match(html, new RegExp(`hreflang="en" href="${ORIGIN}${pair.en}"`));
+    assert.match(html, new RegExp(`hreflang="x-default" href="${ORIGIN}${pair.pt}"`));
+  }
+});
