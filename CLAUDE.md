@@ -353,8 +353,8 @@ system; an unverified claim is a liability no matter who drafted it.
   single like `exclusao-de-conta` (the PDF prints ONE address in both languages), `noindex`,
   no canonical and **out of the sitemap on purpose**: its pageviews are the measurement of that
   channel, and organic search would mix into it. Every sentence is a claim about the app's code
-  (report is Premium, built on the device, not stored on our servers, no signature or
-  verification code, history erased only with the whole family) — re-check it when the report
+  (report is Premium, built on the device, not stored on our servers, not a digital signature,
+  verifiable by the F-64 QR code since S-22, history erased only with the whole family) — re-check it when the report
   changes. **It must never move or 404**: once F-63 ships, every PDF generated carries it, and a
   PDF in someone's hands cannot be re-printed.
 - **A `utm_*` on an app link measures nothing (L-27).** The app's `sanitizeAnalyticsPath` (T-37)

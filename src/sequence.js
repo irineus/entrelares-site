@@ -188,7 +188,7 @@ function step3(ctx) {
           <p style="margin:0 0 18px;font-family:${FONT};font-size:15px;line-height:1.65;color:${MUTED};">Um acordo de convivência só funciona enquanto as duas pessoas lembram dele do mesmo jeito. É por isso que o Entrelares existe: o calendário fica num lugar só, igual para os dois responsáveis.</p>
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             ${li("📅", `De quem é o dia, ${strong("sempre à vista")} — sem conferir conversa antiga`)}
-            ${li("🤝", `Trocas de dia só valem com a ${strong("aprovação dos dois")}`)}
+            ${li("🤝", `Troca de dia pede a ${strong("aprovação do outro responsável")}`)}
             ${li("📜", `Histórico com data e hora, que ${strong("não pode ser editado nem apagado")}`)}
           </table>
           <div style="padding:24px 0 28px;">${button(ctx.appUrl, "Abrir o Entrelares", INDIGO_DEEP)}</div>
@@ -215,7 +215,7 @@ function step3(ctx) {
     "fica num lugar só, igual para os dois responsáveis.",
     "",
     "  - De quem é o dia, sempre à vista — sem conferir conversa antiga;",
-    "  - trocas de dia só valem com a aprovação dos dois;",
+    "  - troca de dia pede a aprovação do outro responsável;",
     "  - histórico com data e hora, que não pode ser editado nem apagado.",
     "",
     "Abrir o Entrelares: " + ctx.appUrl,
