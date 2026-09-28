@@ -134,7 +134,7 @@
           "name": "What if the other parent does not approve a swap?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The swap simply does not happen: the day stays exactly as the calendar has it, and the refusal is recorded in the history. There is one rule: no day changes without both parents agreeing. That is what keeps the calendar trustworthy for both of them."
+            "text": "The swap simply does not happen: the day stays exactly as the calendar has it, and the refusal is recorded in the history. If they do not answer, the request is approved automatically once the deadline passes, and the history records that it was for lack of an answer. A day changes hands only through the request and the answer — and when an administrator corrects a day alone, the history says that too. That is what keeps the calendar trustworthy for both of them."
           }
         }
       ]
@@ -679,7 +679,7 @@
                                 <img src="/img/screenshots/en/today-calendar-meu-dia.png" width="1080" height="1920" alt="App home screen: a card showing whose day it is, and the month calendar with each day colored by parent" loading="eager" decoding="async" />
                             </picture>
                         </div>
-                        <div class="shot" data-caption="Swapped a day? It only counts when both approve">
+                        <div class="shot" data-caption="Swapped a day? The other parent approves or declines">
                             <picture>
                                 <source srcset="/img/screenshots/en/troca-aguardando-aprovacao.webp" type="image/webp" />
                                 <img src="/img/screenshots/en/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="A pending day-swap request with the Approve and Reject buttons" loading="lazy" decoding="async" />
@@ -731,12 +731,12 @@
             <div class="step">
                 <div class="n">2</div>
                 <h3>Build the calendar together</h3>
-                <p>Set whose day each day is, following your own agreement — alternating weeks, fixed days, holidays. The app always shows who is responsible today and in the days ahead.</p>
+                <p>Set whose day each day is, following your own agreement — alternating weeks, fortnights or a cycle of your own. Holidays and special dates you adjust on the day itself, or on several days at once. The app always shows who is responsible today and in the days ahead.</p>
             </div>
             <div class="step">
                 <div class="n">3</div>
                 <h3>Need to swap a day? Propose it in the app</h3>
-                <p>The swap only takes effect once the other parent approves. Nothing changes on one person's say-so — and everything is recorded, with date and time.</p>
+                <p>The other parent approves or declines, and until they answer the day stays as it was. Everything is recorded, with date and time — including when an administrator corrects a day alone.</p>
             </div>
         </div>
     </div>
@@ -797,7 +797,7 @@
                         <img src="/img/screenshots/en/editor-dia.png" width="1080" height="1920" alt="The day editor: who is responsible, the handover time and the day note" loading="lazy" decoding="async" />
                     </picture>
                 </div></div>
-                <p>Set who is responsible, the handoff time and a note for each day.</p>
+                <p>Set who is responsible and the handoff time for each day.</p>
             </div>
             <div class="gallery-item">
                 <div class="phone-sm"><div class="scr">
@@ -832,7 +832,7 @@
                 <ul>
                     <li>One calendar, identical for both parents</li>
                     <li>Whose day it is today, always in sight</li>
-                    <li>A swap only counts with the other parent's approval</li>
+                    <li>A swap asks for the other parent's approval</li>
                     <li>History with date and time that cannot be deleted</li>
                     <li>Instant notifications — nobody is left out</li>
                 </ul>
@@ -881,7 +881,7 @@
                 <li>
                     <button type="button" data-frame="0" data-hl="9.8,84.5,39.3,4.9" aria-current="false">
                         <span class="demo-n">2</span>
-                        <span class="demo-tx"><strong>Rafael decides</strong><span class="demo-d">A swap only counts once the other caregiver approves it. While the request is open, the day stays frozen exactly as it was.</span></span>
+                        <span class="demo-tx"><strong>Rafael decides</strong><span class="demo-d">Approving or declining is up to him. While the request is open, the day stays frozen exactly as it was.</span></span>
                         <span class="demo-bar"><i></i></span>
                     </button>
                 </li>
@@ -910,7 +910,7 @@
             <div class="feature">
                 <div class="ico">🤝</div>
                 <h3>Swaps approved by both</h3>
-                <p>Any change to a day becomes a request the other parent approves or declines. No surprises, no "nobody told me".</p>
+                <p>A swap becomes a request the other parent approves or declines. No surprises, no "nobody told me".</p>
             </div>
             <div class="feature">
                 <div class="ico">📜</div>
@@ -943,7 +943,7 @@
         <div class="install-grid">
             <div class="install-card">
                 <h3>🤖 Android</h3>
-                <p class="play-badge" data-param-show="landing.play_badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a></p>
+                <p class="play-badge" data-param-show="landing.play_badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Den-install" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a></p>
                 <p class="play-badge-alt" data-param-show="landing.play_badge">Or from the browser (Chrome):</p>
                 <p class="play-badge-alt" data-param-hide="landing.play_badge" hidden>From the browser (Chrome):</p>
                 <ol>
@@ -1024,7 +1024,7 @@
                 <div class="price">R$ 0<small>/month</small></div>
                 <p>Everything two parents need to organize their children's time — no credit card, no catch.</p>
                 <ul>
-                    <li>Parenting calendar for both parents</li>
+                    <li>Parenting calendar for up to <span data-param="free_caregivers" data-format="int">2</span> caregivers</li>
                     <li>Day swaps approved by both</li>
                     <li>Immutable history of every decision</li>
                     <li>Real-time and e-mail notifications</li>
@@ -1100,11 +1100,11 @@
             </details>
             <details>
                 <summary>Does it work on iPhone and Android?</summary>
-                <div class="a">Yes. The app runs on any phone with a browser — Android or iPhone — and can be installed on the home screen in seconds, and on Android from <a href="https://play.google.com/store/apps/details?id=com.entrelares.app" rel="noopener">Google Play</a> too. See the <a href="#install">installation steps</a>.</div>
+                <div class="a">Yes. The app runs on any phone with a browser — Android or iPhone — and can be installed on the home screen in seconds, and on Android from <a href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Den-faq" rel="noopener">Google Play</a> too. See the <a href="#install">installation steps</a>.</div>
             </details>
             <details>
                 <summary>What if the other parent doesn't approve a swap?</summary>
-                <div class="a">The swap simply doesn't happen: the day stays exactly as the calendar has it, and the refusal is recorded in the history. There's one rule — no day changes without both parents agreeing. That's what keeps the calendar trustworthy for both of them.</div>
+                <div class="a">The swap simply doesn't happen: the day stays exactly as the calendar has it, and the refusal is recorded in the history. If they don't answer, the request is approved automatically once the deadline passes, and the history records that it was for lack of an answer. A day changes hands only through the request and the answer — and when an administrator corrects a day alone, the history says that too. That's what keeps the calendar trustworthy for both of them.</div>
             </details>
         </div>
     </div>

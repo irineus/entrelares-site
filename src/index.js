@@ -742,7 +742,7 @@ function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
               <p style="margin:0 0 14px;font-family:${FONT};font-size:14.5px;line-height:1.6;color:${MUTED};">Coloque-a no app Entrelares — grátis. Ele mantém o calendário num lugar só, igual para os dois responsáveis:</p>
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 ${li("📅", `De quem é o dia, ${strong("sempre à vista")}`)}
-                ${li("🤝", `Trocas de dia só valem com a ${strong("aprovação dos dois")}`)}
+                ${li("🤝", `Troca de dia pede a ${strong("aprovação do outro responsável")}`)}
                 ${li("📜", `Histórico com data e hora, que ${strong("não pode ser editado nem apagado")}`)}
               </table>
               <div style="padding:18px 0 4px;">${button(APP_SIGNUP_URL, "Criar conta grátis", INDIGO_DEEP)}</div>
