@@ -135,3 +135,16 @@ test('L-39: /para-toda-familia and /en/for-every-family are listed, served and p
     assert.match(html, new RegExp(`hreflang="x-default" href="${ORIGIN}${pair.pt}"`));
   }
 });
+
+// L-40 — the neutral checklist is an indexed article: listed, served extensionless, and
+// linked from the blog index. Its answers box names no other app — only questions above it.
+test('L-40: the "como escolher" article is listed, served and linked from the blog', () => {
+  const path = '/blog/como-escolher-app-guarda-compartilhada';
+  assert.ok(locs.includes(`${ORIGIN}${path}`), `${path} is missing from the sitemap`);
+  assert.ok(fileFor(path), `${path} has no file on disk`);
+  const html = readFileSync(join(PUBLIC, fileFor(path)), 'utf8');
+  assert.ok(!/<meta[^>]+noindex/i.test(html), 'the article must stay indexable');
+  assert.match(html, /id="respostas-entrelares"/, 'our answers sit in their own box');
+  const blogIndex = readFileSync(join(PUBLIC, 'blog', 'index.html'), 'utf8');
+  assert.match(blogIndex, new RegExp(`href="${path}"`));
+});
