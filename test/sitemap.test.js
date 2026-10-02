@@ -207,3 +207,42 @@ test('L-43: the routine pages are listed, served and linked', () => {
     assert.match(gerador, new RegExp(`href="${path}"`), `the generator does not link to ${path}`);
   }
 });
+
+// L-44 — no orphan pages. A page that only the sitemap names is one a crawler finds and
+// then weighs as unimportant: nothing on the site vouches for it, and a reader can never
+// walk to it. Every sitemap URL except the home has to be the target of a plain <a href>
+// on at least ONE OTHER sitemap page (a link from a noindex page, or from the page to
+// itself, does not count). The audit of 02/10/2026 found none orphaned; the weakest were
+// /advogados (one article) and /rotinas/ (never from the home), both linked since.
+test('L-44: every sitemap page except the home is linked from another sitemap page', () => {
+  const paths = locs.map((loc) => loc.slice(ORIGIN.length));
+  const canonicalPath = (href, from) => {
+    if (/^(mailto:|tel:|#|\/\/)/.test(href)) return null;
+    const url = new URL(href, `${ORIGIN}${from}`);
+    if (url.origin !== ORIGIN) return null;
+    let p = url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/');
+    if (!p.endsWith('/') && paths.includes(`${p}/`)) p = `${p}/`; // /blog → /blog/
+    return p;
+  };
+  const inbound = new Map(paths.map((p) => [p, new Set()]));
+  for (const from of paths) {
+    const { html } = pages.find((pg) => pg.file === fileFor(from));
+    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="([^"]*)"/g)) {
+      const to = canonicalPath(href, from);
+      if (to && to !== from && inbound.has(to)) inbound.get(to).add(from);
+    }
+  }
+  const orphans = paths.filter((p) => p !== '/' && inbound.get(p).size === 0);
+  assert.deepEqual(orphans, [], `orphan pages (no link from any other indexable page): ${orphans.join(', ')}`);
+});
+
+// L-44 — the routine cluster's hubs reach each other: the home and the blog index lead
+// to /rotinas/, and the 7/7 x 14/14 article (the oldest routine piece) does too.
+test('L-44: the home, the blog index and the 7/7 article link to /rotinas/ and the generator', () => {
+  for (const path of ['/', '/blog/', '/blog/rotina-7-7-vs-14-14']) {
+    const html = readFileSync(join(PUBLIC, fileFor(path)), 'utf8');
+    assert.match(html, /href="\/rotinas\/"/, `${path} does not link to /rotinas/`);
+    assert.match(html, /href="\/ferramentas\/gerador-de-rotina-de-guarda"/, `${path} does not link to the generator`);
+  }
+  assert.match(readFileSync(join(PUBLIC, 'index.html'), 'utf8'), /href="\/advogados"/, 'the home footer leads to /advogados');
+});
