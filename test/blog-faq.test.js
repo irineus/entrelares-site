@@ -44,7 +44,8 @@ test('every JSON-LD block on the site parses', () => {
 });
 
 const faqPages = pages
-  .filter(({ file }) => file.startsWith('blog/'))
+  // L-43: the routine pages under /rotinas/ carry the same visible FAQ + FAQPage pair.
+  .filter(({ file }) => file.startsWith('blog/') || file.startsWith('rotinas/'))
   .map((p) => ({ ...p, faq: jsonLd(p.html).map((b) => JSON.parse(b)).find((d) => d['@type'] === 'FAQPage') }))
   .filter((p) => p.faq);
 
@@ -55,6 +56,12 @@ test('the holiday articles carry a FAQPage (a broken filter would make the rule 
     'como-combinar-festas-com-o-outro-responsavel',
   ]) {
     assert.ok(faqPages.some(({ file }) => file === `blog/${slug}.html`), `${slug} has no FAQPage block`);
+  }
+});
+
+test('the routine pages carry a FAQPage too (L-43)', () => {
+  for (const slug of ['2-2-3', '5-2-2-5', '1-1', '3-4-4-3', 'fins-de-semana-alternados']) {
+    assert.ok(faqPages.some(({ file }) => file === `rotinas/${slug}.html`), `${slug} has no FAQPage block`);
   }
 });
 
