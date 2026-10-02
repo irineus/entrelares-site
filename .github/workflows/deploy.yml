@@ -30,6 +30,14 @@ jobs:
       - name: Bake the live parameters
         run: node tool/bake-params.mjs production public
 
+      # L-44: keep the sitemap that is LIVE right now (the previous deploy's), so
+      # the IndexNow step below submits only the pages this deploy changed (new
+      # <loc> or a moved <lastmod>). A miss leaves no file and the step submits
+      # every sitemap URL instead. Never fails the job.
+      - name: Keep the live sitemap (IndexNow baseline)
+        continue-on-error: true
+        run: curl -fsS --max-time 15 https://entrelares.app/sitemap.xml -o "$RUNNER_TEMP/sitemap-live.xml" || echo "::warning::sitemap anterior indisponível — o IndexNow vai enviar todas as URLs"
+
       - name: Deploy static assets via Wrangler
         uses: cloudflare/wrangler-action@v3
         with:
@@ -37,3 +45,14 @@ jobs:
           # The action defaults to Wrangler 3.x, which cannot deploy an
           # assets-only Worker (no `main` entry-point). Assets support needs 4.x.
           wranglerVersion: "4.113.0"
+
+      # L-44: ping IndexNow (Bing, Yandex and the other members; Bing's index also
+      # feeds DuckDuckGo — Google does NOT use IndexNow, the sitemap stays its only
+      # channel). Production only, AFTER the deploy succeeded, so the key file
+      # public/<key>.txt is already served when IndexNow validates it. Best-effort:
+      # the script exits 0 on any HTTP or network failure (a ::warning:: with the
+      # status) and the step is continue-on-error, so it can never turn a good
+      # deploy red. No secret — the IndexNow key is public by design.
+      - name: Notify IndexNow of the changed pages
+        continue-on-error: true
+        run: node tool/indexnow.mjs public/sitemap.xml "$RUNNER_TEMP/sitemap-live.xml"
