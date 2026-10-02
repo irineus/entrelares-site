@@ -27,11 +27,17 @@
   L-16: the English version is listed as its own URL. The PT-BR/EN pairing is
   declared by the reciprocal hreflang alternate links in each page's head, which is
   what Google reads; keeping it out of here keeps this file simple.
+
+  L-44: after every production deploy, tool/indexnow.mjs compares this file with the
+  sitemap that was live before it and pings IndexNow (Bing, Yandex; Bing feeds
+  DuckDuckGo, Google ignores IndexNow) with each URL that is new or whose lastmod
+  moved. One more reason for rule 2: a lastmod bumped without a content change asks
+  those crawlers to come back for nothing.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://entrelares.app/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -97,7 +103,7 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/rotina-7-7-vs-14-14</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

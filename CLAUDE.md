@@ -403,6 +403,13 @@ system; an unverified claim is a liability no matter who drafted it.
   `og:image`, and social scrapers want a JPEG at a URL that never moves. Adding a width means
   the generator AND the four `<picture>` blocks; `test/blog-images.test.js` fails when they
   disagree or when an article names a file that is not on disk.
+  **The app screenshots on both homes (L-44, 02/10/2026)** have the same shape:
+  `screenshot-sizes.py` writes `<name>-540.webp` / `-720.webp` beside each 1080×1920 capture
+  in `public/img/screenshots/` and `…/en/` (resized from the PNG, WebP quality 82 — the
+  quality the 1080 px WebP was made with), and every screenshot `<source>` names the three
+  widths with a `sizes` matching its frame (268 px hero/demo, 194 px gallery).
+  **The L-21 re-shoot must re-run it**, or the small variants keep the old screen while the
+  1080 px one shows the new; `test/perf.test.js` fails on a missing file or a width drift.
   Re-render when the copy they show changes; a banner whose text no longer matches the page is
   worse than no banner.
 - **An `<img>` with a `height` attribute ignores `aspect-ratio` (L-04, 13/09/2026).** The
@@ -435,5 +442,23 @@ system; an unverified claim is a liability no matter who drafted it.
   a Wednesday start gives fixed weekdays with alternating weekends. The pages never link into the
   generator through its `#` fragment: that is the L-30 share door (dated, framed as "rotina compartilhada
   com você", counted as `gerador-rotina-recebida`), not a preset parameter.
+- **IndexNow on the production deploy (L-44, 02/10/2026).** After `wrangler deploy` succeeds,
+  `deploy.yml` runs `tool/indexnow.mjs`, which POSTs to `api.indexnow.org` (host
+  `entrelares.app`) the sitemap URLs that are new or whose `lastmod` moved compared with the
+  sitemap that was live BEFORE the deploy (fetched by the step just ahead of it; without it,
+  every sitemap URL). IndexNow reaches Bing, Yandex and the other members — Bing's index also
+  feeds DuckDuckGo — but **Google does not use IndexNow**: for Google the sitemap in Search
+  Console stays the only channel. The key is **public by design** and committed:
+  `public/35c229ab5a2746a65c52d271b2b448bd.txt`, whose body is the key (`INDEXNOW_KEY` in the
+  script; `test/indexnow.test.js` pins that the two agree, that the file stays out of the
+  sitemap and of `run_worker_first`, and that preview never pings). **Best-effort, never a
+  gate**: a 4xx/5xx or network failure is a `::warning::` with the status in the run summary,
+  the script exits 0 and the step is `continue-on-error`. 200 and 202 (key validation
+  pending) are success. The proof it worked is Bing Webmaster Tools → IndexNow, not the
+  status code. Never delete or rename the key file: IndexNow re-validates it.
+- **No orphan pages (L-44).** Every sitemap URL except `/` must be the target of a plain
+  `<a href>` on at least one OTHER sitemap page — `test/sitemap.test.js` walks the links.
+  A new page lands with its inbound links in the same delivery (blog index, a related-posts
+  block, the home footer).
 - The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
   assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.
