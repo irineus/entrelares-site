@@ -178,3 +178,32 @@ test('L-42: the holiday articles are listed, served and linked', () => {
   // The product claims of the "como combinar" article live in their own box, the L-40 shape.
   assert.match(read(paths[2]), /id="como-o-entrelares-ajuda"/);
 });
+
+// L-43 — the routine pages (/rotinas/<id>) and their index are indexed, served
+// extensionless, and reached from the routine guide, the generator and the blog index.
+test('L-43: the routine pages are listed, served and linked', () => {
+  const index = '/rotinas/';
+  const paths = ['2-2-3', '5-2-2-5', '1-1', '3-4-4-3', 'fins-de-semana-alternados'].map((id) => `/rotinas/${id}`);
+  const read = (path) => readFileSync(join(PUBLIC, fileFor(path)), 'utf8');
+  for (const path of [index, ...paths]) {
+    assert.ok(locs.includes(`${ORIGIN}${path}`), `${path} is missing from the sitemap`);
+    assert.ok(fileFor(path), `${path} has no file on disk`);
+    assert.ok(!/<meta[^>]+noindex/i.test(read(path)), `${path} must stay indexable`);
+  }
+  const indexHtml = read(index);
+  const guide = read('/blog/modelos-de-rotina-guarda-compartilhada');
+  for (const path of paths) {
+    assert.match(indexHtml, new RegExp(`href="${path}"`), `the /rotinas/ index does not list ${path}`);
+    assert.match(guide, new RegExp(`href="${path}"`), `the routine guide does not link to ${path}`);
+    const html = read(path);
+    assert.match(html, /href="\/rotinas\/"/, `${path} does not link back to the index`);
+    assert.match(html, /href="\/blog\/modelos-de-rotina-guarda-compartilhada"/, `${path} does not link to the guide`);
+    assert.match(html, /href="\/blog\/rotina-7-7-vs-14-14"/, `${path} does not link to the 7/7 x 14/14 post`);
+  }
+  assert.match(guide, /href="\/rotinas\/"/);
+  assert.match(read('/blog/'), /href="\/rotinas\/"/, 'the blog index does not list the routines');
+  const gerador = read('/ferramentas/gerador-de-rotina-de-guarda');
+  for (const path of ['/rotinas/2-2-3', '/rotinas/5-2-2-5', '/rotinas/']) {
+    assert.match(gerador, new RegExp(`href="${path}"`), `the generator does not link to ${path}`);
+  }
+});

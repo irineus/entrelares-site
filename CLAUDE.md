@@ -424,5 +424,16 @@ system; an unverified claim is a liability no matter who drafted it.
   preset change in the app repo must land here in the same delivery. `test/gerador-rotina.test.js`
   hardcodes the expansion tables on purpose: it fails when THIS side drifts, but nothing fails
   when the APP side moves — the sync is a convention, like the legal pages.
+- **`/rotinas/<id>` (L-43, 02/10/2026) are claims about the app's rotation wizard.** One page per
+  routine (2-2-3, 5-2-2-5, 1-1, 3-4-4-3, fins de semana alternados) plus the `/rotinas/` index. Each
+  two-week grid declares its cycle in `data-blocks`/`data-inicio`, and `test/rotinas.test.js` walks it
+  with the generator's `buildSchedule` (the `generateRotation` mirror): a hand-edited cell, a wrong
+  number in the three cards, or a quick-model label that no longer matches the app's PT-BR catalogue
+  (`APP_PRESET_LABELS`, read from `strings_pt_br.dart`) goes red. Same convention as the generator:
+  a rename or a new preset in the app must land here in the same delivery. The 5-2-2-5 page tells the
+  reader to start the plan on a WEDNESDAY — the app's preset is 5, 2, 2, 5 from the start date, and only
+  a Wednesday start gives fixed weekdays with alternating weekends. The pages never link into the
+  generator through its `#` fragment: that is the L-30 share door (dated, framed as "rotina compartilhada
+  com você", counted as `gerador-rotina-recebida`), not a preset parameter.
 - The deploy Action needs the `CLOUDFLARE_API_TOKEN` secret; it publishes `./public` (static
   assets) plus the Worker script (`src/index.js`) — `wrangler deploy` ships both.
