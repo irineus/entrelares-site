@@ -43,7 +43,7 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -61,7 +61,7 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-montar-calendario-guarda-compartilhada</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -79,7 +79,7 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/modelos-de-rotina-guarda-compartilhada</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -122,6 +122,24 @@
   <url>
     <loc>https://entrelares.app/blog/como-escolher-app-guarda-compartilhada</loc>
     <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/natal-e-ano-novo-guarda-compartilhada</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/ferias-escolares-guarda-compartilhada</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/blog/como-combinar-festas-com-o-outro-responsavel</loc>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

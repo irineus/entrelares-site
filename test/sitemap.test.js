@@ -148,3 +148,33 @@ test('L-40: the "como escolher" article is listed, served and linked from the bl
   const blogIndex = readFileSync(join(PUBLIC, 'blog', 'index.html'), 'utf8');
   assert.match(blogIndex, new RegExp(`href="${path}"`));
 });
+
+// L-42 — the three holiday articles (Natal e Ano-Novo, férias escolares, como combinar)
+// are indexed, served extensionless, linked from the blog index, cross-linked to each
+// other, and reached from the two older guides that talk about feriados e férias.
+test('L-42: the holiday articles are listed, served and linked', () => {
+  const paths = [
+    '/blog/natal-e-ano-novo-guarda-compartilhada',
+    '/blog/ferias-escolares-guarda-compartilhada',
+    '/blog/como-combinar-festas-com-o-outro-responsavel',
+  ];
+  const read = (path) => readFileSync(join(PUBLIC, fileFor(path)), 'utf8');
+  const blogIndex = readFileSync(join(PUBLIC, 'blog', 'index.html'), 'utf8');
+  for (const path of paths) {
+    assert.ok(locs.includes(`${ORIGIN}${path}`), `${path} is missing from the sitemap`);
+    assert.ok(fileFor(path), `${path} has no file on disk`);
+    const html = read(path);
+    assert.ok(!/<meta[^>]+noindex/i.test(html), `${path} must stay indexable`);
+    assert.match(blogIndex, new RegExp(`href="${path}"`), `${path} is not on the blog index`);
+    for (const other of paths.filter((p) => p !== path)) {
+      assert.match(html, new RegExp(`href="${other}"`), `${path} does not link to ${other}`);
+    }
+  }
+  for (const older of ['/blog/como-montar-calendario-guarda-compartilhada', '/blog/modelos-de-rotina-guarda-compartilhada']) {
+    const html = read(older);
+    assert.match(html, new RegExp(`href="${paths[0]}"`), `${older} does not link to the Natal article`);
+    assert.match(html, new RegExp(`href="${paths[1]}"`), `${older} does not link to the férias article`);
+  }
+  // The product claims of the "como combinar" article live in their own box, the L-40 shape.
+  assert.match(read(paths[2]), /id="como-o-entrelares-ajuda"/);
+});

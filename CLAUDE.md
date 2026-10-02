@@ -396,8 +396,10 @@ system; an unverified claim is a liability no matter who drafted it.
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
   `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
   blog articles' responsive set (`blog-images.py`, L-04, Pillow: AVIF + WebP + JPEG at four
-  widths, centre-cropped to the 16:9 the article CSS shows, written BESIDE the four 1600 px
-  masters in `public/blog/img/`). The masters are never rewritten — each one is its article's
+  widths, centre-cropped to the 16:9 the article CSS shows, written BESIDE the 1600 px
+  masters in `public/blog/img/`). Four masters are the owner's photographs (July 2026); the
+  three holiday ones (L-42) are drawn by `blog-illustrations.html` (headless Chrome, 1600×900,
+  one scene per `#hash`) — no stock photo, no faces. The masters are never rewritten — each one is its article's
   `og:image`, and social scrapers want a JPEG at a URL that never moves. Adding a width means
   the generator AND the four `<picture>` blocks; `test/blog-images.test.js` fails when they
   disagree or when an article names a file that is not on disk.

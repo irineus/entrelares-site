@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Responsive variants of the blog article images (L-04, 13/09/2026).
 
-The four 1600 px JPEG masters in `public/blog/img/` are NOT touched: each one is the
+The 1600 px JPEG masters in `public/blog/img/` are NOT touched: each one is the
 `og:image`, the `twitter:image` and the JSON-LD `image` of its article, and social
 scrapers want a JPEG at a URL that never moves. What this script writes, beside each
 master, is the set the `<picture>` in `public/blog/*.html` references:
@@ -13,12 +13,17 @@ CSS already applies (`.post-img img { aspect-ratio: 16/9; object-fit: cover }`),
 is served is exactly what is shown — and the one portrait master (1600×2400) stops
 shipping the 60 % of its pixels the browser discarded anyway.
 
+The first four masters are photographs (July 2026). The three holiday ones (L-42,
+02/10/2026: natal-ano-novo, ferias-escolares, combinar-festas) are DRAWN by
+`assets-src/blog-illustrations.html` at 1600x900, so their crop is a no-op; the command
+that renders them lives in that file.
+
 Run from the repo root, with Pillow >= 11 built with AVIF and WebP (12.3.0 verified):
 
     python assets-src/blog-images.py
 
 Idempotent — re-run after replacing a master. Adding a width means adding it HERE and in
-the four articles' `srcset`; `test/blog-images.test.js` reads WIDTHS out of this file and
+every article's `srcset`; `test/blog-images.test.js` reads WIDTHS out of this file and
 fails when the HTML and the generator disagree, or when the HTML names a file that is not
 on disk.
 """
