@@ -1,7 +1,7 @@
 // Cloudflare Worker for the landing site.
 //
 // The site is 99% static assets (served by the `ASSETS` binding). This Worker
-// adds TWO dynamic endpoints:
+// adds THREE dynamic routes:
 //
 //   · POST /api/subscribe    — the L-09 materials / newsletter opt-in: registers
 //     the e-mail in a Resend segment (the launch / premium-announcement list)
@@ -10,6 +10,9 @@
 //     policy §4 promises ("revogável a qualquer tempo, com link/contato para
 //     descadastro em cada mensagem") and which a scheduled sequence makes
 //     mandatory rather than merely polite. See `handleUnsubscribe`.
+//   · GET /i/<code>          — F-82: the family-referral link the app shares
+//     (F-80). Explains the invitation and offers the Play listing (with the
+//     install referrer) and the web sign-up (with `?ref=`). See src/referral.js.
 //
 // Everything else is delegated to the static assets, so the existing 404-page
 // handling and asset routing are preserved unchanged — except that the pages
@@ -17,6 +20,10 @@
 // src/serve-params.js; the routes are `assets.run_worker_first`).
 //
 // Config (wrangler.jsonc `vars`, non-secret):
+//   APP_ORIGIN         — F-82: the app the referral page sends a reader to
+//                        (web.entrelares.app; qa.entrelares.app on preview).
+//   UMAMI_WEBSITE_ID   — F-82: the landing's Umami site, PRODUCTION only — the
+//                        referral page's events; preview declares none.
 //   PARAMS_URL         — L-34: the app's T-81 feed (`public-settings`), through the
 //                        Fulcrum gateway since Fulcrum 03.4.5 — the dev
 //                        project on preview, production on production.
@@ -48,6 +55,7 @@ import {
 } from "./email-layout.js";
 import { DAILY_CAP, dueStep, isFinished, renderStep } from "./sequence.js";
 import { serveWithParams } from "./serve-params.js";
+import { handleReferral, referralCodeFromPath } from "./referral.js";
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,6 +68,12 @@ export default {
     }
     if (url.pathname === "/api/unsubscribe") {
       return handleUnsubscribe(request, env, ctx);
+    }
+    // F-82: a referral link. A malformed code falls through to the assets,
+    // which answer the 404 page like any other unknown path.
+    if (url.pathname.startsWith("/i/") && (request.method === "GET" || request.method === "HEAD")) {
+      const code = referralCodeFromPath(url.pathname);
+      if (code) return handleReferral(request, env, code);
     }
     // L-34: the pages that carry a parameter reach the Worker first
     // (`assets.run_worker_first`) and leave with the live values; every other
