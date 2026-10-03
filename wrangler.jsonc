@@ -79,7 +79,11 @@
     // env (PUBLIC by design; the same one the app ships). Read by the Worker
     // (src/serve-params.js) AND by the deploy's bake (tool/bake-params.mjs).
     "PARAMS_URL": "https://api.entrelares.app/functions/v1/public-settings",
-    "PARAMS_KEY": "6cc0c37647edce18502b231522b60f861e753a92da1929df6386c7b7a444127e"
+    "PARAMS_KEY": "6cc0c37647edce18502b231522b60f861e753a92da1929df6386c7b7a444127e",
+    // F-82: the referral page (/i/<code>, src/referral.js) sends the reader to
+    // the PRODUCTION app and counts its events in the landing's Umami site.
+    "APP_ORIGIN": "https://web.entrelares.app",
+    "UMAMI_WEBSITE_ID": "8b182992-68ce-4f2e-abb9-e798c33e48d8"
   },
   "env": {
     "preview": {
@@ -137,7 +141,11 @@
         // QA app (qa.entrelares.app) runs on, so a console edit on dev shows here.
         // Fulcrum 03.4.5: through the gateway's DEV env, with its tenant key.
         "PARAMS_URL": "https://api-dev.entrelares.app/functions/v1/public-settings",
-        "PARAMS_KEY": "6a6abea8f2bb37df2412172620f5d9ab2742e7715c2efd8d42f10e59fc32772a"
+        "PARAMS_KEY": "6a6abea8f2bb37df2412172620f5d9ab2742e7715c2efd8d42f10e59fc32772a",
+        // F-82: the referral page sends preview testers to the QA app, and
+        // counts nothing (no UMAMI_WEBSITE_ID — the preview deploy strips the
+        // tracker from every page for the same reason).
+        "APP_ORIGIN": "https://qa.entrelares.app"
       }
     }
   }
