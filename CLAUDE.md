@@ -144,9 +144,9 @@ is that it deploys exactly what is in the repo.
 
 ## Worker endpoint — materials / newsletter (L-09, L-20)
 The site is no longer purely static: `src/index.js` is the Worker entrypoint (`main` in
-`wrangler.jsonc`). It serves the `ASSETS` binding for everything and adds TWO dynamic routes:
+`wrangler.jsonc`). It serves the `ASSETS` binding for everything and adds THREE dynamic routes:
 **`POST /api/subscribe`**, the opt-in (`public/js/materiais.js` posts to it), and
-**`GET|POST /api/unsubscribe`**, the way out (L-20). The Worker
+**`GET|POST /api/unsubscribe`**, the way out (L-20), and **`GET /i/<code>`**, the family-referral page (F-82, `src/referral.js`: noindex, no Referer, the code never in Umami, `APP_ORIGIN` per environment; mirrors of the app's `ReferralRules` named at the top of the file). The Worker
 registers the e-mail **as a contact in Resend** (the `RESEND_SEGMENT_ID` var — the contacts
 appear under **Audience** in the Resend dashboard; there is no separately-named segment) and
 sends a **welcome e-mail** with the *Modelos de rotina* PDF (`public/downloads/…`, generated from
