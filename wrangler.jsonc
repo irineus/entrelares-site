@@ -19,10 +19,11 @@
   "name": "entrelares-site",
   "account_id": "1185ad84960bdaf12e52096fe8df0dc9",
   "compatibility_date": "2026-07-22",
-  // Worker entrypoint (L-09): serves the static assets AND one dynamic endpoint,
-  // POST /api/subscribe, for the materials / newsletter opt-in. Asset requests
-  // are matched first; only a miss reaches the Worker, which delegates non-API
-  // routes back to the ASSETS binding (preserving 404-page handling).
+  // Worker entrypoint (L-09): serves the static assets AND its own routes —
+  // /api/subscribe, /api/unsubscribe (L-20) and /i/<code> (F-82). Asset requests
+  // are matched first and a MISS does NOT reach the Worker while
+  // `not_found_handling` is set (the asset layer answers its 404 page), so the
+  // Worker's routes are named in `run_worker_first` below (F-82, 03/10/2026).
   "main": "src/index.js",
   "assets": {
     "directory": "./public",
@@ -35,6 +36,14 @@
     // wakes the Worker. A page that gains a `data-param` joins this list in
     // the same delivery; test/params.test.js fails otherwise.
     "run_worker_first": [
+      // F-82 (03/10/2026): the Worker's OWN routes. With `not_found_handling`
+      // set, a path that matches no asset is answered with the 404 page by the
+      // asset layer and the Worker is never invoked — measured in production on
+      // 03/10: POST /api/subscribe and /api/unsubscribe answered 405/404 from
+      // the assets, and /i/<code> 404. Only a path on this list reaches
+      // src/index.js. test/indicacao.test.js pins both entries in both envs.
+      "/api/*",
+      "/i/*",
       "/",
       "/en",
       "/en/",
@@ -102,6 +111,9 @@
         // wakes the Worker. A page that gains a `data-param` joins this list in
         // the same delivery; test/params.test.js fails otherwise.
         "run_worker_first": [
+          // F-82: the Worker's own routes — see the production list above.
+          "/api/*",
+          "/i/*",
           "/",
           "/en",
           "/en/",

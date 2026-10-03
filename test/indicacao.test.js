@@ -115,3 +115,14 @@ test("a referral link is never in the sitemap", () => {
   const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
   assert.doesNotMatch(sitemap, /\/i\//);
 });
+
+test("the Worker's own routes are in run_worker_first in BOTH envs — a miss never reaches it otherwise", () => {
+  const cfg = readFileSync(new URL("../wrangler.jsonc", import.meta.url), "utf8")
+    .replace(/^\s*\/\/.*$/gm, "");
+  const json = JSON.parse(cfg);
+  for (const [name, assets] of [["production", json.assets], ["preview", json.env.preview.assets]]) {
+    for (const route of ["/api/*", "/i/*"]) {
+      assert.ok(assets.run_worker_first.includes(route), `${name} lacks ${route}`);
+    }
+  }
+});
