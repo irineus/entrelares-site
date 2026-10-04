@@ -121,3 +121,14 @@ test('the CTA the three e-mails share is declared once, so the copies cannot dri
     'expected the import plus the three call sites (welcome HTML, welcome text, sequence ctx)',
   );
 });
+
+// L-46 — the ad pages build their sign-up link in the Worker (src/comecar.js), not
+// in a file under public/, so the sweep above never sees it: pin it here.
+test('the ad pages (L-46) send the reader to a path the app serves', async () => {
+  const { webSignupUrlFor, SOURCES } = await import('../src/comecar.js');
+  for (const source of Object.values(SOURCES)) {
+    const url = new URL(webSignupUrlFor(APP_HOST, source, 'primeira-turma'));
+    assert.equal(url.origin, APP_HOST);
+    assert.ok(APP_ROUTES.has(url.pathname), `${url.pathname} is not an app route`);
+  }
+});

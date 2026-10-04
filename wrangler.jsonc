@@ -44,6 +44,8 @@
       // src/index.js. test/indicacao.test.js pins both entries in both envs.
       "/api/*",
       "/i/*",
+      // L-46 (04/10/2026): the ad landing pages /comecar/meta and /comecar/busca.
+      "/comecar/*",
       "/",
       "/en",
       "/en/",
@@ -114,6 +116,7 @@
           // F-82: the Worker's own routes — see the production list above.
           "/api/*",
           "/i/*",
+          "/comecar/*",
           "/",
           "/en",
           "/en/",
