@@ -13,6 +13,9 @@
 //   · GET /i/<code>          — F-82: the family-referral link the app shares
 //     (F-80). Explains the invitation and offers the Play listing (with the
 //     install referrer) and the web sign-up (with `?ref=`). See src/referral.js.
+//   · GET /comecar/meta|busca — L-46: the pages the paid ads land on; the CTA
+//     hands the source to the Play referrer or to `?src=` (app T-101). See
+//     src/comecar.js.
 //
 // Everything else is delegated to the static assets, so the existing 404-page
 // handling and asset routing are preserved unchanged — except that the pages
@@ -56,6 +59,7 @@ import {
 import { DAILY_CAP, dueStep, isFinished, renderStep } from "./sequence.js";
 import { serveWithParams } from "./serve-params.js";
 import { handleReferral, referralCodeFromPath } from "./referral.js";
+import { comecarSegmentFromPath, handleComecar } from "./comecar.js";
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -74,6 +78,11 @@ export default {
     if (url.pathname.startsWith("/i/") && (request.method === "GET" || request.method === "HEAD")) {
       const code = referralCodeFromPath(url.pathname);
       if (code) return handleReferral(request, env, code);
+    }
+    // L-46: the ad landing pages. An unknown segment falls through to the 404.
+    if (url.pathname.startsWith("/comecar/") && (request.method === "GET" || request.method === "HEAD")) {
+      const segment = comecarSegmentFromPath(url.pathname);
+      if (segment) return handleComecar(request, env, segment);
     }
     // L-34: the pages that carry a parameter reach the Worker first
     // (`assets.run_worker_first`) and leave with the live values; every other
