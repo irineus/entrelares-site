@@ -357,6 +357,16 @@ system; an unverified claim is a liability no matter who drafted it.
   verifiable by the F-64 QR code since S-22, history erased only with the whole family) — re-check it when the report
   changes. **It must never move or 404**: once F-63 ships, every PDF generated carries it, and a
   PDF in someone's hands cannot be re-printed.
+- **`/comecar/meta` and `/comecar/busca` are where the paid ads land (L-46, 04/10/2026)** — ONE
+  template in the Worker (`src/comecar.js`, route `/comecar/*` in `run_worker_first` of both envs),
+  `noindex`, no canonical, out of the sitemap, no pixel: the path IS the source (L-13), and the call
+  to action hands it to the app, which records it once on the new family (app T-101,
+  `families.acquisition_source`) — Android → the Play listing with `referrer=utm_source=meta|google_search`
+  (+ `utm_campaign`), iPhone → `/register?src=…` plus the L-19 guide, a computer → `/register?src=…`.
+  The ad URL's own `utm_campaign` (or `cmp`) is passed on when it has the app's token shape. Umami
+  counts the pageview with `data-exclude-search`/`-hash` (an ad click appends `gclid`/`fbclid`) and the
+  events `comecar-play` / `comecar-web` (`origem` = the path segment). Every sentence is a claim about
+  the app (S-15); the third capture is the Premium PDF and says so. `test/comecar.test.js`.
 - **A `utm_*` on an app link measures nothing (L-27).** The app's `sanitizeAnalyticsPath` (T-37)
   cuts the string at the first `?`/`#` before the pageview leaves, on purpose, so the query never
   reaches Umami. Tagging links to **this** site works (the standard Umami script sends the whole
