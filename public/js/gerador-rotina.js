@@ -14,10 +14,14 @@ export const PRESET_BLOCKS = {
   "1-1": [[0, 1], [1, 1]],
   "5-2-2-5": [[0, 5], [1, 2], [0, 2], [1, 5]],
   "2-2-3": [[0, 2], [1, 2], [0, 3], [1, 2], [0, 2], [1, 3]],
+  // F-97 (app, 06/10/2026): the alternating weekends, anchored on a Friday in
+  // the app's wizard — the second caregiver has the first weekend.
+  "3-11": [[1, 3], [0, 11]],
+  "3-2-1-6-1-1": [[1, 3], [0, 2], [1, 1], [0, 6], [1, 1], [0, 1]],
 };
 
 /** Preset ids in menu order — same order as the app's wizard dropdown. */
-export const PRESET_IDS = ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3"];
+export const PRESET_IDS = ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3", "3-11", "3-2-1-6-1-1"];
 
 /**
  * Expands a preset id into cycle blocks, optionally starting with the second

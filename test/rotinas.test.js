@@ -35,6 +35,9 @@ const APP_PRESET_LABELS = {
   '1-1': 'Dias alternados (1/1)',
   '5-2-2-5': '5/2/2/5 (semana + final de semana)',
   '2-2-3': '2/2/3 (rotação quinzenal)',
+  // F-97 (06/10/2026): KApp.wizPreset311 / wizPreset321611 in k_app.dart.
+  '3-11': 'Fins de semana alternados (sex–dom)',
+  '3-2-1-6-1-1': 'Fins de semana alternados + pernoite de quarta',
 };
 const APP_WIZARD_ENTRY = 'Assistente de rotação'; // K.calWizard
 const APP_GENERATE = 'Gerar plano'; // K.wizGenerate
@@ -68,10 +71,11 @@ function expected(blocks, offset) {
   return Array.from({ length: 14 }, (_, i) => ({ parent: at(i), troca: at(i) !== at(i - 1) }));
 }
 
-test('the five routine pages exist (a broken glob would make every rule below pass)', () => {
+test('the six routine pages exist (a broken glob would make every rule below pass)', () => {
   assert.deepEqual(
     pages.map((p) => p.file).sort(),
-    ['1-1.html', '2-2-3.html', '3-4-4-3.html', '5-2-2-5.html', 'fins-de-semana-alternados.html'],
+    ['1-1.html', '2-2-3.html', '3-4-4-3.html', '5-2-2-5.html',
+      'fins-de-semana-alternados-com-pernoite.html', 'fins-de-semana-alternados.html'],
   );
 });
 
@@ -85,7 +89,8 @@ test('every grid is the cycle the app generates, day by day, handoffs included',
 
 test("a page that names an app quick model declares that model's blocks and quotes its label", () => {
   const withPreset = pages.filter(({ html, file }) => parseGrid(html, file).preset);
-  assert.deepEqual(withPreset.map((p) => p.file).sort(), ['1-1.html', '2-2-3.html', '5-2-2-5.html']);
+  assert.deepEqual(withPreset.map((p) => p.file).sort(),
+    ['1-1.html', '2-2-3.html', '5-2-2-5.html', 'fins-de-semana-alternados-com-pernoite.html']);
   for (const { file, html } of withPreset) {
     const { blocks, preset } = parseGrid(html, file);
     assert.deepEqual(blocks, PRESET_BLOCKS[preset], `${file}: not the app's ${preset} expansion`);
