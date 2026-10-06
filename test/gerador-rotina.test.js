@@ -39,7 +39,7 @@ test("presets expand exactly like the app's wizardPresetBlocks", () => {
 
 test("preset ids keep the app's menu order", () => {
   assert.deepEqual(PRESET_IDS,
-    ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3", "3-11", "3-2-1-6-1-1"]);
+    ["3-11", "3-2-1-6-1-1", "7-7", "14-14", "1-1", "5-2-2-5", "2-2-3"]);
 });
 
 test("unknown preset falls back to 7-7, like the app", () => {

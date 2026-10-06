@@ -31,10 +31,10 @@ const DIR = join(ROOT, 'public', 'rotinas');
 
 const APP_PRESET_LABELS = {
   '7-7': 'Semanas alternadas (7/7)',
-  '14-14': 'Quinzenal (14/14)',
+  '14-14': 'Quinzenas alternadas (14/14)',
   '1-1': 'Dias alternados (1/1)',
-  '5-2-2-5': '5/2/2/5 (semana + final de semana)',
-  '2-2-3': '2/2/3 (rotação quinzenal)',
+  '5-2-2-5': 'Dias fixos + fins de semana alternados (5/2/2/5)',
+  '2-2-3': 'Revezamento quinzenal alternado (2/2/3)',
   // F-97 (06/10/2026): KApp.wizPreset311 / wizPreset321611 in k_app.dart.
   '3-11': 'Fins de semana alternados (sex–dom)',
   '3-2-1-6-1-1': 'Fins de semana alternados + pernoite de quarta',
