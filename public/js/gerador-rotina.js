@@ -21,7 +21,8 @@ export const PRESET_BLOCKS = {
 };
 
 /** Preset ids in menu order — same order as the app's wizard dropdown. */
-export const PRESET_IDS = ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3", "3-11", "3-2-1-6-1-1"];
+// App 3.1.15 (06/10/2026): the alternating weekends come first in the wizard.
+export const PRESET_IDS = ["3-11", "3-2-1-6-1-1", "7-7", "14-14", "1-1", "5-2-2-5", "2-2-3"];
 
 /**
  * Expands a preset id into cycle blocks, optionally starting with the second
