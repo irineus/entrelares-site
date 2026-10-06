@@ -31,10 +31,15 @@ test("presets expand exactly like the app's wizardPresetBlocks", () => {
   assert.deepEqual(PRESET_BLOCKS["5-2-2-5"], [[0, 5], [1, 2], [0, 2], [1, 5]]);
   assert.deepEqual(PRESET_BLOCKS["2-2-3"],
     [[0, 2], [1, 2], [0, 3], [1, 2], [0, 2], [1, 3]]);
+  // F-97: the alternating weekends (p2 has the first weekend, like the app).
+  assert.deepEqual(PRESET_BLOCKS["3-11"], [[1, 3], [0, 11]]);
+  assert.deepEqual(PRESET_BLOCKS["3-2-1-6-1-1"],
+    [[1, 3], [0, 2], [1, 1], [0, 6], [1, 1], [0, 1]]);
 });
 
 test("preset ids keep the app's menu order", () => {
-  assert.deepEqual(PRESET_IDS, ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3"]);
+  assert.deepEqual(PRESET_IDS,
+    ["7-7", "14-14", "1-1", "5-2-2-5", "2-2-3", "3-11", "3-2-1-6-1-1"]);
 });
 
 test("unknown preset falls back to 7-7, like the app", () => {
