@@ -269,11 +269,11 @@
             <div class="field">
                 <label for="g-modelo">Modelo de rotina</label>
                 <select id="g-modelo" name="modelo">
-                    <option value="7-7" selected>Semana alternada (7/7)</option>
+                    <option value="3-11" selected>Fins de semana alternados (sex–dom)</option>
+                    <option value="3-2-1-6-1-1">Fins de semana alternados + pernoite de quarta</option>
+                    <option value="7-7">Semana alternada (7/7)</option>
                     <option value="14-14">Quinzenal (14/14)</option>
                     <option value="1-1">Dia sim, dia não (1/1)</option>
-                    <option value="3-11">Fins de semana alternados (sex–dom)</option>
-                    <option value="3-2-1-6-1-1">Fins de semana alternados + pernoite de quarta</option>
                     <option value="custom">Customizado (eu defino os blocos)</option>
                 </select>
                 <span class="hint">Não sabe qual escolher? <a href="/blog/modelos-de-rotina-guarda-compartilhada">Veja o guia de modelos</a>.</span>
@@ -436,11 +436,11 @@
 
     const WEEKDAYS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
     const MODEL_LABELS = {
+        "3-11": "Fins de semana alternados (sex–dom)",
+        "3-2-1-6-1-1": "Fins de semana alternados + pernoite de quarta",
         "7-7": "Semana alternada (7/7)",
         "14-14": "Quinzenal (14/14)",
         "1-1": "Dia sim, dia não (1/1)",
-        "3-11": "Fins de semana alternados (sex–dom)",
-        "3-2-1-6-1-1": "Fins de semana alternados + pernoite de quarta",
     };
 
     // Customizado: reveal the block fields, hide "Quem começa" (the fields
@@ -606,8 +606,9 @@
     // A second link opened in the same tab changes only the fragment — no reload.
     window.addEventListener("hashchange", openShared);
 
-    // Fase 3 (07/10/2026): a prévia aparece desde o primeiro segundo — hoje, semana alternada,
-    // "Responsável 1" e "Responsável 2" — e segue cada campo enquanto a pessoa mexe. O botão
+    // Fase 3 (07/10/2026): a prévia aparece desde o primeiro segundo — hoje, fins de semana
+    // alternados (o primeiro modelo do menu, como no app — L-50), "Responsável 1" e
+    // "Responsável 2" — e segue cada campo enquanto a pessoa mexe. O botão
     // continua existindo para quem prefere confirmar, para o leitor de tela e para quem chegou
     // por um link compartilhado (aí a rotina recebida é a que está na tela, não a padrão).
     if (!current) {

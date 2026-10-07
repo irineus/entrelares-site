@@ -122,10 +122,11 @@ export function countDays(plan) {
 /** Format version carried as `v` — bump it only together with a decoder for the old one. */
 export const SHARE_VERSION = "1";
 
-/** Presets the page's menu offers. L-50 (07/10/2026): the two alternating-weekend presets the
- * app's wizard ships (F-97) join the menu — the owner expects them to be among the most used.
+/** Presets the page's menu offers, in MENU ORDER. L-50 (07/10/2026): the two alternating-weekend
+ * presets the app's wizard ships (F-97) join the menu and come FIRST, like in the app (PRESET_IDS)
+ * — the owner expects them to be the most used, and the first one is the page's default.
  * Both are anchored on a FRIDAY in the app; `anchorStart` is the page's mirror of that rule. */
-export const MENU_PRESETS = ["7-7", "14-14", "1-1", "3-11", "3-2-1-6-1-1"];
+export const MENU_PRESETS = ["3-11", "3-2-1-6-1-1", "7-7", "14-14", "1-1"];
 
 /** Presets whose cycle the app anchors on a Friday (the weekend block opens the cycle). */
 export const FRIDAY_ANCHORED = ["3-11", "3-2-1-6-1-1"];
