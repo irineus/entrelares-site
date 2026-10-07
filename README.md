@@ -116,7 +116,8 @@ entrelares-site/
 │   │                           #   store/brand-icons.py; never edited here (T-57)
 │   ├── brand-icons.py          # favicon + icon-192 + icon-512, resized from the master
 │   ├── blog-images.py          # L-04 — AVIF/WebP/JPEG × 4 widths beside the blog masters (Pillow)
-│   ├── modelos-rotina.html     # the lead-magnet PDF (headless Chromium)
+│   ├── modelos-rotina.mjs      # writes modelos-rotina.html from the engine's presets (7 models)
+│   ├── modelos-rotina.html     # the lead-magnet PDF's page (GENERATED; headless Chromium prints it)
 │   ├── og-cover.html           # the PT-BR OG banner (headless Chrome; command in the file)
 │   └── og-cover-en.html        # the English OG banner (same command, other language)
 ├── wrangler.jsonc              # Workers config (main + assets + vars; two envs)
@@ -213,7 +214,8 @@ registers the e-mail **as a contact in Resend** (they appear under **Audience** 
 dashboard — there is no separately-named segment) and sends a **welcome e-mail** with the
 *Modelos de rotina* PDF (`public/downloads/…`, generated from `assets-src/modelos-rotina.html`
 via headless Chromium; the PDF's `/Title` is set from the generator's `<title>` so it opens with
-a proper name).
+a proper name). The HTML is written by `assets-src/modelos-rotina.mjs` from the generator's engine
+(the seven app presets, strips walked by `buildSchedule`), so the PDF never drifts from the app.
 
 - **Secret:** `RESEND_API_KEY` (Resend full-access) is set **per worker** via `wrangler secret put`
   or the Cloudflare dashboard — **never committed**. **When the secret is absent the endpoint
