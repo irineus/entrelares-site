@@ -87,8 +87,11 @@ test('the old palette does not survive as a literal inside any page CSS, except 
 // reports it only in the console, so this lane parses every inline script the way the browser would.
 test('every inline script on every page parses', () => {
   for (const { file, html } of pages) {
-    for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
-      assert.doesNotThrow(() => new Function(m[1]), `${file}: an inline <script> does not parse`);
+    for (const m of html.matchAll(/<script(?: type="module")?>([\s\S]*?)<\/script>/g)) {
+      // L-50: the hero calendar is a <script type="module"> importing the generator's engine;
+      // Function() has no module scope, so the import lines are dropped before parsing the rest.
+      const body = m[1].replace(/^\s*import\s[\s\S]*?;\n/gm, "");
+      assert.doesNotThrow(() => new Function(body), `${file}: an inline <script> does not parse`);
     }
   }
 });

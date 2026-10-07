@@ -338,13 +338,17 @@ system; an unverified claim is a liability no matter who drafted it.
   site's visitors, not one page's.
 
 ## Gotchas
-- **The redesign's homes were GENERATED once and are edited by hand since (L-49, 07/10/2026).**
-  `public/index.html` and `public/en/index.html` came out of a Python template that lived in a
-  session scratchpad, not in this repo — so there is nothing to "re-run": a change is made in both
-  files, as L-16 always said. The pieces that move together: the tour tabs (`.tab` ↔ `.pane`, one
-  real capture each), the live calendar presets (`presets` in the inline script — 14-day strings
-  anchored on Monday, a MIRROR of the generator's blocks like `js/gerador-rotina.js`), the 3D scene
-  (pure CSS, `--rz` drives the rotation), and the mobile menu (`#burger` + `#mmenu`). `/instalar`
+- **The homes are GENERATED (L-50, 07/10/2026): `node tool/build.mjs` renders `public/index.html`
+  and `public/en/index.html` from `src/site/home/`** — one `template.html`, one `home.css`,
+  `pt.json`/`en.json` with every string (same keys, test-pinned) and `partials/<lang>/` for the
+  blocks a test pins verbatim (head, header, L-17 demo, pricing, FAQ, the founder's letter, PT
+  materiais). Edit the source, run the build, commit both: `test/build.test.js` goes red when
+  `public/` and the sources disagree, so a hand edit to a home is caught in CI. The pieces that
+  move together: the tour tabs (`.tab` ↔ `.pane`, one real capture each), the live calendar (a
+  `<script type="module">` importing `buildSchedule`/`anchorStart` from `js/gerador-rotina.js` —
+  no hand-written cycle string; the five chips are engine presets, and the two alternating-weekend
+  ones open on a Friday like the app's wizard), the 3D scene (pure CSS, `--rz` drives the
+  rotation), and the mobile menu (`#burger` + `#mmenu`). `/instalar`
   carries the iOS drawing (L-19/L-33) and `/en/install` its English twin; both are
   `run_worker_first` routes (the Play badge sits behind `landing.play_badge`). The display font is
   **Newsreader** (L-51); Fraunces was dropped because its descending *f* and curly *j* are part of
@@ -461,7 +465,10 @@ system; an unverified claim is a liability no matter who drafted it.
   The tool's whole promise is that the preview equals what the app generates after signup, so a
   preset change in the app repo must land here in the same delivery. `test/gerador-rotina.test.js`
   hardcodes the expansion tables on purpose: it fails when THIS side drifts, but nothing fails
-  when the APP side moves — the sync is a convention, like the legal pages.
+  when the APP side moves — the sync is a convention, like the legal pages. Since L-50 (07/10/2026)
+  the tool's menu also offers the app's two alternating-weekend presets (`MENU_PRESETS` = 7-7, 14-14,
+  1-1, 3-11, 3-2-1-6-1-1); `anchorStart` snaps a weekend preset to the Friday on or before the chosen
+  date, as the wizard does, and a note under the model says so — the hero calendar uses the same call.
 - **`/rotinas/<id>` (L-43, 02/10/2026) are claims about the app's rotation wizard.** One page per
   routine (2-2-3, 5-2-2-5, 1-1, 3-4-4-3, fins de semana alternados) plus the `/rotinas/` index. Each
   two-week grid declares its cycle in `data-blocks`/`data-inicio`, and `test/rotinas.test.js` walks it

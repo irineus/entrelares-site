@@ -122,8 +122,28 @@ export function countDays(plan) {
 /** Format version carried as `v` — bump it only together with a decoder for the old one. */
 export const SHARE_VERSION = "1";
 
-/** Presets the page's menu offers (the module keeps all five app presets). */
-export const MENU_PRESETS = ["7-7", "14-14", "1-1"];
+/** Presets the page's menu offers. L-50 (07/10/2026): the two alternating-weekend presets the
+ * app's wizard ships (F-97) join the menu — the owner expects them to be among the most used.
+ * Both are anchored on a FRIDAY in the app; `anchorStart` is the page's mirror of that rule. */
+export const MENU_PRESETS = ["7-7", "14-14", "1-1", "3-11", "3-2-1-6-1-1"];
+
+/** Presets whose cycle the app anchors on a Friday (the weekend block opens the cycle). */
+export const FRIDAY_ANCHORED = ["3-11", "3-2-1-6-1-1"];
+
+/**
+ * The first day the app would plan for `preset` when the person picks `date`: the Friday on or
+ * before it for the weekend presets, the date itself for every other one.
+ * @param {string} preset
+ * @param {Date} date
+ * @returns {Date}
+ */
+export function anchorStart(preset, date) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  if (!FRIDAY_ANCHORED.includes(preset)) return d;
+  const back = (d.getDay() - 5 + 7) % 7; // 5 = Friday
+  d.setDate(d.getDate() - back);
+  return d;
+}
 
 /** Preview lengths the page's menu offers, in weeks. */
 export const MENU_WEEKS = [4, 8, 12];

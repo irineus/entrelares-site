@@ -649,7 +649,8 @@
                     <button type="button" class="chip" data-preset="7-7" aria-pressed="true">Semana alternada</button>
                     <button type="button" class="chip" data-preset="2-2-3" aria-pressed="false">2-2-3</button>
                     <button type="button" class="chip" data-preset="5-2-2-5" aria-pressed="false">5-2-2-5</button>
-                    <button type="button" class="chip" data-preset="fds" aria-pressed="false">Fins de semana</button>
+                    <button type="button" class="chip" data-preset="3-11" aria-pressed="false">Fins de semana alternados</button>
+                    <button type="button" class="chip" data-preset="3-2-1-6-1-1" aria-pressed="false">FDS alternados + quarta</button>
                 </div>
                 <div class="cal-head"><b id="monthName"></b>
                     <span class="legend"><span><i style="background:var(--indigo)"></i>Casa do pai</span><span><i style="background:var(--pink)"></i>Casa da mãe</span></span></div>
@@ -1117,41 +1118,12 @@
 <div class="sticky-cta" id="stickyCta"><a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a></div>
 
 <script>
-// Fase 1 — hero: o calendário vivo (presets do gerador, ancorados na segunda-feira), parallax
-// 3D do card só com mouse, a cena isométrica (arrastar gira), as abas do tour, o menu do
-// celular, a barra fixa e o reveal ao rolar. Tudo honra prefers-reduced-motion. Sem deps.
+// Fase 1 — hero: parallax 3D do card só com mouse, a cena isométrica (arrastar gira), as abas
+// do tour, o menu do celular, a barra fixa e o reveal ao rolar. Tudo honra prefers-reduced-motion.
+// Sem deps. O calendário vivo mora no <script type="module"> logo abaixo (L-50).
 (function () {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var LANG = 'pt';
-
-    // ── calendário vivo ──
-    var presets = { '7-7': 'aaaaaaabbbbbbb', '2-2-3': 'aabbaaabbaabbb', '5-2-2-5': 'aabbaaaaabbbbb', 'fds': 'aaaaabbaaaaaaa' };
-    var grid = document.getElementById('calGrid'), tt = document.getElementById('todayText'), td = document.getElementById('todayDot');
-    var now = new Date(), y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
-    var monthName = now.toLocaleDateString(LANG === 'en' ? 'en-US' : 'pt-BR', { month: 'long', year: 'numeric' });
-    document.getElementById('monthName').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-    var offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
-    var DOW = LANG === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
-    var NAMES = { a: "Casa do pai", b: "Casa da mãe" };
-    function render(key) {
-        var cyc = presets[key]; grid.innerHTML = '';
-        DOW.forEach(function (d) { var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e); });
-        for (var i = 0; i < offset; i++) grid.appendChild(document.createElement('div'));
-        var who = null, next = null;
-        for (var d = 1; d <= days; d++) {
-            var house = cyc[(offset + d - 1) % cyc.length];
-            var cell = document.createElement('div'); cell.className = 'day ' + house + (d === today ? ' today' : ''); cell.textContent = d; grid.appendChild(cell);
-            (function (c, k) { setTimeout(function () { c.classList.add('on'); }, reduce ? 0 : 18 * k); })(cell, d);
-            if (d === today) who = house;
-            if (d > today && next === null && house !== who) next = d;
-        }
-        td.style.background = who === 'a' ? 'var(--indigo)' : 'var(--pink)';
-        tt.innerHTML = '<b>Hoje: ' + NAMES[who] + '</b>' + (next ? ' · próxima troca dia ' + next : '');
-        if (window.umami && window.umami.track) window.umami.track('hero-rotina-' + key);
-    }
-    var chips = document.querySelectorAll('.chip');
-    chips.forEach(function (c) { c.addEventListener('click', function () { chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); }); render(c.getAttribute('data-preset')); }); });
-    render('7-7');
 
     // ── parallax do card (só com mouse e largura de mesa) ──
     var stage = document.getElementById('stage'), card = stage.querySelector('.cal-card');
@@ -1209,6 +1181,50 @@
         var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
         document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
     } else { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+})();
+</script>
+<script type="module">
+// L-50 — o calendário vivo do hero usa o MESMO motor do gerador (/js/gerador-rotina.js), não uma
+// string de 14 letras escrita à mão: um preset que mude no app muda aqui pelo espelho de sempre.
+// Os modelos de semana (7-7, 2-2-3, 5-2-2-5) abrem o ciclo na segunda-feira da primeira semana
+// visível; os de fim de semana alternado (3-11, 3-2-1-6-1-1) abrem na sexta-feira anterior a ela,
+// como o assistente do app (F-97) — por isso o fim de semana cai sempre em sex–dom, na coluna certa.
+// Módulo à parte de propósito: se o motor não carregar, o menu e a barra fixa seguem vivos.
+import { buildSchedule, anchorStart } from '/js/gerador-rotina.js';
+(function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var LANG = 'pt';
+    var grid = document.getElementById('calGrid'), tt = document.getElementById('todayText'), td = document.getElementById('todayDot');
+    var now = new Date(), y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+    var monthName = now.toLocaleDateString(LANG === 'en' ? 'en-US' : 'pt-BR', { month: 'long', year: 'numeric' });
+    document.getElementById('monthName').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    var offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    var DOW = LANG === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+    var NAMES = { a: "Casa do pai", b: "Casa da mãe" };
+    var DAY = 864e5;
+    function render(key) {
+        var first = new Date(y, m, 1), firstMonday = new Date(y, m, 1 - offset);
+        var start = anchorStart(key, firstMonday);
+        var skip = Math.round((first - start) / DAY);
+        var plan = buildSchedule({ preset: key, start: start, days: skip + days });
+        grid.innerHTML = '';
+        DOW.forEach(function (d) { var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e); });
+        for (var i = 0; i < offset; i++) grid.appendChild(document.createElement('div'));
+        var who = null, next = null;
+        for (var d = 1; d <= days; d++) {
+            var house = plan[skip + d - 1].parent === 0 ? 'a' : 'b';
+            var cell = document.createElement('div'); cell.className = 'day ' + house + (d === today ? ' today' : ''); cell.textContent = d; grid.appendChild(cell);
+            (function (c, k) { setTimeout(function () { c.classList.add('on'); }, reduce ? 0 : 18 * k); })(cell, d);
+            if (d === today) who = house;
+            if (d > today && next === null && house !== who) next = d;
+        }
+        td.style.background = who === 'a' ? 'var(--indigo)' : 'var(--pink)';
+        tt.innerHTML = '<b>Hoje: ' + NAMES[who] + '</b>' + (next ? ' · próxima troca dia ' + next : '');
+        if (window.umami && window.umami.track) window.umami.track('hero-rotina-' + key);
+    }
+    var chips = document.querySelectorAll('.chip');
+    chips.forEach(function (c) { c.addEventListener('click', function () { chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); }); render(c.getAttribute('data-preset')); }); });
+    render('7-7');
 })();
 </script>
 
