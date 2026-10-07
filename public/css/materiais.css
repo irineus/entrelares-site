@@ -1,15 +1,14 @@
 /* L-09 — materiais / newsletter opt-in.
    Shared by index.html (full section `.materiais-box`) and the blog articles
-   (compact `.lm-mini`). Self-contained: uses literal brand colours so it works
-   on any page regardless of that page's CSS custom properties. */
+   (compact `.lm-mini`). Colours are the brand tokens from /css/brand.css, which every page links (phase 0). */
 
 /* Self-contained: don't rely on the host page's CSS reset for box-sizing,
    otherwise width:100% inputs/cards overflow on narrow screens. */
 .materiais-box, .materiais-box *, .lm-mini, .lm-mini * { box-sizing: border-box; }
 
 .materiais-box {
-  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
-  border: 1px solid #e0e7ff;
+  background: linear-gradient(135deg, var(--bg-tint) 0%, var(--bg-tint) 100%);
+  border: 1px solid var(--line-tint);
   border-radius: 20px;
   padding: 40px 38px;
   display: grid;
@@ -23,43 +22,43 @@
   font-weight: 700;
   letter-spacing: .04em;
   text-transform: uppercase;
-  color: #4338ca;
-  background: #e0e7ff;
+  color: var(--indigo-deep);
+  background: var(--line-tint);
   padding: 4px 11px;
   border-radius: 999px;
   margin-bottom: 14px;
 }
-.materiais-box h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; color: #1e293b; margin-bottom: 12px; }
-.materiais-box .lm-sub { color: #475569; font-size: 16px; line-height: 1.55; margin-bottom: 18px; }
+.materiais-box h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; }
+.materiais-box .lm-sub { color: var(--ink-soft); font-size: 16px; line-height: 1.55; margin-bottom: 18px; }
 .materiais-box .lm-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.materiais-box .lm-list li { position: relative; padding-left: 26px; color: #475569; font-size: 14.5px; line-height: 1.45; }
+.materiais-box .lm-list li { position: relative; padding-left: 26px; color: var(--ink-soft); font-size: 14.5px; line-height: 1.45; }
 .materiais-box .lm-list li::before {
   content: "✓"; position: absolute; left: 0; top: 0;
-  color: #4f46e5; font-weight: 800;
+  color: var(--indigo); font-weight: 800;
 }
 
 /* Form card */
 .lm-form {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 16px;
   padding: 24px 22px;
-  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.08);
+  box-shadow: 0 10px 30px rgba(var(--ink-rgb), 0.08);
 }
-.lm-form .lm-form-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+.lm-form .lm-form-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 14px; }
 .lm-field { display: flex; flex-direction: column; gap: 8px; }
-.lm-field label { font-size: 13px; font-weight: 600; color: #334155; }
+.lm-field label { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
 .lm-input {
   width: 100%;
   font-size: 16px;
-  color: #1e293b;
+  color: var(--ink);
   padding: 13px 14px;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid var(--line);
   border-radius: 10px;
-  background: #fff;
+  background: var(--card);
   font-family: inherit;
 }
-.lm-input:focus { outline: 2px solid #4f46e5; outline-offset: 1px; border-color: #4f46e5; }
+.lm-input:focus { outline: 2px solid var(--indigo); outline-offset: 1px; border-color: var(--indigo); }
 /* Honeypot — visually hidden, off-screen, not focusable */
 .lm-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .lm-btn {
@@ -68,19 +67,19 @@
   font-size: 15.5px;
   font-weight: 700;
   color: #fff;
-  background: #4f46e5;
+  background: var(--indigo);
   border: none;
   border-radius: 10px;
   padding: 14px 18px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.35);
   transition: background .15s ease, transform .05s ease;
 }
-.lm-btn:hover { background: #4338ca; }
+.lm-btn:hover { background: var(--indigo-deep); }
 .lm-btn:active { transform: translateY(1px); }
 .lm-btn:disabled { opacity: .6; cursor: default; box-shadow: none; }
-.lm-consent { font-size: 12px; color: #94a3b8; line-height: 1.5; margin-top: 12px; }
-.lm-consent a { color: #6366f1; }
+.lm-consent { font-size: 12px; color: var(--muted-2); line-height: 1.5; margin-top: 12px; }
+.lm-consent a { color: var(--indigo); }
 
 /* Status message (aria-live) */
 .lm-status { margin-top: 12px; font-size: 14px; line-height: 1.5; display: none; }
@@ -98,16 +97,16 @@
 .lm-mini {
   max-width: 720px;
   margin: 8px auto 40px;
-  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
-  border: 1px solid #e0e7ff;
+  background: linear-gradient(135deg, var(--bg-tint) 0%, var(--bg-tint) 100%);
+  border: 1px solid var(--line-tint);
   border-radius: 16px;
   padding: 24px 24px 22px;
 }
-.lm-mini h2 { font-size: 19px; line-height: 1.25; color: #1e293b; margin: 0 0 6px; }
-.lm-mini p.lm-mini-sub { font-size: 14.5px; color: #475569; margin: 0 0 16px; line-height: 1.5; }
+.lm-mini h2 { font-size: 19px; line-height: 1.25; color: var(--ink); margin: 0 0 6px; }
+.lm-mini p.lm-mini-sub { font-size: 14.5px; color: var(--ink-soft); margin: 0 0 16px; line-height: 1.5; }
 .lm-mini .lm-form {
   box-shadow: none;
-  background: #fff;
+  background: var(--card);
   padding: 16px;
 }
 .lm-mini .lm-form-title { display: none; }
