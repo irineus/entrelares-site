@@ -20,7 +20,8 @@
 
     <link rel="icon" type="image/png" href="favicon.png?v=6" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
 
     <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website" />
@@ -183,6 +184,9 @@
             --line: #e2e8f0;
             --radius: 16px;
         }
+        /* Tokens only this page uses (the 3D scene's floor); brand.css carries the rest. */
+        :root { --floor: #F1EAE0; --floor-line: #E2D8CB; --a-deep: #1F4FB3; --b-deep: #B2305C; }
+        @media (prefers-color-scheme: dark) { :root { --floor: #241C2C; --floor-line: #33283D; } }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -191,21 +195,24 @@
             background: var(--bg);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         img, svg { max-width: 100%; }
         a { color: var(--indigo); }
-        a, .btn, summary { -webkit-tap-highlight-color: rgba(79, 70, 229, 0.12); }
-        a:focus-visible, .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+        a, .btn, summary { -webkit-tap-highlight-color: rgba(var(--brand-rgb), 0.12); }
+        a:focus-visible, .btn:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
         .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 64px 0; }
-        h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; }
-        h2 { font-size: clamp(26px, 4vw, 34px); margin-bottom: 12px; }
-        .section-lead { color: var(--muted); max-width: 640px; margin-bottom: 40px; font-size: 17px; }
+        section { padding: 84px 0; position: relative; }
+        h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(30px, 4.2vw, 44px); margin-bottom: 14px; }
+        .section-lead { color: var(--muted); max-width: 600px; margin-bottom: 36px; font-size: 17.5px; }
+        .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--pink); margin-bottom: 12px; }
+        .dark .eyebrow { color: var(--accent); }
 
         /* ── Header ─────────────────────────────────────────── */
         header {
             position: sticky; top: 0; z-index: 50;
-            background: rgba(248, 250, 252, 0.92);
+            background: color-mix(in srgb, var(--bg) 92%, transparent);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--line);
         }
@@ -229,12 +236,12 @@
             padding: 12px 22px; border-radius: 10px; font-size: 15px; font-weight: 600;
             text-decoration: none; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease;
         }
-        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
-        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4); }
+        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.35); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(var(--brand-rgb), 0.4); }
         .btn-ghost { background: transparent; color: var(--indigo); border: 1px solid var(--indigo); }
         /* CTA do header: pílula enxuta e elegante, visível em toda a navegação */
-        .nav .btn { margin-left: 0; padding: 9px 20px; border-radius: 999px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.28); }
-        .nav .btn:hover { box-shadow: 0 5px 14px rgba(79, 70, 229, 0.36); }
+        .nav .btn { margin-left: 0; padding: 9px 20px; border-radius: 999px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(var(--brand-rgb), 0.28); }
+        .nav .btn:hover { box-shadow: 0 5px 14px rgba(var(--brand-rgb), 0.36); }
         .cta-short { display: none; }
 
         /* ── Language switch (L-16) ─────────────────────────── */
@@ -249,373 +256,292 @@
         .lang-switch a:hover { color: var(--ink); }
         .lang-switch .lang-on { background: var(--bg-tint); color: var(--indigo); }
 
-        /* ── Hero ───────────────────────────────────────────── */
-        .hero { background: linear-gradient(170deg, var(--bg) 0%, var(--bg-tint) 100%); padding: 72px 0 80px; }
-        .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
-        .hero h1 { font-size: clamp(32px, 5vw, 46px); margin-bottom: 18px; }
-        .hero h1 em { font-style: normal; color: var(--indigo); }
-        .hero p.sub { font-size: 18px; color: var(--muted); margin-bottom: 28px; max-width: 480px; }
-        .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-        .hero-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+        /* Mobile menu (phase 1): the burger lives in the header bar; the panel is its own
+           element after the header, so .nav-links keeps the rules the menu suite pins. */
+        .burger { display: none; width: 42px; height: 42px; flex: none; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); cursor: pointer; padding: 0; }
+        .burger span { display: block; width: 18px; height: 2px; background: var(--ink); margin: 4px auto; border-radius: 2px; transition: transform .2s, opacity .2s; }
+        .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .mmenu { position: fixed; inset: 58px 0 0 0; z-index: 45; background: var(--bg); padding: 18px 20px 28px; overflow: auto; }
+        .mmenu a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 600; }
+        .mmenu .mm-foot { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 18px; }
+        .mmenu .mm-foot a { border: 0; padding: 0; font-size: 15px; font-weight: 500; color: var(--muted); }
+        .mmenu a.btn-primary { display: inline-flex; margin-top: 18px; width: 100%; border-bottom: 0; color: var(--bg); font-size: 16px; }
 
-        /* Phone frame + real-screenshot slideshow (L-03) */
-        .hero-shot { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .phone {
-            width: 290px; max-width: 80vw; margin: 0; background: #0f172a; border-radius: 40px; padding: 11px;
-            box-shadow: 0 26px 60px rgba(15, 23, 42, 0.28);
-        }
-        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 1080 / 1920; }
-        .shots { position: absolute; inset: 0; }
-        .shot { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
-        .shot.is-active { opacity: 1; }
-        .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        .shot-caption { font-size: 15px; font-weight: 600; color: var(--ink); text-align: center; max-width: 300px; min-height: 42px; margin: 0; }
-        .shot-dots { display: flex; gap: 9px; }
-        .shot-dots button { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; background: var(--line); cursor: pointer; transition: background .2s ease, transform .2s ease; }
-        .shot-dots button.is-on { background: var(--indigo); transform: scale(1.3); }
-        .shot-dots button:hover { background: var(--muted); }
+        /* ── Hero (phase 1): the live calendar is the visual ── */
+        .hero { padding: 64px 0 72px; position: relative; overflow: hidden; }
+        .floor3d { position: absolute; left: -10%; right: -10%; top: 30%; height: 110%; pointer-events: none;
+            background: linear-gradient(90deg, var(--floor-line) 1.5px, transparent 1.5px) 0 0 / 64px 64px, linear-gradient(0deg, var(--floor-line) 1.5px, transparent 1.5px) 0 0 / 64px 64px;
+            transform: perspective(700px) rotateX(62deg); transform-origin: top center; opacity: .7;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, transparent 85%); mask-image: linear-gradient(to bottom, transparent, #000 25%, transparent 85%); }
+        .hero .wrap { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        .hero h1 { font-size: clamp(38px, 5.6vw, 62px); margin-bottom: 18px; }
+        .hero h1 em { font-style: italic; font-weight: 500; color: var(--pink); }
+        .hero p.sub { font-size: 18.5px; color: var(--muted); max-width: 500px; margin-bottom: 24px; }
+        .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 24px; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease; white-space: nowrap; }
+        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.35); }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+        .hero-play img { height: 46px; width: auto; display: block; }
+        .hero-tiny { font-size: 13px; color: var(--muted); }
+        .stage { position: relative; perspective: 1400px; }
+        .cal-card { position: relative; background: var(--card); border-radius: 26px; padding: 22px; box-shadow: 0 24px 60px rgba(var(--ink-rgb), .16); border: 1px solid var(--line);
+            transform-style: preserve-3d; transform: rotateY(var(--ry, -10deg)) rotateX(var(--rx, 5deg)); transition: transform .25s ease-out; scroll-margin-top: 90px; }
+        .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .chip { border: 1.5px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+        .cal-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+        .cal-head b { font-family: var(--font-display, Georgia, serif); font-size: 20px; }
+        .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }
+        .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; transform-style: preserve-3d; }
+        .cal-grid .dow { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 4px; }
+        .day { aspect-ratio: 1; border-radius: 9px; display: grid; place-items: center; font-size: 13px; font-weight: 600; background: var(--line); color: var(--muted);
+            transform: translateZ(0) scale(.6); opacity: 0; transition: transform .4s cubic-bezier(.2,.8,.2,1.2), opacity .3s, background .3s, box-shadow .3s; }
+        .day.on { transform: translateZ(0) scale(1); opacity: 1; }
+        .day.a { background: var(--bg-tint); color: var(--indigo); box-shadow: 0 3px 0 color-mix(in srgb, var(--indigo) 35%, transparent); }
+        .day.b { background: color-mix(in srgb, var(--pink) 16%, var(--card)); color: var(--pink); box-shadow: 0 3px 0 color-mix(in srgb, var(--pink) 35%, transparent); }
+        .day.today { outline: 2.5px solid var(--accent); outline-offset: -2.5px; transform: translateZ(14px) scale(1.08); }
+        .today-line { margin-top: 14px; display: flex; gap: 10px; align-items: center; font-size: 14px; background: var(--bg); border-radius: 12px; padding: 10px 12px; }
+        .today-line .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+        .cal-more { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; }
+        .float { position: absolute; border-radius: 14px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 14px 30px rgba(var(--ink-rgb), .14); padding: 10px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: float 6s ease-in-out infinite; transform-style: preserve-3d; white-space: nowrap; }
+        .float .sq { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-family: var(--font-display, Georgia, serif); font-size: 14px; flex: none; }
+        .f1 { top: -26px; left: -34px; transform: translateZ(60px); animation-delay: -1s; }
+        .f2 { bottom: -18px; right: 18px; transform: translateZ(80px); animation-delay: -3s; }
+        .f3 { top: 46%; left: -56px; transform: translateZ(40px); animation-delay: -5s; }
+        @keyframes float { 0%, 100% { margin-top: 0; } 50% { margin-top: -10px; } }
 
-        /* Screenshot gallery ("por dentro do app") */
-        #galeria { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 8px; max-width: 820px; }
-        .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-        .phone-sm { width: 100%; max-width: 210px; background: #0f172a; border-radius: 30px; padding: 8px; box-shadow: 0 16px 36px rgba(15, 23, 42, 0.20); }
-        .phone-sm .scr { border-radius: 22px; overflow: hidden; aspect-ratio: 1080 / 1920; background: #fff; }
-        .phone-sm img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        .gallery-item p { font-size: 14px; color: var(--muted); text-align: center; margin: 0; max-width: 210px; }
-
-        @media (prefers-reduced-motion: reduce) { .shot { transition: none; } }
-
-        /* ── How it works ───────────────────────────────────── */
-        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px; }
-        .step .n {
-            width: 34px; height: 34px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo);
-            font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
-        }
-        .step h3 { font-size: 17px; margin-bottom: 8px; }
-        .step p { font-size: 14.5px; color: var(--muted); }
-
-        /* ── Features ───────────────────────────────────────── */
-        #beneficios { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .feature { padding: 22px; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--line); }
-        .feature .ico { font-size: 26px; margin-bottom: 10px; }
-        .feature h3 { font-size: 16.5px; margin-bottom: 6px; }
-        .feature p { font-size: 14.5px; color: var(--muted); }
-        /* L-38 — the phase-6 modules: vector icons, no screenshots (L-21 stays out). */
-        .feature .ico svg { width: 28px; height: 28px; color: var(--indigo); display: block; }
-        /* Os seis cartões de benefícios: um pedaço da própria interface do app nas cores
-           dele, não um ícone (owner, 03/10/2026). */
-        .feature .ico svg.vg { width: 72px; height: 40px; }
-        .feature .module-tag { display: inline-block; font-size: 12px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 999px; padding: 2px 10px; margin-bottom: 8px; }
-
-        /* ── Install ────────────────────────────────────────── */
-        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .install-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
-        .tool-teaser { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; }
-        .tool-teaser svg { flex: 1 1 320px; min-width: 240px; height: auto; }
-        .tool-teaser .tt-side { flex: 1 1 260px; }
-        .tool-teaser .tt-side p { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
-        .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-        .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
-        .install-card li { margin-bottom: 8px; }
-        .play-badge { margin: 0 0 12px; }
-        .play-badge img { height: 56px; width: auto; display: block; }
-        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
-        .install-card li strong { color: var(--ink); }
-        /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
-           nosso próprio visual. A ESTRUTURA foi conferida contra o guia oficial
-           da Apple "Transforme um site em um app no Safari do iPhone" em
-           21/09/2026 (iOS 27 e iOS 26, pt-BR:
-           support.apple.com/pt-br/guide/iphone/iphea86e5236/ios) — daí virem, na
-           folha de compartilhamento, o cartão do site, a fileira de apps, a
-           fileira de ações redondas e a lista agrupada com "Adicionar à Tela de
-           Início" lá embaixo, que é por que o passo escrito manda ROLAR.
-           L-33 (21/09/2026): o guia agora tem um passo que a primeira versão
-           deste desenho não tinha — "Ative a opção Abrir como App da Web" antes
-           de "Adicionar". Sem ela o ícone abre o site como favorito do Safari,
-           não como app, e notificação nenhuma chega. Daí a camada 3, o painel
-           de adicionar. O guia não traz figura desse painel: só o TEXTO nomeia
-           a opção e o botão, então só esses dois têm rótulo e o resto é barra
-           neutra, como na folha.
-           Só o rótulo que interessa tem texto: desenhar nome de app de terceiro
-           seria inventar o que não conferimos.
-           Quem reconferir o guia e achar diferente, ajusta aqui e troca a data
-           da linha abaixo do card — é ela que diz quando isto foi visto.
-           Os passos escritos ao lado seguem sendo O conteúdo: o diagrama é
-           aria-hidden, e leitor de tela, prefers-reduced-motion e JS desligado
-           leem a lista. Ao contrário do L-17, este bloco NÃO guarda coordenada
-           nenhuma: cada ponto de toque é filho do controle que ele aponta. */
-        .iosd-wrap { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
-        .iosd { flex: 0 0 180px; }
-        .iosd-steps { flex: 1 1 200px; min-width: 0; }
-        .iosd-phone { background: #0f172a; border-radius: 24px; padding: 5px; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18); }
-        .iosd-scr { position: relative; overflow: hidden; border-radius: 20px; background: #fff; aspect-ratio: 9 / 16; font-size: 7.5px; }
-
-        /* camada 1: a página aberta no navegador, só o suficiente para dizer
-           "você está no site" — marca, linhas de texto e a barra de baixo. */
-        .iosd-page { position: absolute; inset: 0 0 13% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
-        .iosd-mark { display: block; width: 24px; height: 24px; border-radius: 7px; }
-        .iosd-name { display: block; font-weight: 700; color: var(--ink); font-size: 9px; margin-bottom: 2px; }
-        .iosd-page i { display: block; height: 4px; border-radius: 2px; background: var(--line); }
-        .iosd-page i:nth-child(3) { width: 85%; }
-        .iosd-page i:nth-child(4) { width: 65%; }
-        .iosd-page i:nth-child(5) { width: 78%; }
-        .iosd-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 13%; border-top: 1px solid var(--line); background: #f8fafc; display: flex; align-items: center; gap: 5px; padding: 0 7px; }
-        .iosd-url { flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 6px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .iosd-share { position: relative; flex: none; width: 15px; height: 15px; color: var(--indigo); }
-        .iosd-share svg { display: block; width: 100%; height: 100%; }
-
-        /* camada 2: a folha. Ela cobre quase a tela inteira, como a de verdade. */
-        .iosd-sheet { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.14); padding: 7px 7px 0; display: flex; flex-direction: column; gap: 6px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
-        .iosd-head { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px; }
-        .iosd-fav { flex: none; display: block; width: 17px; height: 17px; border-radius: 4px; }
-        /* o cartão mostra o SITE que está sendo compartilhado — então mostra o
-           nosso, com o mesmo título que web.entrelares.app serve (<title>
-           Entrelares) e o mesmo ícone que o apple-touch-icon entrega. */
-        .iosd-headtx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
-        .iosd-headtx b { font-weight: 700; color: var(--ink); white-space: nowrap; }
-        .iosd-headtx i { font-style: normal; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .iosd-x { flex: none; width: 13px; height: 13px; border-radius: 50%; background: #e5e5ea; }
-        .iosd-apps, .iosd-acts { flex: none; display: flex; gap: 7px; padding: 0 2px; }
-        .iosd-apps span, .iosd-acts span { flex: 1; aspect-ratio: 1; }
-        /* cor só para dizer "aqui é a fileira de apps" — nenhum app nomeado */
-        .iosd-apps span { border-radius: 7px; background: #c7c7cc; }
-        .iosd-acts span { border-radius: 50%; background: #e5e5ea; }
-        .iosd-list { flex: none; background: #fff; border-radius: 9px; overflow: hidden; }
-        .iosd-row { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-top: 1px solid #ececf0; }
-        .iosd-row:first-child { border-top: 0; }
-        .iosd-row b { display: block; height: 4px; border-radius: 2px; background: #dcdce2; flex: 1; }
-        .iosd-row svg { flex: none; width: 11px; height: 11px; color: #8e8e93; }
-        .iosd-row-target { position: relative; color: var(--ink); line-height: 1.25; padding-right: 20px; transition: background .3s ease, color .3s ease; }
-        .iosd-row-target svg { color: var(--ink); }
-        /* o ponto da linha encosta na borda: centrado, ele tapava justamente o
-           rótulo que o passo manda procurar. */
-        .iosd-row-target .iosd-dot { left: auto; right: 4px; margin-left: 0; }
-
-        /* camada 3 (L-33): o painel de adicionar. Sobe por cima da folha, e a
-           chave liga um instante DEPOIS de o painel chegar — o gesto que o
-           passo 4 pede é justamente virar essa chave. */
-        .iosd-add { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.14); padding: 7px; display: flex; flex-direction: column; gap: 7px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
-        .iosd-addnav { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 2px 2px 0; }
-        .iosd-addnav > b { display: block; width: 26%; height: 4px; border-radius: 2px; background: #dcdce2; }
-        .iosd-addbtn { position: relative; font-weight: 700; color: var(--indigo); padding: 2px 4px; border-radius: 6px; transition: background .3s ease; }
-        .iosd-addcard { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px; }
-        .iosd-addcard img { flex: none; display: block; width: 22px; height: 22px; border-radius: 6px; }
-        .iosd-addtog { flex: none; display: flex; align-items: center; gap: 6px; background: #fff; border-radius: 9px; padding: 6px 7px; color: var(--ink); line-height: 1.25; transition: background .3s ease, color .3s ease; }
-        .iosd-addtog > span:first-child { flex: 1; min-width: 0; }
-        .iosd-sw { position: relative; flex: none; width: 20px; height: 12px; border-radius: 999px; background: #d1d1d6; transition: background .3s ease .7s; }
-        .iosd-sw::before { content: ''; position: absolute; top: 1px; left: 1px; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25); transition: transform .3s ease .7s; }
-        /* como na linha da folha: o ponto encosta AO LADO do controle, senão
-           tapa o rótulo e a chave que o passo manda procurar. */
-        .iosd-addbtn .iosd-dot { left: -20px; margin-left: 0; }
-        .iosd-sw .iosd-dot { left: -17px; margin-left: 0; }
-        .iosd.is-b3 .iosd-add, .iosd.is-b4 .iosd-add { transform: translateY(0); }
-        .iosd.is-b3 .iosd-sw, .iosd.is-b4 .iosd-sw { background: #34c759; }
-        .iosd.is-b3 .iosd-sw::before, .iosd.is-b4 .iosd-sw::before { transform: translateX(8px); }
-        .iosd.is-b3 .iosd-addtog { background: var(--bg-tint); color: var(--indigo-deep); }
-        .iosd.is-b4 .iosd-addbtn { background: var(--bg-tint); }
-
-        /* camada 4: a recompensa — o ícone na tela inicial. */
-        .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, #e0e7ff, #fce7f3); opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
-        .iosd-home img { width: 38px; height: 38px; border-radius: 11px; box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22); }
-        .iosd-home span { color: var(--ink); font-weight: 600; }
-
-        /* o ponto de toque: um por controle, filho dele. Não há coordenada a
-           manter em dia — é o que o L-17 aprendeu do jeito caro. */
-        .iosd-dot { position: absolute; left: 50%; top: 50%; width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; border-radius: 50%; background: rgba(79, 70, 229, 0.22); border: 2px solid var(--indigo); opacity: 0; transform: scale(.45) translateY(7px); transition: opacity .26s ease, transform .4s cubic-bezier(.34, 1.3, .5, 1); pointer-events: none; }
-        .iosd-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--indigo); opacity: 0; }
-        .iosd.is-b1 .iosd-share .iosd-dot,
-        .iosd.is-b2 .iosd-row-target .iosd-dot,
-        .iosd.is-b3 .iosd-sw .iosd-dot,
-        .iosd.is-b4 .iosd-addbtn .iosd-dot { opacity: 1; transform: scale(1) translateY(0); }
-        .iosd.is-b1 .iosd-share .iosd-dot::after,
-        .iosd.is-b2 .iosd-row-target .iosd-dot::after,
-        .iosd.is-b3 .iosd-sw .iosd-dot::after,
-        .iosd.is-b4 .iosd-addbtn .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
-        @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
-        /* a folha fica de pé debaixo do painel de adicionar (b3/b4). */
-        .iosd.is-b2 .iosd-sheet, .iosd.is-b3 .iosd-sheet, .iosd.is-b4 .iosd-sheet { transform: translateY(0); }
-        /* a página atrás escurece quando a folha sobe, como no aparelho */
-        .iosd-page, .iosd-bar { transition: opacity .4s ease; }
-        .iosd.is-b2 .iosd-page, .iosd.is-b2 .iosd-bar,
-        .iosd.is-b3 .iosd-page, .iosd.is-b3 .iosd-bar,
-        .iosd.is-b4 .iosd-page, .iosd.is-b4 .iosd-bar { opacity: .4; }
-        .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); color: var(--indigo-deep); }
-        .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
-        .iosd.is-b5 .iosd-home { opacity: 1; }
-
-        /* o passo escrito que corresponde ao quadro acende junto — é o que liga o
-           desenho às palavras sem repetir as palavras. Sem JS, nada acende. */
-        .iosd-steps li { transition: color .3s ease; }
-        .iosd-steps li.is-now { color: var(--ink); }
-        .iosd-note { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.5; }
-        @media (prefers-reduced-motion: reduce) {
-            .iosd-sheet, .iosd-add, .iosd-sw, .iosd-sw::before, .iosd-addtog, .iosd-addbtn,
-            .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li,
-            .iosd-page, .iosd-bar { transition: none; }
-            .iosd-dot::after { animation: none; }
-        }
-
-        /* ── Pricing ────────────────────────────────────────── */
-        #precos { background: linear-gradient(170deg, var(--bg-tint) 0%, var(--bg) 100%); }
-        .price-card {
-            max-width: 520px; margin: 0 auto; background: var(--card); border: 2px solid var(--indigo);
-            border-radius: 20px; padding: 36px 32px; text-align: center;
-            box-shadow: 0 16px 40px rgba(79, 70, 229, 0.12);
-        }
-        .price-badge {
-            display: inline-block; background: var(--bg-tint); color: var(--indigo); font-size: 12px;
-            font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 14px;
-            border-radius: 999px; margin-bottom: 14px;
-        }
-        .price-card .price { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; }
-        .price-card .price small { font-size: 16px; font-weight: 500; color: var(--muted); }
-        .price-card p { color: var(--muted); font-size: 15px; margin: 14px 0 24px; }
-        .price-card ul { list-style: none; text-align: left; margin: 0 auto 26px; max-width: 340px; font-size: 15px; }
-        .price-card li { padding: 6px 0 6px 28px; position: relative; }
-        .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
-        /* L-08: free vs premium comparison */
-        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; align-items: stretch; }
-        .price-grid .price-card { max-width: none; margin: 0; display: flex; flex-direction: column; }
-        .price-grid .price-card ul { flex: 1; }
-        .price-card.free { border-color: var(--line); box-shadow: none; }
-        .price-card.free .price-badge { background: var(--bg); color: var(--muted); }
-        .price-card .price-cycle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
-        .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
-        /* L-14: trust signals — promo tag + the 7-day guarantee next to the price */
-        .price-promo { display: inline-block; background: #ecfdf5; color: #047857; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 10px 0 0; }
-        .price-guarantee {
-            max-width: 640px; margin: 22px auto 0; background: var(--bg-tint); border: 1px solid var(--line);
-            border-radius: 14px; padding: 14px 18px; text-align: center; font-size: 14px;
-        }
-        @media (max-width: 760px) { .price-grid { grid-template-columns: 1fr; } }
-
-        /* ── FAQ ────────────────────────────────────────────── */
-        .faq-list { max-width: 720px; }
-        details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin-bottom: 10px; }
-        summary {
-            cursor: pointer; font-weight: 600; font-size: 15.5px; padding: 16px 20px;
-            list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
-        }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: "+"; font-size: 20px; color: var(--muted); flex-shrink: 0; }
-        details[open] summary::after { content: "–"; }
-        details .a { padding: 0 20px 16px; color: var(--muted); font-size: 15px; }
-
-        /* ── Trust bar ──────────────────────────────────────── */
-        .trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 20px; }
-        .trust span { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--muted); font-weight: 500; }
+        /* ── Trust strip ── */
+        .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--card); padding: 16px 0; }
+        .trust { display: flex; gap: 10px 32px; flex-wrap: wrap; justify-content: center; }
+        .trust span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); font-weight: 500; }
         .trust span::before { content: "✓"; color: var(--indigo); font-weight: 700; }
 
-        /* ── Comparison (planilha/WhatsApp vs app) ──────────── */
-        #porque { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; }
-        .compare-col { border-radius: var(--radius); padding: 26px 24px; border: 1px solid var(--line); }
-        .compare-col h3 { font-size: 17px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .compare-col ul { list-style: none; }
-        .compare-col li { padding: 8px 0 8px 28px; position: relative; font-size: 15px; color: var(--muted); }
-        .compare-bad { background: var(--bg); }
-        .compare-bad li::before { content: "✕"; position: absolute; left: 4px; color: var(--pink); font-weight: 700; }
-        .compare-good { background: var(--bg-tint); border-color: var(--indigo); }
-        .compare-good li { color: var(--ink); }
-        .compare-good li::before { content: "✓"; position: absolute; left: 2px; color: var(--indigo); font-weight: 700; }
+        /* ── Cena isométrica "duas casas" (CSS 3D, sem biblioteca) ── */
+        .scene-sec { background: var(--card); border-bottom: 1px solid var(--line); overflow: hidden; }
+        .scene-sec .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: center; }
+        .iso-wrap { position: relative; min-width: 0; height: 460px; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; }
+        .iso-wrap:active { cursor: grabbing; }
+        .iso-scale { transform: scale(var(--s, 1)); transform-origin: center; }
+        .iso { position: relative; width: 460px; height: 460px; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(var(--rz, -40deg)); transition: transform .08s linear; }
+        .ground { position: absolute; inset: 0; border-radius: 40px; background: var(--floor);
+            background-image: linear-gradient(90deg, var(--floor-line) 1px, transparent 1px), linear-gradient(0deg, var(--floor-line) 1px, transparent 1px); background-size: 46px 46px; box-shadow: 0 40px 0 -10px rgba(var(--ink-rgb), .08); }
+        .box { position: absolute; width: var(--w); height: var(--d); transform-style: preserve-3d; }
+        .box i { position: absolute; display: block; left: 0; top: 0; }
+        .box .top { width: var(--w); height: var(--d); transform: translateZ(var(--h)); background: var(--c3); }
+        .box .front { width: var(--w); height: var(--h); transform-origin: top; transform: translateY(var(--d)) rotateX(90deg); background: var(--c1); }
+        .box .back { width: var(--w); height: var(--h); transform-origin: top; transform: rotateX(90deg); background: var(--c2); }
+        .box .right { width: var(--h); height: var(--d); transform-origin: left; transform: translateX(var(--w)) rotateY(-90deg); background: var(--c2); }
+        .box .left { width: var(--h); height: var(--d); transform-origin: left; transform: rotateY(-90deg); background: var(--c1); }
+        .roof { position: absolute; left: 0; top: 0; width: var(--w); transform-style: preserve-3d; }
+        .roof i { position: absolute; left: -6px; width: calc(var(--w) + 12px); height: var(--r); display: block; }
+        .roof .ra { transform-origin: top; transform: translateY(-4px) translateZ(var(--h)) rotateX(45deg); background: var(--c4); }
+        .roof .rb { transform-origin: top; transform: translateY(calc(var(--d) + 4px)) translateZ(var(--h)) rotateX(135deg); background: var(--c5); }
+        .gable { position: absolute; left: 0; top: 0; width: var(--w); height: calc(var(--d) / 2); transform-origin: top; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+        .gable.gf { transform: translateY(var(--d)) translateZ(var(--h)) rotateX(90deg); background: var(--c1); }
+        .gable.gb { transform: translateZ(var(--h)) rotateX(90deg); background: var(--c2); }
+        .door { position: absolute; left: 50%; top: 0; width: 18px; height: 30px; margin-left: -9px; background: var(--accent); border-radius: 0 0 4px 4px; }
+        .win { position: absolute; width: 14px; height: 12px; background: #FFF5D6; border-radius: 2px; box-shadow: inset 0 0 0 2px rgba(42,31,51,.25); }
+        .tile { position: absolute; width: 34px; height: 34px; border-radius: 8px; transform: translateZ(1px); transition: transform .3s, filter .3s; }
+        .tile.a { background: var(--indigo); box-shadow: 0 0 0 2px var(--a-deep) inset; }
+        .tile.b { background: var(--pink); box-shadow: 0 0 0 2px var(--b-deep) inset; }
+        .tile.hot { transform: translateZ(10px); filter: brightness(1.18); }
+        .kid { position: absolute; width: 26px; height: 26px; margin: 4px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE0B2, var(--accent) 70%); transform: translateZ(24px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); transition: left .6s cubic-bezier(.5,0,.3,1.2), top .6s cubic-bezier(.5,0,.3,1.2); box-shadow: 0 10px 14px rgba(42,31,51,.25); }
+        .kid::after { content: ""; position: absolute; left: 7px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: #2A1F33; box-shadow: 8px 0 0 #2A1F33; }
+        .label3d { position: absolute; font: 600 12px var(--font-body, sans-serif); color: var(--ink); background: var(--card); border: 1px solid var(--line); padding: 4px 9px; border-radius: 999px; transform: translateZ(140px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); white-space: nowrap; box-shadow: 0 6px 14px rgba(var(--ink-rgb), .14); }
+        .scene-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-        /* ── Demo: o histórico sendo escrito (L-17) ─────────────
-           Sequência DIRIGIDA sobre os frames REAIS do app (T-57), não um vídeo:
-           o texto é HTML — serve os dois idiomas sem um segundo binário e sem
-           re-encodar quando a UI mudar —, os quadros já estão no cache da
-           página (peso extra ≈ 0, o LCP segue no hero) e
-           prefers-reduced-motion vira só "não avança sozinho": os três passos
-           continuam legíveis parados. */
+        /* ── Problema mostrado: a conversa que vira registro ── */
+        .problem .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+        .chat { background: #E8DFD3; border-radius: 22px; padding: 22px; max-width: 420px; }
+        @media (prefers-color-scheme: dark) { .chat { background: #2B2231; } }
+        .bubble { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 14px; margin-bottom: 10px; background: var(--card); color: var(--ink); }
+        .bubble.me { margin-left: auto; background: #D7F5D0; color: #1F3A1B; }
+        .bubble time { display: block; font-size: 10px; color: var(--muted); text-align: right; margin-top: 4px; }
+        .bubble.me time { color: #4C6B47; }
+        .chat-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .arrow { text-align: center; font-size: 28px; color: var(--accent); margin: 10px 0; line-height: 1; }
+        .record { border-left: 3px solid var(--indigo); background: var(--card); border-radius: 0 14px 14px 0; padding: 12px 16px; font-size: 14px; margin-top: 16px; box-shadow: 0 10px 24px rgba(var(--ink-rgb), .08); }
+        .record b { font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: 16px; }
+        .record-list { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+        .record-list li { padding-left: 26px; position: relative; font-size: 15px; color: var(--ink); }
+        .record-list li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
+
+        /* ── Três passos (faixa escura, celulares em perspectiva) ── */
+        .dark { background: var(--deep); color: var(--deep-ink); }
+        .dark h2 { color: var(--deep-ink); }
+        .dark .section-lead { color: var(--deep-ink-soft); }
+        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; counter-reset: s; perspective: 1200px; }
+        .step { position: relative; padding-top: 18px; }
+        .step::before { counter-increment: s; content: counter(s, decimal-leading-zero); font-family: var(--font-display, Georgia, serif); font-size: 44px; color: var(--accent); line-height: 1; display: block; margin-bottom: 12px; }
+        .step h3 { font-size: 20px; margin-bottom: 8px; }
+        .step p { font-size: 15px; color: var(--deep-ink-soft); }
+        .shot3d { width: 100%; max-width: 230px; background: #0F0B13; border-radius: 30px; padding: 8px; margin: 22px 0 0; box-shadow: 0 30px 50px rgba(0,0,0,.35); transform: rotateY(var(--py, -14deg)) rotateX(6deg); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+        .step:nth-child(2) .shot3d { --py: 0deg; transform: rotateX(8deg) translateY(-10px); }
+        .step:nth-child(3) .shot3d { --py: 14deg; }
+        .step:hover .shot3d { transform: none; }
+        .shot3d img { display: block; width: 100%; height: auto; border-radius: 22px; aspect-ratio: 1080 / 1920; object-fit: cover; object-position: top; }
+
+        /* ── Demo (L-17) — verbatim from the previous home ── */
+        .phone { width: 290px; max-width: 80vw; margin: 0; background: #0F0B13; border-radius: 40px; padding: 11px; box-shadow: 0 26px 60px rgba(var(--ink-rgb), 0.28); }
+        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 1080 / 1920; }
         .demo { display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: center; max-width: 880px; }
         .demo .phone { margin: 0; }
         .demo-frame { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
         .demo-frame.is-active { opacity: 1; }
         .demo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        /* O foco é um RECORTE: escurece tudo fora dele com um box-shadow gigante
-           (por isso .phone-screen precisa do overflow:hidden que já tem) e
-           desliza de um beat para o outro. É esse movimento que faz a peça ler
-           como sequência, e não como mais um slideshow. As coordenadas do
-           primeiro beat estão inline no HTML: sem JS, o recorte já nasce certo. */
-        .demo-ring {
-            position: absolute; border: 2.5px solid var(--indigo); border-radius: 12px;
-            box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.45); pointer-events: none;
-            transition: left .55s cubic-bezier(.4, 0, .2, 1), top .55s cubic-bezier(.4, 0, .2, 1),
-                        width .55s cubic-bezier(.4, 0, .2, 1), height .55s cubic-bezier(.4, 0, .2, 1);
-        }
+        .demo-ring { position: absolute; border: 2.5px solid var(--accent); border-radius: 12px; box-shadow: 0 0 0 9999px rgba(15, 11, 19, 0.45); pointer-events: none;
+            transition: left .55s cubic-bezier(.4, 0, .2, 1), top .55s cubic-bezier(.4, 0, .2, 1), width .55s cubic-bezier(.4, 0, .2, 1), height .55s cubic-bezier(.4, 0, .2, 1); }
         .demo-steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .demo-steps button {
-            display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; text-align: left;
-            background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-            padding: 16px 18px; cursor: pointer; font: inherit; color: inherit;
-            transition: border-color .2s ease, background .2s ease;
-        }
+        .demo-steps button { display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s ease, background .2s ease; }
         .demo-steps button:hover { border-color: var(--indigo); }
         .demo-steps button[aria-current="true"] { border-color: var(--indigo); background: var(--bg-tint); }
-        .demo-n {
-            width: 30px; height: 30px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo);
-            font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center;
-        }
+        .demo-n { width: 30px; height: 30px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo); font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; }
         .demo-steps button[aria-current="true"] .demo-n { background: var(--indigo); color: #fff; }
         .demo-tx strong { display: block; font-size: 16px; margin-bottom: 4px; }
         .demo-d { display: block; font-size: 14.5px; color: var(--muted); line-height: 1.55; }
-        /* A barra só existe enquanto algo de fato avança sozinho — sem autoplay
-           (reduced-motion, ponteiro em cima, aba oculta) ela some em vez de
-           mentir que está correndo. */
         .demo-bar { grid-column: 2; height: 3px; border-radius: 2px; background: var(--line); margin-top: 12px; overflow: hidden; display: none; }
         .demo.is-playing .demo-steps button[aria-current="true"] .demo-bar { display: block; }
         .demo-bar i { display: block; height: 100%; width: 0; background: var(--indigo); }
-        @media (prefers-reduced-motion: reduce) { .demo-frame, .demo-ring { transition: none; } }
 
-        /* ── Founder note + values (L-06; calmer since L-18) ─────
-           L-18: the one section that speaks in first person reads like a letter, not
-           like a feature block — one narrow column (heading, lead and card share it),
-           more air above and below, regular weight, longer line-height, no heavy accent
-           bar. System font on purpose: a web font would add a request and a FOUT to buy
-           a tone that spacing already buys. */
-        .founder-section { padding: 96px 0; }
-        .founder-section .wrap { max-width: 720px; }
-        .founder-section h2 { font-weight: 600; letter-spacing: -0.01em; }
-        .founder-section .section-lead { margin-bottom: 36px; }
-        .founder { margin: 0 auto; }
-        .founder-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 44px 48px; }
-        .founder-card p { color: #475569; font-size: 17.5px; font-weight: 400; line-height: 1.85; letter-spacing: 0.003em; margin-bottom: 1.1em; }
-        .founder-card p:last-of-type { margin-bottom: 0; }
-        .founder-card strong { color: var(--ink); font-weight: 600; }
-        .founder-sign { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
-        .founder-avatar { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: block; background: var(--bg-tint); box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
+        /* ── Tour em abas (#beneficios) + módulos ── */
+        .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0 30px; }
+        .tab { border: 0; background: transparent; padding: 10px 16px; border-radius: 999px; font: 600 14px var(--font-body, sans-serif); color: var(--muted); cursor: pointer; }
+        .tab[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: 0 4px 16px rgba(var(--ink-rgb), .08); }
+        .pane { display: none; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; perspective: 1200px; }
+        .pane.on { display: grid; }
+        .pane .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--bg-tint); color: var(--indigo); margin-bottom: 14px; }
+        .pane .tag.premium { background: color-mix(in srgb, var(--pink) 16%, var(--card)); color: var(--pink); }
+        .pane h3 { font-size: 28px; margin-bottom: 12px; }
+        .pane p { color: var(--muted); font-size: 16px; }
+        .pane .shot3d { margin: 0 auto; transform: rotateY(-10deg) rotateX(4deg); animation: flipin .6s cubic-bezier(.2,.8,.2,1); }
+        @keyframes flipin { from { transform: rotateY(40deg) translateX(40px); opacity: 0; } to { transform: rotateY(-10deg) rotateX(4deg); opacity: 1; } }
+        .modules { margin-top: 64px; padding-top: 44px; border-top: 1px solid var(--line); }
+        .modules h3 { font-size: 24px; margin-bottom: 20px; }
+        .mod-list { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+        .mod-list li { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+        .mod-list svg { width: 26px; height: 26px; color: var(--indigo); display: block; margin-bottom: 10px; }
+        .module-tag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px; line-height: 1.35; }
+        .mod-list b { display: block; font-size: 15.5px; margin-bottom: 6px; }
+        .mod-list p { font-size: 13.5px; color: var(--muted); }
+
+        /* ── Para toda família ── */
+        .roles { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 8px; }
+        .roles li { padding: 7px 13px; border-radius: 999px; font-size: 14px; font-weight: 500; border: 1px solid var(--line); background: var(--card); }
+        .roles li:nth-child(odd) { border-color: color-mix(in srgb, var(--indigo) 35%, var(--line)); color: var(--indigo); }
+        .roles li:nth-child(even) { border-color: color-mix(in srgb, var(--pink) 35%, var(--line)); color: var(--pink); }
+
+        /* ── Fundador: citação curta, carta inteira a um toque ── */
+        .founder-section { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .founder-row { display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: start; max-width: 820px; }
+        .founder-avatar { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; display: block; box-shadow: 0 10px 24px rgba(var(--ink-rgb), .2); }
         .founder-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .founder-sign .who { font-weight: 700; color: var(--ink); font-size: 15px; line-height: 1.3; }
-        .founder-sign .who span { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
-        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 40px; }
-        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid #e0e7ff; border-radius: 999px; padding: 8px 15px; font-size: 14px; font-weight: 500; }
-        /* Ícones em SVG próprio: o Windows não desenha emoji de bandeira (mostrava "BR"),
-           e cada sistema desenhava os outros emojis de um jeito. */
-        .vb-ico { flex-shrink: 0; display: block; }
+        .founder-row blockquote { font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: clamp(22px, 3vw, 30px); line-height: 1.3; }
+        .founder-row cite { display: block; font-style: normal; font-size: 14px; color: var(--muted); margin-top: 12px; }
+        .founder-more { margin-top: 16px; }
+        .founder-more summary { cursor: pointer; color: var(--indigo); font-weight: 600; font-size: 15px; list-style: none; }
+        .founder-more summary::-webkit-details-marker { display: none; }
+        .founder-more summary::before { content: "+ "; }
+        .founder-more[open] summary::before { content: "– "; }
+        .founder-card { margin-top: 16px; }
+        .founder-card p { color: var(--ink-soft); font-size: 17px; line-height: 1.8; margin-bottom: 1em; }
+        .founder-card strong { color: var(--ink); font-weight: 600; }
 
-        /* ── Final CTA + footer ─────────────────────────────── */
-        .cta-final { text-align: center; background: #03173d; color: #fff; }
-        .cta-final h2 { color: #fff; }
-        .cta-final p { color: #cbd5e1; max-width: 520px; margin: 0 auto 28px; }
-        footer { background: #03173d; color: #94a3b8; font-size: 14px; border-top: 1px solid #1e3a5f; }
-        footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 24px; padding-bottom: 24px; }
-        footer a { color: #cbd5e1; text-decoration: none; }
-        footer a:hover { color: #fff; }
-        .foot-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+        /* ── Instalar (compacto; o passo a passo desenhado mora em /instalar) ── */
+        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .install-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+        .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
+        .install-card li { margin-bottom: 8px; }
+        .install-card li strong { color: var(--ink); }
+        .play-badge { margin: 0 0 12px; }
+        .play-badge img { height: 56px; width: auto; display: block; }
+        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
+        .install-more { display: inline-block; margin-top: 10px; font-weight: 600; }
 
+        /* ── Preços (markup kept; the look is the tokens') ── */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; align-items: stretch; }
+        .price-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 32px 30px; text-align: left; display: flex; flex-direction: column; }
+        .price-card:not(.free) { border: 2px solid var(--pink); }
+        .price-badge { display: inline-block; align-self: flex-start; background: var(--bg-tint); color: var(--indigo); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 14px; }
+        .price-card.free .price-badge { background: var(--bg); color: var(--muted); }
+        .price-card .price { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; }
+        .price-card .price small { font-size: 15px; font-weight: 500; color: var(--muted); }
+        .price-card p { color: var(--muted); font-size: 15px; margin: 12px 0 18px; }
+        .price-card .price-cycle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+        .price-card ul { list-style: none; margin: 0 0 24px; font-size: 15px; flex: 1; }
+        .price-card li { padding: 6px 0 6px 28px; position: relative; }
+        .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
+        .price-card .btn { width: 100%; }
+        .price-promo { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: color-mix(in srgb, var(--accent) 22%, var(--card)); color: var(--accent-ink); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 10px 0 0; }
+        .price-guarantee { max-width: 640px; margin: 22px auto 0; background: var(--bg-tint); border: 1px solid var(--line-tint); border-radius: 14px; padding: 14px 18px; text-align: center; font-size: 14px; }
+        .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
+
+        /* ── FAQ ── */
+        .faq-list { max-width: 760px; }
+        details.faq-item, .faq-list > details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin-bottom: 10px; }
+        .faq-list summary { cursor: pointer; font-weight: 600; font-size: 15.5px; padding: 16px 20px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .faq-list summary::-webkit-details-marker { display: none; }
+        .faq-list summary::after { content: "+"; font-size: 20px; color: var(--muted); flex-shrink: 0; }
+        .faq-list details[open] summary::after { content: "–"; }
+        .faq-list details .a { padding: 0 20px 16px; color: var(--muted); font-size: 15px; }
+
+        /* ── CTA final + rodapé ── */
+        .cta-final { text-align: center; background: var(--deep); color: var(--deep-ink); overflow: hidden; }
+        .cta-final h2 { color: var(--deep-ink); font-size: clamp(34px, 5vw, 56px); }
+        .cta-final p { color: var(--deep-ink-soft); max-width: 520px; margin: 0 auto 28px; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .55; pointer-events: none; }
+        .o1 { width: 220px; height: 220px; left: -60px; top: -40px; background: radial-gradient(circle at 35% 35%, var(--bg-tint), var(--indigo)); }
+        .o2 { width: 160px; height: 160px; right: -30px; bottom: -40px; background: radial-gradient(circle at 35% 35%, #FFE0EA, var(--pink)); }
+        footer { background: var(--deep); color: var(--deep-muted); font-size: 14px; border-top: 1px solid var(--deep-line); }
+        footer .wrap { padding-top: 44px; padding-bottom: 28px; }
+        footer a { color: var(--deep-ink-soft); text-decoration: none; }
+        footer a:hover { color: var(--deep-ink); }
+        .cols { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 24px; }
+        .cols h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--deep-muted); margin-bottom: 12px; font-weight: 600; }
+        .cols a { display: block; margin-bottom: 8px; }
+        .cols .brand { color: var(--deep-ink); }
+        .foot-tag { margin-top: 10px; font-size: 13px; }
+        .foot-legal { display: block; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--deep-line); font-size: 13px; line-height: 1.6; }
+        .foot-legal a, .foot-legal strong { color: var(--deep-ink-soft); }
+        .sticky-cta { display: none; position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--line); z-index: 30; transform: translateY(110%); transition: transform .3s; }
+        .sticky-cta.on { transform: none; }
+        .sticky-cta .btn { width: 100%; }
+
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+
+        @media (max-width: 1060px) { .mod-list { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 860px) {
+            .hero .wrap { grid-template-columns: 1fr; gap: 32px; }
+            .hero { padding-top: 36px; }
+            .hero h1 { font-size: 40px; }
+            .stage { margin-top: 26px; }
+            .cal-card { transform: none; }
+            .f1 { left: auto; right: 6px; top: -20px; }
+            .f2, .f3 { display: none; }
+            .scene-sec .wrap, .problem .wrap, .pane, .founder-row { grid-template-columns: 1fr; }
+            .iso-wrap { height: 250px; }
+            .steps { grid-template-columns: 1fr; }
+            .shot3d { transform: none !important; margin-inline: auto; }
+            .pane .shot3d { animation: none; }
+            .mod-list { grid-template-columns: 1fr 1fr; }
+            .cols { grid-template-columns: 1fr 1fr; }
+            .sticky-cta { display: block; }
+            body { padding-bottom: 0; }
+        }
         @media (max-width: 820px) {
-            section { padding: 48px 0; }
-            .hero { padding: 40px 0 56px; }
-            .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
-            .steps, .features, .install-grid, .compare { grid-template-columns: 1fr; }
+            section { padding: 56px 0; }
+            .install-grid, .price-grid { grid-template-columns: 1fr; }
             /* L-17: a demo empilha e centraliza — a lista de passos vira legenda
                abaixo do telefone em vez de uma coluna espremida. */
             .demo { grid-template-columns: 1fr; gap: 28px; justify-items: center; }
             .demo-steps { width: 100%; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .nav-links { display: none; }
+            .burger { display: block; }
 
             /* Header: barra enxuta com o seletor de idioma e a pílula de CTA à direita */
             .nav { height: 58px; gap: 10px; }
@@ -626,30 +552,29 @@
             .cta-full { display: none; }
             .cta-short { display: inline; }
 
-            /* Hero: CTAs em largura total, com alvo de toque confortável */
             .hero-ctas { flex-direction: column; align-items: stretch; }
             .hero-ctas .btn { width: 100%; }
-
-            .price-card { padding: 30px 22px; }
-            footer .wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
-
-            .founder-section { padding: 64px 0; }
-            .founder-card { padding: 30px 22px; }
-            .founder-card p { font-size: 16.5px; line-height: 1.8; }
-            .values { justify-content: flex-start; }
+            .hero-play { display: flex; justify-content: center; }
+            .price-card { padding: 28px 22px; }
+            .mod-list { grid-template-columns: 1fr; }
         }
-
-        /* L-16: o seletor de idioma entrou na barra, então o nome da marca some um
-           pouco mais cedo (antes era 380px) para o header não estourar. */
         @media (max-width: 420px) {
             .brand { font-size: 0; gap: 0; }
             .brand img { width: 30px; height: 30px; }
             .lang-switch { font-size: 12px; padding: 2px; }
             .lang-switch a, .lang-switch span { padding: 4px 8px; }
         }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .day, .cal-card, .shot3d, .tile, .kid, .demo-frame, .demo-ring, .sticky-cta { transition: none !important; animation: none !important; }
+            .float { animation: none; }
+        }
     </style>
-    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -674,215 +599,148 @@
             <a href="/en/" hreflang="en" lang="en" title="English version">EN</a>
         </div>
         <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#gerador">Simulador</a>
+    <a href="#porque">Por quê</a>
+    <a href="#beneficios">Benefícios</a>
+    <a href="/instalar">Instalar</a>
+    <a href="#precos">Preços</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a href="/rotinas/">Rotinas de guarda</a>
+    <a href="/advogados">Para advogados e mediadores</a>
+    <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <div class="hero">
+    <div class="floor3d" aria-hidden="true"></div>
     <div class="wrap">
         <div>
-            <h1>De quem é o dia hoje? <em>Nunca mais discuta</em> por causa do calendário.</h1>
-            <p class="sub">
-                O app que organiza a convivência dos seus filhos na guarda compartilhada:
-                calendário claro, trocas de dia com aprovação dos dois responsáveis e um
-                histórico que não pode ser editado nem apagado — o registro de tudo
-                o que foi combinado, <em>preservado exatamente como foi feito</em>.
-            </p>
+            <p class="eyebrow">Duas casas, uma mesma infância</p>
+            <h1>De quem é o dia hoje? <em>Os dois sabem.</em></h1>
+            <p class="sub">O app que organiza a convivência dos seus filhos na guarda compartilhada: um calendário que pai, mãe e quem mais cuida veem igual, trocas de dia que só valem com a aprovação dos dois e um histórico que não pode ser editado nem apagado.</p>
             <div class="hero-ctas">
                 <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a>
-                <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
+                <a class="hero-play" data-param-show="landing.play_badge" href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Dhero" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-pt-br.png" width="646" height="250" alt="Disponível no Google Play" loading="lazy" decoding="async" /></a>
+                <a class="btn btn-ghost" data-param-hide="landing.play_badge" hidden href="#como-funciona-anchor">Ver como funciona</a>
             </div>
-            <div class="trust">
-                <span data-param-show="landing.launch_free_badge">Grátis no lançamento</span>
-                <span>Sem cartão de crédito</span>
-                <span>Android e iPhone</span>
-                <span data-param-show="landing.play_badge">No Google Play e na web</span>
-                <span data-param-hide="landing.play_badge" hidden>Sem loja de apps</span>
-            </div>
+            <p class="hero-tiny">Grátis para os dois responsáveis · sem cartão · também no navegador, no iPhone inclusive</p>
         </div>
 
-        <div class="hero-shot">
-            <div class="phone">
-                <div class="phone-screen">
-                    <div class="shots" id="heroShots">
-                        <div class="shot is-active" data-caption="Veja de quem é o dia — hoje e nos próximos">
-                            <picture>
-                                <source srcset="img/screenshots/today-calendar-meu-dia-540.webp 540w, img/screenshots/today-calendar-meu-dia-720.webp 720w, img/screenshots/today-calendar-meu-dia.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="img/screenshots/today-calendar-meu-dia.png" width="1080" height="1920" alt="Tela inicial do app: card mostrando de quem é o dia e o calendário do mês com os dias coloridos por responsável" loading="eager" fetchpriority="high" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Trocou um dia? O outro responsável aprova ou recusa">
-                            <picture>
-                                <source srcset="img/screenshots/troca-aguardando-aprovacao-540.webp 540w, img/screenshots/troca-aguardando-aprovacao-720.webp 720w, img/screenshots/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="img/screenshots/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Monte a rotação em segundos — até com avós no revezamento">
-                            <picture>
-                                <source srcset="img/screenshots/assistente-rotacao-com-avo-540.webp 540w, img/screenshots/assistente-rotacao-com-avo-720.webp 720w, img/screenshots/assistente-rotacao-com-avo.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="img/screenshots/assistente-rotacao-com-avo.png" width="1080" height="1920" alt="Assistente de rotação montando um ciclo de revezamento com pai, mãe e avó" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Tudo registrado, com data e hora — sem poder apagar">
-                            <picture>
-                                <source srcset="img/screenshots/historico-auditoria-540.webp 540w, img/screenshots/historico-auditoria-720.webp 720w, img/screenshots/historico-auditoria.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="img/screenshots/historico-auditoria.png" width="1080" height="1920" alt="Histórico de ajustes: registro imutável das alterações, com a origem da troca e a data e hora de cada uma" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Pai, mãe e avó no mesmo calendário — cada um com a sua cor">
-                            <picture>
-                                <source srcset="img/screenshots/calendario-tres-cuidadores-540.webp 540w, img/screenshots/calendario-tres-cuidadores-720.webp 720w, img/screenshots/calendario-tres-cuidadores.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="img/screenshots/calendario-tres-cuidadores.png" width="1080" height="1920" alt="Calendário com três responsáveis — pai, mãe e avó — cada um com a sua cor" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                    </div>
+        <div class="stage" id="stage">
+            <div class="cal-card" id="gerador" aria-label="Experimente uma rotina de convivência">
+                <div class="float f1"><span class="sq" style="background:var(--bg-tint);color:var(--indigo)">✓</span>Troca aprovada por Rafael</div>
+                <div class="float f2"><span class="sq" style="background:color-mix(in srgb, var(--pink) 16%, var(--card));color:var(--pink)">12</span>Próxima troca: sexta</div>
+                <div class="float f3"><span class="sq" style="background:#FFF1D6;color:#5A3A00"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2l3 7 7 .6-5.3 4.6 1.7 7.2L12 17.7 5.6 21.4l1.7-7.2L2 9.6 9 9z"/></svg></span>Hoje</div>
+                <div class="chips" role="group" aria-label="Modelo de rotina">
+                    <button type="button" class="chip" data-preset="7-7" aria-pressed="true">Semana alternada</button>
+                    <button type="button" class="chip" data-preset="2-2-3" aria-pressed="false">2-2-3</button>
+                    <button type="button" class="chip" data-preset="5-2-2-5" aria-pressed="false">5-2-2-5</button>
+                    <button type="button" class="chip" data-preset="fds" aria-pressed="false">Fins de semana</button>
                 </div>
-            </div>
-            <p class="shot-caption" id="shotCaption" aria-live="polite">Veja de quem é o dia — hoje e nos próximos</p>
-            <div class="shot-dots" id="shotDots" role="tablist" aria-label="Telas do aplicativo">
-                <button type="button" class="is-on" data-i="0" role="tab" aria-selected="true" aria-label="Tela 1: calendário de convivência"></button>
-                <button type="button" data-i="1" role="tab" aria-selected="false" aria-label="Tela 2: aprovação de troca de dia"></button>
-                <button type="button" data-i="2" role="tab" aria-selected="false" aria-label="Tela 3: assistente de rotação"></button>
-                <button type="button" data-i="3" role="tab" aria-selected="false" aria-label="Tela 4: histórico com data e hora"></button>
-                <button type="button" data-i="4" role="tab" aria-selected="false" aria-label="Tela 5: calendário com três cuidadores"></button>
+                <div class="cal-head"><b id="monthName"></b>
+                    <span class="legend"><span><i style="background:var(--indigo)"></i>Casa do pai</span><span><i style="background:var(--pink)"></i>Casa da mãe</span></span></div>
+                <div class="cal-grid" id="calGrid" aria-live="polite"></div>
+                <div class="today-line"><span class="dot" id="todayDot"></span><span id="todayText"></span></div>
+                <a class="cal-more" data-umami-event="gerador-home" href="/ferramentas/gerador-de-rotina-de-guarda">Abrir o gerador completo de rotinas →</a>
             </div>
         </div>
     </div>
 </div>
 
-<section id="como-funciona">
-    <div class="wrap">
-        <h2>Como funciona</h2>
-        <p class="section-lead">Três passos para tirar o calendário do WhatsApp e acabar com o "mas você disse que…".</p>
-        <div class="steps">
-            <div class="step">
-                <div class="n">1</div>
-                <h3>Crie a família e convide o outro responsável</h3>
-                <p>Cada um acessa com a própria conta. Dá para incluir também avós e outros cuidadores que participam da rotina.</p>
-            </div>
-            <div class="step">
-                <div class="n">2</div>
-                <h3>Montem o calendário de convivência</h3>
-                <p>Defina de quem é cada dia conforme o acordo de vocês — semanas alternadas, quinzenas ou um ciclo do seu jeito. Feriados e datas especiais vocês ajustam no próprio dia, ou em vários dias de uma vez. O app mostra sempre quem é o responsável hoje e nos próximos dias.</p>
-            </div>
-            <div class="step">
-                <div class="n">3</div>
-                <h3>Precisou trocar um dia? Proponha no app</h3>
-                <p>O outro responsável aprova ou recusa, e enquanto ele não responde o dia fica como estava. Tudo fica registrado, com data e hora — inclusive quando um administrador corrige um dia sozinho.</p>
-            </div>
-        </div>
+<div class="trust-strip">
+    <div class="wrap trust">
+        <span data-param-show="landing.launch_free_badge">Grátis no lançamento</span>
+        <span>Sem cartão de crédito</span>
+        <span>Android e iPhone</span>
+        <span data-param-show="landing.play_badge">No Google Play e na web</span>
+        <span data-param-hide="landing.play_badge" hidden>Sem loja de apps</span>
+        <span>Em conformidade com a LGPD</span>
+        <span>Sem anúncios, sem venda de dados</span>
     </div>
-</section>
+</div>
 
-<section id="gerador">
+<section id="duas-casas" class="scene-sec">
     <div class="wrap">
-        <h2>Experimente agora: simule a rotina de convivência</h2>
-        <p class="section-lead">Antes mesmo de criar conta, veja como a rotina fica no calendário. O <strong>gerador de rotina de guarda</strong> é gratuito e não pede cadastro: escolha o modelo — semana alternada, quinzenal, dia sim/dia não ou um ciclo do seu jeito —, veja a divisão de dias de cada responsável e imprima ou salve em PDF.</p>
-        <div class="tool-teaser">
-            <svg viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Duas semanas de rotina alternada no calendário"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><rect x="10" y="6" width="13" height="13" rx="3.5" fill="#c7d2fe" stroke="#4f46e5" stroke-width="2"/><text x="30" y="17" font-size="12.5" fill="#334155">Casa 1</text><rect x="92" y="6" width="13" height="13" rx="3.5" fill="#fbcfe8" stroke="#db2777" stroke-width="2" stroke-dasharray="4 3"/><text x="112" y="17" font-size="12.5" fill="#334155">Casa 2</text><text x="51" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">D</text><text x="147" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><text x="243" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">T</text><text x="339" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">Q</text><text x="435" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">Q</text><text x="531" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><text x="627" y="46" font-size="12" fill="#94a3b8" text-anchor="middle">S</text><rect x="10" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="106" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="202" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="298" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="394" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="490" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="586" y="56" width="82" height="38" rx="9" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><rect x="10" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="106" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="202" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="298" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="394" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="490" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/><rect x="586" y="102" width="82" height="38" rx="9" fill="#fdf2f8" stroke="#db2777" stroke-width="2" stroke-dasharray="5 4"/></svg>
-            <div class="tt-side">
-                <p>É o mesmo motor de rotinas do aplicativo: o que você simular aqui é o que o app monta para a sua família depois — com trocas aprovadas pelos dois e histórico registrado.</p>
-                <a class="btn btn-primary" data-umami-event="gerador-home" href="/ferramentas/gerador-de-rotina-de-guarda">Simular minha rotina — grátis</a>
-            </div>
+        <div class="reveal">
+            <p class="eyebrow">A ideia</p>
+            <h2>Duas casas. Um caminho claro entre elas.</h2>
+            <p class="section-lead" style="margin-bottom:0">A criança vai e volta. O que não pode ir e voltar é o combinado: de quem é cada dia, quando muda, e quem aprovou a mudança. É isso que o Entrelares guarda — igual para as duas casas.</p>
+            <p class="scene-note">Cada azulejo é um dia de uma casa. Arraste a cena para girar.</p>
         </div>
-    </div>
-</section>
-
-<!-- L-18 — a nota do fundador sobe: logo depois de "Como funciona" e do simulador,
-     ANTES de toda a prova do produto (galeria, porquê, registro, benefícios). É uma
-     APOSTA de posicionamento, não um fato: ganha empatia mais cedo e atrasa o "o que é
-     isso" para quem chegou de busca. O card L-18 guarda a linha de base de cta-signup
-     (Umami, datada) e o critério para a nota voltar para baixo. Mesma posição relativa
-     em /en/ — mudar aqui é mudar lá. -->
-<section id="fundador" class="founder-section">
-    <div class="wrap">
-        <h2>De pai para pais: por que criei o Entrelares</h2>
-        <p class="section-lead">Este app não nasceu numa reunião de negócios. Nasceu de uma necessidade real, dentro da minha própria família.</p>
-        <div class="founder">
-            <div class="founder-card">
-                <p>Fui casado por 20 anos, e desse casamento veio o bem mais precioso da minha vida: meu filho. Quando a mãe dele e eu entendemos que não seguiríamos juntos, escolhemos a separação pensando no bem de todos — e, principalmente, no dele.</p>
-                <p>De repente, tudo era novo: casa, rotina, hábitos. Mas uma coisa não mudou — a vontade de estar presente na vida do meu filho. Em meio aos atritos naturais de uma separação recente, o que mais nos fazia falta era justamente o que parecia mais difícil: dar <strong>estabilidade e previsibilidade</strong> a uma criança pequena, conciliando tudo isso com a rotina de trabalho intensa da mãe dele.</p>
-                <p>Nós dois precisávamos saber com clareza <strong>de quem era cada dia</strong>. Tentei uma planilha — ajudou no começo, mas logo ficou complicada e nunca estava à mão na hora certa. Tentei um calendário comum — trabalhoso demais de manter. Então criei uma solução própria, simples, que foi crescendo até se tornar uma verdadeira parceira na convivência com meu filho.</p>
-                <p>Conversando com outros pais e mães que passaram pela separação, percebi que a falta era a mesma. Por isso decidi abrir a ferramenta para outras famílias — para tirar esse atrito do caminho num momento tão delicado, que se atravessa com carinho, amor e, acima de tudo, <strong>respeito entre todos os envolvidos</strong>.</p>
-                <div class="founder-sign">
-                    <picture class="founder-avatar">
-                        <source srcset="/img/founder.webp" type="image/webp" />
-                        <img src="/img/founder.jpg" alt="Irineu, fundador do Entrelares" width="56" height="56" loading="lazy" decoding="async" />
-                    </picture>
-                    <span class="who">Irineu<span>Fundador e pai</span></span>
+        <div class="iso-wrap" id="isoWrap" aria-hidden="true">
+            <div class="iso-scale" id="isoScale">
+                <div class="iso" id="iso">
+                    <div class="ground"></div>
+                    <div class="box" style="--w:120px;--d:100px;--h:70px;--c1:#5C8BF5;--c2:#3F6FD8;--c3:#9DB8FF;--c4:#2F4FA8;--c5:#1E3C86;--r:78px;left:40px;top:40px">
+                    <i class="back"></i><i class="left"></i><i class="right"></i><i class="front"><span class="door"></span><span class="win" style="left:18px;top:14px"></span><span class="win" style="right:18px;top:14px"></span></i><i class="top"></i>
+                    <div class="roof"><i class="ra"></i><i class="rb"></i></div><div class="gable gf"></div><div class="gable gb"></div>
+                </div>
+                    <div class="label3d" style="left:52px;top:60px">Casa do pai</div>
+                    <div class="box" style="--w:120px;--d:100px;--h:70px;--c1:#F06A98;--c2:#D4467A;--c3:#FFB3CB;--c4:#B2305C;--c5:#8E2149;--r:78px;left:300px;top:320px">
+                    <i class="back"></i><i class="left"></i><i class="right"></i><i class="front"><span class="door"></span><span class="win" style="left:18px;top:14px"></span><span class="win" style="right:18px;top:14px"></span></i><i class="top"></i>
+                    <div class="roof"><i class="ra"></i><i class="rb"></i></div><div class="gable gf"></div><div class="gable gb"></div>
+                </div>
+                    <div class="label3d" style="left:306px;top:340px">Casa da mãe</div>
+                    <div id="path"></div>
+                    <div class="kid" id="kid"></div>
                 </div>
             </div>
-            <ul class="values" aria-label="Nossos compromissos">
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="1" y="4" width="22" height="16" rx="3" fill="#009c3b"/><path d="M12 6.2 20.6 12 12 17.8 3.4 12z" fill="#ffdf00"/><circle cx="12" cy="12" r="3.6" fill="#002776"/><path d="M8.6 11.2c2.2-.6 4.6-.4 6.7.6" stroke="#fff" stroke-width="0.9" fill="none"/></svg>Feito no Brasil</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 4 5.2v6.3c0 5.1 3.4 8.8 8 10.5 4.6-1.7 8-5.4 8-10.5V5.2z" fill="#4f46e5"/><path d="m8.4 12.2 2.6 2.6 4.8-5.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Em conformidade com a LGPD</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="3" fill="#fbbf24"/><text x="12" y="15.6" text-anchor="middle" font-family="system-ui,Segoe UI,Arial,sans-serif" font-size="8.5" font-weight="800" fill="#78350f">AD</text><path d="M3 21 21 3" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/><path d="M3 21 21 3" stroke="#dc2626" stroke-width="2.4" stroke-linecap="round"/></svg>Sem anúncios, sem venda de dados</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="2" width="14" height="19" rx="2" fill="#fef9c3" stroke="#a16207" stroke-width="1.3"/><rect x="6.5" y="6" width="8" height="1.8" rx=".9" fill="#a16207"/><rect x="6.5" y="9.5" width="6" height="1.8" rx=".9" fill="#ca8a04"/><circle cx="16.5" cy="17" r="5" fill="#dc2626"/><circle cx="16.5" cy="17" r="2.6" fill="none" stroke="#fca5a5" stroke-width="1"/></svg>Histórico inalterável</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.8s-8-4.9-8-10.8A4.6 4.6 0 0 1 12 7.2 4.6 4.6 0 0 1 20 10c0 5.9-8 10.8-8 10.8z" fill="#e11d48"/></svg>O essencial é grátis</li>
+        </div>
+    </div>
+</section>
+
+<section id="porque" class="problem">
+    <div class="wrap">
+        <div class="reveal">
+            <p class="eyebrow">O que acontece hoje</p>
+            <h2>Por que não resolver no WhatsApp ou numa planilha?</h2>
+            <p class="section-lead" style="margin-bottom:0">Porque combinado que fica no chat vira discussão: a mensagem se perde, cada um lembra de um jeito, e a criança fica no meio. O app existe para tirar a convivência do "eu não fiquei sabendo".</p>
+            <ul class="record-list">
+                <li>Um calendário único, igual para os dois</li>
+                <li>De quem é o dia hoje, sempre à vista</li>
+                <li>Troca de dia pede a aprovação do outro responsável</li>
+                <li>Histórico com data e hora, que não pode ser apagado</li>
+                <li>Notificação na hora — ninguém fica de fora</li>
             </ul>
         </div>
-    </div>
-</section>
-
-<section id="galeria">
-    <div class="wrap">
-        <h2>Veja o app por dentro</h2>
-        <p class="section-lead">Telas reais do aplicativo — do calendário do dia a dia aos detalhes que dão segurança para os dois lados.</p>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="img/screenshots/today-calendar-dia-do-outro-540.webp 540w, img/screenshots/today-calendar-dia-do-outro-720.webp 720w, img/screenshots/today-calendar-dia-do-outro.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="img/screenshots/today-calendar-dia-do-outro.png" width="1080" height="1920" alt="Card do dia mostrando as duas cores quando o responsável de hoje é o outro" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>No dia do outro responsável, o card mostra as duas cores.</p>
+        <div class="reveal">
+            <div class="chat" aria-label="Conversa de exemplo">
+                <p class="chat-tag">Conversa de exemplo</p>
+                <div class="bubble">Você disse que ficava com ele na sexta<time>ter 21:14</time></div>
+                <div class="bubble me">Eu disse sábado. Procura aí na conversa<time>ter 21:20</time></div>
+                <div class="bubble">Não acho. Vou ter que remarcar o trabalho de novo<time>ter 21:31</time></div>
             </div>
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="img/screenshots/editor-dia-540.webp 540w, img/screenshots/editor-dia-720.webp 720w, img/screenshots/editor-dia.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="img/screenshots/editor-dia.png" width="1080" height="1920" alt="Editor de um dia do calendário: responsável, horário da troca e observações" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>Defina o responsável e o horário da troca de cada dia.</p>
-            </div>
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="img/screenshots/familia-membros-540.webp 540w, img/screenshots/familia-membros-720.webp 720w, img/screenshots/familia-membros.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="img/screenshots/familia-membros.png" width="1080" height="1920" alt="Tela da família com os responsáveis e o convite por e-mail" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>Convide o outro responsável e outros cuidadores por e-mail.</p>
-            </div>
+            <div class="arrow" aria-hidden="true">↓</div>
+            <div class="record"><b>Troca do dia 31/08 — pedida por Marina, aprovada por Rafael</b><br/>Registrada em 28/08/2026 às 18:22. Nada aqui pode ser editado nem apagado.</div>
         </div>
     </div>
 </section>
 
-<section id="porque">
+<section id="como-funciona" class="dark">
     <div class="wrap">
-        <h2>Por que não resolver no WhatsApp ou numa planilha?</h2>
-        <p class="section-lead">Porque combinado que fica no chat vira discussão. O app existe justamente para tirar a convivência do "eu não fiquei sabendo".</p>
-        <div class="compare">
-            <div class="compare-col compare-bad">
-                <h3>💬 WhatsApp, planilha ou agenda de papel</h3>
-                <ul>
-                    <li>Mensagem se perde no meio da conversa</li>
-                    <li>Cada um anota de um jeito — e some no fim do mês</li>
-                    <li>Troca de dia combinada "de boca", sem registro</li>
-                    <li>Discussão sobre quem disse o quê e quando</li>
-                    <li>Ninguém confia no que está anotado</li>
-                </ul>
-            </div>
-            <div class="compare-col compare-good">
-                <h3>📅 Entrelares</h3>
-                <ul>
-                    <li>Um calendário único, igual para os dois</li>
-                    <li>De quem é o dia hoje, sempre à vista</li>
-                    <li>Troca de dia pede a aprovação do outro responsável</li>
-                    <li>Histórico com data e hora, que não pode ser apagado</li>
-                    <li>Notificação na hora — ninguém fica de fora</li>
-                </ul>
-            </div>
+        <span id="como-funciona-anchor"></span>
+        <p class="eyebrow">Como funciona</p>
+        <h2>Três passos. Dez minutos.</h2>
+        <p class="section-lead">Cada passo com a tela real do app — sem demonstração encenada.</p>
+        <div class="steps">
+            <div class="step reveal"><h3>Crie a família e convide quem cuida</h3><p>Cada um acessa com a própria conta. Dá para incluir também avós e outros cuidadores que participam da rotina.</p><div class="shot3d"><picture>
+<source srcset="img/screenshots/familia-membros-540.webp 540w, img/screenshots/familia-membros-720.webp 720w, img/screenshots/familia-membros.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/familia-membros.png" width="1080" height="1920" alt="Tela da família com os responsáveis e o convite por e-mail" loading="lazy" decoding="async" />
+</picture></div></div>
+            <div class="step reveal"><h3>Montem o calendário de convivência</h3><p>Defina de quem é cada dia conforme o acordo de vocês — semanas alternadas, quinzenas ou um ciclo do seu jeito. Feriados e datas especiais vocês ajustam no próprio dia, ou em vários dias de uma vez.</p><div class="shot3d"><picture>
+<source srcset="img/screenshots/assistente-rotacao-com-avo-540.webp 540w, img/screenshots/assistente-rotacao-com-avo-720.webp 720w, img/screenshots/assistente-rotacao-com-avo.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/assistente-rotacao-com-avo.png" width="1080" height="1920" alt="Assistente de rotação montando um ciclo de revezamento com pai, mãe e avó" loading="lazy" decoding="async" />
+</picture></div></div>
+            <div class="step reveal"><h3>Precisou trocar um dia? Proponha no app</h3><p>O outro responsável aprova ou recusa, e enquanto ele não responde o dia fica como estava. Tudo fica registrado, com data e hora.</p><div class="shot3d"><picture>
+<source srcset="img/screenshots/troca-aguardando-aprovacao-540.webp 540w, img/screenshots/troca-aguardando-aprovacao-720.webp 720w, img/screenshots/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
+</picture></div></div>
         </div>
     </div>
 </section>
@@ -943,89 +801,99 @@
 
 <section id="beneficios">
     <div class="wrap">
+        <p class="eyebrow">Benefícios</p>
         <h2>Feito para reduzir conflito, não para criar mais um app</h2>
-        <p class="section-lead">Cada detalhe existe para responder rápido a uma pergunta e evitar uma discussão.</p>
-        <div class="features">
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="6" cy="24.5" r="2" fill="#2563eb"/><rect x="12" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="16" cy="24.5" r="2" fill="#2563eb"/><rect x="22" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="26" cy="24.5" r="2" fill="#e11d48"/><rect x="32" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="36" cy="24.5" r="2" fill="#e11d48"/><rect x="30.5" y="9.5" width="11" height="21" rx="3.5" fill="none" stroke="#1e293b" stroke-width="1.5"/><rect x="42" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="46" cy="24.5" r="2" fill="#2563eb"/><rect x="52" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="56" cy="24.5" r="2" fill="#2563eb"/><rect x="62" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="66" cy="24.5" r="2" fill="#e11d48"/></svg></div>
-                <h3>Calendário sempre claro</h3>
-                <p>Abra e veja na hora de quem é o dia — hoje, amanhã e no mês inteiro. Cores diferentes para cada responsável.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="8" y="6" width="22" height="28" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="19" cy="29.5" r="2" fill="#2563eb"/><path d="M32 20c3-5 5-5 8 0" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><rect x="42" y="6" width="22" height="28" rx="2.5" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="3 2"/><circle cx="53" cy="29.5" r="2" fill="#e11d48"/></svg></div>
-                <h3>Trocas com aprovação dos dois</h3>
-                <p>Uma troca de dia vira uma solicitação que o outro aprova ou recusa. Sem surpresas, sem "eu não fiquei sabendo".</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><path d="M8 7v26" stroke="#c7d2fe" stroke-width="2"/><circle cx="8" cy="8" r="3.2" fill="#4f46e5"/><circle cx="8" cy="20" r="3.2" fill="#4f46e5"/><circle cx="8" cy="32" r="3.2" fill="#fff" stroke="#4f46e5" stroke-width="1.6"/><rect x="16" y="6" width="44" height="4" rx="2" fill="#94a3b8"/><rect x="16" y="18" width="34" height="4" rx="2" fill="#94a3b8"/><rect x="16" y="30" width="40" height="4" rx="2" fill="#cbd5e1"/></svg></div>
-                <h3>Histórico inalterável</h3>
-                <p>Cada troca, aprovação e alteração fica registrada com data e hora, num histórico que <strong>não pode ser editado nem apagado</strong>. Se o combinado um dia virar discussão, ele está lá — preto no branco.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="7" width="68" height="26" rx="6" fill="#fff" stroke="#e2e8f0"/><rect x="8" y="13" width="14" height="14" rx="4" fill="#4f46e5"/><rect x="27" y="14" width="30" height="4" rx="2" fill="#475569"/><rect x="27" y="22" width="36" height="4" rx="2" fill="#cbd5e1"/></svg></div>
-                <h3>Notificações em tempo real</h3>
-                <p>Solicitação de troca, aprovação, lembrete: você fica sabendo na hora, pela notificação no celular.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><circle cx="13" cy="20" r="10" fill="#3b82f6" stroke="#fff" stroke-width="2.5"/><circle cx="28" cy="20" r="10" fill="#e11d48" stroke="#fff" stroke-width="2.5"/><circle cx="43" cy="20" r="10" fill="#f59e0b" stroke="#fff" stroke-width="2.5"/><circle cx="58" cy="20" r="10" fill="#10b981" stroke="#fff" stroke-width="2.5"/></svg></div>
-                <h3>Mais que pai e mãe</h3>
-                <p>Avós, madrastas, padrastos e outros cuidadores podem participar da família e assumir dias, com as mesmas regras de aprovação.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="5" width="46" height="30" rx="9" fill="#eef2ff" stroke="#a5b4fc"/><circle cx="14" cy="20" r="5" fill="#3b82f6"/><circle cx="25" cy="20" r="5" fill="#e11d48"/><circle cx="36" cy="20" r="5" fill="#f59e0b"/><circle cx="62" cy="20" r="5" fill="none" stroke="#cbd5e1" stroke-width="1.6" stroke-dasharray="2 2"/></svg></div>
-                <h3>Privacidade em primeiro lugar</h3>
-                <p>Os dados da sua família são visíveis apenas para quem faz parte dela. Sem anúncios, sem venda de dados.</p>
-            </div>
+        <p class="section-lead">Cada detalhe existe para responder rápido a uma pergunta e evitar uma discussão. Telas reais do app.</p>
+        <div class="tabs" role="tablist" aria-label="Telas do aplicativo">
+            <button type="button" class="tab" role="tab" id="tab-calendario" aria-controls="pane-calendario" aria-selected="true" tabindex="0" data-key="calendario">Calendário</button>
+            <button type="button" class="tab" role="tab" id="tab-dia" aria-controls="pane-dia" aria-selected="false" tabindex="-1" data-key="dia">Dia a dia</button>
+            <button type="button" class="tab" role="tab" id="tab-trocas" aria-controls="pane-trocas" aria-selected="false" tabindex="-1" data-key="trocas">Trocas</button>
+            <button type="button" class="tab" role="tab" id="tab-historico" aria-controls="pane-historico" aria-selected="false" tabindex="-1" data-key="historico">Histórico</button>
+            <button type="button" class="tab" role="tab" id="tab-familia" aria-controls="pane-familia" aria-selected="false" tabindex="-1" data-key="familia">Família</button>
+        </div>
+        <div class="pane on" id="pane-calendario" role="tabpanel" aria-labelledby="tab-calendario"><div><span class="tag">Grátis</span><h3>Quem fica com a criança, hoje e no mês inteiro</h3><p>Abra e veja na hora de quem é o dia — hoje, amanhã e no mês inteiro. Cores diferentes para cada responsável, e a próxima troca sempre à vista.</p></div><div class="shot3d"><picture>
+<source srcset="img/screenshots/today-calendar-meu-dia-540.webp 540w, img/screenshots/today-calendar-meu-dia-720.webp 720w, img/screenshots/today-calendar-meu-dia.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/today-calendar-meu-dia.png" width="1080" height="1920" alt="Tela inicial do app: card mostrando de quem é o dia e o calendário do mês com os dias coloridos por responsável" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-dia" role="tabpanel" aria-labelledby="tab-dia"><div><span class="tag">Grátis</span><h3>Cada dia com responsável, horário da troca e observação</h3><p>Defina o responsável, o horário em que a criança muda de casa e uma observação para cada dia — a nota do dia é gratuita.</p></div><div class="shot3d"><picture>
+<source srcset="img/screenshots/editor-dia-540.webp 540w, img/screenshots/editor-dia-720.webp 720w, img/screenshots/editor-dia.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/editor-dia.png" width="1080" height="1920" alt="Editor de um dia do calendário: responsável, horário da troca e observações" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-trocas" role="tabpanel" aria-labelledby="tab-trocas"><div><span class="tag">Grátis</span><h3>Trocas com aprovação dos dois</h3><p>Qualquer mudança de dia vira uma solicitação que o outro aprova ou recusa. Sem surpresas, sem "eu não fiquei sabendo".</p></div><div class="shot3d"><picture>
+<source srcset="img/screenshots/troca-aguardando-aprovacao-540.webp 540w, img/screenshots/troca-aguardando-aprovacao-720.webp 720w, img/screenshots/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="Solicitação de troca de dia pendente, com os botões Aprovar e Recusar" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-historico" role="tabpanel" aria-labelledby="tab-historico"><div><span class="tag">Grátis</span><h3>Histórico inalterável</h3><p>Cada troca, aprovação e alteração fica registrada com data e hora, num histórico que <strong>não pode ser editado nem apagado</strong>. Se o combinado um dia virar discussão, ele está lá — preto no branco.</p></div><div class="shot3d"><picture>
+<source srcset="img/screenshots/historico-auditoria-540.webp 540w, img/screenshots/historico-auditoria-720.webp 720w, img/screenshots/historico-auditoria.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/historico-auditoria.png" width="1080" height="1920" alt="Histórico de ajustes: registro imutável das alterações, com a origem da troca e a data e hora de cada uma" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-familia" role="tabpanel" aria-labelledby="tab-familia"><div><span class="tag premium">Avós e cuidadores no Premium</span><h3>Mais que pai e mãe</h3><p>Avós, madrastas, padrastos e outros cuidadores podem participar da família e assumir dias, com as mesmas regras de aprovação — cada um com a sua cor.</p></div><div class="shot3d"><picture>
+<source srcset="img/screenshots/calendario-tres-cuidadores-540.webp 540w, img/screenshots/calendario-tres-cuidadores-720.webp 720w, img/screenshots/calendario-tres-cuidadores.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="img/screenshots/calendario-tres-cuidadores.png" width="1080" height="1920" alt="Calendário com três responsáveis — pai, mãe e avó — cada um com a sua cor" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="modules" id="modulos">
+            <h3>Além do calendário: a rotina inteira da criança</h3>
+            <ul class="mod-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg><span class="module-tag">Nota do dia grátis · agenda completa no Premium</span><b>Agenda da criança</b><p>Escola, saúde, remédios e atividades de cada filho, com rotinas que se repetem e lembretes para quem você escolher.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/></svg><span class="module-tag">Premium</span><b>Despesas compartilhadas</b><p>Cada gasto dividido em partes iguais, por valor, por porcentagem ou por cotas, com o saldo de cada um. Um pagamento só conta quando quem recebe confirma — o app não movimenta dinheiro.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg><span class="module-tag">Escrever no Premium · ler é sempre possível</span><b>Conversa da família</b><p>Uma conversa só, para todos da família, que ninguém edita nem apaga, mostrando quem já leu cada mensagem.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="module-tag">Grátis · mais visualizadores no Premium</span><b>Visualizador</b><p>Para quem acompanha sem decidir — a avó, a babá: vê o calendário, a agenda e os relatórios e recebe as notificações informativas. Não altera nada.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span class="module-tag">Premium</span><b>Relatório em PDF verificável</b><p>O relatório do período traz um QR code: quem o recebe confere que o arquivo não foi alterado, e o documento não fica guardado nos nossos servidores.</p></li>
+            </ul>
         </div>
     </div>
 </section>
 
-<!-- L-39 — the short version on the home; the page /para-toda-familia carries the rest (and the search). -->
 <section id="toda-familia">
-    <div class="wrap">
-        <h2>Para toda família</h2>
-        <p class="section-lead">Dois pais, duas mães, os avós que buscam na escola, o padrasto, a madrasta, a babá: cada um entra com o papel que tem na vida da criança — 21 prontos, ou um próprio no Premium —, e quem só acompanha entra como visualizador. <a href="/para-toda-familia">Veja como funciona para cada família</a>.</p>
+    <div class="wrap reveal">
+        <p class="eyebrow">Para toda família</p>
+        <h2>Dois pais, duas mães, avós, padrasto, madrasta e a babá</h2>
+        <p class="section-lead" style="margin-bottom:0">Cada um entra com o papel que tem na vida da criança — 21 prontos, ou um próprio no Premium —, e quem só acompanha entra como visualizador.</p>
+        <ul class="roles" aria-label="Papéis disponíveis">
+            <li>Pai</li>
+            <li>Mãe</li>
+            <li>Avô</li>
+            <li>Avó</li>
+            <li>Bisavô</li>
+            <li>Bisavó</li>
+            <li>Padrasto</li>
+            <li>Madrasta</li>
+            <li>Tio</li>
+            <li>Tia</li>
+            <li>Padrinho</li>
+            <li>Madrinha</li>
+            <li>Irmão</li>
+            <li>Irmã</li>
+            <li>Primo</li>
+            <li>Prima</li>
+            <li>Amigo</li>
+            <li>Amiga</li>
+            <li>Tutor</li>
+            <li>Tutora</li>
+            <li>Babá</li>
+        </ul>
+        <p><a href="/para-toda-familia">Veja como funciona para cada família →</a></p>
     </div>
 </section>
 
-<!-- L-38 — the five phase-6 modules (S-22). Each sentence cites its code in the PR. The Free/Premium
-     split is typed from agenda/expenses/chat.premium_only and free_viewers: none of them is on the
-     public-settings feed, so a change there means editing this block and its twin in the other language. -->
-<section id="modulos">
-    <div class="wrap">
-        <h2>Além do calendário: a rotina inteira da criança</h2>
-        <p class="section-lead">O que a família combina e registra, num lugar só — só para quem faz parte dela, sem anúncios.</p>
-        <div class="features">
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg></div>
-                <p class="module-tag">Nota do dia grátis · agenda completa no Premium</p>
-                <h3>Agenda da criança</h3>
-                <p>Escola, saúde, remédios e atividades de cada filho, com rotinas que se repetem e lembretes para quem você escolher.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/></svg></div>
-                <p class="module-tag">Premium</p>
-                <h3>Despesas compartilhadas</h3>
-                <p>Cada gasto dividido em partes iguais, por valor, por porcentagem ou por cotas, com o saldo de cada um e o menor número de pagamentos para acertar. Um pagamento só conta quando quem recebe confirma — o app não movimenta dinheiro.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg></div>
-                <p class="module-tag">Escrever no Premium · ler é sempre possível</p>
-                <h3>Conversa da família</h3>
-                <p>Uma conversa só, para todos da família, que ninguém edita nem apaga, mostrando quem já leu cada mensagem. Sem o Premium, o que já foi dito continua disponível para leitura.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
-                <p class="module-tag">Grátis · mais visualizadores no Premium</p>
-                <h3>Visualizador</h3>
-                <p>Para quem acompanha sem decidir — a avó, a babá: vê o calendário, a agenda e os relatórios e recebe as notificações informativas. Não altera nada, não entra em trocas e não vê as mensagens das trocas nem as despesas.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
-                <p class="module-tag">Premium</p>
-                <h3>Relatório em PDF verificável</h3>
-                <p>O relatório do período traz um QR code: quem o recebe confere que o arquivo não foi alterado, e o documento não fica guardado nos nossos servidores.</p>
-            </div>
+<section id="fundador" class="founder-section">
+    <div class="wrap founder-row reveal">
+        <picture class="founder-avatar">
+            <source srcset="/img/founder.webp" type="image/webp" />
+            <img src="/img/founder.jpg" alt="Irineu, fundador do Entrelares" width="96" height="96" loading="lazy" decoding="async" />
+        </picture>
+        <div>
+            <blockquote>"Nós dois precisávamos saber com clareza de quem era cada dia. Tentei uma planilha, tentei um calendário comum. Então criei uma solução própria, simples, que foi crescendo até se tornar uma verdadeira parceira na convivência com meu filho."</blockquote>
+            <cite>Irineu — fundador do Entrelares, e pai em guarda compartilhada</cite>
+            <details class="founder-more">
+                <summary>Ler a história inteira: por que criei o Entrelares</summary>
+                <div class="founder-card">
+                    <p>Fui casado por 20 anos, e desse casamento veio o bem mais precioso da minha vida: meu filho. Quando a mãe dele e eu entendemos que não seguiríamos juntos, escolhemos a separação pensando no bem de todos — e, principalmente, no dele.</p>
+                    <p>De repente, tudo era novo: casa, rotina, hábitos. Mas uma coisa não mudou — a vontade de estar presente na vida do meu filho. Em meio aos atritos naturais de uma separação recente, o que mais nos fazia falta era justamente o que parecia mais difícil: dar <strong>estabilidade e previsibilidade</strong> a uma criança pequena, conciliando tudo isso com a rotina de trabalho intensa da mãe dele.</p>
+                    <p>Nós dois precisávamos saber com clareza <strong>de quem era cada dia</strong>. Tentei uma planilha — ajudou no começo, mas logo ficou complicada e nunca estava à mão na hora certa. Tentei um calendário comum — trabalhoso demais de manter. Então criei uma solução própria, simples, que foi crescendo até se tornar uma verdadeira parceira na convivência com meu filho.</p>
+                    <p>Conversando com outros pais e mães que passaram pela separação, percebi que a falta era a mesma. Por isso decidi abrir a ferramenta para outras famílias — para tirar esse atrito do caminho num momento tão delicado, que se atravessa com carinho, amor e, acima de tudo, <strong>respeito entre todos os envolvidos</strong>.</p>
+                </div>
+            </details>
         </div>
     </div>
 </section>
@@ -1036,7 +904,7 @@
         <p class="section-lead"><span data-param-show="landing.play_badge">No Android, baixe o Entrelares no Google Play. Em qualquer celular, ele também</span><span data-param-hide="landing.play_badge" hidden>Em qualquer celular, o Entrelares</span> instala direto do navegador e abre como qualquer app — com ícone na tela inicial.</p>
         <div class="install-grid">
             <div class="install-card">
-                <h3>🤖 Android</h3>
+                <h3><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg> Android</h3>
                 <p class="play-badge" data-param-show="landing.play_badge"><a href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Dinstalar" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-pt-br.png" width="646" height="250" alt="Disponível no Google Play" loading="lazy" decoding="async" /></a></p>
                 <p class="play-badge-alt" data-param-show="landing.play_badge">Ou pelo navegador (Chrome):</p>
                 <p class="play-badge-alt" data-param-hide="landing.play_badge" hidden>Pelo navegador (Chrome):</p>
@@ -1047,62 +915,14 @@
                 </ol>
             </div>
             <div class="install-card">
-                <h3>🍎 iPhone e iPad (Safari)</h3>
-                <div class="iosd-wrap">
-                    <div class="iosd is-b1" id="iosd" aria-hidden="true">
-                        <div class="iosd-phone">
-                            <div class="iosd-scr">
-                                <div class="iosd-page">
-                                    <img class="iosd-mark" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                    <span class="iosd-name">Entrelares</span>
-                                    <i></i><i></i><i></i>
-                                </div>
-                                <div class="iosd-bar">
-                                    <span class="iosd-url">web.entrelares.app</span>
-                                    <span class="iosd-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg><span class="iosd-dot"></span></span>
-                                </div>
-                                <div class="iosd-sheet">
-                                    <div class="iosd-head">
-                                        <img class="iosd-fav" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
-                                        <span class="iosd-x"></span>
-                                    </div>
-                                    <div class="iosd-apps"><span></span><span></span><span></span><span></span></div>
-                                    <div class="iosd-acts"><span></span><span></span><span></span><span></span></div>
-                                    <div class="iosd-list">
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row iosd-row-target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><path d="M12 8.4v7.2M8.4 12h7.2"/></svg><span>Adicionar à Tela de Início</span><span class="iosd-dot"></span></div>
-                                    </div>
-                                    <div class="iosd-list"><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div></div>
-                                </div>
-                                <div class="iosd-add">
-                                    <div class="iosd-addnav"><b></b><span class="iosd-addbtn">Adicionar<span class="iosd-dot"></span></span></div>
-                                    <div class="iosd-addcard">
-                                        <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
-                                    </div>
-                                    <div class="iosd-addtog"><span>Abrir como App da Web</span><span class="iosd-sw"><span class="iosd-dot"></span></span></div>
-                                </div>
-                                <div class="iosd-home">
-                                    <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                    <span>Entrelares</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="iosd-steps">
-                        <ol id="iosd-steps">
-                            <li>Acesse <strong>web.entrelares.app</strong> no Safari.</li>
-                            <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima). Se ele não estiver à vista, toque no botão de <strong>menu da página</strong> e escolha <strong>Compartilhar</strong>.</li>
-                            <li><strong>Role a lista</strong> e toque em <strong>Adicionar à Tela de Início</strong>. Se a opção não estiver lá, toque em <strong>Editar Ações</strong>, no fim da lista, e inclua-a.</li>
-                            <li>Ative <strong>Abrir como App da Web</strong> (se a opção aparecer) e toque em <strong>Adicionar</strong>. Sem ela, o ícone abre o site no Safari, e as notificações do app não chegam.</li>
-                        </ol>
-                    </div>
-                </div>
-                <p class="iosd-note">O desenho é uma <strong>ilustração dos passos</strong>, conferida com o <a href="https://support.apple.com/pt-br/guide/iphone/iphea86e5236/ios" rel="noopener">guia oficial da Apple</a> em 21/09/2026 (iOS 27 e iOS 26). A tela do seu iPhone pode variar conforme a versão do iOS — os nomes dos botões acima são o que importa.</p>
+                <h3><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg> iPhone e iPad (Safari)</h3>
+                <ol>
+                    <li>Acesse <strong>web.entrelares.app</strong> no Safari.</li>
+                    <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima). Se ele não estiver à vista, toque no botão de <strong>menu da página</strong> e escolha <strong>Compartilhar</strong>.</li>
+                    <li><strong>Role a lista</strong> e toque em <strong>Adicionar à Tela de Início</strong>. Se a opção não estiver lá, toque em <strong>Editar Ações</strong>, no fim da lista, e inclua-a.</li>
+                    <li>Ative <strong>Abrir como App da Web</strong> (se a opção aparecer) e toque em <strong>Adicionar</strong>. Sem ela, o ícone abre o site no Safari, e as notificações do app não chegam.</li>
+                </ol>
+                <a class="install-more" href="/instalar">Ver o passo a passo desenhado, tela por tela →</a>
             </div>
         </div>
     </div>
@@ -1132,7 +952,7 @@
                 <div class="price-badge">Premium</div>
                 <div class="price"><span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span><small>/mês</small></div>
                 <p class="price-cycle">ou <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/ano<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=" — "> — 2 meses grátis</span></p>
-                <p class="price-promo" data-param-show="landing.promo_price_label">🎉 Preço de lançamento até 31/12/2026</p>
+                <p class="price-promo" data-param-show="landing.promo_price_label"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg>Preço de lançamento até 31/12/2026</p>
                 <p class="price-cycle">Promoção válida até 31/12/2026, só na assinatura pela versão web (web.entrelares.app). Pelo Google Play, no app Android: R$ 5,99/mês ou R$ 59,90/ano.</p>
                 <p>Para famílias que precisam de mais gente e mais alcance — cobre <strong>todos</strong> os responsáveis.</p>
                 <ul>
@@ -1153,7 +973,7 @@
         <!-- L-14: the 7-day guarantee next to the price — a visible mirror of what
              the Terms (§ arrependimento, CDC art. 49) already promise, operated via
              suporte@. Pix emphasized: no card data ever leaves the payer's bank app. -->
-        <p class="price-guarantee">🛡️ <strong>Garantia de 7 dias</strong>: assinou e se arrependeu? Em até 7 dias após o pagamento, devolvemos <strong>o valor integral</strong> (art. 49 do CDC) — é só escrever para <a href="mailto:suporte@entrelares.app">suporte@entrelares.app</a>.</p>
+        <p class="price-guarantee"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><strong>Garantia de 7 dias</strong>: assinou e se arrependeu? Em até 7 dias após o pagamento, devolvemos <strong>o valor integral</strong> (art. 49 do CDC) — é só escrever para <a href="mailto:suporte@entrelares.app">suporte@entrelares.app</a>.</p>
         <p class="price-note"><strong>O preço promocional vale até 31/12/2026 e só para a assinatura pela versão web</strong> (web.entrelares.app): pague por <strong>Pix</strong> — QR code pelo aplicativo do seu banco, <strong>sem informar dados de cartão</strong> — ou por cartão de crédito, sempre em ambiente seguro do provedor (Asaas). No aplicativo Android, a assinatura é feita pelo <strong>Google Play</strong>, na sua conta Google, a <strong>R$ 5,99/mês ou R$ 59,90/ano</strong>. Cancele quando quiser: o período pago continua valendo até o fim e <strong>nenhum dado é apagado</strong> — os recursos Premium apenas voltam a ficar bloqueados. A assinatura é feita dentro do app, na página da família, por um administrador.</p>
         <!-- L-14 slot, opened by app item T-59 when the Play listing went public. -->
         <p style="text-align:center; margin-top:18px;" data-param-show="landing.play_badge">
@@ -1250,8 +1070,9 @@
 </section>
 
 <section class="cta-final">
-    <div class="wrap">
-        <h2>Menos discussão. Mais convivência.</h2>
+    <div class="orb o1" aria-hidden="true"></div><div class="orb o2" aria-hidden="true"></div>
+    <div class="wrap reveal">
+        <h2>Menos discussão.<br/>Mais convivência.</h2>
         <p>Crie a conta, monte o calendário e convide o outro responsável. Em dez minutos, a rotina dos seus filhos sai do bate-boca e entra num combinado claro.</p>
         <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Começar agora — é grátis</a>
     </div>
@@ -1259,70 +1080,115 @@
 
 <footer>
     <div class="wrap">
-        <span>© 2026 Entrelares · Cuidando juntos do que mais importa</span>
-        <span class="foot-links">
-            <a href="/en/" hreflang="en" lang="en">English</a>
-            <a href="/blog/">Blog</a>
-            <a href="/ferramentas/gerador-de-rotina-de-guarda">Gerador de rotina</a>
-            <a href="/rotinas/">Rotinas de guarda</a>
-            <a href="/advogados">Para advogados e mediadores</a>
-            <a href="/termos">Termos de Uso</a>
-            <a href="/privacidade">Privacidade</a>
-            <a href="/exclusao-de-conta">Excluir conta</a>
-            <a href="mailto:suporte@entrelares.app">Suporte</a>
-            <a href="mailto:contato@entrelares.app">Contato</a>
-        </span>
+        <div class="cols">
+            <div>
+                <a class="brand" href="/"><img src="/icon-192.png?v=6" alt="" width="32" height="32" /> Entrelares</a>
+                <p class="foot-tag">Duas casas, uma mesma infância.<br/>© 2026 Entrelares</p>
+            </div>
+            <div><h4>Produto</h4><a href="https://web.entrelares.app">O app</a><a href="#precos">Preços</a><a href="/instalar">Instalar</a><a href="/para-toda-familia">Para toda família</a></div>
+            <div><h4>Conteúdo</h4><a href="/blog/">Blog</a><a href="/rotinas/">Rotinas de guarda</a><a href="/ferramentas/gerador-de-rotina-de-guarda">Gerador de rotina</a><a href="#materiais">5 modelos em PDF</a></div>
+            <div><h4>Para quem</h4><a href="#como-funciona">Pais e mães</a><a href="/para-toda-familia">Avós e cuidadores</a><a href="/advogados">Advogados e mediadores</a></div>
+            <div><h4>Legal</h4><a href="/termos">Termos de Uso</a><a href="/privacidade">Privacidade</a><a href="/exclusao-de-conta">Excluir conta</a><a href="mailto:suporte@entrelares.app">Suporte</a><a href="mailto:contato@entrelares.app">Contato</a><a href="/en/" hreflang="en" lang="en">English</a></div>
+        </div>
+
     </div>
 </footer>
 
+<div class="sticky-cta" id="stickyCta"><a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a></div>
+
 <script>
-// Hero screenshot slideshow: auto-rotate, pause on hover/focus, dots + swipe,
-// and honour prefers-reduced-motion (no autoplay). Self-hosted, no deps.
+// Fase 1 — hero: o calendário vivo (presets do gerador, ancorados na segunda-feira), parallax
+// 3D do card só com mouse, a cena isométrica (arrastar gira), as abas do tour, o menu do
+// celular, a barra fixa e o reveal ao rolar. Tudo honra prefers-reduced-motion. Sem deps.
 (function () {
-    var root = document.getElementById('heroShots');
-    var dotsBox = document.getElementById('shotDots');
-    var cap = document.getElementById('shotCaption');
-    if (!root || !dotsBox) return;
-
-    var shots = Array.prototype.slice.call(root.querySelectorAll('.shot'));
-    var dots = Array.prototype.slice.call(dotsBox.querySelectorAll('[data-i]'));
-    if (shots.length < 2) return;
-
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var i = 0, timer = null, DELAY = 5000;
+    var LANG = 'pt';
 
-    function show(n) {
-        i = (n + shots.length) % shots.length;
-        for (var k = 0; k < shots.length; k++) {
-            shots[k].classList.toggle('is-active', k === i);
-            if (dots[k]) {
-                dots[k].classList.toggle('is-on', k === i);
-                dots[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
-            }
+    // ── calendário vivo ──
+    var presets = { '7-7': 'aaaaaaabbbbbbb', '2-2-3': 'aabbaaabbaabbb', '5-2-2-5': 'aabbaaaaabbbbb', 'fds': 'aaaaabbaaaaaaa' };
+    var grid = document.getElementById('calGrid'), tt = document.getElementById('todayText'), td = document.getElementById('todayDot');
+    var now = new Date(), y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+    var monthName = now.toLocaleDateString(LANG === 'en' ? 'en-US' : 'pt-BR', { month: 'long', year: 'numeric' });
+    document.getElementById('monthName').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    var offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    var DOW = LANG === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+    var NAMES = { a: "Casa do pai", b: "Casa da mãe" };
+    function render(key) {
+        var cyc = presets[key]; grid.innerHTML = '';
+        DOW.forEach(function (d) { var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e); });
+        for (var i = 0; i < offset; i++) grid.appendChild(document.createElement('div'));
+        var who = null, next = null;
+        for (var d = 1; d <= days; d++) {
+            var house = cyc[(offset + d - 1) % cyc.length];
+            var cell = document.createElement('div'); cell.className = 'day ' + house + (d === today ? ' today' : ''); cell.textContent = d; grid.appendChild(cell);
+            (function (c, k) { setTimeout(function () { c.classList.add('on'); }, reduce ? 0 : 18 * k); })(cell, d);
+            if (d === today) who = house;
+            if (d > today && next === null && house !== who) next = d;
         }
-        if (cap) cap.textContent = shots[i].getAttribute('data-caption') || '';
+        td.style.background = who === 'a' ? 'var(--indigo)' : 'var(--pink)';
+        tt.innerHTML = '<b>Hoje: ' + NAMES[who] + '</b>' + (next ? ' · próxima troca dia ' + next : '');
+        if (window.umami && window.umami.track) window.umami.track('hero-rotina-' + key);
     }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function play() { if (reduce) return; stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
+    var chips = document.querySelectorAll('.chip');
+    chips.forEach(function (c) { c.addEventListener('click', function () { chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); }); render(c.getAttribute('data-preset')); }); });
+    render('7-7');
 
-    dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); play(); }); });
-    root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', play);
-    dotsBox.addEventListener('focusin', stop);
-    dotsBox.addEventListener('focusout', play);
-    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+    // ── parallax do card (só com mouse e largura de mesa) ──
+    var stage = document.getElementById('stage'), card = stage.querySelector('.cal-card');
+    if (window.matchMedia('(hover: hover) and (min-width: 861px)').matches && !reduce) {
+        stage.addEventListener('mousemove', function (e) {
+            var r = stage.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, yy = (e.clientY - r.top) / r.height - .5;
+            card.style.setProperty('--ry', (-10 + x * 16) + 'deg'); card.style.setProperty('--rx', (5 - yy * 12) + 'deg');
+        });
+        stage.addEventListener('mouseleave', function () { card.style.removeProperty('--ry'); card.style.removeProperty('--rx'); });
+    }
 
-    var x0 = null;
-    root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
-    root.addEventListener('touchend', function (e) {
-        if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0;
-        if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
-        x0 = null; play();
-    }, { passive: true });
+    // ── cena isométrica ──
+    var iso = document.getElementById('iso'), wrap = document.getElementById('isoWrap'), scale = document.getElementById('isoScale'), path = document.getElementById('path'), kid = document.getElementById('kid');
+    var pts = [[150,110],[190,140],[230,170],[270,200],[310,240],[350,280],[310,240],[270,200],[230,170],[190,140]];
+    var tiles = [];
+    for (var i = 0; i < 6; i++) { var t = document.createElement('div'); t.className = 'tile ' + (i < 3 ? 'a' : 'b'); t.style.left = pts[i][0] + 'px'; t.style.top = pts[i][1] + 'px'; path.appendChild(t); tiles.push(t); }
+    var step = 0;
+    function walk() { var p = pts[step % pts.length]; kid.style.left = p[0] + 'px'; kid.style.top = p[1] + 'px';
+        tiles.forEach(function (tl, k) { tl.classList.toggle('hot', pts[k][0] === p[0] && pts[k][1] === p[1]); }); step++; }
+    walk(); if (!reduce) setInterval(walk, 900);
+    function fit() { var w = wrap.getBoundingClientRect().width; scale.style.setProperty('--s', Math.min(1, w / 680)); }
+    fit(); window.addEventListener('resize', fit);
+    var rz = -40, dragging = false, sx = 0, srz = -40;
+    function setRz(v) { rz = Math.max(-80, Math.min(0, v)); iso.style.setProperty('--rz', rz + 'deg'); }
+    wrap.addEventListener('pointerdown', function (e) { dragging = true; sx = e.clientX; srz = rz; wrap.setPointerCapture(e.pointerId); });
+    wrap.addEventListener('pointermove', function (e) { if (dragging) setRz(srz + (e.clientX - sx) * .25); });
+    wrap.addEventListener('pointerup', function () { dragging = false; }); wrap.addEventListener('pointercancel', function () { dragging = false; });
+    if (!reduce) { (function sway(ts) { if (!dragging) setRz(-40 + Math.sin(ts / 2600) * 6); requestAnimationFrame(sway); })(0); }
 
-    show(0);
-    play();
+    // ── abas do tour ──
+    var tabs = document.querySelectorAll('.tab');
+    tabs.forEach(function (t) { t.addEventListener('click', function () {
+        tabs.forEach(function (o) { o.setAttribute('aria-selected', o === t ? 'true' : 'false'); o.setAttribute('tabindex', o === t ? '0' : '-1'); });
+        document.querySelectorAll('.pane').forEach(function (p) { p.classList.toggle('on', p.id === t.getAttribute('aria-controls')); });
+        if (window.umami && window.umami.track) window.umami.track('tour-aba-' + t.getAttribute('data-key'));
+    }); });
+
+    // ── menu do celular ──
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+
+    // ── barra fixa (celular): aparece depois do hero, some perto do rodapé ──
+    var sticky = document.getElementById('stickyCta'), hero = document.querySelector('.hero'), foot = document.querySelector('footer');
+    if (window.IntersectionObserver) {
+        var heroOut = false, footIn = false;
+        function upd() { sticky.classList.toggle('on', heroOut && !footIn); }
+        new IntersectionObserver(function (es) { es.forEach(function (e) { heroOut = !e.isIntersecting; }); upd(); }, { threshold: 0 }).observe(hero);
+        new IntersectionObserver(function (es) { es.forEach(function (e) { footIn = e.isIntersecting; }); upd(); }, { threshold: 0 }).observe(foot);
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 })();
 </script>
 
@@ -1399,46 +1265,6 @@
     }
 })();
 </script>
-
-<script>
-// L-19: o guia de instalação no iPhone, desenhado. Isto aqui NÃO é um player e
-// não carrega nada — o HTML já nasce no quadro 1 (o dedo sobre o botão
-// Compartilhar), que é o único que precisa estar de pé parado, porque é ele que
-// responde "qual botão é esse". O resto é ganho.
-// prefers-reduced-motion vira "não avança sozinho", exatamente como a sequência
-// do L-17 logo acima — mesmo precedente, mesma expectativa.
-(function () {
-    var root = document.getElementById('iosd');
-    if (!root) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var steps = Array.prototype.slice.call(document.querySelectorAll('#iosd-steps li'));
-    var BEATS = ['is-b0', 'is-b1', 'is-b2', 'is-b3', 'is-b4', 'is-b5'];
-    // b3 (virar a chave) e b4 (Adicionar) são o MESMO passo escrito, o 4 — e o
-    // último quadro ainda é ele: confirmar.
-    var STEP_OF = [0, 1, 2, 3, 3, 3];
-    var i = 1, timer = null, DELAY = 2600;
-
-    function show(n) {
-        i = (n + BEATS.length) % BEATS.length;
-        for (var k = 0; k < BEATS.length; k++) root.classList.toggle(BEATS[k], k === i);
-        for (var s = 0; s < steps.length; s++) steps[s].classList.toggle('is-now', s === STEP_OF[i]);
-    }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function play() { stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
-
-    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
-    if (window.IntersectionObserver) {
-        new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
-        }, { threshold: 0.4 }).observe(root);
-    } else {
-        play();
-    }
-})();
-</script>
-
 <script defer src="/js/materiais.js"></script>
-
 </body>
 </html>
