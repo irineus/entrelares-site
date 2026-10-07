@@ -17,9 +17,13 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PUBLIC = join(ROOT, 'public');
 const BLOG = join(PUBLIC, 'blog');
 
+// Phase 3 of the redesign (07/10/2026): the blog index shows each illustrated article's own
+// picture as a card thumbnail. It is not an article — no figure, no og:image master of its own —
+// so the article rules below skip it; its thumbnails get their own test at the end.
 const articles = readdirSync(BLOG)
-  .filter((f) => f.endsWith('.html'))
+  .filter((f) => f.endsWith('.html') && f !== 'index.html')
   .map((f) => ({ file: f, html: readFileSync(join(BLOG, f), 'utf8') }));
+const indexHtml = readFileSync(join(BLOG, 'index.html'), 'utf8');
 
 // WIDTHS as the generator declares it — the HTML has to name exactly these.
 const generatorWidths = (() => {
@@ -109,5 +113,26 @@ test('the og:image / twitter:image / JSON-LD image stay on the untouched 1600 px
     assert.ok(existsSync(join(PUBLIC, path)), `${file}: ${path} exists`);
     assert.equal(html.match(/name="twitter:image" content="([^"]*)"/)?.[1], og, `${file}: twitter:image is the same file`);
     assert.ok(html.includes(`"image": "${og}"`), `${file}: JSON-LD image is the same file`);
+  }
+});
+
+// Phase 3 (07/10/2026): the blog index's card thumbnails are the articles' own pictures — the
+// same three formats over the generator's widths, one `sizes`, every file on disk. A thumbnail
+// that names a file that is not there is the same silent 404 the article rules exist for.
+test('the blog index thumbnails reuse the article pictures, every file on disk', () => {
+  const thumbs = pictures(indexHtml);
+  assert.equal(thumbs.length, 7, 'one thumbnail per illustrated article');
+  for (const pic of thumbs) {
+    const sets = [...pic.matchAll(/srcset="([^"]*)"/g)].map((m) => srcsetWidths(m[1]));
+    assert.equal(sets.length, 3, 'AVIF, WebP and JPEG candidates');
+    for (const set of sets) assert.deepEqual(set.map((e) => e.width), generatorWidths);
+    const sizes = new Set([...pic.matchAll(/sizes="([^"]*)"/g)].map((m) => m[1]));
+    assert.equal(sizes.size, 1, 'one sizes attribute per picture');
+    const urls = [...sets.flatMap((s) => s.map((e) => e.url)), attr(pic.match(/<img[^>]*>/)[0], 'src')];
+    for (const url of urls) {
+      assert.ok(url.startsWith('/blog/img/'), `${url} lives under /blog/img/`);
+      assert.ok(existsSync(join(PUBLIC, url)), `${url} is not on disk`);
+    }
+    assert.equal(attr(pic.match(/<img[^>]*>/)[0], 'loading'), 'lazy');
   }
 });
