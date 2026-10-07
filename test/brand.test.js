@@ -90,7 +90,7 @@ test('every inline script on every page parses', () => {
     for (const m of html.matchAll(/<script(?: type="module")?>([\s\S]*?)<\/script>/g)) {
       // L-50: the hero calendar is a <script type="module"> importing the generator's engine;
       // Function() has no module scope, so the import lines are dropped before parsing the rest.
-      const body = m[1].replace(/^\s*import\s[\s\S]*?;\n/gm, "");
+      const body = m[1].replace(/^\s*import\s[\s\S]*?;\r?\n/gm, ""); // \r: a CRLF checkout on Windows
       assert.doesNotThrow(() => new Function(body), `${file}: an inline <script> does not parse`);
     }
   }
