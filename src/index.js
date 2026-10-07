@@ -704,8 +704,8 @@ function emailText(pdfUrl, unsubscribe, unsubUrl) {
     "Baixe o guia (PDF): " + pdfUrl,
     "",
     "O que você vai encontrar:",
-    "  - 5 modelos de rotina prontos, das semanas alternadas às opções para",
-    "    crianças pequenas;",
+    "  - 7 modelos de rotina prontos — os mesmos do app —, dos fins de semana",
+    "    alternados às opções para crianças pequenas;",
     "  - um calendário visual de duas semanas para cada modelo;",
     "  - os prós e contras de cada rotina, em linguagem simples;",
     "  - um roteiro para combinar férias, feriados e datas especiais.",
@@ -750,7 +750,7 @@ function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
         <tr><td style="padding:26px 32px 6px;">
           <div style="font-family:${FONT};font-size:15px;font-weight:700;color:${INK};margin-bottom:6px;">O que você vai encontrar</div>
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-            ${li("🗓️", `${strong("5 modelos prontos")} — das semanas alternadas às opções para crianças pequenas`)}
+            ${li("🗓️", `${strong("7 modelos prontos")} — os mesmos do app, dos fins de semana alternados às opções para crianças pequenas`)}
             ${li("👀", `Um ${strong("calendário visual de duas semanas")} para cada modelo`)}
             ${li("⚖️", `Os ${strong("prós e contras")} de cada rotina, em linguagem simples`)}
             ${li("🏖️", `Um roteiro para combinar ${strong("férias, feriados e datas especiais")}`)}
@@ -775,7 +775,7 @@ function emailHtml(pdfUrl, unsubscribe, unsubUrl) {
 
   return shell(
     "Seu guia de rotinas de guarda compartilhada",
-    "Seu guia com 5 modelos de rotina — e como dar mais previsibilidade para os filhos.",
+    "Seu guia com 7 modelos de rotina — e como dar mais previsibilidade para os filhos.",
     content,
     footerHtml(unsubscribe, unsubUrl),
   );

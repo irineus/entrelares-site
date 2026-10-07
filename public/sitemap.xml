@@ -37,25 +37,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://entrelares.app/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://entrelares.app/en/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,43 +67,43 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-montar-calendario-guarda-compartilhada</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/guarda-compartilhada-x-guarda-alternada</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-funciona-guarda-compartilhada</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/modelos-de-rotina-guarda-compartilhada</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/guarda-compartilhada-e-pensao-alimenticia</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/rotina-7-7-vs-14-14</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -112,6 +112,18 @@
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/instalar</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://entrelares.app/en/install</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://entrelares.app/en/for-every-family</loc>
@@ -127,25 +139,25 @@
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-escolher-app-guarda-compartilhada</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/natal-e-ano-novo-guarda-compartilhada</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/ferias-escolares-guarda-compartilhada</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/blog/como-combinar-festas-com-o-outro-responsavel</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -157,37 +169,37 @@
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/2-2-3</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/5-2-2-5</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/3-4-4-3</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/1-1</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/fins-de-semana-alternados</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://entrelares.app/rotinas/fins-de-semana-alternados-com-pernoite</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

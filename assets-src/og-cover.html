@@ -36,15 +36,19 @@
   Re-render whenever the hero copy or the artwork changes.
 -->
 <style>
+  /* L-51 palette (07/10/2026): the redesign's tokens — cream, plum, the house blue — and the
+     display serif the site serves. The fonts are the site's own files, by relative path. */
+  @font-face { font-family: "Newsreader"; src: url(../public/fonts/newsreader-latin.woff2) format("woff2"); font-weight: 500 700; }
+  @font-face { font-family: "Inter"; src: url(../public/fonts/inter-latin.woff2) format("woff2"); font-weight: 400 600; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
-    font-family: "Segoe UI", "Liberation Sans", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
-    background: #f9fafb;
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    background: #FBF8F3;
     background-image:
-      radial-gradient(760px 480px at 92% 0%, rgba(79,70,229,0.12) 0%, rgba(79,70,229,0) 60%),
-      radial-gradient(640px 440px at 4% 100%, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0) 58%);
-    color: #111827;
+      radial-gradient(760px 480px at 92% 0%, rgba(47,87,201,0.14) 0%, rgba(47,87,201,0) 60%),
+      radial-gradient(640px 440px at 4% 100%, rgba(216,58,110,0.12) 0%, rgba(216,58,110,0) 58%);
+    color: #2A1F33;
     padding: 48px 70px 54px;
     position: relative;
   }
@@ -57,11 +61,12 @@
 
   .mid { position: absolute; top: 172px; left: 70px; right: 452px; }
   h1 {
-    font-size: 61px; font-weight: 800; line-height: 1.12; letter-spacing: -0.025em;
-    color: #111827; margin-bottom: 24px;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 64px; font-weight: 700; line-height: 1.12; letter-spacing: -0.025em;
+    color: #2A1F33; margin-bottom: 24px;
   }
-  .sub { font-size: 27px; line-height: 1.42; color: #6b7280; }
-  .sub b { color: #111827; font-weight: 700; }
+  .sub { font-size: 27px; line-height: 1.42; color: #6B6072; }
+  .sub b { color: #2A1F33; font-weight: 700; }
 
   /* the brand plaque, framed: the square text-free master, shown 1:1 */
   .art {
@@ -77,14 +82,14 @@
           display: flex; align-items: center; gap: 16px; }
   .chip {
     background: #ffffff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #E9E1D8;
     border-radius: 999px;
     padding: 11px 22px;
     font-size: 21px;
     font-weight: 600;
     color: #374151;
   }
-  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #4f46e5; }
+  .domain { margin-left: auto; font-size: 25px; font-weight: 700; color: #2F57C9; }
 </style>
 </head>
 <body>

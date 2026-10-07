@@ -7,7 +7,8 @@
     <meta name="description" content="Jeitos de dividir o Natal e o Ano-Novo entre as duas casas: alternar por ano par e ímpar, separar o dia 24 do dia 25, dividir a semana das festas e combinar as viagens." />
     <link rel="canonical" href="https://entrelares.app/blog/natal-e-ano-novo-guarda-compartilhada" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
@@ -29,7 +30,7 @@
       "inLanguage": "pt-BR",
       "image": "https://entrelares.app/blog/img/natal-ano-novo.jpg",
       "datePublished": "2026-10-02",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-07",
       "author": { "@type": "Organization", "name": "Entrelares" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
       "mainEntityOfPage": "https://entrelares.app/blog/natal-e-ano-novo-guarda-compartilhada"
@@ -83,7 +84,7 @@
         a{color:var(--indigo);}
         a:focus-visible,.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
         .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
-        header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+        header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
         .nav{display:flex;align-items:center;gap:12px;height:64px;}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;}
         .brand img{width:32px;height:32px;border-radius:8px;}
@@ -99,9 +100,9 @@
         .nav-links a:hover{color:var(--ink);}
         .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600;}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;}
-        .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.35);}
-        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(79,70,229,.28);transition:transform .15s ease,box-shadow .15s ease;}
-        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,.36);}
+        .btn-primary{background:var(--indigo);color: #fff;box-shadow:0 4px 14px rgba(var(--brand-rgb),.35);}
+        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28);transition:transform .15s ease,box-shadow .15s ease;}
+        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--brand-rgb),.36);}
         .cta-short{display:none;}
         .lang-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;font-size:13px;font-weight:600;}
         .lang-switch a,.lang-switch span{padding:4px 10px;border-radius:999px;line-height:1;text-decoration:none;color:var(--muted);}
@@ -116,7 +117,7 @@
         .meta{color:var(--muted);font-size:14px;margin-bottom:28px;}
         article h2{font-size:24px;letter-spacing:-.01em;margin:36px 0 12px;}
         article h3{font-size:19px;margin:24px 0 8px;}
-        article p,article li{color:#334155;font-size:17px;margin-bottom:14px;}
+        article p,article li{color:var(--ink-soft);font-size:17px;margin-bottom:14px;}
         article ul,article ol{padding-left:24px;}
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
@@ -131,7 +132,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:var(--bg-tint);border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -139,9 +140,9 @@
         .related{max-width:720px;margin:0 auto;padding:0 20px 56px;}
         .related h2{font-size:18px;margin-bottom:12px;}
         .related a{display:block;padding:6px 0;}
-        footer{background:#03173d;color:#94a3b8;font-size:14px;border-top:1px solid #1e3a5f;}
+        footer{background:var(--deep);color:var(--muted-2);font-size:14px;border-top:1px solid var(--deep-line);}
         footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px;}
-        footer a{color:#cbd5e1;text-decoration:none;}
+        footer a{color:var(--line);text-decoration:none;}
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
         @media(max-width:820px){
           .nav-links{display:none;}
@@ -159,10 +160,44 @@
           .lang-switch{font-size:12px;padding:2px;}
           .lang-switch a,.lang-switch span{padding:4px 8px;}
         }
+
+        /* Fase 3 (07/10/2026): o menu do celular, igual ao da home — o botão vive na barra e o
+           painel é outro elemento depois do header, para o .nav-links seguir como o
+           menu.test.js prende. */
+        .burger{display:none;width:42px;height:42px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;padding:0;}
+        .burger span{display:block;width:18px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px;transition:transform .2s,opacity .2s;}
+        .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+        .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+        .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+        .mmenu{position:fixed;inset:58px 0 0 0;z-index:45;background:var(--bg);padding:18px 20px 28px;overflow:auto;}
+        .mmenu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:18px;font-weight:600;}
+        .mmenu a.btn-primary{display:inline-flex;margin-top:18px;width:100%;border-bottom:0;color:var(--bg);font-size:16px;justify-content:center;border-radius:999px;}
+        .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
+        .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
+        @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -184,19 +219,49 @@
             <a href="/en/" hreflang="en" lang="en" title="English version — home">EN</a>
         </div>
         <a class="btn btn-primary" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="/#como-funciona">Como funciona</a>
+    <a href="/ferramentas/gerador-de-rotina-de-guarda">Simulador</a>
+    <a href="/#porque">Por quê</a>
+    <a href="/#beneficios">Benefícios</a>
+    <a href="/rotinas/">Rotinas</a>
+    <a href="/#precos">Preços</a>
+    <a href="/#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <nav class="crumbs" aria-label="Trilha"><a href="/">Início</a> › <a href="/blog/">Blog</a> › Natal e Ano-Novo</nav>
 
 <article>
     <span class="kicker">Festas de fim de ano</span>
     <h1>Natal e Ano-Novo na guarda compartilhada: jeitos de dividir</h1>
-    <p class="meta">Publicado em 2 de outubro de 2026 · leitura de ~6 min</p>
+    <p class="meta">Atualizado em 7 de outubro de 2026 · leitura de ~9 min</p>
 
     <p class="lead">Dezembro junta as datas que mais pesam numa rotina de guarda: a ceia, o almoço do dia 25, a virada do ano, a viagem para a casa dos avós. Quase nenhuma rotina semanal dá conta delas sozinha. Veja os jeitos mais comuns de dividir as festas — e o que cada um pede de combinação.</p>
 
-    <h2>Por que as festas pedem um combinado à parte</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#por-que-as-festas-pedem-um-combinado-a-parte">Por que as festas pedem um combinado à parte</a></li>
+            <li><a href="#1-alternar-por-ano-par-e-impar">1. Alternar por ano: par e ímpar</a></li>
+            <li><a href="#2-separar-o-dia-24-do-dia-25">2. Separar o dia 24 do dia 25</a></li>
+            <li><a href="#3-dividir-a-semana-das-festas">3. Dividir a semana das festas</a></li>
+            <li><a href="#4-viagens-com-a-crianca">4. Viagens com a criança</a></li>
+            <li><a href="#o-primeiro-natal-depois-da-separacao">O primeiro Natal depois da separação</a></li>
+            <li><a href="#avos-tios-e-as-duas-familias">Avós, tios e as duas famílias</a></li>
+            <li><a href="#como-escolher-entre-os-formatos">Como escolher entre os formatos</a></li>
+            <li><a href="#como-escrever-a-regra-no-acordo">Como escrever a regra no acordo</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="por-que-as-festas-pedem-um-combinado-a-parte">Por que as festas pedem um combinado à parte</h2>
     <p>A rotina da semana — semana sim, semana não, 2-2-3, dias fixos — funciona porque se repete. O Natal e o Ano-Novo não se repetem: caem num dia da semana diferente a cada ano, e cada família tem as próprias tradições. Se ninguém combina nada, quem decide é a escala normal, e ela não sabe que aquele dia é diferente.</p>
     <p>Desde a Lei nº 13.058/2014, a guarda compartilhada é a regra no Brasil. A lei, porém, não diz como dividir a noite do dia 24: isso fica para o acordo entre os responsáveis ou, sem acordo, para o que o juiz decidir no caso concreto.</p>
 
@@ -209,18 +274,17 @@
       <figcaption>As festas cabem em qualquer rotina — desde que alguém escreva quem fica com cada dia.</figcaption>
     </figure>
 
-    <h2>1. Alternar por ano: par e ímpar</h2>
+    <h2 id="1-alternar-por-ano-par-e-impar">1. Alternar por ano: par e ímpar</h2>
     <p>O jeito mais simples: num ano, a criança passa o Natal com um responsável e o Ano-Novo com o outro; no ano seguinte, inverte. Para não depender da memória de ninguém, amarrem a regra ao calendário, com os nomes escritos: <strong>"nos anos pares, o Natal fica com um e o Ano-Novo com o outro; nos ímpares, o contrário"</strong>.</p>
     <ul>
         <li><strong>A favor:</strong> cada festa fica inteira, sem deslocamento no meio da comemoração, e sobra tempo para viajar;</li>
         <li><strong>Contra:</strong> a cada dois anos, cada responsável passa uma das festas sem a criança.</li>
     </ul>
-
-    <h2>2. Separar o dia 24 do dia 25</h2>
+<h2 id="2-separar-o-dia-24-do-dia-25">2. Separar o dia 24 do dia 25</h2>
     <p>Muitas famílias comemoram na noite do dia 24, com a ceia; outras, no almoço do dia 25. Dá para a criança estar nas duas: a noite do dia 24 numa casa e o dia 25 na outra, com a troca na manhã do dia 25. O mesmo vale para a virada: o dia 31 até a meia-noite numa casa, o dia 1º na outra. Para ficar justo, quem tem a noite num ano passa a ter o dia no ano seguinte.</p>
     <p>Combinem o horário da troca com folga. Depois de uma noite de festa, "de manhã cedo" raramente funciona; <strong>"dia 25 às 11h"</strong> é mais honesto. E este formato pede casas próximas: com horas de estrada no meio, o dia 25 vira viagem.</p>
 
-    <h2>3. Dividir a semana das festas</h2>
+    <h2 id="3-dividir-a-semana-das-festas">3. Dividir a semana das festas</h2>
     <p>Outro formato separa o fim de ano em dois blocos: a semana do Natal com um responsável e a semana do Réveillon com o outro, alternando a cada ano. É o que mais se parece com as férias — e por isso combina com famílias que viajam: cada bloco tem dias suficientes para ir e voltar sem correria.</p>
     <p>O ponto delicado é a fronteira entre os blocos. Escrevam o dia e a hora exatos da troca no meio — por exemplo, "dia 28, ao meio-dia" — em vez de "depois do Natal".</p>
 
@@ -229,7 +293,7 @@
       <figcaption>Três jeitos de dividir o fim de ano, num ano de exemplo. No ano seguinte, as cores se invertem.</figcaption>
     </figure>
 
-    <h2>4. Viagens com a criança</h2>
+    <h2 id="4-viagens-com-a-crianca">4. Viagens com a criança</h2>
     <p>Fim de ano é época de viagem: casa dos avós, praia, outra cidade. Vale responder antes:</p>
     <ul>
         <li>Quem viaja, para onde e entre quais dias;</li>
@@ -239,7 +303,20 @@
     </ul>
     <p>Viagens, sobretudo para fora do país, podem exigir autorização do outro responsável e documentos específicos da criança. As exigências mudam conforme a idade, o destino e com quem ela viaja — e mudam com o tempo. Confirme as regras em vigor com antecedência, nos canais oficiais e com a empresa de transporte, e procure um advogado se houver dúvida ou desacordo.</p>
 
-    <h2>Como escolher entre os formatos</h2>
+    <h2 id="o-primeiro-natal-depois-da-separacao">O primeiro Natal depois da separação</h2>
+    <p>O primeiro fim de ano em duas casas é o mais difícil — para os adultos, sobretudo. Três coisas ajudam a atravessá-lo:</p>
+    <ul>
+        <li><strong>Baixar a régua.</strong> Não será o Natal de antes, e tentar reproduzi-lo costuma frustrar. Uma comemoração menor, com as pessoas certas, vale mais do que a ceia perfeita com o clima tenso.</li>
+        <li><strong>Contar o plano à criança com antecedência</strong>, com datas concretas: "dia 24 você dorme na casa do papai, dia 25 almoça aqui". Ela lida bem com o que é previsível; sofre com o que é decidido na véspera.</li>
+        <li><strong>Combinar o que se diz sobre o outro</strong>: nada de "a mamãe não quis vir". A criança não precisa de explicação sobre o que falhou entre os adultos; precisa saber que vai ver os dois.</li>
+    </ul>
+    <p>Quem passa a festa sem a criança não precisa passá-la em silêncio: uma chamada de vídeo em hora combinada, curta e sem cobrança, dá à criança a presença dos dois sem transformar a noite num cabo de guerra.</p>
+
+    <h2 id="avos-tios-e-as-duas-familias">Avós, tios e as duas famílias</h2>
+    <p>A maior parte das tradições de fim de ano não é do casal — é da família de cada um. A ceia na casa dos avós, o almoço na casa da tia, o amigo-secreto dos primos. O combinado fica mais fácil quando cada lado traz a própria lista de datas que importam e a conversa deixa de ser "24 ou 25" para ser "a sua família comemora quando?". Muitas vezes a resposta encaixa: uma família faz a ceia, a outra, o almoço; um lado viaja no Ano-Novo, o outro fica. Quando os dois lados fazem a ceia do dia 24, a alternância por ano é a saída honesta — e os avós também se organizam, porque sabem com antecedência em que ano verão a neta.</p>
+    <p>O que a família estendida não pode fazer é ser o canal: avós que negociam datas diretamente com o outro genitor, ou que comentam a separação com a criança, pesam mais do que ajudam. O combinado é entre os dois responsáveis; a família de cada um é informada do resultado.</p>
+
+    <h2 id="como-escolher-entre-os-formatos">Como escolher entre os formatos</h2>
     <ul>
         <li><strong>Distância entre as casas:</strong> na mesma cidade, separar o dia 24 do dia 25 é simples; com horas de estrada, blocos maiores evitam passar a festa no carro;</li>
         <li><strong>Tradições de cada lado:</strong> se uma família comemora na ceia e a outra no almoço, o formato quase se escolhe sozinho;</li>
@@ -257,7 +334,12 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup">Criar conta grátis</a>
     </div>
 
-    <h2>Perguntas frequentes</h2>
+    <h2 id="como-escrever-a-regra-no-acordo">Como escrever a regra no acordo</h2>
+    <p>Qualquer dos formatos cabe numa cláusula curta do <a href="/blog/modelo-de-acordo-de-guarda-compartilhada">plano de parentalidade</a>, desde que diga período, hora e regra de alternância. Um exemplo, com nomes fictícios:</p>
+    <blockquote><p>"O Natal, compreendido entre as 10h de 24 de dezembro e as 10h de 26 de dezembro, caberá a Ana nos anos pares e a Carlos nos anos ímpares; o Ano-Novo, entre as 10h de 30 de dezembro e as 10h de 2 de janeiro, caberá ao outro genitor no mesmo ano. Estes períodos prevalecem sobre a rotina semanal e sobre os blocos de férias. Havendo consenso, as datas poderão ser ajustadas, por escrito, a cada ano."</p></blockquote>
+    <p>Três detalhes fazem diferença: o período tem <strong>hora de início e de fim</strong> (ninguém discute se "o Natal" acaba no dia 25 à noite ou no dia 26); a <strong>ordem de prioridade</strong> está escrita (a festa vale sobre a rotina e sobre as férias); e a <strong>flexibilização por consenso</strong> está prevista, para que o acordo não vire camisa de força nos anos em que os dois concordam em mudar.</p>
+
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
     <section class="faq" aria-label="Perguntas frequentes">
         <h3>Quem fica com a criança no Natal na guarda compartilhada?</h3>
         <p>A lei não traz uma regra pronta para o Natal. Vale o que os responsáveis combinarem ou, sem acordo, o que o juiz decidir no caso concreto. Os formatos mais comuns são alternar as festas por ano, separar o dia 24 do dia 25 e dividir a semana das festas em dois blocos.</p>
@@ -269,15 +351,15 @@
         <p>Em geral, sim, quando a viagem está combinada. Viagens, sobretudo para fora do país, podem exigir autorização do outro responsável e documentos da criança. As exigências mudam conforme a idade, o destino e com quem a criança viaja, então confirme as regras em vigor com antecedência e procure um advogado se houver dúvida.</p>
     </section>
 
-    <h2>Resumo</h2>
+    <h2 id="resumo">Resumo</h2>
     <p>Alternar por ano, separar o dia 24 do dia 25 ou dividir a semana das festas: o melhor formato é o que cabe na distância entre as casas e nas tradições de cada lado. Escolham cedo, escrevam com nomes, dias e horários, e tratem as viagens com antecedência. O que dá previsibilidade à criança é o combinado claro, mais do que o formato.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
 <div class="lm-mini">
-    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
-    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <h2>Baixe grátis: 7 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Os mesmos sete modelos do gerador e do app — fins de semana alternados (com e sem pernoite de quarta), semana alternada, quinzenal, dia sim/dia não, 5-2-2-5 e 2-2-3 —, com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
     <form class="lm-form" novalidate>
         <div class="lm-inline">
             <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
@@ -314,5 +396,19 @@
 </footer>
 
 <script defer src="/js/materiais.js"></script>
+<script>
+// Fase 3: menu do celular (o mesmo da home).
+(function () {
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    if (!burger || !mmenu) return;
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+})();
+</script>
 </body>
 </html>

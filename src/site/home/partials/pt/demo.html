@@ -1,0 +1,53 @@
+<!-- L-17 — a promessa do registro inalterável, MOSTRADA em vez de afirmada.
+     Os dois quadros são capturas reais (T-57); o que se move é o recorte e o
+     passo ativo. Tudo o que as legendas dizem está verificado no app:
+     o dia com pedido aberto fica congelado (regra de banco) e activity_logs
+     é append-only, escrito só por trigger. Nada aqui é encenação. -->
+<section id="registro">
+    <div class="wrap">
+        <h2>Veja o histórico sendo escrito</h2>
+        <p class="section-lead">Não dá para provar um registro inalterável com uma frase. São duas telas reais do app seguindo <em>o mesmo pedido</em> — a troca do dia 31/08 — do card de aprovação à linha que ninguém mais tira.</p>
+        <div class="demo" id="demo">
+            <div class="phone">
+                <div class="phone-screen">
+                    <div class="demo-frame is-active">
+                        <picture>
+                            <source srcset="img/screenshots/troca-aguardando-aprovacao-540.webp 540w, img/screenshots/troca-aguardando-aprovacao-720.webp 720w, img/screenshots/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
+                            <img src="img/screenshots/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="Tela do app com a solicitação de troca pendente do dia 31/08/2026: solicitante Marina, responsável proposto Rafael, solicitado em 23/08/2026 07:59, e os botões Aprovar e Recusar" loading="lazy" decoding="async" />
+                        </picture>
+                    </div>
+                    <div class="demo-frame">
+                        <picture>
+                            <source srcset="img/screenshots/historico-auditoria-540.webp 540w, img/screenshots/historico-auditoria-720.webp 720w, img/screenshots/historico-auditoria.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
+                            <img src="img/screenshots/historico-auditoria.png" width="1080" height="1920" alt="Tela Relatórios do app, aba Histórico: a entrada do dia 31/08/2026 registrando que a alteração veio da troca solicitada por Marina e aprovada por Rafael, com data e hora" loading="lazy" decoding="async" />
+                        </picture>
+                    </div>
+                    <div class="demo-ring" style="left: 9.9%; top: 59.2%; width: 80.6%; height: 13.6%;" aria-hidden="true"></div>
+                </div>
+            </div>
+            <ol class="demo-steps">
+                <li>
+                    <button type="button" data-frame="0" data-hl="9.9,59.2,80.6,13.6" aria-current="true">
+                        <span class="demo-n">1</span>
+                        <span class="demo-tx"><strong>Marina pede a troca</strong><span class="demo-d">O pedido chega com o dia, o responsável proposto, o recado dela e a hora exata em que foi feito: 23/08/2026, 07:59.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-frame="0" data-hl="9.8,84.5,39.3,4.9" aria-current="false">
+                        <span class="demo-n">2</span>
+                        <span class="demo-tx"><strong>Rafael decide</strong><span class="demo-d">Aprovar ou recusar é com ele. Enquanto o pedido está aberto, o dia fica congelado do jeito que estava.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-frame="1" data-hl="9.3,36.4,83.3,22.8" aria-current="false">
+                        <span class="demo-n">3</span>
+                        <span class="demo-tx"><strong>A troca vira registro</strong><span class="demo-d">A aprovação entra no Histórico de ajustes dizendo de onde veio — <em>troca solicitada por Marina e aprovada por Rafael</em> — e carimbada em 28/08/2026 18:22. O registro só cresce: nada ali pode ser editado nem apagado.</span></span>
+                        <span class="demo-bar"><i></i></span>
+                    </button>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>

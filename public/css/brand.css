@@ -1,0 +1,165 @@
+/* Brand tokens — phase 0 of the landing redesign (07/10/2026).
+
+   ONE file, linked by every page AFTER its own inline <style>, so the tokens below win over
+   the per-page `:root` copies (no build step here, so the pages keep their copies as the
+   fallback that renders if this file ever fails to load). What lives here:
+
+   1. the two self-hosted fonts (Newsreader for headings, Inter for body — Inter is the app's
+      font, so landing and product read as one), latin subset, variable, `font-display: swap`;
+      Newsreader replaced Fraunces on 07/10/2026 (L-51): Fraunces' descending f and curly j read
+      as crooked on the owner's phone, and no axis in the served subset removes them;
+   2. the palette — cream background, plum ink, the two "house" colours the app's calendar
+      already paints (blue / rose) as the brand colours, amber for "today";
+   3. the same tokens for dark mode (`prefers-color-scheme: dark`);
+   4. the few component rules the per-page CSS writes as literal colours and that would
+      otherwise stay slate/indigo on a cream page or white on a dark one.
+
+   Token names stay the ones the pages already use (`--indigo`, `--pink`, `--bg-tint`…) on
+   purpose: renaming them would mean touching 29 files for no visual gain. `--indigo` is the
+   primary (links, focus, checkmarks) and is blue now; the name is history, like `backlog/`.
+   test/brand.test.js pins the link order, the fonts on disk and the absence of emoji icons. */
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* surfaces */
+  --bg: #FBF8F3;          /* cream page */
+  --card: #FFFFFF;
+  --bg-tint: #ECEFFB;     /* soft blue tint: badges, active states, highlighted cards */
+  --line: #E9E1D8;
+  --line-tint: #D9DFF7;   /* border of a tinted card */
+
+  /* text */
+  --ink: #2A1F33;         /* plum */
+  --ink-soft: #4A3F53;    /* long-form body text */
+  --muted: #6B6072;
+  --muted-2: #8E8296;     /* captions, consent lines */
+
+  /* brand */
+  --indigo: #2F57C9;      /* primary: links, focus, checkmarks (house A, deepened for AA on cream) */
+  --indigo-deep: #1F3F99;
+  --pink: #D83A6E;        /* house B */
+  --accent: #F2A33A;      /* today */
+  --accent-ink: #5A3A00;
+
+  /* the dark band (final CTA, footer) and what reads on it */
+  --deep: #2A1F33;
+  --deep-line: #3E3147;
+  --deep-ink: #FBF8F3;
+  --deep-ink-soft: #CFC6D6;
+  --deep-muted: #A89DB0;
+
+  /* shadows are built from these, never from a literal */
+  --ink-rgb: 42, 31, 51;
+  --brand-rgb: 47, 87, 201;
+
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17121C;
+    --card: #211A28;
+    --bg-tint: #232A48;
+    --line: #352B3D;
+    --line-tint: #2F3A66;
+
+    --ink: #F5EFF7;
+    --ink-soft: #D9CFE0;
+    --muted: #B3A7BA;
+    --muted-2: #8E8296;
+
+    --indigo: #9DB6FF;
+    --indigo-deep: #C4D3FF;
+    --pink: #FF7FA6;
+    --accent: #F2A33A;
+    --accent-ink: #FFE2B5;
+
+    --deep: #0F0B13;
+    --deep-line: #2A2231;
+    --deep-ink: #F5EFF7;
+    --deep-ink-soft: #CFC6D6;
+    --deep-muted: #8E8296;
+
+    --ink-rgb: 0, 0, 0;
+    --brand-rgb: 157, 182, 255;
+  }
+}
+
+/* ── Type ─────────────────────────────────────────────────────────────────── */
+body { font-family: var(--font-body); }
+h1, h2, h3, .price-card .price { font-family: var(--font-display); letter-spacing: -0.01em; }
+h1, h2 { font-weight: 700; }
+h3 { font-weight: 600; }
+.price-card .price { font-weight: 700; letter-spacing: -0.02em; }
+.price-card .price small { font-family: var(--font-body); }
+/* The founder's letter keeps the calmer weight L-18 chose. */
+.founder-section h2 { font-weight: 600; }
+
+/* ── Components the pages paint with literals ─────────────────────────────── */
+/* Primary buttons are plum, like the mock — not the link colour. */
+.btn-primary, .lm-btn {
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: 0 8px 24px rgba(var(--ink-rgb), .22);
+}
+.btn-primary:hover, .lm-btn:hover { background: var(--ink); box-shadow: 0 10px 28px rgba(var(--ink-rgb), .28); }
+.demo-steps button[aria-current="true"] .demo-n { background: var(--indigo); color: var(--card); }
+
+/* Sections and cards the pages fill with #fff / slate */
+#galeria, #beneficios, #porque { background: var(--card); }
+header { background: color-mix(in srgb, var(--bg) 90%, transparent); }
+.founder-card p { color: var(--ink-soft); }
+.founder-avatar { box-shadow: 0 0 0 3px var(--card), 0 0 0 4px var(--line); }
+.value-badge { border-color: var(--line-tint); }
+.price-promo { background: color-mix(in srgb, var(--accent) 22%, var(--card)); color: var(--accent-ink); }
+
+/* The dark band: final CTA and footer */
+.cta-final, footer { background: var(--deep); color: var(--deep-ink-soft); }
+.cta-final h2 { color: var(--deep-ink); }
+.cta-final p { color: var(--deep-ink-soft); }
+footer { color: var(--deep-muted); border-top-color: var(--deep-line); }
+footer a { color: var(--deep-ink-soft); }
+footer a:hover { color: var(--deep-ink); }
+.cta-final .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 8px 24px rgba(0, 0, 0, .25); }
+@media (prefers-color-scheme: dark) { .cta-final .btn-primary { color: #2A1F33; } }
+
+/* Phone frames stay near-black in both schemes; their screen is the capture itself. */
+.phone, .phone-sm, .iosd-phone { background: #0F0B13; }
+
+/* Heading icons that replaced the emojis (compare, install, price promo, guarantee) */
+.h-ico { width: 20px; height: 20px; flex: none; color: var(--indigo); vertical-align: -4px; display: inline-block; }
+.compare-bad .h-ico { color: var(--pink); }
+.price-promo .h-ico, .price-guarantee .h-ico { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; color: currentColor; }
+
+/* Illustrations drawn with the app's light palette keep a light plate in dark mode. */
+@media (prefers-color-scheme: dark) {
+  .fig-frame, .tool-teaser svg, .lm-form { background: #FBF8F3; border-radius: 12px; }
+  .tool-teaser svg { padding: 10px; }
+  .lm-form .lm-form-title, .lm-field label, .lm-input { color: #2A1F33; }
+  .lm-input { background: #FFFFFF; }
+  .play-badge img { filter: brightness(.95); }
+}
+
+/* Forms inherit the body font */
+input, button, select, textarea { font-family: inherit; }

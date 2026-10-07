@@ -7,7 +7,8 @@
     <meta name="description" content="Semana alternada (7/7) ou quinzenal (14/14)? Compare tempo longe de cada casa, número de trocas, logística e adaptação da criança — e veja como testar cada rotina antes de decidir." />
     <link rel="canonical" href="https://entrelares.app/blog/rotina-7-7-vs-14-14" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
@@ -26,7 +27,7 @@
       "inLanguage": "pt-BR",
       "image": "https://entrelares.app/og-cover.png",
       "datePublished": "2026-08-28",
-      "dateModified": "2026-08-28",
+      "dateModified": "2026-10-07",
       "author": { "@type": "Organization", "name": "Entrelares" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
       "mainEntityOfPage": "https://entrelares.app/blog/rotina-7-7-vs-14-14"
@@ -43,6 +44,38 @@
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "A partir de que idade a semana alternada costuma funcionar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A lei não fixa idade; o critério é o interesse da criança. Na prática, a semana alternada aparece mais a partir da idade escolar, quando a criança já entende a rotina e tolera sete dias longe de um dos responsáveis. Para crianças pequenas, muitas famílias começam com períodos mais curtos, como a 2-2-3, e migram depois, às vezes com apoio de um psicólogo infantil."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quantas trocas por mês tem cada rotina?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Na semana alternada são cerca de quatro trocas por mês, uma por semana, sempre no mesmo dia. Na quinzenal são cerca de duas. Para comparar, a 2-2-3 tem cerca de doze trocas por mês e os fins de semana alternados, cerca de quatro, concentradas na sexta e no domingo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como testar a rotina antes de formalizar no acordo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gere o calendário das duas no gerador de rotina, com os nomes de vocês e a data de início, imprima e vivam o formato por alguns meses. Registrem as trocas e o que funcionou ou não; quando decidirem, a rotina escolhida entra como cláusula do plano de parentalidade, e com consenso pode ser ajustada depois."
+          }
+        }
+      ]
+    }
+    </script>
     <style>
         :root{--ink:#1e293b;--muted:#64748b;--indigo:#4f46e5;--indigo-deep:#3730a3;--pink:#db2777;--bg:#f8fafc;--bg-tint:#eef2ff;--card:#fff;--line:#e2e8f0;--radius:16px;}
         *{margin:0;padding:0;box-sizing:border-box;}
@@ -52,7 +85,7 @@
         a{color:var(--indigo);}
         a:focus-visible,.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
         .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
-        header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+        header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
         .nav{display:flex;align-items:center;gap:12px;height:64px;}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;}
         .brand img{width:32px;height:32px;border-radius:8px;}
@@ -68,9 +101,9 @@
         .nav-links a:hover{color:var(--ink);}
         .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600;}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;}
-        .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.35);}
-        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(79,70,229,.28);transition:transform .15s ease,box-shadow .15s ease;}
-        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,.36);}
+        .btn-primary{background:var(--indigo);color: #fff;box-shadow:0 4px 14px rgba(var(--brand-rgb),.35);}
+        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28);transition:transform .15s ease,box-shadow .15s ease;}
+        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--brand-rgb),.36);}
         .cta-short{display:none;}
         .lang-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;font-size:13px;font-weight:600;}
         .lang-switch a,.lang-switch span{padding:4px 10px;border-radius:999px;line-height:1;text-decoration:none;color:var(--muted);}
@@ -85,7 +118,7 @@
         .meta{color:var(--muted);font-size:14px;margin-bottom:28px;}
         article h2{font-size:24px;letter-spacing:-.01em;margin:36px 0 12px;}
         article h3{font-size:19px;margin:24px 0 8px;}
-        article p,article li{color:#334155;font-size:17px;margin-bottom:14px;}
+        article p,article li{color:var(--ink-soft);font-size:17px;margin-bottom:14px;}
         article ul,article ol{padding-left:24px;}
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
@@ -100,7 +133,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:var(--bg-tint);border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -108,9 +141,9 @@
         .related{max-width:720px;margin:0 auto;padding:0 20px 56px;}
         .related h2{font-size:18px;margin-bottom:12px;}
         .related a{display:block;padding:6px 0;}
-        footer{background:#03173d;color:#94a3b8;font-size:14px;border-top:1px solid #1e3a5f;}
+        footer{background:var(--deep);color:var(--muted-2);font-size:14px;border-top:1px solid var(--deep-line);}
         footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px;}
-        footer a{color:#cbd5e1;text-decoration:none;}
+        footer a{color:var(--line);text-decoration:none;}
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
         @media(max-width:820px){
           .nav-links{display:none;}
@@ -128,10 +161,44 @@
           .lang-switch{font-size:12px;padding:2px;}
           .lang-switch a,.lang-switch span{padding:4px 8px;}
         }
+
+        /* Fase 3 (07/10/2026): o menu do celular, igual ao da home — o botão vive na barra e o
+           painel é outro elemento depois do header, para o .nav-links seguir como o
+           menu.test.js prende. */
+        .burger{display:none;width:42px;height:42px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;padding:0;}
+        .burger span{display:block;width:18px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px;transition:transform .2s,opacity .2s;}
+        .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+        .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+        .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+        .mmenu{position:fixed;inset:58px 0 0 0;z-index:45;background:var(--bg);padding:18px 20px 28px;overflow:auto;}
+        .mmenu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:18px;font-weight:600;}
+        .mmenu a.btn-primary{display:inline-flex;margin-top:18px;width:100%;border-bottom:0;color:var(--bg);font-size:16px;justify-content:center;border-radius:999px;}
+        .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
+        .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
+        @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -153,15 +220,28 @@
             <a href="/en/" hreflang="en" lang="en" title="English version — home">EN</a>
         </div>
         <a class="btn btn-primary" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="/#como-funciona">Como funciona</a>
+    <a href="/ferramentas/gerador-de-rotina-de-guarda">Simulador</a>
+    <a href="/#porque">Por quê</a>
+    <a href="/#beneficios">Benefícios</a>
+    <a href="/rotinas/">Rotinas</a>
+    <a href="/#precos">Preços</a>
+    <a href="/#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <nav class="crumbs" aria-label="Trilha"><a href="/">Início</a> › <a href="/blog/">Blog</a> › Rotina 7/7 vs 14/14</nav>
 
 <article>
     <span class="kicker">Comparativo</span>
     <h1>Rotina 7/7 ou 14/14 na guarda compartilhada: qual escolher?</h1>
-    <p class="meta">Publicado em 28 de agosto de 2026 · leitura de ~6 min</p>
+    <p class="meta">Atualizado em 7 de outubro de 2026 · leitura de ~10 min</p>
 
     <p class="lead">As duas rotinas mais simples da guarda compartilhada dividem o tempo exatamente ao meio: na <strong>7/7 (semana alternada)</strong>, a criança passa uma semana em cada casa; na <strong>14/14 (quinzenal)</strong>, duas. A diferença está no que essa simetria custa — tempo longe de cada responsável, número de trocas e adaptação. Veja o comparativo.</p>
 
@@ -170,11 +250,26 @@
       <figcaption>Quatro semanas nas duas rotinas: mesma divisão 50/50, ritmos muito diferentes.</figcaption>
     </figure>
 
-    <h2>Como cada uma funciona</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#como-cada-uma-funciona">Como cada uma funciona</a></li>
+            <li><a href="#o-comparativo-lado-a-lado">O comparativo lado a lado</a></li>
+            <li><a href="#como-decidir">Como decidir</a></li>
+            <li><a href="#a-logistica-que-ninguem-conta">A logística que ninguém conta: mala, material e a segunda casa</a></li>
+            <li><a href="#como-a-crianca-sente-a-diferenca">Como a criança sente a diferença, por idade</a></li>
+            <li><a href="#e-se-nenhuma-das-duas-couber">E se nenhuma das duas couber?</a></li>
+            <li><a href="#veja-as-duas-no-calendario-antes-de-decidir">Veja as duas no calendário antes de decidir</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="como-cada-uma-funciona">Como cada uma funciona</h2>
     <p><strong>7/7 — semana alternada ("semana sim, semana não"):</strong> uma troca por semana, sempre no mesmo dia. A criança nunca fica mais de sete dias sem ver um dos responsáveis, e a semana inteira na mesma casa dá conta da rotina escolar sem malas no meio.</p>
     <p><strong>14/14 — quinzenal:</strong> metade das trocas da 7/7. Períodos longos favorecem imersão na rotina de cada casa e reduzem a logística — ao custo de até <strong>duas semanas</strong> longe do outro responsável, o que pesa mais quanto menor a criança.</p>
 
-    <h2>O comparativo lado a lado</h2>
+    <h2 id="o-comparativo-lado-a-lado">O comparativo lado a lado</h2>
     <div class="tbl-wrap"><table>
         <tr><th></th><th>7/7 (semana alternada)</th><th>14/14 (quinzenal)</th></tr>
         <tr><td><strong>Divisão do tempo</strong></td><td>50/50</td><td>50/50</td></tr>
@@ -185,8 +280,11 @@
         <tr><td><strong>Logística de mala e material</strong></td><td>Semanal, leve</td><td>Quinzenal, mais volumosa</td></tr>
         <tr><td><strong>Comunicação entre os responsáveis</strong></td><td>Frequente (semana a semana)</td><td>Espaçada, mas as atualizações precisam ser mais completas</td></tr>
     </table></div>
-
-    <h2>Como decidir</h2>
+    <figure>
+      <div class="fig-frame"><svg viewBox="0 0 680 214" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maior período seguido longe de um dos responsáveis, por rotina"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><text x="188" y="24" font-size="12.5" fill="#1e293b" text-anchor="end">Quinzenal (14/14)</text><rect x="200" y="8" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="8" width="420.0" height="22" rx="6" fill="#4f46e5"/><text x="628.0" y="24" font-size="12" font-weight="600" fill="#1e293b">14 dias</text><text x="188" y="58" font-size="12.5" fill="#1e293b" text-anchor="end">Fins de semana alternados</text><rect x="200" y="42" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="42" width="330.0" height="22" rx="6" fill="#db2777"/><text x="538.0" y="58" font-size="12" font-weight="600" fill="#1e293b">11 dias</text><text x="188" y="92" font-size="12.5" fill="#1e293b" text-anchor="end">Semana alternada (7/7)</text><rect x="200" y="76" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="76" width="210.0" height="22" rx="6" fill="#4f46e5"/><text x="418.0" y="92" font-size="12" font-weight="600" fill="#1e293b">7 dias</text><text x="188" y="126" font-size="12.5" fill="#1e293b" text-anchor="end">FDS + pernoite de quarta</text><rect x="200" y="110" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="110" width="180.0" height="22" rx="6" fill="#db2777"/><text x="388.0" y="126" font-size="12" font-weight="600" fill="#1e293b">6 dias</text><text x="188" y="160" font-size="12.5" fill="#1e293b" text-anchor="end">5-2-2-5</text><rect x="200" y="144" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="144" width="150.0" height="22" rx="6" fill="#4f46e5"/><text x="358.0" y="160" font-size="12" font-weight="600" fill="#1e293b">5 dias</text><text x="188" y="194" font-size="12.5" fill="#1e293b" text-anchor="end">2-2-3</text><rect x="200" y="178" width="420" height="22" rx="6" fill="#eef2ff"/><rect x="200" y="178" width="90.0" height="22" rx="6" fill="#4f46e5"/><text x="298.0" y="194" font-size="12" font-weight="600" fill="#1e293b">3 dias</text></svg></div>
+      <figcaption>O número que mais pesa para a criança pequena: o maior período seguido sem dormir na casa de um dos responsáveis, em cada rotina.</figcaption>
+    </figure>
+    <h2 id="como-decidir">Como decidir</h2>
     <ul>
         <li><strong>Idade da criança:</strong> quanto menor, mais curtos devem ser os períodos longe de cada responsável. Para crianças pequenas, mesmo a 7/7 pode ser longa — formatos como o 2-2-3 encurtam a ausência (veja o <a href="/blog/modelos-de-rotina-guarda-compartilhada">guia de modelos</a>).</li>
         <li><strong>Distância e escola:</strong> as duas rotinas assumem que a criança consegue ir à escola a partir das duas casas. Se a distância aperta, a 14/14 reduz o número de manhãs difíceis.</li>
@@ -195,7 +293,35 @@
     </ul>
     <blockquote><p><strong>Nenhuma escolha é definitiva.</strong> A rotina acompanha a idade: famílias começam com períodos curtos e migram para 7/7 ou 14/14 conforme a criança cresce. Muitas testam o formato por alguns meses — às vezes com apoio de um psicólogo infantil — antes de formalizar no acordo.</p></blockquote>
 
-    <h2>Veja as duas no calendário antes de decidir</h2>
+    <h2 id="como-a-crianca-sente-a-diferenca">Como a criança sente a diferença, por idade</h2>
+    <p>Não há idade certa na lei, e cada criança é uma. Mas a experiência das famílias e dos profissionais que as acompanham aponta tendências que ajudam a decidir:</p>
+    <ul>
+        <li><strong>Até os três anos:</strong> a noção de tempo ainda não existe; uma semana longe de uma figura de referência é longa demais para a maioria. Períodos curtos e frequentes (2-2-3, dias fixos, ou uma casa-base com pernoites curtos) costumam funcionar melhor.</li>
+        <li><strong>Dos quatro aos sete:</strong> a criança já entende "amanhã é dia da mãe" e acompanha um calendário visual. A 2-2-3 e a 5-2-2-5 são comuns; a semana alternada começa a aparecer no fim dessa faixa.</li>
+        <li><strong>Dos oito aos doze:</strong> a semana alternada é a mais usada — a criança organiza a própria mochila, tem atividades fixas e sente menos a troca. A quinzenal aparece quando as casas são distantes.</li>
+        <li><strong>Adolescentes:</strong> a rotina passa a negociar com a vida social e os estudos. Blocos longos (7/7 ou 14/14) com liberdade para ajustes combinados costumam ser o que o adolescente prefere — e ouvir a preferência dele passa a pesar na decisão.</li>
+    </ul>
+    <p>Um sinal para observar em qualquer idade: as 24 horas depois da troca. Irritação, sono ruim ou regressão nesse período, de forma repetida, é o corpo dizendo que o intervalo está longo demais — ou que a troca em si precisa ser mais tranquila.</p>
+
+    <h2 id="a-logistica-que-ninguem-conta">A logística que ninguém conta: mala, material e a segunda casa</h2>
+    <p>Boa parte do desgaste das rotinas de blocos longos não está na criança, e sim na mudança. Três combinados reduzem quase tudo:</p>
+    <ul>
+        <li><strong>Duas casas completas, uma mala pequena.</strong> Roupa de cama, pijama, escova, remédio de uso contínuo e brinquedo preferido existem nas duas casas. A mala que viaja leva só o que é único: o uniforme do dia, o livro da biblioteca, o aparelho ortodôntico.</li>
+        <li><strong>O material escolar mora na mochila</strong>, e a mochila vai para a escola todo dia, de qualquer casa. O que é da escola não "fica" em casa nenhuma.</li>
+        <li><strong>Roupas e objetos são da criança</strong>, não de quem comprou. Escrever isso no acordo acaba com a discussão da mochila que "fica na minha casa". O que ela quiser levar, leva.</li>
+    </ul>
+    <p>Na 14/14, uma lista fixa do que viaja (dez itens, no máximo) evita a conferência de domingo à noite. Na 7/7, a troca na escola — a criança sai de uma casa de manhã e entra na outra à tarde — tira a mala do centro da cena e poupa os adultos do encontro na porta.</p>
+
+    <h2 id="e-se-nenhuma-das-duas-couber">E se nenhuma das duas couber?</h2>
+    <p>A 7/7 e a 14/14 partem de duas premissas: tempo dividido ao meio e casas de onde a criança consegue ir à escola. Quando uma delas falha, outras rotinas resolvem melhor:</p>
+    <ul>
+        <li><strong>A criança é pequena e sete dias são demais:</strong> a <a href="/rotinas/2-2-3">2-2-3</a> mantém a metade para cada um com no máximo três dias longe, e a <a href="/rotinas/5-2-2-5">5-2-2-5</a> dá dias fixos na semana com fins de semana alternados.</li>
+        <li><strong>Uma das casas é a base</strong> — porque fica perto da escola, porque um dos dois viaja a trabalho ou porque as casas são distantes: os <a href="/rotinas/fins-de-semana-alternados">fins de semana alternados</a>, de sexta a domingo, são a rotina mais usada, e a <a href="/rotinas/fins-de-semana-alternados-com-pernoite">versão com pernoite de quarta</a> encurta a maior ausência de onze para seis dias.</li>
+        <li><strong>A escala de trabalho muda toda semana:</strong> um ciclo personalizado, com blocos do tamanho da escala, costuma servir melhor do que qualquer modelo pronto.</li>
+    </ul>
+    <p>Todas essas rotinas estão no <a href="/blog/modelos-de-rotina-guarda-compartilhada">guia de modelos</a>, com um quadro que compara dias em cada casa, trocas e maior ausência.</p>
+
+    <h2 id="veja-as-duas-no-calendario-antes-de-decidir">Veja as duas no calendário antes de decidir</h2>
     <p>A forma mais rápida de sentir a diferença é olhar as semanas no papel: gere o calendário das duas rotinas com os seus nomes e a sua data de início no <a href="/ferramentas/gerador-de-rotina-de-guarda">gerador de rotina de guarda</a> — dá para imprimir cada versão e comparar. Quando decidirem, o formato escolhido entra como cláusula de rotina no <a href="/blog/modelo-de-acordo-de-guarda-compartilhada">plano de parentalidade</a>.</p>
 
     <div class="cta-box">
@@ -204,15 +330,25 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup">Criar conta grátis</a>
     </div>
 
-    <h2>Resumo</h2>
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
+    <section class="faq" aria-label="Perguntas frequentes">
+        <h3>A partir de que idade a semana alternada costuma funcionar?</h3>
+        <p>A lei não fixa idade; o critério é o interesse da criança. Na prática, a semana alternada aparece mais a partir da idade escolar, quando a criança já entende a rotina e tolera sete dias longe de um dos responsáveis. Para crianças pequenas, muitas famílias começam com períodos mais curtos, como a 2-2-3, e migram depois, às vezes com apoio de um psicólogo infantil.</p>
+        <h3>Quantas trocas por mês tem cada rotina?</h3>
+        <p>Na semana alternada são cerca de quatro trocas por mês, uma por semana, sempre no mesmo dia. Na quinzenal são cerca de duas. Para comparar, a 2-2-3 tem cerca de doze trocas por mês e os fins de semana alternados, cerca de quatro, concentradas na sexta e no domingo.</p>
+        <h3>Como testar a rotina antes de formalizar no acordo?</h3>
+        <p>Gere o calendário das duas no gerador de rotina, com os nomes de vocês e a data de início, imprima e vivam o formato por alguns meses. Registrem as trocas e o que funcionou ou não; quando decidirem, a rotina escolhida entra como cláusula do plano de parentalidade, e com consenso pode ser ajustada depois.</p>
+    </section>
+
+    <h2 id="resumo">Resumo</h2>
     <p>7/7 e 14/14 dividem o tempo igualmente; a escolha é sobre ritmo. A semana alternada limita a ausência a sete dias e pede casas próximas; a quinzenal corta as trocas pela metade e tolera distância, mas afasta a criança de cada responsável por até duas semanas — mais adequada a crianças maiores. Teste no calendário, combine contatos no período longe e registre a escolha no plano de parentalidade.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
 <div class="lm-mini">
-    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
-    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <h2>Baixe grátis: 7 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Os mesmos sete modelos do gerador e do app — fins de semana alternados (com e sem pernoite de quarta), semana alternada, quinzenal, dia sim/dia não, 5-2-2-5 e 2-2-3 —, com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
     <form class="lm-form" novalidate>
         <div class="lm-inline">
             <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
@@ -233,6 +369,7 @@
     <a href="/blog/modelos-de-rotina-guarda-compartilhada">Modelos de rotina de convivência: semana alternada, 2-2-3 e mais</a>
     <a href="/rotinas/">Rotinas de guarda compartilhada, uma por página: 2-2-3, 5-2-2-5, 3-4-4-3 e mais</a>
     <a href="/blog/modelo-de-acordo-de-guarda-compartilhada">Modelo de acordo de guarda compartilhada: o plano de parentalidade</a>
+    <a href="/rotinas/fins-de-semana-alternados">Fins de semana alternados: como funciona a rotina</a>
 </section>
 
 <footer>
@@ -249,5 +386,19 @@
 </footer>
 
 <script defer src="/js/materiais.js"></script>
+<script>
+// Fase 3: menu do celular (o mesmo da home).
+(function () {
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    if (!burger || !mmenu) return;
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+})();
+</script>
 </body>
 </html>

@@ -7,7 +7,8 @@
     <meta name="description" content="Entenda a diferença entre guarda compartilhada, alternada e unilateral: quem decide pela criança em cada regime, o que diz a lei e os mitos mais comuns." />
     <link rel="canonical" href="https://entrelares.app/blog/guarda-compartilhada-x-guarda-alternada" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
 
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="pt_BR" />
@@ -31,7 +32,7 @@
       "inLanguage": "pt-BR",
       "image": "https://entrelares.app/blog/img/crianca-pais.jpg",
       "datePublished": "2026-07-22",
-      "dateModified": "2026-07-22",
+      "dateModified": "2026-10-07",
       "author": { "@type": "Organization", "name": "Entrelares" },
       "publisher": {
         "@type": "Organization",
@@ -52,6 +53,46 @@
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Guarda alternada é permitida no Brasil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ela não está prevista expressamente na lei, que trata da guarda unilateral e da compartilhada. Pode ocorrer em casos específicos, por acordo ou decisão judicial, mas é pouco recomendada, porque a troca de residência e de quem decide a cada período afeta a estabilidade da criança. A regra é a guarda compartilhada."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Guarda compartilhada é o mesmo que morar metade do tempo em cada casa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. O que se compartilha são as decisões e a responsabilidade. A lei pede um tempo de convívio equilibrado, mas a criança costuma ter uma casa de referência, e a convivência é organizada por um calendário que pode ou não dividir os dias ao meio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quem decide a escola e a saúde na guarda unilateral?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O genitor guardião concentra as decisões do dia a dia. O outro mantém o poder familiar, o direito de conviver e o dever de supervisionar os interesses do filho, podendo pedir informações e prestação de contas sobre o que afete a saúde e a educação da criança."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Dá para mudar de guarda unilateral para compartilhada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dá. Com acordo entre os dois, a mudança pode ser levada ao juiz para homologação. Sem acordo, qualquer dos genitores pode pedir a revisão judicial, e o juiz decide com base no interesse da criança, podendo se apoiar em equipe técnica. Para o seu caso, consulte um advogado de família."
+          }
+        }
+      ]
+    }
+    </script>
 
     <style>
         :root{--ink:#1e293b;--muted:#64748b;--indigo:#4f46e5;--indigo-deep:#3730a3;--pink:#db2777;--bg:#f8fafc;--bg-tint:#eef2ff;--card:#fff;--line:#e2e8f0;--radius:16px;}
@@ -62,7 +103,7 @@
         a{color:var(--indigo);}
         a:focus-visible,.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
         .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
-        header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+        header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
         .nav{display:flex;align-items:center;gap:12px;height:64px;}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;}
         .brand img{width:32px;height:32px;border-radius:8px;}
@@ -78,9 +119,9 @@
         .nav-links a:hover{color:var(--ink);}
         .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600;}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;}
-        .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.35);}
-        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(79,70,229,.28);transition:transform .15s ease,box-shadow .15s ease;}
-        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,.36);}
+        .btn-primary{background:var(--indigo);color: #fff;box-shadow:0 4px 14px rgba(var(--brand-rgb),.35);}
+        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28);transition:transform .15s ease,box-shadow .15s ease;}
+        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--brand-rgb),.36);}
         .cta-short{display:none;}
         .lang-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;font-size:13px;font-weight:600;}
         .lang-switch a,.lang-switch span{padding:4px 10px;border-radius:999px;line-height:1;text-decoration:none;color:var(--muted);}
@@ -95,7 +136,7 @@
         .meta{color:var(--muted);font-size:14px;margin-bottom:28px;}
         article h2{font-size:24px;letter-spacing:-.01em;margin:36px 0 12px;}
         article h3{font-size:19px;margin:24px 0 8px;}
-        article p,article li{color:#334155;font-size:17px;margin-bottom:14px;}
+        article p,article li{color:var(--ink-soft);font-size:17px;margin-bottom:14px;}
         article ul,article ol{padding-left:24px;}
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
@@ -110,7 +151,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:var(--bg-tint);border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -118,9 +159,9 @@
         .related{max-width:720px;margin:0 auto;padding:0 20px 56px;}
         .related h2{font-size:18px;margin-bottom:12px;}
         .related a{display:block;padding:6px 0;}
-        footer{background:#03173d;color:#94a3b8;font-size:14px;border-top:1px solid #1e3a5f;}
+        footer{background:var(--deep);color:var(--muted-2);font-size:14px;border-top:1px solid var(--deep-line);}
         footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px;}
-        footer a{color:#cbd5e1;text-decoration:none;}
+        footer a{color:var(--line);text-decoration:none;}
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
         @media(max-width:820px){
           .nav-links{display:none;}
@@ -138,10 +179,44 @@
           .lang-switch{font-size:12px;padding:2px;}
           .lang-switch a,.lang-switch span{padding:4px 8px;}
         }
+
+        /* Fase 3 (07/10/2026): o menu do celular, igual ao da home — o botão vive na barra e o
+           painel é outro elemento depois do header, para o .nav-links seguir como o
+           menu.test.js prende. */
+        .burger{display:none;width:42px;height:42px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;padding:0;}
+        .burger span{display:block;width:18px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px;transition:transform .2s,opacity .2s;}
+        .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+        .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+        .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+        .mmenu{position:fixed;inset:58px 0 0 0;z-index:45;background:var(--bg);padding:18px 20px 28px;overflow:auto;}
+        .mmenu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:18px;font-weight:600;}
+        .mmenu a.btn-primary{display:inline-flex;margin-top:18px;width:100%;border-bottom:0;color:var(--bg);font-size:16px;justify-content:center;border-radius:999px;}
+        .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
+        .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
+        @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -163,15 +238,28 @@
             <a href="/en/" hreflang="en" lang="en" title="English version — home">EN</a>
         </div>
         <a class="btn btn-primary" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="/#como-funciona">Como funciona</a>
+    <a href="/ferramentas/gerador-de-rotina-de-guarda">Simulador</a>
+    <a href="/#porque">Por quê</a>
+    <a href="/#beneficios">Benefícios</a>
+    <a href="/rotinas/">Rotinas</a>
+    <a href="/#precos">Preços</a>
+    <a href="/#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <nav class="crumbs" aria-label="Trilha"><a href="/">Início</a> › <a href="/blog/">Blog</a> › Compartilhada x alternada</nav>
 
 <article>
     <span class="kicker">Entenda o tema</span>
     <h1>Guarda compartilhada x guarda alternada: qual a diferença?</h1>
-    <p class="meta">Atualizado em 22 de julho de 2026 · leitura de ~6 min</p>
+    <p class="meta">Atualizado em 7 de outubro de 2026 · leitura de ~9 min</p>
 
     <p class="lead">Os nomes parecem sinônimos, mas significam coisas diferentes — e confundi-los gera muita discussão. O ponto central não é onde a criança mora, e sim <strong>como as decisões sobre a vida dela são tomadas</strong>. Vamos destrinchar os três regimes: compartilhada, alternada e unilateral.</p>
 
@@ -181,15 +269,30 @@
       <figcaption>O que separa os regimes é quem decide pela criança — não onde ela mora.</figcaption>
     </figure>
 
-    <h2>O que é guarda compartilhada</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#o-que-e-guarda-compartilhada">O que é guarda compartilhada</a></li>
+            <li><a href="#o-que-e-guarda-alternada">O que é guarda alternada</a></li>
+            <li><a href="#e-a-guarda-unilateral">E a guarda unilateral?</a></li>
+            <li><a href="#comparacao-lado-a-lado">Comparação lado a lado</a></li>
+            <li><a href="#a-mesma-semana-nos-tres-regimes">A mesma semana nos três regimes: um exemplo</a></li>
+            <li><a href="#como-explicar-para-a-crianca">Como explicar para a criança</a></li>
+            <li><a href="#e-a-pensao-alimenticia">E a pensão alimentícia?</a></li>
+            <li><a href="#o-que-realmente-importa-no-dia-a-dia">O que realmente importa no dia a dia</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="o-que-e-guarda-compartilhada">O que é guarda compartilhada</h2>
     <p>Na <strong>guarda compartilhada</strong>, pai e mãe dividem as <strong>responsabilidades e decisões</strong> sobre a vida do filho — escola, saúde, atividades — mesmo morando em casas separadas. No Brasil, ela é a <strong>regra desde 2014</strong> (Lei nº 13.058), aplicada sempre que ambos estão aptos a exercer o poder familiar, mesmo sem acordo entre eles.</p>
     <p>Um ponto que confunde muita gente: guarda compartilhada <strong>não significa dividir o tempo pela metade</strong>. A criança normalmente tem uma <strong>residência de referência</strong> (base), e a convivência com o outro responsável é organizada por um calendário. O que é "compartilhado" é a <strong>responsabilidade</strong>, não necessariamente o número de dias.</p>
 
-    <h2>O que é guarda alternada</h2>
+    <h2 id="o-que-e-guarda-alternada">O que é guarda alternada</h2>
     <p>Na <strong>guarda alternada</strong>, a criança passa períodos morando com cada responsável (por exemplo, alguns meses em cada casa) e, <strong>em cada período, quem está com ela decide sozinho</strong> sobre o dia a dia. As decisões se <strong>alternam</strong> junto com a guarda — em vez de serem tomadas em conjunto.</p>
     <p>A guarda alternada <strong>não está expressamente prevista na lei brasileira</strong> e é <strong>menos recomendada</strong>, porque a troca constante de residência pode afetar a estabilidade e as referências da criança. Ela até pode ocorrer em casos específicos, mas não é o modelo padrão.</p>
-
-    <h2>E a guarda unilateral?</h2>
+<h2 id="e-a-guarda-unilateral">E a guarda unilateral?</h2>
     <p>Vale citar o terceiro regime para não confundir. Na <strong>guarda unilateral</strong>, a guarda fica com <strong>um dos genitores</strong>, e é nele que se concentra o <strong>poder de decisão do dia a dia</strong>. O outro não perde o vínculo: mantém o <strong>poder familiar</strong>, o direito de conviver e de <strong>fiscalizar</strong> a criação, além de participar das decisões mais importantes. É reservada a situações específicas — hoje, a regra é a compartilhada.</p>
 
     <figure class="post-img">
@@ -201,7 +304,7 @@
       <figcaption>O nome do regime importa menos do que a clareza da convivência.</figcaption>
     </figure>
 
-    <h2>Comparação lado a lado</h2>
+    <h2 id="comparacao-lado-a-lado">Comparação lado a lado</h2>
     <div class="tbl-wrap">
     <table>
         <tr><th></th><th>Compartilhada</th><th>Alternada</th><th>Unilateral</th></tr>
@@ -216,11 +319,27 @@
         <p>Regra de bolso, pelo ângulo da decisão: <strong>compartilhada</strong> = decidem juntos; <strong>alternada</strong> = cada um decide no seu período; <strong>unilateral</strong> = um genitor decide. A lei prefere a compartilhada.</p>
     </blockquote>
 
-    <h2>E a pensão alimentícia?</h2>
+    <h2 id="a-mesma-semana-nos-tres-regimes">A mesma semana nos três regimes: um exemplo</h2>
+    <p>Imagine uma semana comum: a escola avisa que vai abrir uma turma em período integral, a pediatra marca um retorno e um dos pais quer viajar com a criança no feriado.</p>
+    <figure>
+      <div class="fig-frame"><svg viewBox="0 0 680 104" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A mesma semana nos três regimes de guarda"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><rect x="0.0" y="0" width="218.7" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0"/><text x="14.0" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Compartilhada</text><text x="14.0" y="54" font-size="12" fill="#64748b">Escola: os dois decidem</text><text x="14.0" y="70" font-size="12" fill="#64748b">Consulta: um leva, os dois sabem</text><text x="14.0" y="86" font-size="12" fill="#64748b">Viagem: aviso e autorização</text><rect x="230.7" y="0" width="218.7" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0"/><text x="244.7" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Alternada</text><text x="244.7" y="54" font-size="12" fill="#64748b">Escola: quem tem o período</text><text x="244.7" y="70" font-size="12" fill="#64748b">Consulta: quem tem o período</text><text x="244.7" y="86" font-size="12" fill="#64748b">Viagem: quem tem o período</text><rect x="461.3" y="0" width="218.7" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0"/><text x="475.3" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Unilateral</text><text x="475.3" y="54" font-size="12" fill="#64748b">Escola: o guardião decide</text><text x="475.3" y="70" font-size="12" fill="#64748b">Consulta: o guardião; o outro sabe</text><text x="475.3" y="86" font-size="12" fill="#64748b">Viagem: o guardião, autorizado</text></svg></div>
+      <figcaption>Três decisões de uma semana qualquer e quem as toma em cada regime. Repare que a diferença não é onde a criança dorme.</figcaption>
+    </figure>
+    <ul>
+        <li><strong>Na guarda compartilhada</strong>, a mudança para o integral é decidida pelos dois, e a escola tem o dever de informar os dois; quem está com a criança leva ao retorno da pediatra e conta ao outro como foi; a viagem é avisada com antecedência e, se for para fora do país, precisa da autorização prevista em lei.</li>
+        <li><strong>Na guarda alternada</strong>, quem está no seu período decide sozinho as três coisas — e o outro pode descobrir a mudança de turma quando o período virar. É por isso que o arranjo é pouco recomendado: as decisões da vida da criança mudam de mão a cada troca.</li>
+        <li><strong>Na guarda unilateral</strong>, o guardião decide a turma e leva à pediatra; o outro genitor tem o direito de ser informado e de supervisionar, e pode questionar na Justiça uma decisão que considere contrária ao interesse da criança.</li>
+    </ul>
+
+    <h2 id="como-explicar-para-a-crianca">Como explicar para a criança</h2>
+    <p>A criança não precisa saber o nome do regime; precisa saber o que não muda. Três frases que funcionam em qualquer idade: <em>"você tem duas casas, e as duas são suas"</em>; <em>"as decisões grandes a gente toma junto, o papai e a mamãe"</em>; <em>"você nunca vai ter que escolher entre nós dois"</em>. O calendário na parede — ou no celular — responde à pergunta que vem todo dia, "com quem eu fico hoje?", sem que ela precise perguntar a um dos adultos na frente do outro.</p>
+    <p>O que evitar: pedir que a criança leve recados, perguntar o que acontece na outra casa com tom de interrogatório e, principalmente, comentar a decisão judicial ou o comportamento do outro responsável com ela. O regime é dos adultos; a criança só precisa da rotina.</p>
+
+    <h2 id="e-a-pensao-alimenticia">E a pensão alimentícia?</h2>
     <p>Mesmo na guarda compartilhada, <strong>pode haver pensão</strong>. Ela existe para equilibrar as despesas quando há diferença de renda entre os responsáveis ou quando a criança passa mais tempo em uma das casas. Ou seja: compartilhar a guarda não elimina automaticamente a pensão — isso depende do caso concreto. Para a sua situação, consulte um advogado de família.</p>
 
-    <h2>O que realmente importa no dia a dia</h2>
-    <p>Independentemente do nome do regime, o que evita conflito é a <strong>clareza da convivência</strong>: um calendário único, sabido pelos dois, com regras para trocas e um histórico do que foi combinado. É aí que a maioria das brigas nasce — e onde elas podem ser evitadas.</p>
+    <h2 id="o-que-realmente-importa-no-dia-a-dia">O que realmente importa no dia a dia</h2>
+    <p>Independentemente do nome do regime, o que evita conflito é a <strong>clareza da convivência</strong>: um calendário único, sabido pelos dois, com regras para trocas e um histórico do que foi combinado. É aí que a maioria das brigas nasce — e onde elas podem ser evitadas. A rotina pode dividir o tempo ao meio (semana alternada, 2-2-3) ou ter uma casa-base com fins de semana alternados: o <a href="/blog/modelos-de-rotina-guarda-compartilhada">guia de modelos</a> compara todas, e cada uma tem <a href="/rotinas/">sua página, com o calendário de duas semanas</a>.</p>
 
     <div class="cta-box">
         <h3>Organize a convivência sem conflito</h3>
@@ -228,15 +347,27 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
     </div>
 
-    <h2>Resumo</h2>
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
+    <section class="faq" aria-label="Perguntas frequentes">
+        <h3>Guarda alternada é permitida no Brasil?</h3>
+        <p>Ela não está prevista expressamente na lei, que trata da guarda unilateral e da compartilhada. Pode ocorrer em casos específicos, por acordo ou decisão judicial, mas é pouco recomendada, porque a troca de residência e de quem decide a cada período afeta a estabilidade da criança. A regra é a guarda compartilhada.</p>
+        <h3>Guarda compartilhada é o mesmo que morar metade do tempo em cada casa?</h3>
+        <p>Não. O que se compartilha são as decisões e a responsabilidade. A lei pede um tempo de convívio equilibrado, mas a criança costuma ter uma casa de referência, e a convivência é organizada por um calendário que pode ou não dividir os dias ao meio.</p>
+        <h3>Quem decide a escola e a saúde na guarda unilateral?</h3>
+        <p>O genitor guardião concentra as decisões do dia a dia. O outro mantém o poder familiar, o direito de conviver e o dever de supervisionar os interesses do filho, podendo pedir informações e prestação de contas sobre o que afete a saúde e a educação da criança.</p>
+        <h3>Dá para mudar de guarda unilateral para compartilhada?</h3>
+        <p>Dá. Com acordo entre os dois, a mudança pode ser levada ao juiz para homologação. Sem acordo, qualquer dos genitores pode pedir a revisão judicial, e o juiz decide com base no interesse da criança, podendo se apoiar em equipe técnica. Para o seu caso, consulte um advogado de família.</p>
+    </section>
+
+    <h2 id="resumo">Resumo</h2>
     <p>O que realmente diferencia os regimes é <strong>quem decide</strong> pela criança: na <strong>compartilhada</strong> (a regra no Brasil), os dois decidem juntos; na <strong>alternada</strong>, cada um decide durante o seu período; na <strong>unilateral</strong>, as decisões concentram-se em um genitor. Onde a criança mora é consequência do arranjo — não o que define o regime. Em qualquer caso, o que evita conflito é uma convivência clara e combinada.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
 <div class="lm-mini">
-    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
-    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <h2>Baixe grátis: 7 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Os mesmos sete modelos do gerador e do app — fins de semana alternados (com e sem pernoite de quarta), semana alternada, quinzenal, dia sim/dia não, 5-2-2-5 e 2-2-3 —, com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
     <form class="lm-form" novalidate>
         <div class="lm-inline">
             <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
@@ -256,6 +387,8 @@
     <a href="/blog/rotina-7-7-vs-14-14">Rotina 7/7 ou 14/14 na guarda compartilhada: qual escolher?</a>
     <a href="/blog/como-montar-calendario-guarda-compartilhada">Como montar um calendário de guarda compartilhada</a>
     <a href="/#faq">Dúvidas frequentes sobre a guarda compartilhada</a>
+    <a href="/blog/como-funciona-guarda-compartilhada">Como funciona a guarda compartilhada: guia completo</a>
+    <a href="/blog/modelos-de-rotina-guarda-compartilhada">Modelos de rotina de convivência: semana alternada, 2-2-3, fins de semana alternados e mais</a>
 </section>
 
 <footer>
@@ -271,5 +404,19 @@
 </footer>
 
 <script defer src="/js/materiais.js"></script>
+<script>
+// Fase 3: menu do celular (o mesmo da home).
+(function () {
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    if (!burger || !mmenu) return;
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+})();
+</script>
 </body>
 </html>

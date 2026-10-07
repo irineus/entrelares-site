@@ -7,7 +7,8 @@
     <meta name="description" content="Checklist completo do acordo de guarda compartilhada (plano de parentalidade): rotina semanal, trocas, férias, feriados, aniversários, comunicação, doença, viagens e despesas." />
     <link rel="canonical" href="https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
@@ -26,7 +27,7 @@
       "inLanguage": "pt-BR",
       "image": "https://entrelares.app/og-cover.png",
       "datePublished": "2026-08-28",
-      "dateModified": "2026-08-28",
+      "dateModified": "2026-10-07",
       "author": { "@type": "Organization", "name": "Entrelares" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
       "mainEntityOfPage": "https://entrelares.app/blog/modelo-de-acordo-de-guarda-compartilhada"
@@ -43,6 +44,46 @@
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O plano de parentalidade precisa de advogado?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para escrever e combinar, não: os dois responsáveis podem redigir o plano juntos, e ele já organiza a rotina. Para a homologação judicial, que dá ao acordo força de decisão, é preciso advogado ou defensor público. Um advogado de família também ajuda a prever situações que costumam virar conflito."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O acordo vale sem homologação?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vale como combinado entre os dois e já previne a maior parte dos atritos, mas não pode ser executado judicialmente. Homologado junto com o divórcio ou a regulamentação da guarda, o descumprimento pode gerar multa, execução e até a redução de prerrogativas de quem descumpriu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Com que frequência revisar o plano?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quando a vida muda: entrada na escola, mudança de casa ou de emprego, adolescência. Muitas famílias combinam uma revisão anual, antes do início do ano letivo. Com consenso, a nova versão pode ser homologada; sem consenso, qualquer dos dois pode pedir a revisão judicial."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O que fazer quando o outro responsável descumpre o combinado?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Primeiro, registrar: data, o que estava combinado e o que aconteceu. Um histórico que nenhum dos dois pode editar vale mais do que a memória de cada um. Com o plano homologado, o descumprimento reiterado pode ser levado ao juiz, que pode aplicar multa e rever as cláusulas. Para o seu caso, consulte um advogado de família."
+          }
+        }
+      ]
+    }
+    </script>
     <style>
         :root{--ink:#1e293b;--muted:#64748b;--indigo:#4f46e5;--indigo-deep:#3730a3;--pink:#db2777;--bg:#f8fafc;--bg-tint:#eef2ff;--card:#fff;--line:#e2e8f0;--radius:16px;}
         *{margin:0;padding:0;box-sizing:border-box;}
@@ -52,7 +93,7 @@
         a{color:var(--indigo);}
         a:focus-visible,.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
         .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
-        header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+        header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
         .nav{display:flex;align-items:center;gap:12px;height:64px;}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;}
         .brand img{width:32px;height:32px;border-radius:8px;}
@@ -68,9 +109,9 @@
         .nav-links a:hover{color:var(--ink);}
         .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600;}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;}
-        .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.35);}
-        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(79,70,229,.28);transition:transform .15s ease,box-shadow .15s ease;}
-        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,.36);}
+        .btn-primary{background:var(--indigo);color: #fff;box-shadow:0 4px 14px rgba(var(--brand-rgb),.35);}
+        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28);transition:transform .15s ease,box-shadow .15s ease;}
+        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--brand-rgb),.36);}
         .cta-short{display:none;}
         .lang-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;font-size:13px;font-weight:600;}
         .lang-switch a,.lang-switch span{padding:4px 10px;border-radius:999px;line-height:1;text-decoration:none;color:var(--muted);}
@@ -85,7 +126,7 @@
         .meta{color:var(--muted);font-size:14px;margin-bottom:28px;}
         article h2{font-size:24px;letter-spacing:-.01em;margin:36px 0 12px;}
         article h3{font-size:19px;margin:24px 0 8px;}
-        article p,article li{color:#334155;font-size:17px;margin-bottom:14px;}
+        article p,article li{color:var(--ink-soft);font-size:17px;margin-bottom:14px;}
         article ul,article ol{padding-left:24px;}
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
@@ -100,7 +141,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:var(--bg-tint);border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -108,9 +149,9 @@
         .related{max-width:720px;margin:0 auto;padding:0 20px 56px;}
         .related h2{font-size:18px;margin-bottom:12px;}
         .related a{display:block;padding:6px 0;}
-        footer{background:#03173d;color:#94a3b8;font-size:14px;border-top:1px solid #1e3a5f;}
+        footer{background:var(--deep);color:var(--muted-2);font-size:14px;border-top:1px solid var(--deep-line);}
         footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px;}
-        footer a{color:#cbd5e1;text-decoration:none;}
+        footer a{color:var(--line);text-decoration:none;}
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
         @media(max-width:820px){
           .nav-links{display:none;}
@@ -128,10 +169,44 @@
           .lang-switch{font-size:12px;padding:2px;}
           .lang-switch a,.lang-switch span{padding:4px 8px;}
         }
+
+        /* Fase 3 (07/10/2026): o menu do celular, igual ao da home — o botão vive na barra e o
+           painel é outro elemento depois do header, para o .nav-links seguir como o
+           menu.test.js prende. */
+        .burger{display:none;width:42px;height:42px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;padding:0;}
+        .burger span{display:block;width:18px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px;transition:transform .2s,opacity .2s;}
+        .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+        .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+        .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+        .mmenu{position:fixed;inset:58px 0 0 0;z-index:45;background:var(--bg);padding:18px 20px 28px;overflow:auto;}
+        .mmenu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:18px;font-weight:600;}
+        .mmenu a.btn-primary{display:inline-flex;margin-top:18px;width:100%;border-bottom:0;color:var(--bg);font-size:16px;justify-content:center;border-radius:999px;}
+        .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
+        .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
+        @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -153,28 +228,56 @@
             <a href="/en/" hreflang="en" lang="en" title="English version — home">EN</a>
         </div>
         <a class="btn btn-primary" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="/#como-funciona">Como funciona</a>
+    <a href="/ferramentas/gerador-de-rotina-de-guarda">Simulador</a>
+    <a href="/#porque">Por quê</a>
+    <a href="/#beneficios">Benefícios</a>
+    <a href="/rotinas/">Rotinas</a>
+    <a href="/#precos">Preços</a>
+    <a href="/#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <nav class="crumbs" aria-label="Trilha"><a href="/">Início</a> › <a href="/blog/">Blog</a> › Modelo de acordo</nav>
 
 <article>
     <span class="kicker">Guia prático</span>
     <h1>Modelo de acordo de guarda compartilhada: o que pôr no plano de parentalidade</h1>
-    <p class="meta">Publicado em 28 de agosto de 2026 · leitura de ~8 min</p>
+    <p class="meta">Atualizado em 7 de outubro de 2026 · leitura de ~11 min</p>
 
     <p class="lead">O "acordo de guarda" que evita conflito no dia a dia tem nome técnico: <strong>plano de parentalidade</strong>. É o documento em que os dois responsáveis combinam, por escrito, a rotina de convivência e as regras para tudo o que costuma virar discussão — trocas, férias, feriados, aniversários, despesas. Este guia mostra a estrutura, cláusula por cláusula, para você montar o seu.</p>
 
-    <h2>Por que ter um acordo escrito</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#por-que-ter-um-acordo-escrito">Por que ter um acordo escrito</a></li>
+            <li><a href="#a-estrutura-de-um-bom-plano-clausula-por-clausula">A estrutura de um bom plano, cláusula por cláusula</a></li>
+            <li><a href="#tres-clausulas-escritas-como-exemplo">Três cláusulas escritas, como exemplo</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="por-que-ter-um-acordo-escrito">Por que ter um acordo escrito</h2>
     <p>Desde 2014, a guarda compartilhada é a <strong>regra</strong> no Brasil quando os dois genitores estão aptos (art. 1.584, § 2º, do Código Civil). Compartilhar a guarda significa decidir <em>junto</em> o que é importante — saúde, educação, lazer, atividades — e isso só funciona com combinados claros.</p>
     <p>Um bom plano de parentalidade segue um princípio simples:</p>
     <blockquote><p><strong>Havendo consenso, os pais podem flexibilizar datas e situações à vontade. Não havendo, vale o que está escrito.</strong> A regra escrita não engessa a família — ela é a rede de segurança para os dias em que o diálogo falha.</p></blockquote>
     <p>Quando o plano é homologado pelo juiz junto com o divórcio ou a regulamentação de guarda, ele ganha força de decisão judicial: descumprimentos podem gerar multa e execução. Mas mesmo um acordo particular, sem homologação, já organiza a rotina e previne a maior parte dos atritos.</p>
 
-    <h2>A estrutura de um bom plano, cláusula por cláusula</h2>
+    <h2 id="a-estrutura-de-um-bom-plano-clausula-por-clausula">A estrutura de um bom plano, cláusula por cláusula</h2>
+    <figure>
+      <div class="fig-frame"><svg viewBox="0 0 680 324" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="As doze cláusulas de um plano de parentalidade"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><rect x="0.0" y="0" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="24.0" cy="26" r="13" fill="#4f46e5"/><text x="24.0" y="30.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">1</text><text x="46.0" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Rotina semanal</text><text x="14.0" y="54" font-size="12" fill="#64748b">quem dorme onde, a cada dia</text><rect x="230.7" y="0" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="254.7" cy="26" r="13" fill="#4f46e5"/><text x="254.7" y="30.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">2</text><text x="276.7" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Trocas</text><text x="244.7" y="54" font-size="12" fill="#64748b">horário e lugar fixos</text><rect x="461.3" y="0" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="485.3" cy="26" r="13" fill="#4f46e5"/><text x="485.3" y="30.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">3</text><text x="507.3" y="30" font-size="13.5" font-weight="600" fill="#1e293b">Feriados festivos</text><text x="475.3" y="54" font-size="12" fill="#64748b">alternados por ano</text><rect x="0.0" y="84" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="24.0" cy="110" r="13" fill="#4f46e5"/><text x="24.0" y="114.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">4</text><text x="46.0" y="114" font-size="13.5" font-weight="600" fill="#1e293b">Férias</text><text x="14.0" y="138" font-size="12" fill="#64748b">blocos, quem começa</text><rect x="230.7" y="84" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="254.7" cy="110" r="13" fill="#4f46e5"/><text x="254.7" y="114.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">5</text><text x="276.7" y="114" font-size="13.5" font-weight="600" fill="#1e293b">Aniversários</text><text x="244.7" y="138" font-size="12" fill="#64748b">momento conjunto</text><rect x="461.3" y="84" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="485.3" cy="110" r="13" fill="#4f46e5"/><text x="485.3" y="114.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">6</text><text x="507.3" y="114" font-size="13.5" font-weight="600" fill="#1e293b">Convites e eventos</text><text x="475.3" y="138" font-size="12" fill="#64748b">quem avisa, quem leva</text><rect x="0.0" y="168" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="24.0" cy="194" r="13" fill="#4f46e5"/><text x="24.0" y="198.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">7</text><text x="46.0" y="198" font-size="13.5" font-weight="600" fill="#1e293b">Escola e comunicação</text><text x="14.0" y="222" font-size="12" fill="#64748b">tudo repassado aos dois</text><rect x="230.7" y="168" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="254.7" cy="194" r="13" fill="#4f46e5"/><text x="254.7" y="198.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">8</text><text x="276.7" y="198" font-size="13.5" font-weight="600" fill="#1e293b">Doença</text><text x="244.7" y="222" font-size="12" fill="#64748b">aviso e atualização diária</text><rect x="461.3" y="168" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="485.3" cy="194" r="13" fill="#4f46e5"/><text x="485.3" y="198.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">9</text><text x="507.3" y="198" font-size="13.5" font-weight="600" fill="#1e293b">Blindagem da criança</text><text x="475.3" y="222" font-size="12" fill="#64748b">sem conflito na frente dela</text><rect x="0.0" y="252" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="24.0" cy="278" r="13" fill="#4f46e5"/><text x="24.0" y="282.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">10</text><text x="46.0" y="282" font-size="13.5" font-weight="600" fill="#1e293b">Viagens</text><text x="14.0" y="306" font-size="12" fill="#64748b">aviso proporcional à distância</text><rect x="230.7" y="252" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="254.7" cy="278" r="13" fill="#4f46e5"/><text x="254.7" y="282.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">11</text><text x="276.7" y="282" font-size="13.5" font-weight="600" fill="#1e293b">Prioridade</text><text x="244.7" y="306" font-size="12" fill="#64748b">o que vale quando datas colidem</text><rect x="461.3" y="252" width="218.7" height="72" rx="12" fill="#ffffff" stroke="#e2e8f0"/><circle cx="485.3" cy="278" r="13" fill="#4f46e5"/><text x="485.3" y="282.5" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">12</text><text x="507.3" y="282" font-size="13.5" font-weight="600" fill="#1e293b">Despesas</text><text x="475.3" y="306" font-size="12" fill="#64748b">categorias e acerto mensal</text></svg></div>
+      <figcaption>O mapa do plano: doze decisões, cada uma tomada antes do conflito. As três primeiras são as que mais entram em uso.</figcaption>
+    </figure>
 
     <h3>1. Rotina semanal de convivência</h3>
-    <p>É o coração do acordo: <strong>com quem a criança dorme em cada dia da semana</strong>. Defina os pernoites de cada responsável e o momento em que o ciclo recomeça (por exemplo, todo domingo no fim da tarde). Os formatos mais usados — semana alternada, quinzenal, 2-2-3, 5-2-2-5, dias fixos — estão no nosso <a href="/blog/modelos-de-rotina-guarda-compartilhada">guia de modelos de rotina</a>, e você pode visualizar o seu no <a href="/ferramentas/gerador-de-rotina-de-guarda">gerador de rotina de guarda</a>.</p>
+    <p>É o coração do acordo: <strong>com quem a criança dorme em cada dia da semana</strong>. Defina os pernoites de cada responsável e o momento em que o ciclo recomeça (por exemplo, todo domingo no fim da tarde). Os formatos mais usados — semana alternada, quinzenal, 2-2-3, 5-2-2-5, dias fixos e, quando a criança tem uma casa-base, <a href="/rotinas/fins-de-semana-alternados">fins de semana alternados</a>, com ou sem <a href="/rotinas/fins-de-semana-alternados-com-pernoite">pernoite de quarta</a> — estão no nosso <a href="/blog/modelos-de-rotina-guarda-compartilhada">guia de modelos de rotina</a>, e você pode visualizar o seu no <a href="/ferramentas/gerador-de-rotina-de-guarda">gerador de rotina de guarda</a>. Escreva a rotina como ela se repete — "fins de semana alternados, da saída da escola na sexta até a entrada na escola na segunda, começando no dia tal" — e não como uma lista de datas.</p>
 
     <h3>2. Trocas: onde, quando e como</h3>
     <p>Um <strong>horário fixo de troca</strong> (18h é comum) elimina a negociação diária. Em dia letivo, a troca na <strong>escola</strong> é a mais tranquila: um responsável deixa, o outro busca, e a criança não presencia a passagem de bastão. Preveja também a alternativa para dias sem aula — em geral, a entrega na casa do outro responsável.</p>
@@ -214,16 +317,34 @@
         <p>O app Entrelares transforma o plano de parentalidade em calendário vivo: os dois responsáveis veem os mesmos dias, trocas são propostas e aprovadas dentro do app e tudo fica registrado com data e hora. Comece grátis.</p>
         <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup">Criar conta grátis</a>
     </div>
+    <h2 id="tres-clausulas-escritas-como-exemplo">Três cláusulas escritas, como exemplo</h2>
+    <p>A diferença entre um plano que funciona e um que vira discussão está na redação: cláusula boa diz <strong>quem, quando, onde e o que acontece se não</strong>. Três exemplos, com nomes fictícios, para servir de molde — adapte ao seu caso com o seu advogado:</p>
+    <blockquote><p><strong>Rotina de convivência.</strong> "A filha conviverá com os genitores no regime de fins de semana alternados: com Carlos da saída da escola de sexta-feira até a entrada na escola de segunda-feira, em semanas alternadas, a contar de 06/02/2027, e com Ana nos demais dias. Às quartas-feiras, em todas as semanas, a filha pernoitará com Carlos, que a levará à escola na quinta-feira."</p></blockquote>
+    <blockquote><p><strong>Trocas.</strong> "As trocas ocorrerão na escola, no horário de entrada e de saída. Em dias sem aula, a entrega será às 18h na residência de quem recebe a filha. Atrasos superiores a trinta minutos serão comunicados por mensagem no aplicativo combinado, e a ausência sem aviso será registrada."</p></blockquote>
+    <blockquote><p><strong>Feriados festivos.</strong> "O Natal, compreendido entre as 10h de 24 de dezembro e as 10h de 26 de dezembro, caberá a Ana nos anos pares e a Carlos nos anos ímpares; o Ano-Novo, entre as 10h de 30 de dezembro e as 10h de 2 de janeiro, caberá ao outro genitor no mesmo ano. Estes períodos prevalecem sobre a rotina semanal e sobre os blocos de férias."</p></blockquote>
+    <p>Repare no que as três têm em comum: datas amarradas a uma regra ("anos pares", "em semanas alternadas, a contar de"), horários com hora cheia, o lugar da troca e a regra para a exceção. É esse nível de detalhe que faz o plano ser consultado em vez de discutido.</p>
 
-    <h2>Resumo</h2>
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
+    <section class="faq" aria-label="Perguntas frequentes">
+        <h3>O plano de parentalidade precisa de advogado?</h3>
+        <p>Para escrever e combinar, não: os dois responsáveis podem redigir o plano juntos, e ele já organiza a rotina. Para a homologação judicial, que dá ao acordo força de decisão, é preciso advogado ou defensor público. Um advogado de família também ajuda a prever situações que costumam virar conflito.</p>
+        <h3>O acordo vale sem homologação?</h3>
+        <p>Vale como combinado entre os dois e já previne a maior parte dos atritos, mas não pode ser executado judicialmente. Homologado junto com o divórcio ou a regulamentação da guarda, o descumprimento pode gerar multa, execução e até a redução de prerrogativas de quem descumpriu.</p>
+        <h3>Com que frequência revisar o plano?</h3>
+        <p>Quando a vida muda: entrada na escola, mudança de casa ou de emprego, adolescência. Muitas famílias combinam uma revisão anual, antes do início do ano letivo. Com consenso, a nova versão pode ser homologada; sem consenso, qualquer dos dois pode pedir a revisão judicial.</p>
+        <h3>O que fazer quando o outro responsável descumpre o combinado?</h3>
+        <p>Primeiro, registrar: data, o que estava combinado e o que aconteceu. Um histórico que nenhum dos dois pode editar vale mais do que a memória de cada um. Com o plano homologado, o descumprimento reiterado pode ser levado ao juiz, que pode aplicar multa e rever as cláusulas. Para o seu caso, consulte um advogado de família.</p>
+    </section>
+
+<h2 id="resumo">Resumo</h2>
     <p>Um bom acordo de guarda compartilhada é um checklist de decisões tomadas <em>antes</em> do conflito: rotina semanal com pernoites definidos, trocas em horário e local fixos, festas alternadas por ano em períodos com hora marcada, férias em blocos, aniversários protegidos, comunicação sobre escola e saúde, regras de viagem e uma ordem de prioridade para quando as datas colidirem. Com consenso, tudo se flexibiliza; sem consenso, vale o escrito.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
 <div class="lm-mini">
-    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
-    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <h2>Baixe grátis: 7 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Os mesmos sete modelos do gerador e do app — fins de semana alternados (com e sem pernoite de quarta), semana alternada, quinzenal, dia sim/dia não, 5-2-2-5 e 2-2-3 —, com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
     <form class="lm-form" novalidate>
         <div class="lm-inline">
             <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
@@ -260,5 +381,19 @@
 </footer>
 
 <script defer src="/js/materiais.js"></script>
+<script>
+// Fase 3: menu do celular (o mesmo da home).
+(function () {
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    if (!burger || !mmenu) return;
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+})();
+</script>
 </body>
 </html>

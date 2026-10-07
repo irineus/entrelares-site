@@ -7,7 +7,8 @@
     <meta name="description" content="Um roteiro para combinar Natal, Ano-Novo e férias com o outro responsável: começar cedo, deixar por escrito, o que decidir — datas, horários de troca, viagens, presentes — e o que fazer quando algo muda." />
     <link rel="canonical" href="https://entrelares.app/blog/como-combinar-festas-com-o-outro-responsavel" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
-    <meta name="theme-color" content="#03173d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17121C" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
@@ -29,7 +30,7 @@
       "inLanguage": "pt-BR",
       "image": "https://entrelares.app/blog/img/combinar-festas.jpg",
       "datePublished": "2026-10-02",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-07",
       "author": { "@type": "Organization", "name": "Entrelares" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
       "mainEntityOfPage": "https://entrelares.app/blog/como-combinar-festas-com-o-outro-responsavel"
@@ -83,7 +84,7 @@
         a{color:var(--indigo);}
         a:focus-visible,.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
         .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
-        header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+        header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
         .nav{display:flex;align-items:center;gap:12px;height:64px;}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;}
         .brand img{width:32px;height:32px;border-radius:8px;}
@@ -99,9 +100,9 @@
         .nav-links a:hover{color:var(--ink);}
         .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600;}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;}
-        .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.35);}
-        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(79,70,229,.28);transition:transform .15s ease,box-shadow .15s ease;}
-        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,.36);}
+        .btn-primary{background:var(--indigo);color: #fff;box-shadow:0 4px 14px rgba(var(--brand-rgb),.35);}
+        .nav .btn{margin-left:0;padding:9px 20px;border-radius:999px;font-size:14.5px;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28);transition:transform .15s ease,box-shadow .15s ease;}
+        .nav .btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--brand-rgb),.36);}
         .cta-short{display:none;}
         .lang-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;font-size:13px;font-weight:600;}
         .lang-switch a,.lang-switch span{padding:4px 10px;border-radius:999px;line-height:1;text-decoration:none;color:var(--muted);}
@@ -116,7 +117,7 @@
         .meta{color:var(--muted);font-size:14px;margin-bottom:28px;}
         article h2{font-size:24px;letter-spacing:-.01em;margin:36px 0 12px;}
         article h3{font-size:19px;margin:24px 0 8px;}
-        article p,article li{color:#334155;font-size:17px;margin-bottom:14px;}
+        article p,article li{color:var(--ink-soft);font-size:17px;margin-bottom:14px;}
         article ul,article ol{padding-left:24px;}
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
@@ -131,7 +132,7 @@
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
         figure{margin:28px 0;}
         .post-img{margin:34px 0;}
-        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:#eef2ff;border:1px solid var(--line);}
+        .post-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);display:block;background:var(--bg-tint);border:1px solid var(--line);}
         .post-img figcaption{color:var(--muted);font-size:13.5px;text-align:center;margin-top:10px;font-style:italic;}
         .fig-frame{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
         figure svg{width:100%;height:auto;display:block;}
@@ -144,9 +145,9 @@
         .related{max-width:720px;margin:0 auto;padding:0 20px 56px;}
         .related h2{font-size:18px;margin-bottom:12px;}
         .related a{display:block;padding:6px 0;}
-        footer{background:#03173d;color:#94a3b8;font-size:14px;border-top:1px solid #1e3a5f;}
+        footer{background:var(--deep);color:var(--muted-2);font-size:14px;border-top:1px solid var(--deep-line);}
         footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px;}
-        footer a{color:#cbd5e1;text-decoration:none;}
+        footer a{color:var(--line);text-decoration:none;}
         .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;}
         @media(max-width:820px){
           .nav-links{display:none;}
@@ -164,10 +165,44 @@
           .lang-switch{font-size:12px;padding:2px;}
           .lang-switch a,.lang-switch span{padding:4px 8px;}
         }
+
+        /* Fase 3 (07/10/2026): o menu do celular, igual ao da home — o botão vive na barra e o
+           painel é outro elemento depois do header, para o .nav-links seguir como o
+           menu.test.js prende. */
+        .burger{display:none;width:42px;height:42px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;padding:0;}
+        .burger span{display:block;width:18px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px;transition:transform .2s,opacity .2s;}
+        .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+        .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+        .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+        .mmenu{position:fixed;inset:58px 0 0 0;z-index:45;background:var(--bg);padding:18px 20px 28px;overflow:auto;}
+        .mmenu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:18px;font-weight:600;}
+        .mmenu a.btn-primary{display:inline-flex;margin-top:18px;width:100%;border-bottom:0;color:var(--bg);font-size:16px;justify-content:center;border-radius:999px;}
+        .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
+        .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
+        @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
+    <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
+         <style> on purpose: its :root wins over this page's copy of the tokens. -->
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/brand.css" />
 </head>
 <body>
 
@@ -189,19 +224,48 @@
             <a href="/en/" hreflang="en" lang="en" title="English version — home">EN</a>
         </div>
         <a class="btn btn-primary" href="https://web.entrelares.app" aria-label="Entrar no app"><span class="cta-full">Entrar no app</span><span class="cta-short">Entrar</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="/#como-funciona">Como funciona</a>
+    <a href="/ferramentas/gerador-de-rotina-de-guarda">Simulador</a>
+    <a href="/#porque">Por quê</a>
+    <a href="/#beneficios">Benefícios</a>
+    <a href="/rotinas/">Rotinas</a>
+    <a href="/#precos">Preços</a>
+    <a href="/#faq">Dúvidas</a>
+    <a href="/blog/">Blog</a>
+    <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
+    <div class="mm-foot"><a href="/en/" hreflang="en" lang="en">English</a><a href="/termos">Termos</a><a href="/privacidade">Privacidade</a></div>
+</div>
 
 <nav class="crumbs" aria-label="Trilha"><a href="/">Início</a> › <a href="/blog/">Blog</a> › Como combinar as festas</nav>
 
 <article>
     <span class="kicker">Roteiro</span>
     <h1>Como combinar as festas com o outro responsável</h1>
-    <p class="meta">Publicado em 2 de outubro de 2026 · leitura de ~6 min</p>
+    <p class="meta">Atualizado em 7 de outubro de 2026 · leitura de ~9 min</p>
 
     <p class="lead">A divisão das festas raramente dá errado por falta de modelo. Dá errado porque foi combinada tarde, de boca, e cada um saiu da conversa lembrando de um jeito. Este roteiro serve para qualquer formato — alternar por ano, separar o dia 24 do dia 25, dividir as férias ao meio. O que muda é só o conteúdo do combinado.</p>
 
-    <h2>1. Comece cedo</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#1-comece-cedo">1. Comece cedo</a></li>
+            <li><a href="#2-deixe-por-escrito">2. Deixe por escrito</a></li>
+            <li><a href="#tres-mensagens-que-funcionam">Três mensagens que funcionam</a></li>
+            <li><a href="#3-o-que-decidir">3. O que decidir</a></li>
+            <li><a href="#4-conte-a-crianca-sem-coloca-la-no-meio">4. Conte à criança — sem colocá-la no meio</a></li>
+            <li><a href="#5-quando-algo-muda">5. Quando algo muda</a></li>
+            <li><a href="#quando-a-conversa-trava-mediacao">Quando a conversa trava: mediação</a></li>
+            <li><a href="#ajuda-titulo">Como o Entrelares ajuda neste roteiro</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="1-comece-cedo">1. Comece cedo</h2>
     <p>Quanto mais perto de dezembro, mais coisas já estão decididas sem vocês: passagens compradas, convites aceitos, a família de cada lado esperando uma resposta. Começar a conversa com alguns meses de folga dá espaço para ceder sem pressão — e para buscar uma mediação, se for o caso.</p>
     <p>Se já existe um acordo de guarda, comecem por ele: vejam o que ele já diz sobre festas e férias antes de negociar o resto. Muitas vezes a regra está lá, e falta só aplicá-la ao calendário deste ano.</p>
 
@@ -214,10 +278,13 @@
       <figcaption>Um pedido, uma resposta, o mesmo calendário para as duas casas.</figcaption>
     </figure>
 
-    <h2>2. Deixe por escrito</h2>
+    <figure>
+      <div class="fig-frame"><svg viewBox="0 0 680 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="O calendário da conversa sobre as festas, de setembro a janeiro"><style>text{font-family:system-ui,-apple-system,sans-serif}</style><line x1="160.0" y1="26" x2="160.0" y2="310" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="160.0" y="18" font-size="11" fill="#94a3b8" text-anchor="middle">set</text><line x1="285.5" y1="26" x2="285.5" y2="310" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="285.5" y="18" font-size="11" fill="#94a3b8" text-anchor="middle">out</text><line x1="411.0" y1="26" x2="411.0" y2="310" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="411.0" y="18" font-size="11" fill="#94a3b8" text-anchor="middle">nov</text><line x1="536.5" y1="26" x2="536.5" y2="310" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="536.5" y="18" font-size="11" fill="#94a3b8" text-anchor="middle">dez</text><line x1="662.0" y1="26" x2="662.0" y2="310" stroke="#e2e8f0" stroke-dasharray="3 3"/><text x="662.0" y="18" font-size="11" fill="#94a3b8" text-anchor="middle">jan</text><text x="150" y="61" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Conferir o acordo</text><rect x="160.0" y="40" width="100.4" height="34" rx="7" fill="#4f46e5"/><text x="210.2" y="61" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">reler</text><text x="150" y="107" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Propor as datas</text><rect x="235.3" y="86" width="150.6" height="34" rx="7" fill="#4f46e5"/><text x="310.6" y="107" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">proposta e resposta</text><text x="150" y="153" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Fechar por escrito</text><rect x="385.9" y="132" width="75.3" height="34" rx="7" fill="#db2777"/><text x="423.6" y="153" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">de acordo</text><text x="150" y="199" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Avisar a família</text><rect x="461.2" y="178" width="75.3" height="34" rx="7" fill="#4f46e5"/><text x="498.9" y="199" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">avós, tios</text><text x="150" y="245" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Contar à criança</text><rect x="511.4" y="224" width="75.3" height="34" rx="7" fill="#db2777"/><text x="150" y="291" font-size="12.5" font-weight="600" fill="#1e293b" text-anchor="end">Só ajustes</text><rect x="586.7" y="270" width="75.3" height="34" rx="7" fill="#4f46e5"/><text x="624.4" y="291" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">pedidos</text></svg></div>
+      <figcaption>Quando cada passo acontece numa negociação que dá certo: em dezembro só sobram ajustes, não decisões.</figcaption>
+    </figure>
+    <h2 id="2-deixe-por-escrito">2. Deixe por escrito</h2>
     <p>Um combinado escrito não é desconfiança; é memória compartilhada. Pode ser uma mensagem resumindo o que foi decidido, respondida pelo outro com um "de acordo". O importante é que os dois tenham o mesmo texto — e que ele diga nomes, dias e horários, não "depois do Natal" ou "lá pelo fim da tarde".</p>
-
-    <h2>3. O que decidir</h2>
+<h2 id="3-o-que-decidir">3. O que decidir</h2>
     <ul>
         <li><strong>Datas:</strong> quais dias ficam com cada casa — 24, 25, 31, 1º — e como fica o período de <a href="/blog/ferias-escolares-guarda-compartilhada">férias escolares</a>;</li>
         <li><strong>Horários de troca:</strong> a que horas e onde a criança passa de uma casa para a outra em cada transição;</li>
@@ -228,10 +295,17 @@
     </ul>
     <p>Se ainda não escolheram o formato, veja <a href="/blog/natal-e-ano-novo-guarda-compartilhada">os jeitos mais comuns de dividir o Natal e o Ano-Novo</a>.</p>
 
-    <h2>4. Conte à criança — sem colocá-la no meio</h2>
+    <h2 id="tres-mensagens-que-funcionam">Três mensagens que funcionam</h2>
+    <p>A forma da proposta decide metade da resposta. Mensagens que funcionam têm três partes: o que já está combinado, a proposta concreta e uma pergunta aberta. Três modelos, para adaptar:</p>
+    <blockquote><p><strong>Para abrir a conversa (setembro):</strong> "Oi. Pelo nosso acordo, este ano o Natal é meu e o Ano-Novo é seu. Pensei na troca no dia 28, ao meio-dia, na escola, como no ano passado. Funciona para você ou prefere outro dia?"</p></blockquote>
+    <blockquote><p><strong>Para propor uma mudança:</strong> "Minha família vai fazer a ceia na casa da minha mãe, em outra cidade, no dia 24. Pelo acordo o dia é seu. Você toparia trocar o 24 pelo 31 só este ano? Se não der, tudo bem, seguimos o combinado."</p></blockquote>
+    <blockquote><p><strong>Para fechar:</strong> "Então fica assim: dia 24 e 25 comigo, troca dia 26 às 10h na sua casa; 31 e 1º com você; férias metade e metade, a partir de 2/1, você começa. Confirma que está de acordo?"</p></blockquote>
+    <p>Repare no que as três evitam: justificativa longa, cobrança do passado e pergunta fechada que soa como ordem. E no que incluem: a referência ao acordo, a data e a hora exatas e a saída honrosa — "se não der, seguimos o combinado" — que tira a pressão da resposta.</p>
+
+    <h2 id="4-conte-a-crianca-sem-coloca-la-no-meio">4. Conte à criança — sem colocá-la no meio</h2>
     <p>Saber com antecedência onde vai passar cada data dá previsibilidade à criança. Ela pode dizer o que gostaria, e isso merece ser ouvido; a decisão, porém, é dos adultos. Pedir que ela escolha entre as casas, ou que leve recados de um lado para o outro, coloca sobre ela um peso que não é dela.</p>
 
-    <h2>5. Quando algo muda</h2>
+    <h2 id="5-quando-algo-muda">5. Quando algo muda</h2>
     <p>Mesmo um combinado bem feito encontra imprevistos: um voo cancelado, uma doença, um convite que só aparece em dezembro. Algumas regras simples ajudam:</p>
     <ul>
         <li><strong>Peça assim que souber</strong>, não na véspera;</li>
@@ -243,6 +317,10 @@
     <blockquote>
         <p>Até o outro responder, o dia continua como estava. Essa regra simples impede que uma mudança vire fato consumado.</p>
     </blockquote>
+
+    <h2 id="quando-a-conversa-trava-mediacao">Quando a conversa trava: mediação</h2>
+    <p>Às vezes a proposta é boa, a mensagem é educada e mesmo assim a resposta não vem — ou vem com o conflito de sempre. Antes de pensar em processo, existe a <strong>mediação familiar</strong>: um terceiro neutro conduz a conversa, sem decidir por vocês, até um combinado que os dois assinam. Ela pode ser extrajudicial, com mediadores particulares ou em câmaras privadas, ou gratuita nos <strong>CEJUSCs</strong> (Centros Judiciários de Solução de Conflitos) dos tribunais de Justiça, que atendem mesmo quem não tem processo em andamento. Para as festas, o que a mediação costuma produzir em uma ou duas sessões é exatamente o que falta: uma regra escrita, com datas e horários, que valha para os próximos anos — e não só para este dezembro.</p>
+    <p>Quando nem a mediação resolve, o caminho é o advogado e o pedido ao juiz, que decide pelo interesse da criança. É o mais lento dos caminhos; por isso a regra de começar cedo.</p>
 
     <aside class="cta-box our-answers" id="como-o-entrelares-ajuda" aria-labelledby="ajuda-titulo">
         <h2 id="ajuda-titulo">Como o Entrelares ajuda neste roteiro</h2>
@@ -260,7 +338,7 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup">Criar conta grátis</a>
     </aside>
 
-    <h2>Perguntas frequentes</h2>
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
     <section class="faq" aria-label="Perguntas frequentes">
         <h3>Com quanto tempo de antecedência combinar as festas?</h3>
         <p>Quanto antes, melhor: com alguns meses de folga, ainda dá para ajustar viagens e convites sem pressão. Muitas famílias deixam a regra das festas escrita no acordo de guarda e, a cada ano, só confirmam os detalhes.</p>
@@ -272,15 +350,15 @@
         <p>O que a criança sente e prefere merece ser ouvido, mas a decisão é dos adultos. Pedir que ela escolha entre as casas coloca sobre ela um peso que não é dela.</p>
     </section>
 
-    <h2>Resumo</h2>
+    <h2 id="resumo">Resumo</h2>
     <p>Comece cedo, a partir do acordo que já existe; deixe por escrito, com nomes, dias e horários; decida datas, trocas, viagens, presentes e custos; conte à criança sem colocá-la no meio; e trate cada mudança como um pedido que só vale depois do "sim". É assim que as festas voltam a ser festa.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>
 </article>
 
 <div class="lm-mini">
-    <h2>Baixe grátis: 5 modelos de rotina de guarda (PDF)</h2>
-    <p class="lm-mini-sub">Semana sim/semana não, quinzenal, 2-2-3, 2-2-5-5 e fins de semana alternados — com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
+    <h2>Baixe grátis: 7 modelos de rotina de guarda (PDF)</h2>
+    <p class="lm-mini-sub">Os mesmos sete modelos do gerador e do app — fins de semana alternados (com e sem pernoite de quarta), semana alternada, quinzenal, dia sim/dia não, 5-2-2-5 e 2-2-3 —, com calendário visual de duas semanas e um roteiro para férias e feriados.</p>
     <form class="lm-form" novalidate>
         <div class="lm-inline">
             <input class="lm-input" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" required />
@@ -317,5 +395,19 @@
 </footer>
 
 <script defer src="/js/materiais.js"></script>
+<script>
+// Fase 3: menu do celular (o mesmo da home).
+(function () {
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    if (!burger || !mmenu) return;
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+})();
+</script>
 </body>
 </html>
