@@ -55,17 +55,18 @@ test('every screenshot <source> offers the generator widths plus the 1080 px ori
   }
 });
 
-test('only the first hero capture loads eagerly, at high priority; every other screenshot is lazy', () => {
+// Since the phase-1 redesign (07/10/2026) the hero carries no capture: its visual is the live
+// calendar (HTML + CSS), so the LCP candidate is text and every screenshot sits below the fold.
+// Nothing may ask for high priority any more — an eager capture below the fold would compete
+// with the fonts and the hero for the first bytes on 4G.
+test('every screenshot is lazy, and no image asks for high priority', () => {
   for (const home of HOMES) {
     const html = readFileSync(join(PUBLIC, home), 'utf8');
     const imgs = shotPictures(html).map((p) => p.match(/<img[^>]*>/)[0]);
-    const [first, ...rest] = imgs;
-    assert.equal(attr(first, 'loading'), 'eager', `${home}: the hero's first capture is visible at load`);
-    assert.equal(attr(first, 'fetchpriority'), 'high', `${home}: the LCP candidate on a wide screen`);
-    for (const img of rest) {
+    for (const img of imgs) {
       assert.equal(attr(img, 'loading'), 'lazy', `${home}: ${attr(img, 'src')} should be lazy`);
-      assert.equal(attr(img, 'fetchpriority'), undefined, `${home}: only one image may ask for high priority`);
+      assert.equal(attr(img, 'fetchpriority'), undefined, `${home}: no screenshot may ask for high priority`);
     }
-    assert.equal((html.match(/fetchpriority="high"/g) ?? []).length, 1, `${home}: one high-priority image per page`);
+    assert.equal((html.match(/fetchpriority="high"/g) ?? []).length, 0, `${home}: no high-priority image on the page`);
   }
 });

@@ -175,27 +175,10 @@
     </script>
 
     <style>
-
         /* L-34: a parameter flag hides a block with the `hidden` attribute, and an
-
            author rule with `display` (.trust span, .price-promo…) beats the browser's
-
            own [hidden] rule — so both variants of a sentence showed at once. */
-
         [hidden] { display: none !important; }
-        /* ─────────────────────────────────────────────────────────────────────
-           L-16 — English version of the landing page.
-
-           The design system below is a copy of the one in ../index.html: the site
-           has no build step, so a second language is a second file rather than a
-           template. Keep the two in sync when styling changes — a visual tweak to
-           one page must be applied to the other.
-
-           This page deliberately does NOT carry the #materiais opt-in (L-09): the
-           PDF, the Worker's welcome e-mail and js/materiais.js are all PT-BR, so
-           offering them to an English reader would deliver Portuguese material.
-           Translating that lead magnet is a separate item.
-           ───────────────────────────────────────────────────────────────────── */
         :root {
             --ink: #1e293b;
             --muted: #64748b;
@@ -208,6 +191,9 @@
             --line: #e2e8f0;
             --radius: 16px;
         }
+        /* Tokens only this page uses (the 3D scene's floor); brand.css carries the rest. */
+        :root { --floor: #F1EAE0; --floor-line: #E2D8CB; --a-deep: #1F4FB3; --b-deep: #B2305C; }
+        @media (prefers-color-scheme: dark) { :root { --floor: #241C2C; --floor-line: #33283D; } }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -216,16 +202,19 @@
             background: var(--bg);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         img, svg { max-width: 100%; }
         a { color: var(--indigo); }
         a, .btn, summary { -webkit-tap-highlight-color: rgba(var(--brand-rgb), 0.12); }
-        a:focus-visible, .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+        a:focus-visible, .btn:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
         .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 64px 0; }
-        h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; }
-        h2 { font-size: clamp(26px, 4vw, 34px); margin-bottom: 12px; }
-        .section-lead { color: var(--muted); max-width: 640px; margin-bottom: 40px; font-size: 17px; }
+        section { padding: 84px 0; position: relative; }
+        h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(30px, 4.2vw, 44px); margin-bottom: 14px; }
+        .section-lead { color: var(--muted); max-width: 600px; margin-bottom: 36px; font-size: 17.5px; }
+        .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--pink); margin-bottom: 12px; }
+        .dark .eyebrow { color: var(--accent); }
 
         /* ── Header ─────────────────────────────────────────── */
         header {
@@ -274,372 +263,294 @@
         .lang-switch a:hover { color: var(--ink); }
         .lang-switch .lang-on { background: var(--bg-tint); color: var(--indigo); }
 
-        /* ── Hero ───────────────────────────────────────────── */
-        .hero { background: linear-gradient(170deg, var(--bg) 0%, var(--bg-tint) 100%); padding: 72px 0 80px; }
-        .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
-        .hero h1 { font-size: clamp(32px, 5vw, 46px); margin-bottom: 18px; }
-        .hero h1 em { font-style: normal; color: var(--indigo); }
-        .hero p.sub { font-size: 18px; color: var(--muted); margin-bottom: 28px; max-width: 480px; }
-        .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-        .hero-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+        /* Mobile menu (phase 1): the burger lives in the header bar; the panel is its own
+           element after the header, so .nav-links keeps the rules the menu suite pins. */
+        .burger { display: none; width: 42px; height: 42px; flex: none; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); cursor: pointer; padding: 0; }
+        .burger span { display: block; width: 18px; height: 2px; background: var(--ink); margin: 4px auto; border-radius: 2px; transition: transform .2s, opacity .2s; }
+        .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .mmenu { position: fixed; inset: 58px 0 0 0; z-index: 45; background: var(--bg); padding: 18px 20px 28px; overflow: auto; }
+        .mmenu a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 600; }
+        .mmenu .mm-foot { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 18px; }
+        .mmenu .mm-foot a { border: 0; padding: 0; font-size: 15px; font-weight: 500; color: var(--muted); }
+        .mmenu a.btn-primary { display: inline-flex; margin-top: 18px; width: 100%; border-bottom: 0; color: var(--bg); font-size: 16px; }
 
-        /* Phone frame + real-screenshot slideshow (L-03) */
-        .hero-shot { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .phone {
-            width: 290px; max-width: 80vw; margin: 0; background: var(--ink); border-radius: 40px; padding: 11px;
-            box-shadow: 0 26px 60px rgba(var(--ink-rgb), 0.28);
-        }
-        .phone-screen { position: relative; background: var(--card); border-radius: 30px; overflow: hidden; aspect-ratio: 1080 / 1920; }
-        .shots { position: absolute; inset: 0; }
-        .shot { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
-        .shot.is-active { opacity: 1; }
-        .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        .shot-caption { font-size: 15px; font-weight: 600; color: var(--ink); text-align: center; max-width: 300px; min-height: 42px; margin: 0; }
-        .shot-dots { display: flex; gap: 9px; }
-        .shot-dots button { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; background: var(--line); cursor: pointer; transition: background .2s ease, transform .2s ease; }
-        .shot-dots button.is-on { background: var(--indigo); transform: scale(1.3); }
-        .shot-dots button:hover { background: var(--muted); }
+        /* ── Hero (phase 1): the live calendar is the visual ── */
+        .hero { padding: 64px 0 72px; position: relative; overflow: hidden; }
+        .floor3d { position: absolute; left: -10%; right: -10%; top: 30%; height: 110%; pointer-events: none;
+            background: linear-gradient(90deg, var(--floor-line) 1.5px, transparent 1.5px) 0 0 / 64px 64px, linear-gradient(0deg, var(--floor-line) 1.5px, transparent 1.5px) 0 0 / 64px 64px;
+            transform: perspective(700px) rotateX(62deg); transform-origin: top center; opacity: .7;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, transparent 85%); mask-image: linear-gradient(to bottom, transparent, #000 25%, transparent 85%); }
+        .hero .wrap { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        .hero h1 { font-size: clamp(38px, 5.6vw, 62px); margin-bottom: 18px; }
+        .hero h1 em { font-style: italic; font-weight: 500; color: var(--pink); }
+        .hero p.sub { font-size: 18.5px; color: var(--muted); max-width: 500px; margin-bottom: 24px; }
+        .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 24px; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease; white-space: nowrap; }
+        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.35); }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+        .hero-play img { height: 46px; width: auto; display: block; }
+        .hero-tiny { font-size: 13px; color: var(--muted); }
+        .stage { position: relative; perspective: 1400px; }
+        .cal-card { position: relative; background: var(--card); border-radius: 26px; padding: 22px; box-shadow: 0 24px 60px rgba(var(--ink-rgb), .16); border: 1px solid var(--line);
+            transform-style: preserve-3d; transform: rotateY(var(--ry, -10deg)) rotateX(var(--rx, 5deg)); transition: transform .25s ease-out; scroll-margin-top: 90px; }
+        .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .chip { border: 1.5px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+        .cal-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+        .cal-head b { font-family: var(--font-display, Georgia, serif); font-size: 20px; }
+        .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }
+        .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; transform-style: preserve-3d; }
+        .cal-grid .dow { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 4px; }
+        .day { aspect-ratio: 1; border-radius: 9px; display: grid; place-items: center; font-size: 13px; font-weight: 600; background: var(--line); color: var(--muted);
+            transform: translateZ(0) scale(.6); opacity: 0; transition: transform .4s cubic-bezier(.2,.8,.2,1.2), opacity .3s, background .3s, box-shadow .3s; }
+        .day.on { transform: translateZ(0) scale(1); opacity: 1; }
+        .day.a { background: var(--bg-tint); color: var(--indigo); box-shadow: 0 3px 0 color-mix(in srgb, var(--indigo) 35%, transparent); }
+        .day.b { background: color-mix(in srgb, var(--pink) 16%, var(--card)); color: var(--pink); box-shadow: 0 3px 0 color-mix(in srgb, var(--pink) 35%, transparent); }
+        .day.today { outline: 2.5px solid var(--accent); outline-offset: -2.5px; transform: translateZ(14px) scale(1.08); }
+        .today-line { margin-top: 14px; display: flex; gap: 10px; align-items: center; font-size: 14px; background: var(--bg); border-radius: 12px; padding: 10px 12px; }
+        .today-line .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+        .cal-more { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; }
+        .float { position: absolute; border-radius: 14px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 14px 30px rgba(var(--ink-rgb), .14); padding: 10px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: float 6s ease-in-out infinite; transform-style: preserve-3d; white-space: nowrap; }
+        .float .sq { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-family: var(--font-display, Georgia, serif); font-size: 14px; flex: none; }
+        .f1 { top: -26px; left: -34px; transform: translateZ(60px); animation-delay: -1s; }
+        .f2 { bottom: -18px; right: 18px; transform: translateZ(80px); animation-delay: -3s; }
+        .f3 { top: 46%; left: -56px; transform: translateZ(40px); animation-delay: -5s; }
+        @keyframes float { 0%, 100% { margin-top: 0; } 50% { margin-top: -10px; } }
 
-        /* Screenshot gallery ("see inside the app") */
-        #gallery { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 8px; max-width: 820px; }
-        .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-        .phone-sm { width: 100%; max-width: 210px; background: var(--ink); border-radius: 30px; padding: 8px; box-shadow: 0 16px 36px rgba(var(--ink-rgb), 0.20); }
-        .phone-sm .scr { border-radius: 22px; overflow: hidden; aspect-ratio: 1080 / 1920; background: var(--card); }
-        .phone-sm img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        .gallery-item p { font-size: 14px; color: var(--muted); text-align: center; margin: 0; max-width: 210px; }
-
-        @media (prefers-reduced-motion: reduce) { .shot { transition: none; } }
-
-        /* ── How it works ───────────────────────────────────── */
-        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px; }
-        .step .n {
-            width: 34px; height: 34px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo);
-            font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
-        }
-        .step h3 { font-size: 17px; margin-bottom: 8px; }
-        .step p { font-size: 14.5px; color: var(--muted); }
-
-        /* ── Features ───────────────────────────────────────── */
-        #features { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .feature { padding: 22px; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--line); }
-        .feature .ico { font-size: 26px; margin-bottom: 10px; }
-        .feature h3 { font-size: 16.5px; margin-bottom: 6px; }
-        .feature p { font-size: 14.5px; color: var(--muted); }
-        /* L-38 — the phase-6 modules: vector icons, no screenshots (L-21 stays out). */
-        .feature .ico svg { width: 28px; height: 28px; color: var(--indigo); display: block; }
-        /* Os seis cartões de benefícios: um pedaço da própria interface do app nas cores
-           dele, não um ícone (owner, 03/10/2026). */
-        .feature .ico svg.vg { width: 72px; height: 40px; }
-        .feature .module-tag { display: inline-block; font-size: 12px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 999px; padding: 2px 10px; margin-bottom: 8px; }
-
-        /* ── Install ────────────────────────────────────────── */
-        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .install-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
-        .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-        .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
-        .install-card li { margin-bottom: 8px; }
-        .play-badge { margin: 0 0 12px; }
-        .play-badge img { height: 56px; width: auto; display: block; }
-        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
-        .install-card li strong { color: var(--ink); }
-        /* L-19 — o gesto do iOS, DESENHADO. NÃO é captura de tela: é um esquema no
-           nosso próprio visual. A ESTRUTURA foi conferida contra o guia oficial
-           da Apple "Transforme um site em um app no Safari do iPhone" em
-           21/09/2026 (iOS 27 e iOS 26, pt-BR:
-           support.apple.com/pt-br/guide/iphone/iphea86e5236/ios) — daí virem, na
-           folha de compartilhamento, o cartão do site, a fileira de apps, a
-           fileira de ações redondas e a lista agrupada com "Adicionar à Tela de
-           Início" lá embaixo, que é por que o passo escrito manda ROLAR.
-           L-33 (21/09/2026): o guia agora tem um passo que a primeira versão
-           deste desenho não tinha — "Ative a opção Abrir como App da Web" antes
-           de "Adicionar". Sem ela o ícone abre o site como favorito do Safari,
-           não como app, e notificação nenhuma chega. Daí a camada 3, o painel
-           de adicionar. O guia não traz figura desse painel: só o TEXTO nomeia
-           a opção e o botão, então só esses dois têm rótulo e o resto é barra
-           neutra, como na folha.
-           Só o rótulo que interessa tem texto: desenhar nome de app de terceiro
-           seria inventar o que não conferimos.
-           Quem reconferir o guia e achar diferente, ajusta aqui e troca a data
-           da linha abaixo do card — é ela que diz quando isto foi visto.
-           Os passos escritos ao lado seguem sendo O conteúdo: o diagrama é
-           aria-hidden, e leitor de tela, prefers-reduced-motion e JS desligado
-           leem a lista. Ao contrário do L-17, este bloco NÃO guarda coordenada
-           nenhuma: cada ponto de toque é filho do controle que ele aponta. */
-        .iosd-wrap { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
-        .iosd { flex: 0 0 180px; }
-        .iosd-steps { flex: 1 1 200px; min-width: 0; }
-        .iosd-phone { background: var(--ink); border-radius: 24px; padding: 5px; box-shadow: 0 12px 28px rgba(var(--ink-rgb), 0.18); }
-        .iosd-scr { position: relative; overflow: hidden; border-radius: 20px; background: var(--card); aspect-ratio: 9 / 16; font-size: 7.5px; }
-
-        /* camada 1: a página aberta no navegador, só o suficiente para dizer
-           "você está no site" — marca, linhas de texto e a barra de baixo. */
-        .iosd-page { position: absolute; inset: 0 0 13% 0; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
-        .iosd-mark { display: block; width: 24px; height: 24px; border-radius: 7px; }
-        .iosd-name { display: block; font-weight: 700; color: var(--ink); font-size: 9px; margin-bottom: 2px; }
-        .iosd-page i { display: block; height: 4px; border-radius: 2px; background: var(--line); }
-        .iosd-page i:nth-child(3) { width: 85%; }
-        .iosd-page i:nth-child(4) { width: 65%; }
-        .iosd-page i:nth-child(5) { width: 78%; }
-        .iosd-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 13%; border-top: 1px solid var(--line); background: var(--bg); display: flex; align-items: center; gap: 5px; padding: 0 7px; }
-        .iosd-url { flex: 1; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 3px 6px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .iosd-share { position: relative; flex: none; width: 15px; height: 15px; color: var(--indigo); }
-        .iosd-share svg { display: block; width: 100%; height: 100%; }
-
-        /* camada 2: a folha. Ela cobre quase a tela inteira, como a de verdade. */
-        .iosd-sheet { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(var(--ink-rgb), 0.14); padding: 7px 7px 0; display: flex; flex-direction: column; gap: 6px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
-        .iosd-head { flex: none; display: flex; align-items: center; gap: 6px; background: var(--card); border-radius: 9px; padding: 6px; }
-        .iosd-fav { flex: none; display: block; width: 17px; height: 17px; border-radius: 4px; }
-        /* o cartão mostra o SITE que está sendo compartilhado — então mostra o
-           nosso, com o mesmo título que web.entrelares.app serve (<title>
-           Entrelares) e o mesmo ícone que o apple-touch-icon entrega. */
-        .iosd-headtx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
-        .iosd-headtx b { font-weight: 700; color: var(--ink); white-space: nowrap; }
-        .iosd-headtx i { font-style: normal; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .iosd-x { flex: none; width: 13px; height: 13px; border-radius: 50%; background: #e5e5ea; }
-        .iosd-apps, .iosd-acts { flex: none; display: flex; gap: 7px; padding: 0 2px; }
-        .iosd-apps span, .iosd-acts span { flex: 1; aspect-ratio: 1; }
-        /* cor só para dizer "aqui é a fileira de apps" — nenhum app nomeado */
-        .iosd-apps span { border-radius: 7px; background: #c7c7cc; }
-        .iosd-acts span { border-radius: 50%; background: #e5e5ea; }
-        .iosd-list { flex: none; background: var(--card); border-radius: 9px; overflow: hidden; }
-        .iosd-row { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-top: 1px solid #ececf0; }
-        .iosd-row:first-child { border-top: 0; }
-        .iosd-row b { display: block; height: 4px; border-radius: 2px; background: #dcdce2; flex: 1; }
-        .iosd-row svg { flex: none; width: 11px; height: 11px; color: #8e8e93; }
-        .iosd-row-target { position: relative; color: var(--ink); line-height: 1.25; padding-right: 20px; transition: background .3s ease, color .3s ease; }
-        .iosd-row-target svg { color: var(--ink); }
-        /* o ponto da linha encosta na borda: centrado, ele tapava justamente o
-           rótulo que o passo manda procurar. */
-        .iosd-row-target .iosd-dot { left: auto; right: 4px; margin-left: 0; }
-
-        /* camada 3 (L-33): o painel de adicionar. Sobe por cima da folha, e a
-           chave liga um instante DEPOIS de o painel chegar — o gesto que o
-           passo 4 pede é justamente virar essa chave. */
-        .iosd-add { position: absolute; left: 0; right: 0; top: 9%; bottom: 0; background: #f2f2f7; border-radius: 16px 16px 20px 20px; box-shadow: 0 -8px 20px rgba(var(--ink-rgb), 0.14); padding: 7px; display: flex; flex-direction: column; gap: 7px; transform: translateY(104%); transition: transform .5s cubic-bezier(.32, .72, .35, 1); }
-        .iosd-addnav { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 2px 2px 0; }
-        .iosd-addnav > b { display: block; width: 26%; height: 4px; border-radius: 2px; background: #dcdce2; }
-        .iosd-addbtn { position: relative; font-weight: 700; color: var(--indigo); padding: 2px 4px; border-radius: 6px; transition: background .3s ease; }
-        .iosd-addcard { flex: none; display: flex; align-items: center; gap: 6px; background: var(--card); border-radius: 9px; padding: 6px; }
-        .iosd-addcard img { flex: none; display: block; width: 22px; height: 22px; border-radius: 6px; }
-        .iosd-addtog { flex: none; display: flex; align-items: center; gap: 6px; background: var(--card); border-radius: 9px; padding: 6px 7px; color: var(--ink); line-height: 1.25; transition: background .3s ease, color .3s ease; }
-        .iosd-addtog > span:first-child { flex: 1; min-width: 0; }
-        .iosd-sw { position: relative; flex: none; width: 20px; height: 12px; border-radius: 999px; background: #d1d1d6; transition: background .3s ease .7s; }
-        .iosd-sw::before { content: ''; position: absolute; top: 1px; left: 1px; width: 10px; height: 10px; border-radius: 50%; background: var(--card); box-shadow: 0 1px 2px rgba(var(--ink-rgb), 0.25); transition: transform .3s ease .7s; }
-        /* como na linha da folha: o ponto encosta AO LADO do controle, senão
-           tapa o rótulo e a chave que o passo manda procurar. */
-        .iosd-addbtn .iosd-dot { left: -20px; margin-left: 0; }
-        .iosd-sw .iosd-dot { left: -17px; margin-left: 0; }
-        .iosd.is-b3 .iosd-add, .iosd.is-b4 .iosd-add { transform: translateY(0); }
-        .iosd.is-b3 .iosd-sw, .iosd.is-b4 .iosd-sw { background: #34c759; }
-        .iosd.is-b3 .iosd-sw::before, .iosd.is-b4 .iosd-sw::before { transform: translateX(8px); }
-        .iosd.is-b3 .iosd-addtog { background: var(--bg-tint); color: var(--indigo-deep); }
-        .iosd.is-b4 .iosd-addbtn { background: var(--bg-tint); }
-
-        /* camada 4: a recompensa — o ícone na tela inicial. */
-        .iosd-home { position: absolute; inset: 0; background: linear-gradient(160deg, var(--line-tint), #fce7f3); opacity: 0; transition: opacity .45s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
-        .iosd-home img { width: 38px; height: 38px; border-radius: 11px; box-shadow: 0 6px 14px rgba(var(--ink-rgb), 0.22); }
-        .iosd-home span { color: var(--ink); font-weight: 600; }
-
-        /* o ponto de toque: um por controle, filho dele. Não há coordenada a
-           manter em dia — é o que o L-17 aprendeu do jeito caro. */
-        .iosd-dot { position: absolute; left: 50%; top: 50%; width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; border-radius: 50%; background: rgba(var(--brand-rgb), 0.22); border: 2px solid var(--indigo); opacity: 0; transform: scale(.45) translateY(7px); transition: opacity .26s ease, transform .4s cubic-bezier(.34, 1.3, .5, 1); pointer-events: none; }
-        .iosd-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--indigo); opacity: 0; }
-        .iosd.is-b1 .iosd-share .iosd-dot,
-        .iosd.is-b2 .iosd-row-target .iosd-dot,
-        .iosd.is-b3 .iosd-sw .iosd-dot,
-        .iosd.is-b4 .iosd-addbtn .iosd-dot { opacity: 1; transform: scale(1) translateY(0); }
-        .iosd.is-b1 .iosd-share .iosd-dot::after,
-        .iosd.is-b2 .iosd-row-target .iosd-dot::after,
-        .iosd.is-b3 .iosd-sw .iosd-dot::after,
-        .iosd.is-b4 .iosd-addbtn .iosd-dot::after { animation: iosd-ping 1.6s ease-out .3s infinite; }
-        @keyframes iosd-ping { 0% { opacity: .7; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6); } }
-        /* a folha fica de pé debaixo do painel de adicionar (b3/b4). */
-        .iosd.is-b2 .iosd-sheet, .iosd.is-b3 .iosd-sheet, .iosd.is-b4 .iosd-sheet { transform: translateY(0); }
-        /* a página atrás escurece quando a folha sobe, como no aparelho */
-        .iosd-page, .iosd-bar { transition: opacity .4s ease; }
-        .iosd.is-b2 .iosd-page, .iosd.is-b2 .iosd-bar,
-        .iosd.is-b3 .iosd-page, .iosd.is-b3 .iosd-bar,
-        .iosd.is-b4 .iosd-page, .iosd.is-b4 .iosd-bar { opacity: .4; }
-        .iosd.is-b2 .iosd-row-target { background: var(--bg-tint); color: var(--indigo-deep); }
-        .iosd.is-b2 .iosd-row-target svg { color: var(--indigo-deep); }
-        .iosd.is-b5 .iosd-home { opacity: 1; }
-
-        /* o passo escrito que corresponde ao quadro acende junto — é o que liga o
-           desenho às palavras sem repetir as palavras. Sem JS, nada acende. */
-        .iosd-steps li { transition: color .3s ease; }
-        .iosd-steps li.is-now { color: var(--ink); }
-        .iosd-note { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.5; }
-        @media (prefers-reduced-motion: reduce) {
-            .iosd-sheet, .iosd-add, .iosd-sw, .iosd-sw::before, .iosd-addtog, .iosd-addbtn,
-            .iosd-home, .iosd-dot, .iosd-row-target, .iosd-steps li,
-            .iosd-page, .iosd-bar { transition: none; }
-            .iosd-dot::after { animation: none; }
-        }
-
-        /* ── Pricing ────────────────────────────────────────── */
-        #pricing { background: linear-gradient(170deg, var(--bg-tint) 0%, var(--bg) 100%); }
-        .price-card {
-            max-width: 520px; margin: 0 auto; background: var(--card); border: 2px solid var(--indigo);
-            border-radius: 20px; padding: 36px 32px; text-align: center;
-            box-shadow: 0 16px 40px rgba(var(--brand-rgb), 0.12);
-        }
-        .price-badge {
-            display: inline-block; background: var(--bg-tint); color: var(--indigo); font-size: 12px;
-            font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 14px;
-            border-radius: 999px; margin-bottom: 14px;
-        }
-        .price-card .price { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; }
-        .price-card .price small { font-size: 16px; font-weight: 500; color: var(--muted); }
-        .price-card p { color: var(--muted); font-size: 15px; margin: 14px 0 24px; }
-        .price-card ul { list-style: none; text-align: left; margin: 0 auto 26px; max-width: 340px; font-size: 15px; }
-        .price-card li { padding: 6px 0 6px 28px; position: relative; }
-        .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
-        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; align-items: stretch; }
-        .price-grid .price-card { max-width: none; margin: 0; display: flex; flex-direction: column; }
-        .price-grid .price-card ul { flex: 1; }
-        .price-card.free { border-color: var(--line); box-shadow: none; }
-        .price-card.free .price-badge { background: var(--bg); color: var(--muted); }
-        .price-card .price-cycle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
-        .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
-        .price-promo { display: inline-block; background: #ecfdf5; color: #047857; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 10px 0 0; }
-        .price-guarantee {
-            max-width: 640px; margin: 22px auto 0; background: var(--bg-tint); border: 1px solid var(--line);
-            border-radius: 14px; padding: 14px 18px; text-align: center; font-size: 14px;
-        }
-        @media (max-width: 760px) { .price-grid { grid-template-columns: 1fr; } }
-
-        /* ── FAQ ────────────────────────────────────────────── */
-        .faq-list { max-width: 720px; }
-        details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin-bottom: 10px; }
-        summary {
-            cursor: pointer; font-weight: 600; font-size: 15.5px; padding: 16px 20px;
-            list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
-        }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: "+"; font-size: 20px; color: var(--muted); flex-shrink: 0; }
-        details[open] summary::after { content: "–"; }
-        details .a { padding: 0 20px 16px; color: var(--muted); font-size: 15px; }
-
-        /* ── Trust bar ──────────────────────────────────────── */
-        .trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 20px; }
-        .trust span { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--muted); font-weight: 500; }
+        /* ── Trust strip ── */
+        .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--card); padding: 16px 0; }
+        .trust { display: flex; gap: 10px 32px; flex-wrap: wrap; justify-content: center; }
+        .trust span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); font-weight: 500; }
         .trust span::before { content: "✓"; color: var(--indigo); font-weight: 700; }
 
-        /* ── Comparison (chat/spreadsheet vs app) ───────────── */
-        #why { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; }
-        .compare-col { border-radius: var(--radius); padding: 26px 24px; border: 1px solid var(--line); }
-        .compare-col h3 { font-size: 17px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .compare-col ul { list-style: none; }
-        .compare-col li { padding: 8px 0 8px 28px; position: relative; font-size: 15px; color: var(--muted); }
-        .compare-bad { background: var(--bg); }
-        .compare-bad li::before { content: "✕"; position: absolute; left: 4px; color: var(--pink); font-weight: 700; }
-        .compare-good { background: var(--bg-tint); border-color: var(--indigo); }
-        .compare-good li { color: var(--ink); }
-        .compare-good li::before { content: "✓"; position: absolute; left: 2px; color: var(--indigo); font-weight: 700; }
+        /* ── Cena isométrica "duas casas" (CSS 3D, sem biblioteca) ── */
+        .scene-sec { background: var(--card); border-bottom: 1px solid var(--line); overflow: hidden; }
+        .scene-sec .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: center; }
+        .iso-wrap { position: relative; min-width: 0; height: 460px; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; }
+        .iso-wrap:active { cursor: grabbing; }
+        .iso-scale { transform: scale(var(--s, 1)); transform-origin: center; }
+        .iso { position: relative; width: 460px; height: 460px; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(var(--rz, -40deg)); transition: transform .08s linear; }
+        .ground { position: absolute; inset: 0; border-radius: 40px; background: var(--floor);
+            background-image: linear-gradient(90deg, var(--floor-line) 1px, transparent 1px), linear-gradient(0deg, var(--floor-line) 1px, transparent 1px); background-size: 46px 46px; box-shadow: 0 40px 0 -10px rgba(var(--ink-rgb), .08); }
+        .box { position: absolute; width: var(--w); height: var(--d); transform-style: preserve-3d; }
+        .box i { position: absolute; display: block; left: 0; top: 0; }
+        .box .top { width: var(--w); height: var(--d); transform: translateZ(var(--h)); background: var(--c3); }
+        .box .front { width: var(--w); height: var(--h); transform-origin: top; transform: translateY(var(--d)) rotateX(90deg); background: var(--c1); }
+        .box .back { width: var(--w); height: var(--h); transform-origin: top; transform: rotateX(90deg); background: var(--c2); }
+        .box .right { width: var(--h); height: var(--d); transform-origin: left; transform: translateX(var(--w)) rotateY(-90deg); background: var(--c2); }
+        .box .left { width: var(--h); height: var(--d); transform-origin: left; transform: rotateY(-90deg); background: var(--c1); }
+        .roof { position: absolute; left: 0; top: 0; width: var(--w); transform-style: preserve-3d; }
+        .roof i { position: absolute; left: -6px; width: calc(var(--w) + 12px); height: var(--r); display: block; }
+        .roof .ra { transform-origin: top; transform: translateY(-4px) translateZ(var(--h)) rotateX(45deg); background: var(--c4); }
+        .roof .rb { transform-origin: top; transform: translateY(calc(var(--d) + 4px)) translateZ(var(--h)) rotateX(135deg); background: var(--c5); }
+        .gable { position: absolute; left: 0; top: 0; width: var(--w); height: calc(var(--d) / 2); transform-origin: top; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+        .gable.gf { transform: translateY(var(--d)) translateZ(var(--h)) rotateX(90deg); background: var(--c1); }
+        .gable.gb { transform: translateZ(var(--h)) rotateX(90deg); background: var(--c2); }
+        .door { position: absolute; left: 50%; top: 0; width: 18px; height: 30px; margin-left: -9px; background: var(--accent); border-radius: 0 0 4px 4px; }
+        .win { position: absolute; width: 14px; height: 12px; background: #FFF5D6; border-radius: 2px; box-shadow: inset 0 0 0 2px rgba(42,31,51,.25); }
+        .tile { position: absolute; width: 34px; height: 34px; border-radius: 8px; transform: translateZ(1px); transition: transform .3s, filter .3s; }
+        .tile.a { background: var(--indigo); box-shadow: 0 0 0 2px var(--a-deep) inset; }
+        .tile.b { background: var(--pink); box-shadow: 0 0 0 2px var(--b-deep) inset; }
+        .tile.hot { transform: translateZ(10px); filter: brightness(1.18); }
+        .kid { position: absolute; width: 26px; height: 26px; margin: 4px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE0B2, var(--accent) 70%); transform: translateZ(24px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); transition: left .6s cubic-bezier(.5,0,.3,1.2), top .6s cubic-bezier(.5,0,.3,1.2); box-shadow: 0 10px 14px rgba(42,31,51,.25); }
+        .kid::after { content: ""; position: absolute; left: 7px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: #2A1F33; box-shadow: 8px 0 0 #2A1F33; }
+        .label3d { position: absolute; font: 600 12px var(--font-body, sans-serif); color: var(--ink); background: var(--card); border: 1px solid var(--line); padding: 4px 9px; border-radius: 999px; transform: translateZ(140px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); white-space: nowrap; box-shadow: 0 6px 14px rgba(var(--ink-rgb), .14); }
+        .scene-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-        /* ── Demo: o histórico sendo escrito (L-17) ─────────────
-           Sequência DIRIGIDA sobre os frames REAIS do app (T-57), não um vídeo:
-           o texto é HTML — serve os dois idiomas sem um segundo binário e sem
-           re-encodar quando a UI mudar —, os quadros já estão no cache da
-           página (peso extra ≈ 0, o LCP segue no hero) e
-           prefers-reduced-motion vira só "não avança sozinho": os três passos
-           continuam legíveis parados. */
+        /* ── Problema mostrado: a conversa que vira registro ── */
+        .problem .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+        .chat { background: #E8DFD3; border-radius: 22px; padding: 22px; max-width: 420px; }
+        @media (prefers-color-scheme: dark) { .chat { background: #2B2231; } }
+        .bubble { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 14px; margin-bottom: 10px; background: var(--card); color: var(--ink); }
+        .bubble.me { margin-left: auto; background: #D7F5D0; color: #1F3A1B; }
+        .bubble time { display: block; font-size: 10px; color: var(--muted); text-align: right; margin-top: 4px; }
+        .bubble.me time { color: #4C6B47; }
+        .chat-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .arrow { text-align: center; font-size: 28px; color: var(--accent); margin: 10px 0; line-height: 1; }
+        .record { border-left: 3px solid var(--indigo); background: var(--card); border-radius: 0 14px 14px 0; padding: 12px 16px; font-size: 14px; margin-top: 16px; box-shadow: 0 10px 24px rgba(var(--ink-rgb), .08); }
+        .record b { font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: 16px; }
+        .record-list { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+        .record-list li { padding-left: 26px; position: relative; font-size: 15px; color: var(--ink); }
+        .record-list li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
+
+        /* ── Três passos (faixa escura, celulares em perspectiva) ── */
+        .dark { background: var(--deep); color: var(--deep-ink); }
+        .dark h2 { color: var(--deep-ink); }
+        .dark .section-lead { color: var(--deep-ink-soft); }
+        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; counter-reset: s; perspective: 1200px; }
+        .step { position: relative; padding-top: 18px; }
+        .step::before { counter-increment: s; content: counter(s, decimal-leading-zero); font-family: var(--font-display, Georgia, serif); font-size: 44px; color: var(--accent); line-height: 1; display: block; margin-bottom: 12px; }
+        .step h3 { font-size: 20px; margin-bottom: 8px; }
+        .step p { font-size: 15px; color: var(--deep-ink-soft); }
+        .shot3d { width: 100%; max-width: 230px; background: #0F0B13; border-radius: 30px; padding: 8px; margin: 22px 0 0; box-shadow: 0 30px 50px rgba(0,0,0,.35); transform: rotateY(var(--py, -14deg)) rotateX(6deg); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+        .step:nth-child(2) .shot3d { --py: 0deg; transform: rotateX(8deg) translateY(-10px); }
+        .step:nth-child(3) .shot3d { --py: 14deg; }
+        .step:hover .shot3d { transform: none; }
+        .shot3d img { display: block; width: 100%; height: auto; border-radius: 22px; aspect-ratio: 1080 / 1920; object-fit: cover; object-position: top; }
+
+        /* ── Demo (L-17) — verbatim from the previous home ── */
+        .phone { width: 290px; max-width: 80vw; margin: 0; background: #0F0B13; border-radius: 40px; padding: 11px; box-shadow: 0 26px 60px rgba(var(--ink-rgb), 0.28); }
+        .phone-screen { position: relative; background: #fff; border-radius: 30px; overflow: hidden; aspect-ratio: 1080 / 1920; }
         .demo { display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: center; max-width: 880px; }
         .demo .phone { margin: 0; }
         .demo-frame { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
         .demo-frame.is-active { opacity: 1; }
         .demo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        /* O foco é um RECORTE: escurece tudo fora dele com um box-shadow gigante
-           (por isso .phone-screen precisa do overflow:hidden que já tem) e
-           desliza de um beat para o outro. É esse movimento que faz a peça ler
-           como sequência, e não como mais um slideshow. As coordenadas do
-           primeiro beat estão inline no HTML: sem JS, o recorte já nasce certo. */
-        .demo-ring {
-            position: absolute; border: 2.5px solid var(--indigo); border-radius: 12px;
-            box-shadow: 0 0 0 9999px rgba(var(--ink-rgb), 0.45); pointer-events: none;
-            transition: left .55s cubic-bezier(.4, 0, .2, 1), top .55s cubic-bezier(.4, 0, .2, 1),
-                        width .55s cubic-bezier(.4, 0, .2, 1), height .55s cubic-bezier(.4, 0, .2, 1);
-        }
+        .demo-ring { position: absolute; border: 2.5px solid var(--accent); border-radius: 12px; box-shadow: 0 0 0 9999px rgba(15, 11, 19, 0.45); pointer-events: none;
+            transition: left .55s cubic-bezier(.4, 0, .2, 1), top .55s cubic-bezier(.4, 0, .2, 1), width .55s cubic-bezier(.4, 0, .2, 1), height .55s cubic-bezier(.4, 0, .2, 1); }
         .demo-steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .demo-steps button {
-            display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; text-align: left;
-            background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-            padding: 16px 18px; cursor: pointer; font: inherit; color: inherit;
-            transition: border-color .2s ease, background .2s ease;
-        }
+        .demo-steps button { display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s ease, background .2s ease; }
         .demo-steps button:hover { border-color: var(--indigo); }
         .demo-steps button[aria-current="true"] { border-color: var(--indigo); background: var(--bg-tint); }
-        .demo-n {
-            width: 30px; height: 30px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo);
-            font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center;
-        }
+        .demo-n { width: 30px; height: 30px; border-radius: 50%; background: var(--bg-tint); color: var(--indigo); font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; }
         .demo-steps button[aria-current="true"] .demo-n { background: var(--indigo); color: #fff; }
         .demo-tx strong { display: block; font-size: 16px; margin-bottom: 4px; }
         .demo-d { display: block; font-size: 14.5px; color: var(--muted); line-height: 1.55; }
-        /* A barra só existe enquanto algo de fato avança sozinho — sem autoplay
-           (reduced-motion, ponteiro em cima, aba oculta) ela some em vez de
-           mentir que está correndo. */
         .demo-bar { grid-column: 2; height: 3px; border-radius: 2px; background: var(--line); margin-top: 12px; overflow: hidden; display: none; }
         .demo.is-playing .demo-steps button[aria-current="true"] .demo-bar { display: block; }
         .demo-bar i { display: block; height: 100%; width: 0; background: var(--indigo); }
-        @media (prefers-reduced-motion: reduce) { .demo-frame, .demo-ring { transition: none; } }
 
-        /* ── Founder note + values (L-06; calmer since L-18) ─────
-           L-18: the one section that speaks in first person reads like a letter, not
-           like a feature block — one narrow column (heading, lead and card share it),
-           more air above and below, regular weight, longer line-height, no heavy accent
-           bar. System font on purpose: a web font would add a request and a FOUT to buy
-           a tone that spacing already buys. */
-        .founder-section { padding: 96px 0; }
-        .founder-section .wrap { max-width: 720px; }
-        .founder-section h2 { font-weight: 600; letter-spacing: -0.01em; }
-        .founder-section .section-lead { margin-bottom: 36px; }
-        .founder { margin: 0 auto; }
-        .founder-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 44px 48px; }
-        .founder-card p { color: var(--ink-soft); font-size: 17.5px; font-weight: 400; line-height: 1.85; letter-spacing: 0.003em; margin-bottom: 1.1em; }
-        .founder-card p:last-of-type { margin-bottom: 0; }
-        .founder-card strong { color: var(--ink); font-weight: 600; }
-        .founder-sign { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
-        .founder-avatar { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; overflow: hidden; display: block; background: var(--bg-tint); box-shadow: 0 0 0 3px var(--card), 0 0 0 4px var(--line); }
+        /* ── Tour em abas (#beneficios) + módulos ── */
+        .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0 30px; }
+        .tab { border: 0; background: transparent; padding: 10px 16px; border-radius: 999px; font: 600 14px var(--font-body, sans-serif); color: var(--muted); cursor: pointer; }
+        .tab[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: 0 4px 16px rgba(var(--ink-rgb), .08); }
+        .pane { display: none; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; perspective: 1200px; }
+        .pane.on { display: grid; }
+        .pane .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--bg-tint); color: var(--indigo); margin-bottom: 14px; }
+        .pane .tag.premium { background: color-mix(in srgb, var(--pink) 16%, var(--card)); color: var(--pink); }
+        .pane h3 { font-size: 28px; margin-bottom: 12px; }
+        .pane p { color: var(--muted); font-size: 16px; }
+        .pane .shot3d { margin: 0 auto; transform: rotateY(-10deg) rotateX(4deg); animation: flipin .6s cubic-bezier(.2,.8,.2,1); }
+        @keyframes flipin { from { transform: rotateY(40deg) translateX(40px); opacity: 0; } to { transform: rotateY(-10deg) rotateX(4deg); opacity: 1; } }
+        .modules { margin-top: 64px; padding-top: 44px; border-top: 1px solid var(--line); }
+        .modules h3 { font-size: 24px; margin-bottom: 20px; }
+        .mod-list { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+        .mod-list li { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+        .mod-list svg { width: 26px; height: 26px; color: var(--indigo); display: block; margin-bottom: 10px; }
+        .module-tag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--indigo-deep); background: var(--bg-tint); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px; line-height: 1.35; }
+        .mod-list b { display: block; font-size: 15.5px; margin-bottom: 6px; }
+        .mod-list p { font-size: 13.5px; color: var(--muted); }
+
+        /* ── Para toda família ── */
+        .roles { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 8px; }
+        .roles li { padding: 7px 13px; border-radius: 999px; font-size: 14px; font-weight: 500; border: 1px solid var(--line); background: var(--card); }
+        .roles li:nth-child(odd) { border-color: color-mix(in srgb, var(--indigo) 35%, var(--line)); color: var(--indigo); }
+        .roles li:nth-child(even) { border-color: color-mix(in srgb, var(--pink) 35%, var(--line)); color: var(--pink); }
+
+        /* ── Fundador: citação curta, carta inteira a um toque ── */
+        .founder-section { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .founder-row { display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: start; max-width: 820px; }
+        .founder-avatar { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; display: block; box-shadow: 0 10px 24px rgba(var(--ink-rgb), .2); }
         .founder-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .founder-sign .who { font-weight: 700; color: var(--ink); font-size: 15px; line-height: 1.3; }
-        .founder-sign .who span { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
-        .values { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 40px; }
-        .value-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--bg-tint); color: var(--indigo-deep); border: 1px solid var(--line-tint); border-radius: 999px; padding: 8px 15px; font-size: 14px; font-weight: 500; }
-        /* Ícones em SVG próprio: o Windows não desenha emoji de bandeira (mostrava "BR"),
-           e cada sistema desenhava os outros emojis de um jeito. */
-        .vb-ico { flex-shrink: 0; display: block; }
+        .founder-row blockquote { font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: clamp(22px, 3vw, 30px); line-height: 1.3; }
+        .founder-row cite { display: block; font-style: normal; font-size: 14px; color: var(--muted); margin-top: 12px; }
+        .founder-more { margin-top: 16px; }
+        .founder-more summary { cursor: pointer; color: var(--indigo); font-weight: 600; font-size: 15px; list-style: none; }
+        .founder-more summary::-webkit-details-marker { display: none; }
+        .founder-more summary::before { content: "+ "; }
+        .founder-more[open] summary::before { content: "– "; }
+        .founder-card { margin-top: 16px; }
+        .founder-card p { color: var(--ink-soft); font-size: 17px; line-height: 1.8; margin-bottom: 1em; }
+        .founder-card strong { color: var(--ink); font-weight: 600; }
 
-        /* ── Final CTA + footer ─────────────────────────────── */
-        .cta-final { text-align: center; background: var(--deep); color: var(--deep-ink); }
-        .cta-final h2 { color: var(--deep-ink); }
-        .cta-final p { color: var(--line); max-width: 520px; margin: 0 auto 28px; }
-        footer { background: var(--deep); color: var(--muted-2); font-size: 14px; border-top: 1px solid var(--deep-line); }
-        footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 24px; padding-bottom: 24px; }
-        footer a { color: var(--line); text-decoration: none; }
+        /* ── Instalar (compacto; o passo a passo desenhado mora em /instalar) ── */
+        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .install-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+        .install-card h3 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .install-card ol { padding-left: 20px; color: var(--muted); font-size: 15px; }
+        .install-card li { margin-bottom: 8px; }
+        .install-card li strong { color: var(--ink); }
+        .play-badge { margin: 0 0 12px; }
+        .play-badge img { height: 56px; width: auto; display: block; }
+        .play-badge-alt { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
+        .install-more { display: inline-block; margin-top: 10px; font-weight: 600; }
+
+        /* ── Preços (markup kept; the look is the tokens') ── */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; align-items: stretch; }
+        .price-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 32px 30px; text-align: left; display: flex; flex-direction: column; }
+        .price-card:not(.free) { border: 2px solid var(--pink); }
+        .price-badge { display: inline-block; align-self: flex-start; background: var(--bg-tint); color: var(--indigo); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 14px; }
+        .price-card.free .price-badge { background: var(--bg); color: var(--muted); }
+        .price-card .price { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; }
+        .price-card .price small { font-size: 15px; font-weight: 500; color: var(--muted); }
+        .price-card p { color: var(--muted); font-size: 15px; margin: 12px 0 18px; }
+        .price-card .price-cycle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+        .price-card ul { list-style: none; margin: 0 0 24px; font-size: 15px; flex: 1; }
+        .price-card li { padding: 6px 0 6px 28px; position: relative; }
+        .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--indigo); font-weight: 700; }
+        .price-card .btn { width: 100%; }
+        .price-promo { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: color-mix(in srgb, var(--accent) 22%, var(--card)); color: var(--accent-ink); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 10px 0 0; }
+        .price-guarantee { max-width: 640px; margin: 22px auto 0; background: var(--bg-tint); border: 1px solid var(--line-tint); border-radius: 14px; padding: 14px 18px; text-align: center; font-size: 14px; }
+        .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
+
+        /* ── FAQ ── */
+        .faq-list { max-width: 760px; }
+        details.faq-item, .faq-list > details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin-bottom: 10px; }
+        .faq-list summary { cursor: pointer; font-weight: 600; font-size: 15.5px; padding: 16px 20px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .faq-list summary::-webkit-details-marker { display: none; }
+        .faq-list summary::after { content: "+"; font-size: 20px; color: var(--muted); flex-shrink: 0; }
+        .faq-list details[open] summary::after { content: "–"; }
+        .faq-list details .a { padding: 0 20px 16px; color: var(--muted); font-size: 15px; }
+
+        /* ── CTA final + rodapé ── */
+        .cta-final { text-align: center; background: var(--deep); color: var(--deep-ink); overflow: hidden; }
+        .cta-final h2 { color: var(--deep-ink); font-size: clamp(34px, 5vw, 56px); }
+        .cta-final p { color: var(--deep-ink-soft); max-width: 520px; margin: 0 auto 28px; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .55; pointer-events: none; }
+        .o1 { width: 220px; height: 220px; left: -60px; top: -40px; background: radial-gradient(circle at 35% 35%, var(--bg-tint), var(--indigo)); }
+        .o2 { width: 160px; height: 160px; right: -30px; bottom: -40px; background: radial-gradient(circle at 35% 35%, #FFE0EA, var(--pink)); }
+        footer { background: var(--deep); color: var(--deep-muted); font-size: 14px; border-top: 1px solid var(--deep-line); }
+        footer .wrap { padding-top: 44px; padding-bottom: 28px; }
+        footer a { color: var(--deep-ink-soft); text-decoration: none; }
         footer a:hover { color: var(--deep-ink); }
-        .foot-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-        /* L-16: the legal notice — the Portuguese text is the binding one. */
-        .foot-legal { flex-basis: 100%; font-size: 12.5px; color: #7c8ba1; line-height: 1.55; border-top: 1px solid var(--deep-line); padding-top: 14px; margin-top: 2px; }
-        .foot-legal a { color: var(--muted-2); text-decoration: underline; }
+        .cols { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 24px; }
+        .cols h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--deep-muted); margin-bottom: 12px; font-weight: 600; }
+        .cols a { display: block; margin-bottom: 8px; }
+        .cols .brand { color: var(--deep-ink); }
+        .foot-tag { margin-top: 10px; font-size: 13px; }
+        .foot-legal { display: block; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--deep-line); font-size: 13px; line-height: 1.6; }
+        .foot-legal a, .foot-legal strong { color: var(--deep-ink-soft); }
+        .sticky-cta { display: none; position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--line); z-index: 30; transform: translateY(110%); transition: transform .3s; }
+        .sticky-cta.on { transform: none; }
+        .sticky-cta .btn { width: 100%; }
 
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+
+        @media (max-width: 1060px) { .mod-list { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 860px) {
+            .hero .wrap { grid-template-columns: 1fr; gap: 32px; }
+            .hero { padding-top: 36px; }
+            .hero h1 { font-size: 40px; }
+            .stage { margin-top: 26px; }
+            .cal-card { transform: none; }
+            .f1 { left: auto; right: 6px; top: -20px; }
+            .f2, .f3 { display: none; }
+            .scene-sec .wrap, .problem .wrap, .pane, .founder-row { grid-template-columns: 1fr; }
+            .iso-wrap { height: 250px; }
+            .steps { grid-template-columns: 1fr; }
+            .shot3d { transform: none !important; margin-inline: auto; }
+            .pane .shot3d { animation: none; }
+            .mod-list { grid-template-columns: 1fr 1fr; }
+            .cols { grid-template-columns: 1fr 1fr; }
+            .sticky-cta { display: block; }
+            body { padding-bottom: 0; }
+        }
         @media (max-width: 820px) {
-            section { padding: 48px 0; }
-            .hero { padding: 40px 0 56px; }
-            .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
-            .steps, .features, .install-grid, .compare { grid-template-columns: 1fr; }
+            section { padding: 56px 0; }
+            .install-grid, .price-grid { grid-template-columns: 1fr; }
             /* L-17: a demo empilha e centraliza — a lista de passos vira legenda
                abaixo do telefone em vez de uma coluna espremida. */
             .demo { grid-template-columns: 1fr; gap: 28px; justify-items: center; }
             .demo-steps { width: 100%; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .nav-links { display: none; }
+            .burger { display: block; }
 
-            /* Header: lean bar with the language switch + CTA pill pinned right */
+            /* Header: barra enxuta com o seletor de idioma e a pílula de CTA à direita */
             .nav { height: 58px; gap: 10px; }
             .brand { font-size: 15.5px; gap: 8px; }
             .brand img { width: 28px; height: 28px; }
@@ -648,30 +559,24 @@
             .cta-full { display: none; }
             .cta-short { display: inline; }
 
-            /* Hero: full-width CTAs with a comfortable touch target */
             .hero-ctas { flex-direction: column; align-items: stretch; }
             .hero-ctas .btn { width: 100%; }
-
-            .price-card { padding: 30px 22px; }
-            footer .wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
-
-            .founder-section { padding: 64px 0; }
-            .founder-card { padding: 30px 22px; }
-            .founder-card p { font-size: 16.5px; line-height: 1.8; }
-            .values { justify-content: flex-start; }
+            .hero-play { display: flex; justify-content: center; }
+            .price-card { padding: 28px 22px; }
+            .mod-list { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 420px) {
             .brand { font-size: 0; gap: 0; }
             .brand img { width: 30px; height: 30px; }
             .lang-switch { font-size: 12px; padding: 2px; }
             .lang-switch a, .lang-switch span { padding: 4px 8px; }
         }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .day, .cal-card, .shot3d, .tile, .kid, .demo-frame, .demo-ring, .sticky-cta { transition: none !important; animation: none !important; }
+            .float { animation: none; }
+        }
     </style>
-    <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII.
-         Same website-id as the PT-BR pages: Umami records the URL with every pageview and event, so
-         /en/ traffic is already separable in the dashboard without a second (paid) website. -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
          <style> on purpose: its :root wins over this page's copy of the tokens. -->
     <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -699,200 +604,146 @@
             <span class="lang-on" aria-current="true">EN</span>
         </div>
         <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app" aria-label="Open the app"><span class="cta-full">Open the app</span><span class="cta-short">Open</span></a>
+        <button type="button" class="burger" id="burger" aria-label="Open menu" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
 </header>
+<div class="mmenu" id="mmenu" hidden>
+    <a href="#how-it-works">How it works</a>
+    <a href="#simulator">Simulator</a>
+    <a href="#why">Why</a>
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="/en/for-every-family">For every family</a>
+    <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Create a free account</a>
+    <div class="mm-foot"><a href="/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="/termos" hreflang="pt-BR">Terms</a><a href="/privacidade" hreflang="pt-BR">Privacy</a></div>
+</div>
 
 <div class="hero">
+    <div class="floor3d" aria-hidden="true"></div>
     <div class="wrap">
         <div>
-            <h1>Whose day is it today? <em>Never argue</em> about the calendar again.</h1>
-            <p class="sub">
-                The app that organizes your children's time in shared custody: a clear
-                calendar, day swaps that only count when both parents approve, and a
-                history that cannot be edited or deleted — the record of everything you
-                agreed, <em>kept exactly as it was made</em>.
-            </p>
+            <p class="eyebrow">Two homes, one childhood</p>
+            <h1>Whose day is it today? <em>Both of you know.</em></h1>
+            <p class="sub">The app that organizes your children's time in shared custody: a calendar that mom, dad and every caregiver see the same way, day swaps that only count when both approve, and a history that cannot be edited or deleted.</p>
             <div class="hero-ctas">
                 <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Create a free account</a>
-                <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
+                <a class="hero-play" data-param-show="landing.play_badge" href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Den-hero" rel="noopener" data-umami-event="play-badge"><img src="/img/google-play-badge-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy" decoding="async" /></a>
+                <a class="btn btn-ghost" data-param-hide="landing.play_badge" hidden href="#como-funciona-anchor">See how it works</a>
             </div>
-            <div class="trust">
-                <span>Free plan, no credit card</span>
-                <span>App in English and Portuguese</span>
-                <span>Android and iPhone</span>
-                <span data-param-show="landing.play_badge">On Google Play and the web</span>
-                <span data-param-hide="landing.play_badge" hidden>No app store</span>
-            </div>
+            <p class="hero-tiny">Free for both parents · no credit card · also in the browser, iPhone included · app in English and Portuguese</p>
         </div>
 
-        <div class="hero-shot">
-            <div class="phone">
-                <div class="phone-screen">
-                    <div class="shots" id="heroShots">
-                        <div class="shot is-active" data-caption="See whose day it is — today and the days ahead">
-                            <picture>
-                                <source srcset="/img/screenshots/en/today-calendar-meu-dia-540.webp 540w, /img/screenshots/en/today-calendar-meu-dia-720.webp 720w, /img/screenshots/en/today-calendar-meu-dia.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="/img/screenshots/en/today-calendar-meu-dia.png" width="1080" height="1920" alt="App home screen: a card showing whose day it is, and the month calendar with each day colored by parent" loading="eager" fetchpriority="high" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Swapped a day? The other parent approves or declines">
-                            <picture>
-                                <source srcset="/img/screenshots/en/troca-aguardando-aprovacao-540.webp 540w, /img/screenshots/en/troca-aguardando-aprovacao-720.webp 720w, /img/screenshots/en/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="/img/screenshots/en/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="A pending day-swap request with the Approve and Reject buttons" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Build the rotation in seconds — grandparents included">
-                            <picture>
-                                <source srcset="/img/screenshots/en/assistente-rotacao-com-avo-540.webp 540w, /img/screenshots/en/assistente-rotacao-com-avo-720.webp 720w, /img/screenshots/en/assistente-rotacao-com-avo.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="/img/screenshots/en/assistente-rotacao-com-avo.png" width="1080" height="1920" alt="The rotation wizard building a cycle with father, mother and grandmother" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Everything logged, with date and time — and impossible to erase">
-                            <picture>
-                                <source srcset="/img/screenshots/en/historico-auditoria-540.webp 540w, /img/screenshots/en/historico-auditoria-720.webp 720w, /img/screenshots/en/historico-auditoria.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="/img/screenshots/en/historico-auditoria.png" width="1080" height="1920" alt="Change history: an immutable log of every change, with date and time" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                        <div class="shot" data-caption="Mom, dad and grandma on one calendar — each with their own color">
-                            <picture>
-                                <source srcset="/img/screenshots/en/calendario-tres-cuidadores-540.webp 540w, /img/screenshots/en/calendario-tres-cuidadores-720.webp 720w, /img/screenshots/en/calendario-tres-cuidadores.webp 1080w" sizes="(max-width: 362px) calc(80vw - 22px), 268px" type="image/webp" />
-                                <img src="/img/screenshots/en/calendario-tres-cuidadores.png" width="1080" height="1920" alt="A calendar with three caregivers — father, mother and grandmother — each in their own color" loading="lazy" decoding="async" />
-                            </picture>
-                        </div>
-                    </div>
+        <div class="stage" id="stage">
+            <div class="cal-card" id="simulator" aria-label="Try a parenting schedule">
+                <div class="float f1"><span class="sq" style="background:var(--bg-tint);color:var(--indigo)">✓</span>Swap approved by Rafael</div>
+                <div class="float f2"><span class="sq" style="background:color-mix(in srgb, var(--pink) 16%, var(--card));color:var(--pink)">12</span>Next handoff: Friday</div>
+                <div class="float f3"><span class="sq" style="background:#FFF1D6;color:#5A3A00"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2l3 7 7 .6-5.3 4.6 1.7 7.2L12 17.7 5.6 21.4l1.7-7.2L2 9.6 9 9z"/></svg></span>Today</div>
+                <div class="chips" role="group" aria-label="Schedule pattern">
+                    <button type="button" class="chip" data-preset="7-7" aria-pressed="true">Alternating weeks</button>
+                    <button type="button" class="chip" data-preset="2-2-3" aria-pressed="false">2-2-3</button>
+                    <button type="button" class="chip" data-preset="5-2-2-5" aria-pressed="false">5-2-2-5</button>
+                    <button type="button" class="chip" data-preset="fds" aria-pressed="false">Weekends</button>
                 </div>
-            </div>
-            <p class="shot-caption" id="shotCaption" aria-live="polite">See whose day it is — today and the days ahead</p>
-            <div class="shot-dots" id="shotDots" role="tablist" aria-label="App screens">
-                <button type="button" class="is-on" data-i="0" role="tab" aria-selected="true" aria-label="Screen 1: parenting calendar"></button>
-                <button type="button" data-i="1" role="tab" aria-selected="false" aria-label="Screen 2: day-swap approval"></button>
-                <button type="button" data-i="2" role="tab" aria-selected="false" aria-label="Screen 3: rotation wizard"></button>
-                <button type="button" data-i="3" role="tab" aria-selected="false" aria-label="Screen 4: history with date and time"></button>
-                <button type="button" data-i="4" role="tab" aria-selected="false" aria-label="Screen 5: calendar with three caregivers"></button>
+                <div class="cal-head"><b id="monthName"></b>
+                    <span class="legend"><span><i style="background:var(--indigo)"></i>Dad's home</span><span><i style="background:var(--pink)"></i>Mom's home</span></span></div>
+                <div class="cal-grid" id="calGrid" aria-live="polite"></div>
+                <div class="today-line"><span class="dot" id="todayDot"></span><span id="todayText"></span></div>
+                <a class="cal-more" data-umami-event="gerador-home" href="/ferramentas/gerador-de-rotina-de-guarda">Open the full schedule generator (in Portuguese) →</a>
             </div>
         </div>
     </div>
 </div>
 
-<section id="how-it-works">
-    <div class="wrap">
-        <h2>How it works</h2>
-        <p class="section-lead">Three steps to get the calendar out of the chat and put an end to "but you said that…".</p>
-        <div class="steps">
-            <div class="step">
-                <div class="n">1</div>
-                <h3>Create the family and invite the other parent</h3>
-                <p>Each of you signs in with your own account. You can also include grandparents and other caregivers who take part in the routine.</p>
-            </div>
-            <div class="step">
-                <div class="n">2</div>
-                <h3>Build the calendar together</h3>
-                <p>Set whose day each day is, following your own agreement — alternating weeks, fortnights or a cycle of your own. Holidays and special dates you adjust on the day itself, or on several days at once. The app always shows who is responsible today and in the days ahead.</p>
-            </div>
-            <div class="step">
-                <div class="n">3</div>
-                <h3>Need to swap a day? Propose it in the app</h3>
-                <p>The other parent approves or declines, and until they answer the day stays as it was. Everything is recorded, with date and time — including when an administrator corrects a day alone.</p>
-            </div>
-        </div>
+<div class="trust-strip">
+    <div class="wrap trust">
+        <span>Free plan, no credit card</span>
+        <span>App in English and Portuguese</span>
+        <span>Android and iPhone</span>
+        <span data-param-show="landing.play_badge">On Google Play and the web</span>
+        <span data-param-hide="landing.play_badge" hidden>No app store</span>
+        <span>LGPD compliant</span>
+        <span>No ads, no data selling</span>
     </div>
-</section>
+</div>
 
-<!-- L-18 — the founder note moves up: right after "How it works", BEFORE all of the
-     product proof (gallery, why, record, features). It is a positioning BET, not a fact:
-     empathy earlier, the "what is this" payoff later for a visitor from search. Card L-18
-     holds the dated cta-signup baseline (Umami) and the criterion for moving the note
-     back down. Same relative position on the PT-BR home — change one, change both. -->
-<section id="founder" class="founder-section">
+<section id="two-homes" class="scene-sec">
     <div class="wrap">
-        <h2>From one parent to another: why I built Entrelares</h2>
-        <p class="section-lead">This app wasn't born in a business meeting. It was born out of a real need, inside my own family.</p>
-        <div class="founder">
-            <div class="founder-card">
-                <p>I was married for 20 years, and that marriage gave me the most precious thing in my life: my son. When his mother and I realized we would not stay together, we chose to separate with everyone's good in mind — his above all.</p>
-                <p>Suddenly everything was new: the house, the routine, the habits. But one thing didn't change — wanting to be present in my son's life. Amid the natural friction of a recent separation, what we needed most was exactly what seemed hardest: giving a small child <strong>stability and predictability</strong>, while fitting everything around his mother's demanding work schedule.</p>
-                <p>We both needed to know clearly <strong>whose day each day was</strong>. I tried a spreadsheet — it helped at first, but it soon got complicated and was never at hand when it mattered. I tried an ordinary calendar — too much work to keep up. So I built something of my own, something simple, and it grew until it became a true partner in the time I share with my son.</p>
-                <p>Talking with other mothers and fathers who had been through a separation, I found the same gap. That's why I decided to open the tool to other families — to take that friction out of the way at such a delicate moment, one you get through with care, love and, above all, <strong>respect between everyone involved</strong>.</p>
-                <div class="founder-sign">
-                    <picture class="founder-avatar">
-                        <source srcset="/img/founder.webp" type="image/webp" />
-                        <img src="/img/founder.jpg" alt="Irineu, founder of Entrelares" width="56" height="56" loading="lazy" decoding="async" />
-                    </picture>
-                    <span class="who">Irineu<span>Founder and father</span></span>
+        <div class="reveal">
+            <p class="eyebrow">The idea</p>
+            <h2>Two homes. One clear path between them.</h2>
+            <p class="section-lead" style="margin-bottom:0">The child goes back and forth. What cannot go back and forth is the agreement: whose day each day is, when it changes, and who approved the change. That is what Entrelares keeps — identical for both homes.</p>
+            <p class="scene-note">Each tile is one day at one home. Drag the scene to rotate it.</p>
+        </div>
+        <div class="iso-wrap" id="isoWrap" aria-hidden="true">
+            <div class="iso-scale" id="isoScale">
+                <div class="iso" id="iso">
+                    <div class="ground"></div>
+                    <div class="box" style="--w:120px;--d:100px;--h:70px;--c1:#5C8BF5;--c2:#3F6FD8;--c3:#9DB8FF;--c4:#2F4FA8;--c5:#1E3C86;--r:78px;left:40px;top:40px">
+                    <i class="back"></i><i class="left"></i><i class="right"></i><i class="front"><span class="door"></span><span class="win" style="left:18px;top:14px"></span><span class="win" style="right:18px;top:14px"></span></i><i class="top"></i>
+                    <div class="roof"><i class="ra"></i><i class="rb"></i></div><div class="gable gf"></div><div class="gable gb"></div>
+                </div>
+                    <div class="label3d" style="left:52px;top:60px">Dad's home</div>
+                    <div class="box" style="--w:120px;--d:100px;--h:70px;--c1:#F06A98;--c2:#D4467A;--c3:#FFB3CB;--c4:#B2305C;--c5:#8E2149;--r:78px;left:300px;top:320px">
+                    <i class="back"></i><i class="left"></i><i class="right"></i><i class="front"><span class="door"></span><span class="win" style="left:18px;top:14px"></span><span class="win" style="right:18px;top:14px"></span></i><i class="top"></i>
+                    <div class="roof"><i class="ra"></i><i class="rb"></i></div><div class="gable gf"></div><div class="gable gb"></div>
+                </div>
+                    <div class="label3d" style="left:306px;top:340px">Mom's home</div>
+                    <div id="path"></div>
+                    <div class="kid" id="kid"></div>
                 </div>
             </div>
-            <ul class="values" aria-label="Our commitments">
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="1" y="4" width="22" height="16" rx="3" fill="#009c3b"/><path d="M12 6.2 20.6 12 12 17.8 3.4 12z" fill="#ffdf00"/><circle cx="12" cy="12" r="3.6" fill="#002776"/><path d="M8.6 11.2c2.2-.6 4.6-.4 6.7.6" stroke="#fff" stroke-width="0.9" fill="none"/></svg>Made in Brazil</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 4 5.2v6.3c0 5.1 3.4 8.8 8 10.5 4.6-1.7 8-5.4 8-10.5V5.2z" fill="#4f46e5"/><path d="m8.4 12.2 2.6 2.6 4.8-5.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>LGPD compliant</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="3" fill="#fbbf24"/><text x="12" y="15.6" text-anchor="middle" font-family="system-ui,Segoe UI,Arial,sans-serif" font-size="8.5" font-weight="800" fill="#78350f">AD</text><path d="M3 21 21 3" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/><path d="M3 21 21 3" stroke="#dc2626" stroke-width="2.4" stroke-linecap="round"/></svg>No ads, no data selling</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="2" width="14" height="19" rx="2" fill="#fef9c3" stroke="#a16207" stroke-width="1.3"/><rect x="6.5" y="6" width="8" height="1.8" rx=".9" fill="#a16207"/><rect x="6.5" y="9.5" width="6" height="1.8" rx=".9" fill="#ca8a04"/><circle cx="16.5" cy="17" r="5" fill="#dc2626"/><circle cx="16.5" cy="17" r="2.6" fill="none" stroke="#fca5a5" stroke-width="1"/></svg>History that can't be altered</li>
-                <li class="value-badge"><svg class="vb-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.8s-8-4.9-8-10.8A4.6 4.6 0 0 1 12 7.2 4.6 4.6 0 0 1 20 10c0 5.9-8 10.8-8 10.8z" fill="#e11d48"/></svg>The essentials are free</li>
+        </div>
+    </div>
+</section>
+
+<section id="why" class="problem">
+    <div class="wrap">
+        <div class="reveal">
+            <p class="eyebrow">What happens today</p>
+            <h2>Why not just use a chat app or a spreadsheet?</h2>
+            <p class="section-lead" style="margin-bottom:0">Because an agreement buried in a conversation turns into an argument: the message gets lost, each of you remembers it differently, and the child is caught in the middle. The app exists to take the schedule out of "nobody told me".</p>
+            <ul class="record-list">
+                <li>One calendar, identical for both parents</li>
+                <li>Whose day it is today, always in sight</li>
+                <li>A swap asks for the other parent's approval</li>
+                <li>History with date and time that cannot be deleted</li>
+                <li>Instant notifications — nobody is left out</li>
             </ul>
         </div>
-    </div>
-</section>
-
-<section id="gallery">
-    <div class="wrap">
-        <h2>See inside the app</h2>
-        <p class="section-lead">Real screens from the app — from the everyday calendar to the details that give both sides peace of mind.</p>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="/img/screenshots/en/today-calendar-dia-do-outro-540.webp 540w, /img/screenshots/en/today-calendar-dia-do-outro-720.webp 720w, /img/screenshots/en/today-calendar-dia-do-outro.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="/img/screenshots/en/today-calendar-dia-do-outro.png" width="1080" height="1920" alt="The day card showing both colors when another caregiver is responsible today" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>On the other parent's day, the card shows both colors.</p>
+        <div class="reveal">
+            <div class="chat" aria-label="Example conversation">
+                <p class="chat-tag">Example conversation</p>
+                <div class="bubble">You said you'd have him on Friday<time>Tue 9:14 PM</time></div>
+                <div class="bubble me">I said Saturday. Scroll up and check<time>Tue 9:20 PM</time></div>
+                <div class="bubble">Can't find it. I'll have to move work around again<time>Tue 9:31 PM</time></div>
             </div>
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="/img/screenshots/en/editor-dia-540.webp 540w, /img/screenshots/en/editor-dia-720.webp 720w, /img/screenshots/en/editor-dia.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="/img/screenshots/en/editor-dia.png" width="1080" height="1920" alt="The day editor: who is responsible, the handover time and the day note" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>Set who is responsible and the handoff time for each day.</p>
-            </div>
-            <div class="gallery-item">
-                <div class="phone-sm"><div class="scr">
-                    <picture>
-                        <source srcset="/img/screenshots/en/familia-membros-540.webp 540w, /img/screenshots/en/familia-membros-720.webp 720w, /img/screenshots/en/familia-membros.webp 1080w" sizes="194px" type="image/webp" />
-                        <img src="/img/screenshots/en/familia-membros.png" width="1080" height="1920" alt="The family screen with the caregivers and the e-mail invitation" loading="lazy" decoding="async" />
-                    </picture>
-                </div></div>
-                <p>Invite the other parent and other caregivers by e-mail.</p>
-            </div>
+            <div class="arrow" aria-hidden="true">↓</div>
+            <div class="record"><b>Swap for 31 Aug — requested by Marina, approved by Rafael</b><br/>Recorded on 28 Aug 2026 at 6:22 PM. Nothing here can be edited or deleted.</div>
         </div>
     </div>
 </section>
 
-<section id="why">
+<section id="how-it-works" class="dark">
     <div class="wrap">
-        <h2>Why not just use a chat app or a spreadsheet?</h2>
-        <p class="section-lead">Because an agreement buried in a conversation turns into an argument. The app exists precisely to take the schedule out of "nobody told me".</p>
-        <div class="compare">
-            <div class="compare-col compare-bad">
-                <h3><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg> Chat app, spreadsheet or paper calendar</h3>
-                <ul>
-                    <li>Messages get lost in the middle of the conversation</li>
-                    <li>Everyone writes it down differently — and it's gone by the end of the month</li>
-                    <li>Day swaps agreed verbally, with no record</li>
-                    <li>Arguments about who said what, and when</li>
-                    <li>Nobody trusts what's written down</li>
-                </ul>
-            </div>
-            <div class="compare-col compare-good">
-                <h3><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg> Entrelares</h3>
-                <ul>
-                    <li>One calendar, identical for both parents</li>
-                    <li>Whose day it is today, always in sight</li>
-                    <li>A swap asks for the other parent's approval</li>
-                    <li>History with date and time that cannot be deleted</li>
-                    <li>Instant notifications — nobody is left out</li>
-                </ul>
-            </div>
+        <span id="como-funciona-anchor"></span>
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps. Ten minutes.</h2>
+        <p class="section-lead">Each step with a real screen of the app — no staged demo.</p>
+        <div class="steps">
+            <div class="step reveal"><h3>Create the family and invite the other parent</h3><p>Each of you signs in with your own account. You can also include grandparents and other caregivers who take part in the routine.</p><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/familia-membros-540.webp 540w, /img/screenshots/en/familia-membros-720.webp 720w, /img/screenshots/en/familia-membros.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/familia-membros.png" width="1080" height="1920" alt="The family screen with the caregivers and the e-mail invitation" loading="lazy" decoding="async" />
+</picture></div></div>
+            <div class="step reveal"><h3>Build the calendar together</h3><p>Set whose day each day is, following your own agreement — alternating weeks, fortnights or a cycle of your own. Holidays and special dates you adjust on the day itself, or on several days at once.</p><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/assistente-rotacao-com-avo-540.webp 540w, /img/screenshots/en/assistente-rotacao-com-avo-720.webp 720w, /img/screenshots/en/assistente-rotacao-com-avo.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/assistente-rotacao-com-avo.png" width="1080" height="1920" alt="The rotation wizard building a cycle with father, mother and grandmother" loading="lazy" decoding="async" />
+</picture></div></div>
+            <div class="step reveal"><h3>Need to swap a day? Propose it in the app</h3><p>The other parent approves or declines, and until they answer the day stays as it was. Everything is recorded, with date and time.</p><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/troca-aguardando-aprovacao-540.webp 540w, /img/screenshots/en/troca-aguardando-aprovacao-720.webp 720w, /img/screenshots/en/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="A pending day-swap request with the Approve and Reject buttons" loading="lazy" decoding="async" />
+</picture></div></div>
         </div>
     </div>
 </section>
@@ -955,89 +806,99 @@
 
 <section id="features">
     <div class="wrap">
+        <p class="eyebrow">Features</p>
         <h2>Built to reduce conflict, not to be one more app</h2>
-        <p class="section-lead">Every detail exists to answer one question quickly and prevent one argument.</p>
-        <div class="features">
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="6" cy="24.5" r="2" fill="#2563eb"/><rect x="12" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="16" cy="24.5" r="2" fill="#2563eb"/><rect x="22" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="26" cy="24.5" r="2" fill="#e11d48"/><rect x="32" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="36" cy="24.5" r="2" fill="#e11d48"/><rect x="30.5" y="9.5" width="11" height="21" rx="3.5" fill="none" stroke="#1e293b" stroke-width="1.5"/><rect x="42" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="46" cy="24.5" r="2" fill="#2563eb"/><rect x="52" y="11" width="8" height="18" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="56" cy="24.5" r="2" fill="#2563eb"/><rect x="62" y="11" width="8" height="18" rx="2.5" fill="#ffe4e6" stroke="#fda4af"/><circle cx="66" cy="24.5" r="2" fill="#e11d48"/></svg></div>
-                <h3>A calendar that's always clear</h3>
-                <p>Open it and see straight away whose day it is — today, tomorrow and across the whole month. A different color for each caregiver.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="8" y="6" width="22" height="28" rx="2.5" fill="#dbeafe" stroke="#93c5fd"/><circle cx="19" cy="29.5" r="2" fill="#2563eb"/><path d="M32 20c3-5 5-5 8 0" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><rect x="42" y="6" width="22" height="28" rx="2.5" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="3 2"/><circle cx="53" cy="29.5" r="2" fill="#e11d48"/></svg></div>
-                <h3>Swaps approved by both</h3>
-                <p>A swap becomes a request the other parent approves or declines. No surprises, no "nobody told me".</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><path d="M8 7v26" stroke="#c7d2fe" stroke-width="2"/><circle cx="8" cy="8" r="3.2" fill="#4f46e5"/><circle cx="8" cy="20" r="3.2" fill="#4f46e5"/><circle cx="8" cy="32" r="3.2" fill="#fff" stroke="#4f46e5" stroke-width="1.6"/><rect x="16" y="6" width="44" height="4" rx="2" fill="#94a3b8"/><rect x="16" y="18" width="34" height="4" rx="2" fill="#94a3b8"/><rect x="16" y="30" width="40" height="4" rx="2" fill="#cbd5e1"/></svg></div>
-                <h3>History that cannot be altered</h3>
-                <p>Every swap, approval and change is recorded with date and time, in a history that <strong>cannot be edited or deleted</strong>. If what you agreed ever turns into an argument, it's there — in black and white.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="7" width="68" height="26" rx="6" fill="#fff" stroke="#e2e8f0"/><rect x="8" y="13" width="14" height="14" rx="4" fill="#4f46e5"/><rect x="27" y="14" width="30" height="4" rx="2" fill="#475569"/><rect x="27" y="22" width="36" height="4" rx="2" fill="#cbd5e1"/></svg></div>
-                <h3>Real-time notifications</h3>
-                <p>Swap request, approval, reminder: you find out right away, through a notification on your phone.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><circle cx="13" cy="20" r="10" fill="#3b82f6" stroke="#fff" stroke-width="2.5"/><circle cx="28" cy="20" r="10" fill="#e11d48" stroke="#fff" stroke-width="2.5"/><circle cx="43" cy="20" r="10" fill="#f59e0b" stroke="#fff" stroke-width="2.5"/><circle cx="58" cy="20" r="10" fill="#10b981" stroke="#fff" stroke-width="2.5"/></svg></div>
-                <h3>More than mom and dad</h3>
-                <p>Grandparents, stepparents and other caregivers can join the family and take days, under the same approval rules.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg class="vg" width="72" height="40" viewBox="0 0 72 40" aria-hidden="true" focusable="false"><rect x="2" y="5" width="46" height="30" rx="9" fill="#eef2ff" stroke="#a5b4fc"/><circle cx="14" cy="20" r="5" fill="#3b82f6"/><circle cx="25" cy="20" r="5" fill="#e11d48"/><circle cx="36" cy="20" r="5" fill="#f59e0b"/><circle cx="62" cy="20" r="5" fill="none" stroke="#cbd5e1" stroke-width="1.6" stroke-dasharray="2 2"/></svg></div>
-                <h3>Privacy first</h3>
-                <p>Your family's data is visible only to the people who belong to it. No ads, no data selling.</p>
-            </div>
+        <p class="section-lead">Every detail exists to answer one question quickly and prevent one argument. Real screens from the app.</p>
+        <div class="tabs" role="tablist" aria-label="App screens">
+            <button type="button" class="tab" role="tab" id="tab-calendar" aria-controls="pane-calendar" aria-selected="true" tabindex="0" data-key="calendar">Calendar</button>
+            <button type="button" class="tab" role="tab" id="tab-day" aria-controls="pane-day" aria-selected="false" tabindex="-1" data-key="day">Day by day</button>
+            <button type="button" class="tab" role="tab" id="tab-swaps" aria-controls="pane-swaps" aria-selected="false" tabindex="-1" data-key="swaps">Swaps</button>
+            <button type="button" class="tab" role="tab" id="tab-history" aria-controls="pane-history" aria-selected="false" tabindex="-1" data-key="history">History</button>
+            <button type="button" class="tab" role="tab" id="tab-family" aria-controls="pane-family" aria-selected="false" tabindex="-1" data-key="family">Family</button>
+        </div>
+        <div class="pane on" id="pane-calendar" role="tabpanel" aria-labelledby="tab-calendar"><div><span class="tag">Free</span><h3>Who has the child, today and across the month</h3><p>Open it and see straight away whose day it is — today, tomorrow and across the whole month. A different color for each caregiver, and the next handoff always in sight.</p></div><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/today-calendar-meu-dia-540.webp 540w, /img/screenshots/en/today-calendar-meu-dia-720.webp 720w, /img/screenshots/en/today-calendar-meu-dia.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/today-calendar-meu-dia.png" width="1080" height="1920" alt="App home screen: a card showing whose day it is, and the month calendar with each day colored by parent" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-day" role="tabpanel" aria-labelledby="tab-day"><div><span class="tag">Free</span><h3>Each day with its caregiver, handoff time and note</h3><p>Set who is responsible, the time the child changes homes and a note for each day — the day note is free.</p></div><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/editor-dia-540.webp 540w, /img/screenshots/en/editor-dia-720.webp 720w, /img/screenshots/en/editor-dia.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/editor-dia.png" width="1080" height="1920" alt="The day editor: who is responsible, the handover time and the day note" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-swaps" role="tabpanel" aria-labelledby="tab-swaps"><div><span class="tag">Free</span><h3>Swaps approved by both</h3><p>A swap becomes a request the other parent approves or declines. No surprises, no "nobody told me".</p></div><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/troca-aguardando-aprovacao-540.webp 540w, /img/screenshots/en/troca-aguardando-aprovacao-720.webp 720w, /img/screenshots/en/troca-aguardando-aprovacao.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/troca-aguardando-aprovacao.png" width="1080" height="1920" alt="A pending day-swap request with the Approve and Reject buttons" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-history" role="tabpanel" aria-labelledby="tab-history"><div><span class="tag">Free</span><h3>History that cannot be altered</h3><p>Every swap, approval and change is recorded with date and time, in a history that <strong>cannot be edited or deleted</strong>. If what you agreed ever turns into an argument, it's there — in black and white.</p></div><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/historico-auditoria-540.webp 540w, /img/screenshots/en/historico-auditoria-720.webp 720w, /img/screenshots/en/historico-auditoria.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/historico-auditoria.png" width="1080" height="1920" alt="Change history: an immutable log of every change, with date and time" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="pane" id="pane-family" role="tabpanel" aria-labelledby="tab-family"><div><span class="tag premium">Grandparents and caregivers on Premium</span><h3>More than mom and dad</h3><p>Grandparents, stepparents and other caregivers can join the family and take days, under the same approval rules — each with their own color.</p></div><div class="shot3d"><picture>
+<source srcset="/img/screenshots/en/calendario-tres-cuidadores-540.webp 540w, /img/screenshots/en/calendario-tres-cuidadores-720.webp 720w, /img/screenshots/en/calendario-tres-cuidadores.webp 1080w" sizes="(max-width: 860px) 230px, 230px" type="image/webp" />
+<img src="/img/screenshots/en/calendario-tres-cuidadores.png" width="1080" height="1920" alt="A calendar with three caregivers — father, mother and grandmother — each in their own color" loading="lazy" decoding="async" />
+</picture></div></div>
+        <div class="modules" id="modules">
+            <h3>Beyond the calendar: the child's whole routine</h3>
+            <ul class="mod-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg><span class="module-tag">Day note free · full agenda on Premium</span><b>The child's agenda</b><p>School, health, medicines and activities for each child, with routines that repeat and reminders for whoever you choose.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/></svg><span class="module-tag">Premium</span><b>Shared expenses</b><p>Each expense split equally, by amount, by percentage or by shares, with each person's balance. A payment counts only once the person receiving it confirms — the app never moves money.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg><span class="module-tag">Writing on Premium · reading always</span><b>Family chat</b><p>One conversation for the whole family that nobody can edit or delete, showing who has read each message.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="module-tag">Free · more viewers on Premium</span><b>Viewer</b><p>For people who follow without deciding — a grandparent, a nanny: they see the calendar, the agenda and the reports and get the informative notifications. They change nothing.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span class="module-tag">Premium</span><b>Verifiable PDF report</b><p>The period's report carries a QR code: whoever receives it checks that the file was not altered, and the document is never kept on our servers.</p></li>
+            </ul>
         </div>
     </div>
 </section>
 
-<!-- L-39 — the short version on the home; the page /en/for-every-family carries the rest. -->
 <section id="every-family">
-    <div class="wrap">
-        <h2>For every family</h2>
-        <p class="section-lead">Two dads, two moms, grandparents who pick the child up from school, a stepfather, a stepmother, the nanny: each person joins with the role they play in the child's life — 21 built-in ones, or your own on Premium — and whoever only follows along joins as a viewer. <a href="/en/for-every-family">See how it works for every family</a>.</p>
+    <div class="wrap reveal">
+        <p class="eyebrow">For every family</p>
+        <h2>Two dads, two moms, grandparents, step-parents and the nanny</h2>
+        <p class="section-lead" style="margin-bottom:0">Each person joins with the role they play in the child's life — 21 built-in ones, or your own on Premium — and whoever only follows along joins as a viewer.</p>
+        <ul class="roles" aria-label="Available roles">
+            <li>Father</li>
+            <li>Mother</li>
+            <li>Grandfather</li>
+            <li>Grandmother</li>
+            <li>Great-grandfather</li>
+            <li>Great-grandmother</li>
+            <li>Stepfather</li>
+            <li>Stepmother</li>
+            <li>Uncle</li>
+            <li>Aunt</li>
+            <li>Godfather</li>
+            <li>Godmother</li>
+            <li>Brother</li>
+            <li>Sister</li>
+            <li>Cousin (m)</li>
+            <li>Cousin (f)</li>
+            <li>Friend (m)</li>
+            <li>Friend (f)</li>
+            <li>Guardian (m)</li>
+            <li>Guardian (f)</li>
+            <li>Nanny</li>
+        </ul>
+        <p><a href="/en/for-every-family">See how it works for every family →</a></p>
     </div>
 </section>
 
-<!-- L-38 — the five phase-6 modules (S-22). Each sentence cites its code in the PR. The Free/Premium
-     split is typed from agenda/expenses/chat.premium_only and free_viewers: none of them is on the
-     public-settings feed, so a change there means editing this block and its twin in the other language. -->
-<section id="modules">
-    <div class="wrap">
-        <h2>Beyond the calendar: the child's whole routine</h2>
-        <p class="section-lead">What the family agrees on and records, in one place — only for the people in it, with no ads.</p>
-        <div class="features">
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg></div>
-                <p class="module-tag">Day note free · full agenda on Premium</p>
-                <h3>The child's agenda</h3>
-                <p>School, health, medicines and activities for each child, with routines that repeat and reminders for whoever you choose.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/></svg></div>
-                <p class="module-tag">Premium</p>
-                <h3>Shared expenses</h3>
-                <p>Each expense split equally, by amount, by percentage or by shares, with each person's balance and the fewest payments to settle up. A payment counts only once the person receiving it confirms — the app never moves money.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg></div>
-                <p class="module-tag">Writing on Premium · reading always</p>
-                <h3>Family chat</h3>
-                <p>One conversation for the whole family that nobody can edit or delete, showing who has read each message. Without Premium, what was already said stays available to read.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
-                <p class="module-tag">Free · more viewers on Premium</p>
-                <h3>Viewer</h3>
-                <p>For people who follow without deciding — a grandparent, a nanny: they see the calendar, the agenda and the reports and get the informative notifications. They change nothing, take no part in swaps and see neither the swap messages nor the expenses.</p>
-            </div>
-            <div class="feature">
-                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
-                <p class="module-tag">Premium</p>
-                <h3>Verifiable PDF report</h3>
-                <p>The period's report carries a QR code: whoever receives it checks that the file was not altered, and the document is never kept on our servers.</p>
-            </div>
+<section id="founder" class="founder-section">
+    <div class="wrap founder-row reveal">
+        <picture class="founder-avatar">
+            <source srcset="/img/founder.webp" type="image/webp" />
+            <img src="/img/founder.jpg" alt="Irineu, founder of Entrelares" width="96" height="96" loading="lazy" decoding="async" />
+        </picture>
+        <div>
+            <blockquote>"We both needed to know clearly whose day each day was. I tried a spreadsheet, I tried an ordinary calendar. So I built something of my own, something simple, and it grew until it became a true partner in the time I share with my son."</blockquote>
+            <cite>Irineu — founder of Entrelares, and a father in shared custody</cite>
+            <details class="founder-more">
+                <summary>Read the whole story: why I built Entrelares</summary>
+                <div class="founder-card">
+                    <p>I was married for 20 years, and that marriage gave me the most precious thing in my life: my son. When his mother and I realized we would not stay together, we chose to separate with everyone's good in mind — his above all.</p>
+                    <p>Suddenly everything was new: the house, the routine, the habits. But one thing didn't change — wanting to be present in my son's life. Amid the natural friction of a recent separation, what we needed most was exactly what seemed hardest: giving a small child <strong>stability and predictability</strong>, while fitting everything around his mother's demanding work schedule.</p>
+                    <p>We both needed to know clearly <strong>whose day each day was</strong>. I tried a spreadsheet — it helped at first, but it soon got complicated and was never at hand when it mattered. I tried an ordinary calendar — too much work to keep up. So I built something of my own, something simple, and it grew until it became a true partner in the time I share with my son.</p>
+                    <p>Talking with other mothers and fathers who had been through a separation, I found the same gap. That's why I decided to open the tool to other families — to take that friction out of the way at such a delicate moment, one you get through with care, love and, above all, <strong>respect between everyone involved</strong>.</p>
+                </div>
+            </details>
         </div>
     </div>
 </section>
@@ -1060,61 +921,13 @@
             </div>
             <div class="install-card">
                 <h3><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg> iPhone and iPad (Safari)</h3>
-                <div class="iosd-wrap">
-                    <div class="iosd is-b1" id="iosd" aria-hidden="true">
-                        <div class="iosd-phone">
-                            <div class="iosd-scr">
-                                <div class="iosd-page">
-                                    <img class="iosd-mark" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                    <span class="iosd-name">Entrelares</span>
-                                    <i></i><i></i><i></i>
-                                </div>
-                                <div class="iosd-bar">
-                                    <span class="iosd-url">web.entrelares.app</span>
-                                    <span class="iosd-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2v10.6"/><path d="M8.4 6.8 12 3.2l3.6 3.6"/><path d="M7.6 10.4H5.6A1.6 1.6 0 0 0 4 12v7.2a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V12a1.6 1.6 0 0 0-1.6-1.6h-2"/></svg><span class="iosd-dot"></span></span>
-                                </div>
-                                <div class="iosd-sheet">
-                                    <div class="iosd-head">
-                                        <img class="iosd-fav" src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
-                                        <span class="iosd-x"></span>
-                                    </div>
-                                    <div class="iosd-apps"><span></span><span></span><span></span><span></span></div>
-                                    <div class="iosd-acts"><span></span><span></span><span></span><span></span></div>
-                                    <div class="iosd-list">
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row"><b></b></div>
-                                        <div class="iosd-row iosd-row-target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><path d="M12 8.4v7.2M8.4 12h7.2"/></svg><span>Add to Home Screen</span><span class="iosd-dot"></span></div>
-                                    </div>
-                                    <div class="iosd-list"><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div><div class="iosd-row"><b></b></div></div>
-                                </div>
-                                <div class="iosd-add">
-                                    <div class="iosd-addnav"><b></b><span class="iosd-addbtn">Add<span class="iosd-dot"></span></span></div>
-                                    <div class="iosd-addcard">
-                                        <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                        <span class="iosd-headtx"><b>Entrelares</b><i>web.entrelares.app</i></span>
-                                    </div>
-                                    <div class="iosd-addtog"><span>Open as Web App</span><span class="iosd-sw"><span class="iosd-dot"></span></span></div>
-                                </div>
-                                <div class="iosd-home">
-                                    <img src="/icon-192.png?v=6" width="192" height="192" alt="" loading="lazy" decoding="async" />
-                                    <span>Entrelares</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="iosd-steps">
-                        <ol id="iosd-steps">
-                            <li>Go to <strong>web.entrelares.app</strong> in Safari.</li>
-                            <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up). If you can’t see it, tap the <strong>Page Menu</strong> button and choose <strong>Share</strong>.</li>
-                            <li><strong>Scroll the list</strong> and tap <strong>Add to Home Screen</strong>. If it isn’t there, tap <strong>Edit Actions</strong> at the bottom of the list and add it.</li>
-                            <li>Turn on <strong>Open as Web App</strong> (if you see it), then tap <strong>Add</strong>. Without it, the icon opens the site in Safari and the app’s notifications never arrive.</li>
-                        </ol>
-                    </div>
-                </div>
-                <p class="iosd-note">The drawing is an <strong>illustration of the steps</strong>, checked against <a href="https://support.apple.com/en-us/guide/iphone/iphea86e5236/ios" rel="noopener">Apple’s official guide</a> on 21/09/2026 (iOS 27 and iOS 26). Your iPhone’s screen may vary with the iOS version — the button names above are what matter.</p>
+                <ol>
+                    <li>Go to <strong>web.entrelares.app</strong> in Safari.</li>
+                    <li>Tap the <strong>Share</strong> button (the square with an arrow pointing up). If you can’t see it, tap the <strong>Page Menu</strong> button and choose <strong>Share</strong>.</li>
+                    <li><strong>Scroll the list</strong> and tap <strong>Add to Home Screen</strong>. If it isn’t there, tap <strong>Edit Actions</strong> at the bottom of the list and add it.</li>
+                    <li>Turn on <strong>Open as Web App</strong> (if you see it), then tap <strong>Add</strong>. Without it, the icon opens the site in Safari and the app’s notifications never arrive.</li>
+                </ol>
+                <p class="play-badge-alt" style="margin-top:10px">Checked against <a href="https://support.apple.com/en-us/guide/iphone/iphea86e5236/ios" rel="noopener">Apple’s official guide</a> on 21/09/2026 (iOS 27 and iOS 26).</p>
             </div>
         </div>
     </div>
@@ -1228,9 +1041,12 @@
     </div>
 </section>
 
+
+
 <section class="cta-final">
-    <div class="wrap">
-        <h2>Less arguing. More time together.</h2>
+    <div class="orb o1" aria-hidden="true"></div><div class="orb o2" aria-hidden="true"></div>
+    <div class="wrap reveal">
+        <h2>Less arguing.<br/>More time together.</h2>
         <p>Create your account, build the calendar and invite the other parent. In ten minutes your children's routine moves from a back-and-forth to a clear agreement.</p>
         <a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Get started — it's free</a>
     </div>
@@ -1238,15 +1054,16 @@
 
 <footer>
     <div class="wrap">
-        <span>© 2026 Entrelares · Caring together for what matters most</span>
-        <span class="foot-links">
-            <a href="/" hreflang="pt-BR" lang="pt-BR">Português</a>
-            <a href="/termos" hreflang="pt-BR">Terms of Use</a>
-            <a href="/privacidade" hreflang="pt-BR">Privacy Policy</a>
-            <a href="/exclusao-de-conta">Delete account</a>
-            <a href="mailto:suporte@entrelares.app">Support</a>
-            <a href="mailto:contato@entrelares.app">Contact</a>
-        </span>
+        <div class="cols">
+            <div>
+                <a class="brand" href="/en/"><img src="/icon-192.png?v=6" alt="" width="32" height="32" /> Entrelares</a>
+                <p class="foot-tag">Two homes, one childhood.<br/>© 2026 Entrelares</p>
+            </div>
+            <div><h4>Product</h4><a href="https://web.entrelares.app">The app</a><a href="#pricing">Pricing</a><a href="#install">Install</a><a href="/en/for-every-family">For every family</a></div>
+            <div><h4>Content</h4><a href="/blog/" hreflang="pt-BR">Blog (Portuguese)</a><a href="/rotinas/" hreflang="pt-BR">Routines (Portuguese)</a><a href="/ferramentas/gerador-de-rotina-de-guarda" hreflang="pt-BR">Routine generator (Portuguese)</a></div>
+            <div><h4>For whom</h4><a href="#how-it-works">Parents</a><a href="/en/for-every-family">Grandparents and caregivers</a><a href="/advogados" hreflang="pt-BR">Lawyers and mediators (Portuguese)</a></div>
+            <div><h4>Legal</h4><a href="/termos" hreflang="pt-BR">Terms of Use</a><a href="/privacidade" hreflang="pt-BR">Privacy Policy</a><a href="/exclusao-de-conta">Delete account</a><a href="mailto:suporte@entrelares.app">Support</a><a href="mailto:contato@entrelares.app">Contact</a><a href="/" hreflang="pt-BR" lang="pt-BR">Português</a></div>
+        </div>
         <span class="foot-legal">
             Entrelares is operated from Brazil. Our
             <a href="/termos" hreflang="pt-BR">Terms of Use</a> and
@@ -1259,55 +1076,101 @@
     </div>
 </footer>
 
+<div class="sticky-cta" id="stickyCta"><a class="btn btn-primary" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Create a free account</a></div>
+
 <script>
-// Hero screenshot slideshow: auto-rotate, pause on hover/focus, dots + swipe,
-// and honour prefers-reduced-motion (no autoplay). Self-hosted, no deps.
-// Kept identical to the PT-BR page — change both together.
+// Fase 1 — hero: o calendário vivo (presets do gerador, ancorados na segunda-feira), parallax
+// 3D do card só com mouse, a cena isométrica (arrastar gira), as abas do tour, o menu do
+// celular, a barra fixa e o reveal ao rolar. Tudo honra prefers-reduced-motion. Sem deps.
 (function () {
-    var root = document.getElementById('heroShots');
-    var dotsBox = document.getElementById('shotDots');
-    var cap = document.getElementById('shotCaption');
-    if (!root || !dotsBox) return;
-
-    var shots = Array.prototype.slice.call(root.querySelectorAll('.shot'));
-    var dots = Array.prototype.slice.call(dotsBox.querySelectorAll('[data-i]'));
-    if (shots.length < 2) return;
-
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var i = 0, timer = null, DELAY = 5000;
+    var LANG = 'en';
 
-    function show(n) {
-        i = (n + shots.length) % shots.length;
-        for (var k = 0; k < shots.length; k++) {
-            shots[k].classList.toggle('is-active', k === i);
-            if (dots[k]) {
-                dots[k].classList.toggle('is-on', k === i);
-                dots[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
-            }
+    // ── calendário vivo ──
+    var presets = { '7-7': 'aaaaaaabbbbbbb', '2-2-3': 'aabbaaabbaabbb', '5-2-2-5': 'aabbaaaaabbbbb', 'fds': 'aaaaabbaaaaaaa' };
+    var grid = document.getElementById('calGrid'), tt = document.getElementById('todayText'), td = document.getElementById('todayDot');
+    var now = new Date(), y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+    var monthName = now.toLocaleDateString(LANG === 'en' ? 'en-US' : 'pt-BR', { month: 'long', year: 'numeric' });
+    document.getElementById('monthName').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    var offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    var DOW = LANG === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+    var NAMES = { a: "Dad's home", b: "Mom's home" };
+    function render(key) {
+        var cyc = presets[key]; grid.innerHTML = '';
+        DOW.forEach(function (d) { var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e); });
+        for (var i = 0; i < offset; i++) grid.appendChild(document.createElement('div'));
+        var who = null, next = null;
+        for (var d = 1; d <= days; d++) {
+            var house = cyc[(offset + d - 1) % cyc.length];
+            var cell = document.createElement('div'); cell.className = 'day ' + house + (d === today ? ' today' : ''); cell.textContent = d; grid.appendChild(cell);
+            (function (c, k) { setTimeout(function () { c.classList.add('on'); }, reduce ? 0 : 18 * k); })(cell, d);
+            if (d === today) who = house;
+            if (d > today && next === null && house !== who) next = d;
         }
-        if (cap) cap.textContent = shots[i].getAttribute('data-caption') || '';
+        td.style.background = who === 'a' ? 'var(--indigo)' : 'var(--pink)';
+        tt.innerHTML = '<b>Today: ' + NAMES[who] + '</b>' + (next ? ' · next handoff on the ' + next : '');
+        if (window.umami && window.umami.track) window.umami.track('hero-rotina-' + key);
     }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function play() { if (reduce) return; stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
+    var chips = document.querySelectorAll('.chip');
+    chips.forEach(function (c) { c.addEventListener('click', function () { chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); }); render(c.getAttribute('data-preset')); }); });
+    render('7-7');
 
-    dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); play(); }); });
-    root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', play);
-    dotsBox.addEventListener('focusin', stop);
-    dotsBox.addEventListener('focusout', play);
-    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+    // ── parallax do card (só com mouse e largura de mesa) ──
+    var stage = document.getElementById('stage'), card = stage.querySelector('.cal-card');
+    if (window.matchMedia('(hover: hover) and (min-width: 861px)').matches && !reduce) {
+        stage.addEventListener('mousemove', function (e) {
+            var r = stage.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, yy = (e.clientY - r.top) / r.height - .5;
+            card.style.setProperty('--ry', (-10 + x * 16) + 'deg'); card.style.setProperty('--rx', (5 - yy * 12) + 'deg');
+        });
+        stage.addEventListener('mouseleave', function () { card.style.removeProperty('--ry'); card.style.removeProperty('--rx'); });
+    }
 
-    var x0 = null;
-    root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
-    root.addEventListener('touchend', function (e) {
-        if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0;
-        if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
-        x0 = null; play();
-    }, { passive: true });
+    // ── cena isométrica ──
+    var iso = document.getElementById('iso'), wrap = document.getElementById('isoWrap'), scale = document.getElementById('isoScale'), path = document.getElementById('path'), kid = document.getElementById('kid');
+    var pts = [[150,110],[190,140],[230,170],[270,200],[310,240],[350,280],[310,240],[270,200],[230,170],[190,140]];
+    var tiles = [];
+    for (var i = 0; i < 6; i++) { var t = document.createElement('div'); t.className = 'tile ' + (i < 3 ? 'a' : 'b'); t.style.left = pts[i][0] + 'px'; t.style.top = pts[i][1] + 'px'; path.appendChild(t); tiles.push(t); }
+    var step = 0;
+    function walk() { var p = pts[step % pts.length]; kid.style.left = p[0] + 'px'; kid.style.top = p[1] + 'px';
+        tiles.forEach(function (tl, k) { tl.classList.toggle('hot', pts[k][0] === p[0] && pts[k][1] === p[1]); }); step++; }
+    walk(); if (!reduce) setInterval(walk, 900);
+    function fit() { var w = wrap.getBoundingClientRect().width; scale.style.setProperty('--s', Math.min(1, w / 680)); }
+    fit(); window.addEventListener('resize', fit);
+    var rz = -40, dragging = false, sx = 0, srz = -40;
+    function setRz(v) { rz = Math.max(-80, Math.min(0, v)); iso.style.setProperty('--rz', rz + 'deg'); }
+    wrap.addEventListener('pointerdown', function (e) { dragging = true; sx = e.clientX; srz = rz; wrap.setPointerCapture(e.pointerId); });
+    wrap.addEventListener('pointermove', function (e) { if (dragging) setRz(srz + (e.clientX - sx) * .25); });
+    wrap.addEventListener('pointerup', function () { dragging = false; }); wrap.addEventListener('pointercancel', function () { dragging = false; });
+    if (!reduce) { (function sway(ts) { if (!dragging) setRz(-40 + Math.sin(ts / 2600) * 6); requestAnimationFrame(sway); })(0); }
 
-    show(0);
-    play();
+    // ── abas do tour ──
+    var tabs = document.querySelectorAll('.tab');
+    tabs.forEach(function (t) { t.addEventListener('click', function () {
+        tabs.forEach(function (o) { o.setAttribute('aria-selected', o === t ? 'true' : 'false'); o.setAttribute('tabindex', o === t ? '0' : '-1'); });
+        document.querySelectorAll('.pane').forEach(function (p) { p.classList.toggle('on', p.id === t.getAttribute('aria-controls')); });
+        if (window.umami && window.umami.track) window.umami.track('tour-aba-' + t.getAttribute('data-key'));
+    }); });
+
+    // ── menu do celular ──
+    var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+    function closeMenu() { mmenu.hidden = true; burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', function () {
+        var open = mmenu.hidden; mmenu.hidden = !open; burger.setAttribute('aria-expanded', open ? 'true' : 'false'); document.body.style.overflow = open ? 'hidden' : '';
+        if (open && window.umami && window.umami.track) window.umami.track('menu-mobile');
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mmenu.hidden) closeMenu(); });
+
+    // ── barra fixa (celular): aparece depois do hero, some perto do rodapé ──
+    var sticky = document.getElementById('stickyCta'), hero = document.querySelector('.hero'), foot = document.querySelector('footer');
+    if (window.IntersectionObserver) {
+        var heroOut = false, footIn = false;
+        function upd() { sticky.classList.toggle('on', heroOut && !footIn); }
+        new IntersectionObserver(function (es) { es.forEach(function (e) { heroOut = !e.isIntersecting; }); upd(); }, { threshold: 0 }).observe(hero);
+        new IntersectionObserver(function (es) { es.forEach(function (e) { footIn = e.isIntersecting; }); upd(); }, { threshold: 0 }).observe(foot);
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 })();
 </script>
 
@@ -1379,44 +1242,6 @@
         new IntersectionObserver(function (entries) {
             entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
         }, { threshold: 0.35 }).observe(root);
-    } else {
-        play();
-    }
-})();
-</script>
-
-<script>
-// L-19: o guia de instalação no iPhone, desenhado. Isto aqui NÃO é um player e
-// não carrega nada — o HTML já nasce no quadro 1 (o dedo sobre o botão
-// Compartilhar), que é o único que precisa estar de pé parado, porque é ele que
-// responde "qual botão é esse". O resto é ganho.
-// prefers-reduced-motion vira "não avança sozinho", exatamente como a sequência
-// do L-17 logo acima — mesmo precedente, mesma expectativa.
-(function () {
-    var root = document.getElementById('iosd');
-    if (!root) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var steps = Array.prototype.slice.call(document.querySelectorAll('#iosd-steps li'));
-    var BEATS = ['is-b0', 'is-b1', 'is-b2', 'is-b3', 'is-b4', 'is-b5'];
-    // b3 (virar a chave) e b4 (Adicionar) são o MESMO passo escrito, o 4 — e o
-    // último quadro ainda é ele: confirmar.
-    var STEP_OF = [0, 1, 2, 3, 3, 3];
-    var i = 1, timer = null, DELAY = 2600;
-
-    function show(n) {
-        i = (n + BEATS.length) % BEATS.length;
-        for (var k = 0; k < BEATS.length; k++) root.classList.toggle(BEATS[k], k === i);
-        for (var s = 0; s < steps.length; s++) steps[s].classList.toggle('is-now', s === STEP_OF[i]);
-    }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function play() { stop(); timer = setInterval(function () { show(i + 1); }, DELAY); }
-
-    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
-    if (window.IntersectionObserver) {
-        new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
-        }, { threshold: 0.4 }).observe(root);
     } else {
         play();
     }

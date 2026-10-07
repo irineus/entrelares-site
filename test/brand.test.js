@@ -79,6 +79,18 @@ test('the old palette does not survive as a literal inside any page CSS, except 
   assert.equal(readFileSync(join(PUBLIC, 'css', 'materiais.css'), 'utf8').match(stale), null, 'materiais.css uses the tokens');
 });
 
+// Phase 1 (07/10/2026): the homes are generated from one template with the copy injected, and
+// the first English build shipped `'Dad's home'` inside a script — a syntax error that killed the
+// hero calendar, the tabs and the mobile menu at once, with every structural test green. A browser
+// reports it only in the console, so this lane parses every inline script the way the browser would.
+test('every inline script on every page parses', () => {
+  for (const { file, html } of pages) {
+    for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+      assert.doesNotThrow(() => new Function(m[1]), `${file}: an inline <script> does not parse`);
+    }
+  }
+});
+
 test('no emoji stands in for an icon in the two homes', () => {
   // Pictographs and the flags block; the check marks the CSS draws (✓ ✕) are typography, not icons.
   const emoji = /[\u{1F300}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}\u{2600}-\u{26FF}\u{2B50}\u{2705}]/u;
