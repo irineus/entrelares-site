@@ -175,13 +175,27 @@
         .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
         .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
         @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
     <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
          <style> on purpose: its :root wins over this page's copy of the tokens. -->
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/brand.css" />
 </head>
@@ -230,7 +244,20 @@
 
     <p class="lead">As férias de verão são o maior período fora da rotina do ano: semanas sem escola, que costumam engolir também o Natal e o Ano-Novo. Não existe um jeito certo de dividir. Existem alguns formatos que funcionam — e uma regra que vale para todos: comece pelo calendário da escola.</p>
 
-    <h2>Comece pelo calendário da escola</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#comece-pelo-calendario-da-escola">Comece pelo calendário da escola</a></li>
+            <li><a href="#1-metade-e-metade">1. Metade e metade</a></li>
+            <li><a href="#2-semanas-alternadas">2. Semanas alternadas</a></li>
+            <li><a href="#3-blocos-em-volta-de-uma-viagem">3. Blocos em volta de uma viagem</a></li>
+            <li><a href="#o-que-combinar-alem-das-datas">O que combinar além das datas</a></li>
+            <li><a href="#perguntas-frequentes">Perguntas frequentes</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="comece-pelo-calendario-da-escola">Comece pelo calendário da escola</h2>
     <p>As datas de início e fim das férias mudam de escola para escola, de rede para rede e de ano para ano. Nenhum modelo pronto acerta essas datas por vocês. O primeiro passo é pegar o calendário oficial da escola da criança e marcar o último dia de aula, a volta às aulas e qualquer dia letivo, de recuperação ou de reunião que caia no meio.</p>
     <p>Com o período exato na mão, dá para contar os dias e dividir de verdade — sem descobrir em janeiro que uma das metades era maior. Se há irmãos em escolas diferentes, os calendários podem não coincidir: decidam qual deles organiza a divisão.</p>
 
@@ -243,14 +270,19 @@
       <figcaption>Metade e metade ou semanas alternadas: a conta só fecha com as datas da escola na mão.</figcaption>
     </figure>
 
-    <h2>1. Metade e metade</h2>
+    <h2 id="1-metade-e-metade">1. Metade e metade</h2>
     <p>O período é dividido em duas partes iguais: a primeira com um responsável, a segunda com o outro, invertendo no ano seguinte. É o formato mais fácil de explicar à criança e o que mais abre espaço para viagens longas.</p>
     <p>Atenção ao meio do caminho: se o Natal e o Ano-Novo caem dentro de uma das metades, quem fica com ela leva junto as duas festas. Muitas famílias resolvem combinando <a href="/blog/natal-e-ano-novo-guarda-compartilhada">as festas à parte</a>, por cima da divisão das férias.</p>
 
-    <h2>2. Semanas alternadas</h2>
+    
+    <aside class="cta-inline" aria-label="Entrelares">
+        <p><strong>Leve o combinado para o calendário.</strong> No app Entrelares os dois responsáveis veem os mesmos dias, uma troca só vale com a aprovação do outro, e tudo fica registrado com data e hora.</p>
+        <p class="cta-inline-acts"><a class="btn btn-primary" data-umami-event="cta-artigo" href="https://web.entrelares.app/register">Criar conta grátis</a> <a class="cta-inline-alt" data-umami-event="gerador-artigo" href="/ferramentas/gerador-de-rotina-de-guarda">ou simule a rotina sem cadastro →</a></p>
+    </aside>
+<h2 id="2-semanas-alternadas">2. Semanas alternadas</h2>
     <p>As férias seguem em blocos de uma semana, alternando entre as casas. Ninguém passa semanas seguidas longe da criança. O custo é logístico: mais trocas e menos espaço para uma viagem longa. Uma variação comum são blocos de duas semanas, meio-termo entre a semana e a metade inteira.</p>
 
-    <h2>3. Blocos em volta de uma viagem</h2>
+    <h2 id="3-blocos-em-volta-de-uma-viagem">3. Blocos em volta de uma viagem</h2>
     <p>Quando um dos responsáveis já tem uma viagem marcada, a divisão começa por ela: o bloco da viagem fica com quem viaja, e o restante do período é distribuído em volta para fechar a conta. No ano seguinte, a outra casa tem a prioridade de escolher o seu bloco primeiro.</p>
     <p>Combinem também <strong>até quando</strong> cada um precisa informar as datas da viagem. Sem prazo, quem decide por último fica com o que sobra — e a discussão começa em dezembro.</p>
 
@@ -263,7 +295,7 @@
     </table>
     </div>
 
-    <h2>O que combinar além das datas</h2>
+    <h2 id="o-que-combinar-alem-das-datas">O que combinar além das datas</h2>
     <ul>
         <li><strong>Trocas:</strong> o dia, o horário e o lugar da troca no início e no fim de cada bloco;</li>
         <li><strong>Quem leva e quem busca</strong>, principalmente quando há viagem;</li>
@@ -282,7 +314,7 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register" data-umami-event="cta-signup">Criar conta grátis</a>
     </div>
 
-    <h2>Perguntas frequentes</h2>
+    <h2 id="perguntas-frequentes">Perguntas frequentes</h2>
     <section class="faq" aria-label="Perguntas frequentes">
         <h3>Como dividir as férias escolares na guarda compartilhada?</h3>
         <p>Os formatos mais comuns são metade e metade, semanas alternadas e blocos montados em volta de uma viagem. Em todos, o primeiro passo é o calendário oficial da escola da criança, porque as datas mudam de uma escola para outra, de uma rede para outra e de um ano para o outro.</p>
@@ -294,7 +326,7 @@
         <p>Não necessariamente. A divisão igual é comum, mas o que importa é um combinado claro, com dias e horários de troca escritos, que caiba na rotina das duas casas. Se já existe um acordo de guarda, ele é o ponto de partida; para mudá-lo, converse com um advogado.</p>
     </section>
 
-    <h2>Resumo</h2>
+    <h2 id="resumo">Resumo</h2>
     <p>Comece pelo calendário oficial da escola, conte os dias e escolha um formato — metade e metade, semanas alternadas ou blocos em volta de uma viagem. Combine as festas à parte, defina prazos para avisar viagens e escreva os horários de troca. Assim as férias deixam de ser a temporada das discussões.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>

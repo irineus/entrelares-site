@@ -4,8 +4,10 @@
    the per-page `:root` copies (no build step here, so the pages keep their copies as the
    fallback that renders if this file ever fails to load). What lives here:
 
-   1. the two self-hosted fonts (Fraunces for headings, Inter for body — Inter is the app's
+   1. the two self-hosted fonts (Newsreader for headings, Inter for body — Inter is the app's
       font, so landing and product read as one), latin subset, variable, `font-display: swap`;
+      Newsreader replaced Fraunces on 07/10/2026 (L-51): Fraunces' descending f and curly j read
+      as crooked on the owner's phone, and no axis in the served subset removes them;
    2. the palette — cream background, plum ink, the two "house" colours the app's calendar
       already paints (blue / rose) as the brand colours, amber for "today";
    3. the same tokens for dark mode (`prefers-color-scheme: dark`);
@@ -18,11 +20,11 @@
    test/brand.test.js pins the link order, the fonts on disk and the absence of emoji icons. */
 
 @font-face {
-  font-family: "Fraunces";
+  font-family: "Newsreader";
   font-style: normal;
   font-weight: 500 700;
   font-display: swap;
-  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  src: url("/fonts/newsreader-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -37,7 +39,7 @@
 :root {
   color-scheme: light dark;
 
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* surfaces */
@@ -106,7 +108,7 @@
 
 /* ── Type ─────────────────────────────────────────────────────────────────── */
 body { font-family: var(--font-body); }
-h1, h2, h3, .price-card .price { font-family: var(--font-display); letter-spacing: -0.015em; }
+h1, h2, h3, .price-card .price { font-family: var(--font-display); letter-spacing: -0.01em; }
 h1, h2 { font-weight: 700; }
 h3 { font-weight: 600; }
 .price-card .price { font-weight: 700; letter-spacing: -0.02em; }

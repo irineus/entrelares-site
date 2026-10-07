@@ -139,6 +139,9 @@ for (const { file, html } of withMenu) {
       'para-toda-familia.html': '/en/for-every-family',
       'en/index.html': '/',
       'en/for-every-family.html': '/para-toda-familia',
+      // L-51: the install page has an English sibling.
+      'instalar.html': '/en/install',
+      'en/install.html': '/instalar',
     };
     if (isEn(file)) {
       assert.equal(aria, 'Language');

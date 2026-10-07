@@ -31,7 +31,7 @@
     <meta property="og:title" content="Entrelares — o app do calendário de convivência" />
     <meta property="og:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. O essencial é grátis." />
     <meta property="og:url" content="https://entrelares.app/" />
-    <meta property="og:image" content="https://entrelares.app/og-cover.png?v=3" />
+    <meta property="og:image" content="https://entrelares.app/og-cover.png?v=4" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
@@ -41,7 +41,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Entrelares — o app do calendário de convivência" />
     <meta name="twitter:description" content="De quem é o dia hoje? Calendário de convivência, trocas com aprovação dos dois e histórico completo. O essencial é grátis." />
-    <meta name="twitter:image" content="https://entrelares.app/og-cover.png?v=3" />
+    <meta name="twitter:image" content="https://entrelares.app/og-cover.png?v=4" />
 
     <script type="application/ld+json" data-param-jsonld="billing.price_monthly_cents">
     {
@@ -480,6 +480,14 @@
         .price-guarantee { max-width: 640px; margin: 22px auto 0; background: var(--bg-tint); border: 1px solid var(--line-tint); border-radius: 14px; padding: 14px 18px; text-align: center; font-size: 14px; }
         .price-note { text-align: center; font-size: 13px; color: var(--muted); max-width: 640px; margin: 18px auto 0; }
 
+
+        /* L-51: the fine print (promo validity, Play price, Pix, Asaas, CDC) lives behind one line. */
+        .price-more { max-width: 640px; margin: 14px auto 0; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+        .price-more summary { cursor: pointer; padding: 12px 16px; font-size: 14px; font-weight: 600; color: var(--indigo); list-style: none; display: flex; justify-content: space-between; }
+        .price-more summary::-webkit-details-marker { display: none; }
+        .price-more summary::after { content: "+"; color: var(--muted); }
+        .price-more[open] summary::after { content: "–"; }
+        .price-more .price-fine, .price-more .price-note { padding: 0 16px 14px; margin: 0; text-align: left; font-size: 13.5px; color: var(--muted); }
         /* ── FAQ ── */
         .faq-list { max-width: 760px; }
         details.faq-item, .faq-list > details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin-bottom: 10px; }
@@ -572,7 +580,7 @@
     </style>
     <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
          <style> on purpose: its :root wins over this page's copy of the tokens. -->
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/brand.css" />
 </head>
@@ -956,9 +964,7 @@
                     <li>Calendário de convivência para até <span data-param="free_caregivers" data-format="int">2</span> responsáveis</li>
                     <li>Trocas de dia com aprovação dos dois</li>
                     <li>Histórico imutável de todas as decisões</li>
-                    <li>Notificações em tempo real no celular</li>
                     <li>Planejamento de até <span data-param="calendar_months_free" data-format="months">6 meses</span> à frente</li>
-                    <li>Nota do dia na agenda da criança</li>
                     <li>Visualizador: quem acompanha o plano sem editar (ex.: a avó)</li>
                 </ul>
                 <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Criar conta grátis</a>
@@ -968,19 +974,14 @@
                 <div class="price"><span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span><small>/mês</small></div>
                 <p class="price-cycle">ou <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/ano<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=" — "> — 2 meses grátis</span></p>
                 <p class="price-promo" data-param-show="landing.promo_price_label"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg>Preço de lançamento até 31/12/2026</p>
-                <p class="price-cycle">Promoção válida até 31/12/2026, só na assinatura pela versão web (web.entrelares.app). Pelo Google Play, no app Android: R$ 5,99/mês ou R$ 59,90/ano.</p>
                 <p>Para famílias que precisam de mais gente e mais alcance — cobre <strong>todos</strong> os responsáveis.</p>
                 <ul>
                     <li>Avós, babá e outros cuidadores além do casal</li>
-                    <li>Relatório do histórico em PDF (resumo consolidado do período)</li>
                     <li>Planejamento além de <span data-param="calendar_months_free" data-format="months">6 meses</span> (até <span data-param="calendar_months_premium" data-format="int">24</span>)</li>
-                    <li>Modo administrador para corrigir dias passados</li>
                     <li>Agenda completa da criança: escola, saúde, remédios e atividades, com rotinas e lembretes</li>
                     <li>Despesas compartilhadas, com o acerto confirmado por quem recebe</li>
                     <li>Conversa da família, permanente e com leitura confirmada</li>
                     <li>Relatório em PDF verificável por QR code</li>
-                    <li>Mais visualizadores</li>
-                    <li>Tudo do plano Gratuito, claro</li>
                 </ul>
                 <a class="btn btn-primary" data-umami-event="cta-premium" href="https://web.entrelares.app">Assinar no app</a>
             </div>
@@ -989,7 +990,11 @@
              the Terms (§ arrependimento, CDC art. 49) already promise, operated via
              suporte@. Pix emphasized: no card data ever leaves the payer's bank app. -->
         <p class="price-guarantee"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><strong>Garantia de 7 dias</strong>: assinou e se arrependeu? Em até 7 dias após o pagamento, devolvemos <strong>o valor integral</strong> (art. 49 do CDC) — é só escrever para <a href="mailto:suporte@entrelares.app">suporte@entrelares.app</a>.</p>
-        <p class="price-note"><strong>O preço promocional vale até 31/12/2026 e só para a assinatura pela versão web</strong> (web.entrelares.app): pague por <strong>Pix</strong> — QR code pelo aplicativo do seu banco, <strong>sem informar dados de cartão</strong> — ou por cartão de crédito, sempre em ambiente seguro do provedor (Asaas). No aplicativo Android, a assinatura é feita pelo <strong>Google Play</strong>, na sua conta Google, a <strong>R$ 5,99/mês ou R$ 59,90/ano</strong>. Cancele quando quiser: o período pago continua valendo até o fim e <strong>nenhum dado é apagado</strong> — os recursos Premium apenas voltam a ficar bloqueados. A assinatura é feita dentro do app, na página da família, por um administrador.</p>
+        <details class="price-more">
+            <summary>Detalhes de preço e pagamento</summary>
+            <p class="price-fine">Promoção válida até 31/12/2026, só na assinatura pela versão web (web.entrelares.app). Pelo Google Play, no app Android: R$ 5,99/mês ou R$ 59,90/ano.</p>
+            <p class="price-note"><strong>O preço promocional vale até 31/12/2026 e só para a assinatura pela versão web</strong> (web.entrelares.app): pague por <strong>Pix</strong> — QR code pelo aplicativo do seu banco, <strong>sem informar dados de cartão</strong> — ou por cartão de crédito, sempre em ambiente seguro do provedor (Asaas). No aplicativo Android, a assinatura é feita pelo <strong>Google Play</strong>, na sua conta Google, a <strong>R$ 5,99/mês ou R$ 59,90/ano</strong>. Cancele quando quiser: o período pago continua valendo até o fim e <strong>nenhum dado é apagado</strong> — os recursos Premium apenas voltam a ficar bloqueados. A assinatura é feita dentro do app, na página da família, por um administrador.</p>
+        </details>
         <!-- L-14 slot, opened by app item T-59 when the Play listing went public. -->
         <p style="text-align:center; margin-top:18px;" data-param-show="landing.play_badge">
             <a href="https://play.google.com/store/apps/details?id=com.entrelares.app&amp;referrer=utm_source%3Dentrelares.app%26utm_medium%3Dlanding%26utm_campaign%3Dprecos" rel="noopener" data-umami-event="play-badge">
