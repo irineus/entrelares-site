@@ -330,9 +330,13 @@
         /* ── Cena isométrica "duas casas" (CSS 3D, sem biblioteca) ── */
         .scene-sec { background: var(--card); border-bottom: 1px solid var(--line); overflow: hidden; }
         .scene-sec .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: center; }
-        .iso-wrap { position: relative; min-width: 0; height: 460px; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; }
+        /* The scene is a 460 px square scaled down to the column. It is centred by absolute
+           position + translate(-50%, -50%), NOT by grid: a grid track cannot shrink below the
+           square's 460 px, so on a phone the item sat in a track wider than the column and
+           overflowed down and to the right (07/10/2026, the owner's print). */
+        .iso-wrap { position: relative; min-width: 0; height: 460px; cursor: grab; touch-action: pan-y; user-select: none; }
         .iso-wrap:active { cursor: grabbing; }
-        .iso-scale { transform: scale(var(--s, 1)); transform-origin: center; }
+        .iso-scale { position: absolute; left: 50%; top: 50%; width: 460px; height: 460px; transform: translate(-50%, -50%) scale(var(--s, 1)); transform-origin: center; }
         .iso { position: relative; width: 460px; height: 460px; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(var(--rz, -40deg)); transition: transform .08s linear; }
         .ground { position: absolute; inset: 0; border-radius: 40px; background: var(--floor);
             background-image: linear-gradient(90deg, var(--floor-line) 1px, transparent 1px), linear-gradient(0deg, var(--floor-line) 1px, transparent 1px); background-size: 46px 46px; box-shadow: 0 40px 0 -10px rgba(var(--ink-rgb), .08); }
@@ -359,7 +363,8 @@
         .kid { position: absolute; width: 26px; height: 26px; margin: 4px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE0B2, var(--accent) 70%); transform: translateZ(24px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); transition: left .6s cubic-bezier(.5,0,.3,1.2), top .6s cubic-bezier(.5,0,.3,1.2); box-shadow: 0 10px 14px rgba(42,31,51,.25); }
         .kid::after { content: ""; position: absolute; left: 7px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: #2A1F33; box-shadow: 8px 0 0 #2A1F33; }
         .label3d { position: absolute; font: 600 12px var(--font-body, sans-serif); color: var(--ink); background: var(--card); border: 1px solid var(--line); padding: 4px 9px; border-radius: 999px; transform: translateZ(140px) rotateZ(calc(-1 * var(--rz, -40deg))) rotateX(-58deg); white-space: nowrap; box-shadow: 0 6px 14px rgba(var(--ink-rgb), .14); }
-        .scene-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+        /* A whisper under the scene, not a caption: what the tiles mean is for the visitor to notice. */
+        .scene-note { position: absolute; left: 0; right: 0; bottom: 4px; margin: 0; text-align: center; font-size: 11px; color: var(--muted); opacity: .5; pointer-events: none; }
 
         /* ── Problema mostrado: a conversa que vira registro ── */
         .problem .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
@@ -539,7 +544,7 @@
             .f1 { left: auto; right: 6px; top: -20px; }
             .f2, .f3 { display: none; }
             .scene-sec .wrap, .problem .wrap, .pane, .founder-row { grid-template-columns: 1fr; }
-            .iso-wrap { height: 250px; }
+            .iso-wrap { height: 280px; }
             .steps { grid-template-columns: 1fr; }
             .shot3d { transform: none !important; margin-inline: auto; }
             .pane .shot3d { animation: none; }
@@ -683,7 +688,6 @@
             <p class="eyebrow">The idea</p>
             <h2>Two homes. One clear path between them.</h2>
             <p class="section-lead" style="margin-bottom:0">The child goes back and forth. What cannot go back and forth is the agreement: whose day each day is, when it changes, and who approved the change. That is what Entrelares keeps — identical for both homes.</p>
-            <p class="scene-note">Each tile is one day at one home. Drag the scene to rotate it.</p>
         </div>
         <div class="iso-wrap" id="isoWrap" aria-hidden="true">
             <div class="iso-scale" id="isoScale">
@@ -703,6 +707,7 @@
                     <div class="kid" id="kid"></div>
                 </div>
             </div>
+            <p class="scene-note">Drag to rotate</p>
         </div>
     </div>
 </section>
