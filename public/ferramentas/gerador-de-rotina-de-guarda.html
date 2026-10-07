@@ -272,9 +272,12 @@
                     <option value="7-7" selected>Semana alternada (7/7)</option>
                     <option value="14-14">Quinzenal (14/14)</option>
                     <option value="1-1">Dia sim, dia não (1/1)</option>
+                    <option value="3-11">Fins de semana alternados (sex–dom)</option>
+                    <option value="3-2-1-6-1-1">Fins de semana alternados + pernoite de quarta</option>
                     <option value="custom">Customizado (eu defino os blocos)</option>
                 </select>
                 <span class="hint">Não sabe qual escolher? <a href="/blog/modelos-de-rotina-guarda-compartilhada">Veja o guia de modelos</a>.</span>
+                <span class="hint" id="g-anchor-note" hidden>Nos fins de semana alternados a prévia começa na <strong>sexta-feira</strong> anterior (ou na própria data, se for sexta) — é assim que o app monta esse modelo.</span>
             </div>
             <div class="field g-custom" hidden>
                 <label for="g-dias-1">Dias com Responsável 1</label>
@@ -393,7 +396,7 @@
 
 <script type="module">
     import {
-        buildSchedule, customBlocks, countDays, encodeRoutine, decodeRoutine,
+        buildSchedule, customBlocks, countDays, anchorStart, FRIDAY_ANCHORED, encodeRoutine, decodeRoutine,
     } from "/js/gerador-rotina.js";
 
     const $ = (id) => document.getElementById(id);
@@ -436,6 +439,8 @@
         "7-7": "Semana alternada (7/7)",
         "14-14": "Quinzenal (14/14)",
         "1-1": "Dia sim, dia não (1/1)",
+        "3-11": "Fins de semana alternados (sex–dom)",
+        "3-2-1-6-1-1": "Fins de semana alternados + pernoite de quarta",
     };
 
     // Customizado: reveal the block fields, hide "Quem começa" (the fields
@@ -508,7 +513,11 @@
 
     function show(r) {
         const [y, m, d] = r.start.split("-").map(Number);
-        const start = new Date(y, m - 1, d);
+        // L-50: the weekend presets open on a Friday, like the app's wizard — the preview starts
+        // on the Friday on or before the chosen date, and the note under the model says so.
+        const start = anchorStart(r.model, new Date(y, m - 1, d));
+        const anchorNote = document.getElementById("g-anchor-note");
+        if (anchorNote) anchorNote.hidden = !FRIDAY_ANCHORED.includes(r.model);
         const days = r.weeks * 7;
         const names = [r.names[0] || "Responsável 1", r.names[1] || "Responsável 2"];
         let plan, modelLabel;

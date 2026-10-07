@@ -1,0 +1,47 @@
+<section id="pricing">
+    <div class="wrap">
+        <h2 style="text-align:center">Pricing</h2>
+        <p class="section-lead" style="text-align:center; margin-left:auto; margin-right:auto;">The essentials are <strong>free</strong>. Premium unlocks the advanced features — <strong>one subscription per family</strong>, not per person.</p>
+        <div class="price-grid">
+            <div class="price-card free">
+                <div class="price-badge">Free</div>
+                <div class="price">R$ 0<small>/month</small></div>
+                <p>Everything two parents need to organize their children's time — no credit card, no catch.</p>
+                <ul>
+                    <li>Parenting calendar for up to <span data-param="free_caregivers" data-format="int">2</span> caregivers</li>
+                    <li>Day swaps approved by both</li>
+                    <li>Immutable history of every decision</li>
+                    <li>Planning up to <span data-param="calendar_months_free" data-format="months">6 months</span> ahead</li>
+                    <li>Viewer: someone who follows the plan without editing it (e.g. a grandmother)</li>
+                </ul>
+                <a class="btn btn-ghost" data-umami-event="cta-signup" href="https://web.entrelares.app/register">Create a free account</a>
+            </div>
+            <div class="price-card">
+                <div class="price-badge">Premium</div>
+                <div class="price"><span data-param="billing.price_monthly_cents" data-format="brl">R$ 5,49</span><small>/month</small></div>
+                <p class="price-cycle">or <span data-param="billing.price_annual_cents" data-format="brl">R$ 54,90</span>/year<span data-param="billing.price_annual_cents" data-format="free_months" data-prefix=" — "> — 2 months free</span></p>
+                <p class="price-promo" data-param-show="landing.promo_price_label"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg>Launch price until Dec 31, 2026</p>
+                <p>For families that need more people and more range — it covers <strong>every</strong> caregiver.</p>
+                <ul>
+                    <li>Grandparents, nanny and other caregivers beyond the couple</li>
+                    <li>Planning beyond <span data-param="calendar_months_free" data-format="months">6 months</span> (up to <span data-param="calendar_months_premium" data-format="int">24</span>)</li>
+                    <li>The child's full agenda: school, health, medicine and activities, with routines and reminders</li>
+                    <li>Shared expenses, with settle-ups confirmed by whoever receives them</li>
+                    <li>A family chat that is permanent, with read receipts</li>
+                    <li>A PDF report verifiable by QR code</li>
+                </ul>
+                <a class="btn btn-primary" data-umami-event="cta-premium" href="https://web.entrelares.app">Subscribe in the app</a>
+            </div>
+        </div>
+        <!-- L-14 mirror: the 7-day guarantee, which the Terms already promise (right of
+             withdrawal, article 49 of the Brazilian Consumer Code), operated via suporte@. -->
+        <p class="price-guarantee"><svg class="h-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><strong>7-day guarantee</strong>: subscribed and changed your mind? Within 7 days of the payment we refund <strong>the full amount</strong> (article 49 of the Brazilian Consumer Code) — just write to <a href="mailto:suporte@entrelares.app">suporte@entrelares.app</a>.</p>
+        <details class="price-more">
+            <summary>Price and payment details</summary>
+            <p class="price-fine">Promotion valid until December 31, 2026, only when subscribing on the web version (web.entrelares.app). On Google Play, in the Android app: R$ 5,99/month or R$ 59,90/year.</p>
+            <p class="price-note"><strong>Prices are in Brazilian reais (R$) and charged in Brazil</strong> — we don't quote a converted amount the checkout couldn't honor. <strong>The promotional price is valid until December 31, 2026, and applies only to subscriptions made on the web version</strong> (web.entrelares.app): payment is by <strong>Pix</strong> (Brazil's instant payment system — a QR code in your banking app, <strong>no card details</strong>) or credit card, always in the provider's secure environment (Asaas), so it works best with a Brazilian payment method. In the Android app, the subscription goes through <strong>Google Play</strong>, on your Google account, at <strong>R$ 5,99/month or R$ 59,90/year</strong>. <strong>The free plan needs no payment method at all</strong> and works anywhere with a browser. Cancel whenever you like: the period you paid for runs to the end and <strong>no data is deleted</strong> — the Premium features simply lock again. The subscription is made inside the app, on the family page, by an administrator.</p>
+        </details>
+        <!-- L-16: prices are shown in BRL on purpose — the checkout charges in reais and
+             cannot honour a converted figure. Said plainly instead of hidden. -->
+    </div>
+</section>

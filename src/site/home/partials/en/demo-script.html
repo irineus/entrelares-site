@@ -1,0 +1,73 @@
+<script>
+// Demo "o histórico sendo escrito" (L-17): sequência dirigida sobre os frames
+// reais do app. Não é um player — os três passos já estão legíveis parados, o
+// recorte do primeiro beat vem inline no HTML, e isto aqui só acrescenta o
+// avanço automático. Sem JS, sem movimento e sem nada quebrado.
+// Autoplay só quando a seção está à vista: ela mora abaixo da dobra, e uma
+// sequência que já terminou antes de o visitante chegar não mostra nada.
+(function () {
+    var root = document.getElementById('demo');
+    if (!root) return;
+
+    var ring = root.querySelector('.demo-ring');
+    var frames = Array.prototype.slice.call(root.querySelectorAll('.demo-frame'));
+    var steps = Array.prototype.slice.call(root.querySelectorAll('.demo-steps button'));
+    if (!ring || steps.length < 2) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, timer = null, DELAY = 3800;
+
+    function show(n) {
+        i = (n + steps.length) % steps.length;
+        var b = steps[i];
+        var f = parseInt(b.getAttribute('data-frame'), 10) || 0;
+        var hl = (b.getAttribute('data-hl') || '').split(',');
+
+        for (var k = 0; k < steps.length; k++) steps[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+        for (var j = 0; j < frames.length; j++) frames[j].classList.toggle('is-active', j === f);
+        if (hl.length === 4) {
+            ring.style.left = hl[0] + '%';
+            ring.style.top = hl[1] + '%';
+            ring.style.width = hl[2] + '%';
+            ring.style.height = hl[3] + '%';
+        }
+
+        var bar = b.querySelector('.demo-bar i');
+        if (!bar) return;
+        bar.style.transition = 'none';
+        bar.style.width = '0';
+        if (timer) {
+            void bar.offsetWidth; // reflow: sem isto a barra não recomeça do zero
+            bar.style.transition = 'width ' + DELAY + 'ms linear';
+            bar.style.width = '100%';
+        }
+    }
+    function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+        root.classList.remove('is-playing');
+    }
+    function play() {
+        if (reduce) return;
+        stop();
+        root.classList.add('is-playing');
+        timer = setInterval(function () { show(i + 1); }, DELAY);
+        show(i);
+    }
+
+    steps.forEach(function (b, k) { b.addEventListener('click', function () { show(k); play(); }); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', play);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', play);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+
+    show(0);
+    if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
+        }, { threshold: 0.35 }).observe(root);
+    } else {
+        play();
+    }
+})();
+</script>

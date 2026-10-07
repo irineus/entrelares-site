@@ -1,0 +1,46 @@
+        /* ── Header ─────────────────────────────────────────── */
+        header {
+            position: sticky; top: 0; z-index: 50;
+            background: color-mix(in srgb, var(--bg) 92%, transparent);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
+        }
+        .nav { display: flex; align-items: center; gap: 12px; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--ink); text-decoration: none; }
+        .brand img { width: 32px; height: 32px; border-radius: 8px; }
+        /* Menu numa linha só, na largura do conteúdo (.wrap, 1060px): marca à esquerda,
+           links centralizados no espaço do meio, idioma + botão à direita. Nada quebra; os
+           itens secundários (.nav-opt, depois .nav-opt2) saem antes de apertar — a seção
+           continua na página, só o atalho some. As outras páginas copiam este bloco
+           (test/menu.test.js prende as cópias). */
+        .brand, .nav .btn, .nav-links a { white-space: nowrap; }
+        .brand, .nav .btn { flex-shrink: 0; }
+        .nav-links { display: flex; flex: 1; justify-content: center; align-items: center; gap: 16px; margin: 0 12px; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+        @media (max-width: 1180px) { .nav-links .nav-opt { display: none; } }
+        @media (max-width: 980px) { .nav-links .nav-opt2 { display: none; } }
+        .nav-links a:hover { color: var(--ink); }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 22px; border-radius: 10px; font-size: 15px; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none; transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.35); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(var(--brand-rgb), 0.4); }
+        .btn-ghost { background: transparent; color: var(--indigo); border: 1px solid var(--indigo); }
+        /* CTA do header: pílula enxuta e elegante, visível em toda a navegação */
+        .nav .btn { margin-left: 0; padding: 9px 20px; border-radius: 999px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(var(--brand-rgb), 0.28); }
+        .nav .btn:hover { box-shadow: 0 5px 14px rgba(var(--brand-rgb), 0.36); }
+        .cta-short { display: none; }
+
+        /* ── Language switch (L-16) ─────────────────────────── */
+        /* Lives OUTSIDE .nav-links on purpose: those links are hidden on mobile,
+           and the switch has to survive there — it is the only way to /en/. */
+        .lang-switch {
+            display: inline-flex; align-items: center; gap: 2px; flex-shrink: 0;
+            border: 1px solid var(--line); background: var(--card); border-radius: 999px;
+            padding: 3px; font-size: 13px; font-weight: 600;
+        }
+        .lang-switch a, .lang-switch span { padding: 4px 10px; border-radius: 999px; line-height: 1; text-decoration: none; color: var(--muted); }
+        .lang-switch a:hover { color: var(--ink); }
+        .lang-switch .lang-on { background: var(--bg-tint); color: var(--indigo); }
