@@ -1,5 +1,7 @@
 // Phase 0 of the landing redesign (07/10/2026): one token file, two self-hosted fonts.
 //
+// L-51 (07/10/2026): Newsreader replaced Fraunces — its descending f and curly j read as crooked on
+// the owner's phone, and no axis in the served subset removes them.
 // There is no build step, so each page carries its own <style> with a copy of the tokens;
 // /css/brand.css is linked AFTER that block and its :root wins. A page that forgets the link,
 // or links it before its own CSS, silently renders the old slate/indigo palette — which is the
@@ -40,10 +42,10 @@ test('every page links /css/brand.css once, after its inline <style> and inside 
 
 test('the fonts brand.css names are on disk, preloaded by every page, and never fetched from a third party', () => {
   const urls = [...brand.matchAll(/url\("(\/fonts\/[^"]+)"\)/g)].map((m) => m[1]);
-  assert.deepEqual(urls, ['/fonts/fraunces-latin.woff2', '/fonts/inter-latin.woff2']);
+  assert.deepEqual(urls, ['/fonts/newsreader-latin.woff2', '/fonts/inter-latin.woff2']);
   for (const u of urls) {
     assert.ok(existsSync(join(PUBLIC, u)), `${u} is on disk`);
-    assert.ok(existsSync(join(PUBLIC, 'fonts', u.includes('fraunces') ? 'LICENSE-Fraunces.txt' : 'LICENSE-Inter.txt')), 'the OFL licence ships beside the font');
+    assert.ok(existsSync(join(PUBLIC, 'fonts', u.includes('newsreader') ? 'LICENSE-Newsreader.txt' : 'LICENSE-Inter.txt')), 'the OFL licence ships beside the font');
   }
   for (const { file, html } of pages) {
     for (const u of urls) {

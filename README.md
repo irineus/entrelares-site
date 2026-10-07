@@ -51,9 +51,16 @@ or `.git/`, `src/`, `assets-src/` and these docs would be published too. (`ROADM
 ```
 entrelares-site/
 ├── public/                     # the ONLY directory uploaded as site assets
-│   ├── index.html              # landing page (PT-BR): hero slideshow, how-it-works, simulator,
-│   │                           #   founder note (L-06, moved up by L-18), gallery, benefits,
-│   │                           #   pricing, FAQ, #materiais opt-in (L-09)
+│   ├── index.html              # landing page (PT-BR), redesigned by L-49 (07/10/2026): live
+│   │                           #   calendar hero (#gerador), trust strip, CSS-3D "two homes" scene,
+│   │                           #   #porque (chat → record), #como-funciona (3 steps), #registro
+│   │                           #   (L-17 demo), #beneficios (8-tab tour + modules), #toda-familia,
+│   │                           #   #fundador (quote + letter), #instalar (compact; the iOS drawing
+│   │                           #   lives on /instalar), pricing, FAQ, #materiais opt-in (L-09)
+│   ├── instalar.html           # L-49: how to install (Android + the drawn iOS steps, L-19/L-33)
+│   ├── css/brand.css           # L-49/L-51: ONE token file (palette, dark mode, Newsreader + Inter),
+│   │                           #   linked by every page AFTER its inline <style>
+│   ├── fonts/                  # self-hosted WOFF2 (latin) + OFL licences
 │   ├── en/index.html           # L-16: the English version of the conversion path. A SIBLING of
 │   │                           #   index.html, not a template — the design system is copied, so
 │   │                           #   a styling change must be applied to both. No #materiais block.
@@ -317,11 +324,19 @@ implemented across app v1.6.34–1.6.39 and mirrored here.
       L-04, so the blocker is gone; still not done).
 - [ ] **Remaining on-site roadmap:** L-15 (company identity — gated on the CNPJ existing). The
       board is the queue; see the card, not [`ROADMAP.md`](ROADMAP.md), which is history.
-- [x] **Founder note higher + calmer** (**L-18**, 14/09/2026, promoted in #102) — `#fundador` sits
+- [x] **Founder note higher + calmer** (**L-18**, 14/09/2026, promoted in #102) — `#fundador` sat
       right after *Como funciona* + the simulator (`/en/`: after *How it works*), before all of the
       product proof, in one narrow column with more air and regular-weight type (system font, no
       new request). A positioning **bet**: the dated `cta-signup` baseline and the reversal rule
       live on the L-18 card, with a sample floor — the site's traffic (L-25) cannot judge it yet.
+      **Superseded by L-49 (07/10/2026):** the note is now a short quote with the full letter behind
+      a disclosure, placed AFTER the product proof (tour + roles); the L-28 re-read starts from a
+      new baseline.
+- [x] **Landing redesign** (**L-49**, 07/10/2026, in `preview`; polish **L-51**) — `brand.css`
+      tokens (cream, plum, the house colours, dark mode), Newsreader + Inter self-hosted, the home
+      rebuilt around a live calendar and a CSS-3D scene, blog cards + filter, `/rotinas/` mini-grids,
+      generator live preview, mobile menu on every page, `/instalar` + `/en/install`, real captures
+      of Agenda/Despesas/Conversa, OG covers in the new palette. PRs #166–#168 + the L-51 PR.
 - [x] **Responsive blog images** (**L-04**, 13/09/2026) — the four illustrated articles serve
       AVIF, WebP and JPEG at 480/720/1080/1440 px through `<picture>` + `srcset`/`sizes`,
       centre-cropped to the 16:9 the article CSS already showed (the one portrait master was

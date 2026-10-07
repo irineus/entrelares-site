@@ -56,6 +56,7 @@
       "/para-toda-familia",
       // Fase 1 do redesign (07/10/2026): /instalar carrega o selo da Play atrás de landing.play_badge.
       "/instalar",
+      "/en/install",
       "/en/for-every-family"
     ]
   },
@@ -129,6 +130,7 @@
           "/para-toda-familia",
           // Fase 1 do redesign (07/10/2026): /instalar carrega o selo da Play atrás de landing.play_badge.
           "/instalar",
+          "/en/install",
           "/en/for-every-family"
         ]
       },

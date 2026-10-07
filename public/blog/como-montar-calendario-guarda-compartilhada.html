@@ -163,13 +163,27 @@
         .mmenu .mm-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;}
         .mmenu .mm-foot a{border:0;padding:0;font-size:15px;font-weight:500;color:var(--muted);}
         @media(max-width:820px){.burger{display:block;}}
+
+        /* L-51: índice do guia a partir dos h2 do artigo, e um CTA no corpo depois da segunda seção. */
+        .toc{margin:18px 0 28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;}
+        .toc p{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+        .toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7;}
+        .toc a{color:var(--indigo);text-decoration:none;}
+        .toc a:hover{text-decoration:underline;}
+        .cta-inline{margin:34px 0;padding:22px 24px;border-radius:var(--radius);background:var(--bg-tint);border:1px solid var(--line-tint);}
+        .cta-inline p{margin:0 0 12px;color:var(--ink);font-size:16px;}
+        .cta-inline strong{font-family:var(--font-display, Georgia, serif);font-size:19px;font-weight:600;}
+        .cta-inline-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 !important;}
+        .cta-inline .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:600;text-decoration:none;}
+        .cta-inline-alt{font-size:14.5px;font-weight:600;}
+        article h2{scroll-margin-top:84px;}
     </style>
     <!-- L-01: cookieless product analytics (Umami) — pageviews + CTA click events; no cookies, no PII -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <link rel="stylesheet" href="/css/materiais.css" />
     <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
          <style> on purpose: its :root wins over this page's copy of the tokens. -->
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/brand.css" />
 </head>
@@ -218,7 +232,20 @@
 
     <p class="lead">O maior atrito na guarda compartilhada raramente é a lei — é a rotina: saber de quem é o dia, como ficam os feriados e o que fazer quando alguém precisa trocar. Um calendário de convivência claro resolve quase tudo. Veja como montar o seu, passo a passo.</p>
 
-    <h2>O que é o calendário de convivência</h2>
+    
+    <nav class="toc" aria-label="Neste guia">
+        <p>Neste guia</p>
+        <ol>
+            <li><a href="#o-que-e-o-calendario-de-convivencia">O que é o calendário de convivência</a></li>
+            <li><a href="#passo-1-escolha-um-modelo-de-divisao">Passo 1 — Escolha um modelo de divisão</a></li>
+            <li><a href="#passo-2-defina-os-pontos-de-troca">Passo 2 — Defina os pontos de troca</a></li>
+            <li><a href="#passo-3-planeje-feriados-e-datas-especiais">Passo 3 — Planeje feriados e datas especiais</a></li>
+            <li><a href="#passo-4-registre-tudo-e-e-aqui-que-a-maioria-falha">Passo 4 — Registre tudo (e é aqui que a maioria falha)</a></li>
+            <li><a href="#erros-comuns-que-vale-evitar">Erros comuns que vale evitar</a></li>
+            <li><a href="#resumo">Resumo</a></li>
+        </ol>
+    </nav>
+<h2 id="o-que-e-o-calendario-de-convivencia">O que é o calendário de convivência</h2>
     <p>O <strong>calendário de convivência</strong> (também chamado de regime de convivência) é o combinado que define <strong>com quem a criança fica em cada dia</strong>. Ele traduz, no dia a dia, o que os responsáveis acordaram entre si ou o que foi determinado judicialmente. Um bom calendário é <strong>previsível para a criança</strong> e <strong>igual para os dois responsáveis</strong> — sem versões diferentes na cabeça de cada um.</p>
 
     <figure class="post-img">
@@ -230,7 +257,7 @@
       <figcaption>Combinar os dias por escrito é o primeiro passo para acabar com o “de quem é hoje?”.</figcaption>
     </figure>
 
-    <h2>Passo 1 — Escolha um modelo de divisão</h2>
+    <h2 id="passo-1-escolha-um-modelo-de-divisao">Passo 1 — Escolha um modelo de divisão</h2>
     <p>Não existe modelo único: o melhor é o que cabe na rotina de trabalho, escola e distância entre as casas. Os mais comuns são:</p>
     <div class="tbl-wrap">
     <table>
@@ -248,10 +275,15 @@
       <figcaption>Três formas comuns de dividir a semana. Não existe modelo certo — o melhor é o que cabe na rotina de vocês.</figcaption>
     </figure>
 
-    <h2>Passo 2 — Defina os pontos de troca</h2>
+    
+    <aside class="cta-inline" aria-label="Entrelares">
+        <p><strong>Leve o combinado para o calendário.</strong> No app Entrelares os dois responsáveis veem os mesmos dias, uma troca só vale com a aprovação do outro, e tudo fica registrado com data e hora.</p>
+        <p class="cta-inline-acts"><a class="btn btn-primary" data-umami-event="cta-artigo" href="https://web.entrelares.app/register">Criar conta grátis</a> <a class="cta-inline-alt" data-umami-event="gerador-artigo" href="/ferramentas/gerador-de-rotina-de-guarda">ou simule a rotina sem cadastro →</a></p>
+    </aside>
+<h2 id="passo-2-defina-os-pontos-de-troca">Passo 2 — Defina os pontos de troca</h2>
     <p>Decida <strong>quando e onde</strong> a criança passa de uma casa para a outra: na saída da escola? No domingo à noite? Combinar o ponto de troca evita mal-entendidos e reduz o contato tenso entre os adultos. Anote o horário — "domingo às 18h" é melhor que "no fim do domingo".</p>
 
-    <h2>Passo 3 — Planeje feriados e datas especiais</h2>
+    <h2 id="passo-3-planeje-feriados-e-datas-especiais">Passo 3 — Planeje feriados e datas especiais</h2>
     <p>Feriados prolongados, aniversários, Dia das Mães e dos Pais costumam ser a maior fonte de conflito porque fogem da rotina. Combine <strong>com antecedência</strong> e por escrito:</p>
     <ul>
         <li>Feriados e pontes: alternam a cada ano? Seguem o calendário normal?</li>
@@ -260,7 +292,7 @@
         <li>Férias escolares: metade para cada um? Blocos de uma ou duas semanas?</li>
     </ul>
 
-    <h2>Passo 4 — Registre tudo (e é aqui que a maioria falha)</h2>
+    <h2 id="passo-4-registre-tudo-e-e-aqui-que-a-maioria-falha">Passo 4 — Registre tudo (e é aqui que a maioria falha)</h2>
     <p>Um calendário combinado "de boca" ou perdido no meio do WhatsApp deixa de ser confiável em poucas semanas. Para funcionar de verdade, o registro precisa ser:</p>
     <ul>
         <li><strong>Único e compartilhado:</strong> os dois enxergam exatamente a mesma coisa;</li>
@@ -279,7 +311,7 @@
         <a class="btn btn-primary" href="https://web.entrelares.app/register">Criar conta grátis</a>
     </div>
 
-    <h2>Erros comuns que vale evitar</h2>
+    <h2 id="erros-comuns-que-vale-evitar">Erros comuns que vale evitar</h2>
     <ul>
         <li><strong>Combinar só na conversa:</strong> sem registro, cada um lembra de um jeito.</li>
         <li><strong>Trocar dias sem confirmar:</strong> a troca precisa do "sim" do outro — senão vira conflito.</li>
@@ -287,7 +319,7 @@
         <li><strong>Colocar a criança como mensageira:</strong> o combinado é entre os adultos, não pela criança.</li>
     </ul>
 
-    <h2>Resumo</h2>
+    <h2 id="resumo">Resumo</h2>
     <p>Escolha um modelo que caiba na rotina, defina pontos de troca e regras para feriados, e — o mais importante — registre tudo num lugar único, compartilhado e com histórico. É isso que transforma a convivência de uma fonte de discussão em um combinado claro e previsível para os seus filhos.</p>
 
     <p class="meta" style="border-top:1px solid var(--line);padding-top:16px;margin-top:28px;">Este conteúdo é informativo e não constitui aconselhamento jurídico. Para o seu caso específico, consulte um advogado de família.</p>

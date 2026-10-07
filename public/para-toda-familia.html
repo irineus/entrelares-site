@@ -90,7 +90,10 @@
         article strong{color:var(--ink);}
         .lead{font-size:19px;color:var(--muted);}
         .roles{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0 !important;margin:6px 0 18px;}
-        .roles li{margin:0;font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink);}
+        .roles li{margin:0;font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 13px;color:var(--ink);font-weight:500;}
+        /* L-51: chips nas duas cores das casas — o mesmo par do calendário do app. */
+        .roles li:nth-child(odd){border-color:color-mix(in srgb,var(--indigo) 40%,var(--line));color:var(--indigo);background:var(--bg-tint);}
+        .roles li:nth-child(even){border-color:color-mix(in srgb,var(--pink) 40%,var(--line));color:var(--pink);background:color-mix(in srgb,var(--pink) 12%,var(--card));}
         .cta-box{background:var(--bg-tint);border:1px solid #c7d2fe;border-radius:var(--radius);padding:26px 24px;margin:34px 0;text-align:center;}
         .cta-box h2{margin:0 0 8px;font-size:20px;color:var(--ink);}
         .cta-box p{margin:0 0 16px;color:var(--indigo-deep);}
@@ -134,7 +137,7 @@
     <script defer src="https://cloud.umami.is/script.js" data-website-id="8b182992-68ce-4f2e-abb9-e798c33e48d8"></script>
     <!-- Brand tokens + self-hosted fonts (phase 0, 07/10/2026). Linked AFTER the inline
          <style> on purpose: its :root wins over this page's copy of the tokens. -->
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/brand.css" />
 </head>

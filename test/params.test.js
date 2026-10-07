@@ -44,6 +44,7 @@ const PARAM_PAGES = [
   // Phase 1 of the redesign (07/10/2026): the install page moved out of the home and carries
   // the Play badge behind landing.play_badge.
   "instalar.html",
+  "en/install.html",
 ];
 const LEGAL = ["termos.html", "privacidade.html", "exclusao-de-conta.html"];
 

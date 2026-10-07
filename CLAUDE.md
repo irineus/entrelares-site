@@ -39,10 +39,16 @@ On the preview, every app link is rewritten at deploy to **`https://qa.entrelare
 ## Two published languages (L-16, Aug 2026)
 The site is published in **PT-BR at `/` and English at `/en/`**. No build step and no templating
 layer, so **`public/en/index.html` is a SIBLING FILE of `public/index.html`, not a render of it** —
-the design system (the whole inline `<style>` block) and the slideshow script are **duplicated on
-purpose**. A change that belongs in both has to be made twice; both files carry a comment saying
-so. That is the item's standing cost, accepted over introducing a generator to a site whose virtue
-is that it deploys exactly what is in the repo.
+the design system (the whole inline `<style>` block) and the page scripts (live calendar, 3D scene,
+tour tabs, mobile menu, the L-17 demo) are **duplicated on purpose**. A change that belongs in both
+has to be made twice; both files carry a comment saying so. That is the item's standing cost,
+accepted over introducing a generator to a site whose virtue is that it deploys exactly what is in
+the repo (reopened as **L-50**, pending the owner's decision). **Since L-49 (07/10/2026) the shared
+tokens live in ONE file**, `public/css/brand.css`, linked by every page AFTER its inline `<style>`:
+the palette (cream, plum ink, the app's two house colours), dark mode, and the two self-hosted
+fonts — **Newsreader** for headings, **Inter** for body (L-51 swapped Fraunces out: its descending
+*f* and curly *j* read as crooked on a phone). Each page keeps its own `:root` as the fallback.
+`test/brand.test.js` pins the link order, the fonts on disk and that every inline script parses.
 - **`hreflang` is reciprocal on both pages**, canonical per language, **`x-default` → the PT-BR
   home**. This is the one way a second language can *hurt*: the PT-BR pages already rank, and
   duplicate content without correct annotation is a real SEO risk. Any new page that gains a
@@ -50,7 +56,9 @@ is that it deploys exactly what is in the repo.
 - **No language detection** — a visible `PT | EN` switch, nothing else. No `Accept-Language`
   redirect (breaks crawlers, traps a Brazilian on an English laptop), no suggestion banner. The
   switch lives **outside `.nav-links`**, which is `display:none` below 820 px — inside it, mobile
-  would have no way across. Verified at 344 px.
+  would have no way across. Verified at 344 px. Since L-49/L-51 every page with the header also
+  carries a **mobile menu** (`.burger` in the bar + a `.mmenu` panel after `</header>`, with the same
+  links); the `.nav-links` markup and CSS stay exactly as `test/menu.test.js` pins them.
 - **Not translated, deliberately:** the blog cluster (it targets Brazilian search intent), the
   legal pages (see the cross-repo section below — the PT-BR text is the binding one and `/en/`
   says so), and the L-09 materials opt-in (the PDF, the Worker's welcome e-mail and
@@ -330,6 +338,19 @@ system; an unverified claim is a liability no matter who drafted it.
   site's visitors, not one page's.
 
 ## Gotchas
+- **The redesign's homes were GENERATED once and are edited by hand since (L-49, 07/10/2026).**
+  `public/index.html` and `public/en/index.html` came out of a Python template that lived in a
+  session scratchpad, not in this repo — so there is nothing to "re-run": a change is made in both
+  files, as L-16 always said. The pieces that move together: the tour tabs (`.tab` ↔ `.pane`, one
+  real capture each), the live calendar presets (`presets` in the inline script — 14-day strings
+  anchored on Monday, a MIRROR of the generator's blocks like `js/gerador-rotina.js`), the 3D scene
+  (pure CSS, `--rz` drives the rotation), and the mobile menu (`#burger` + `#mmenu`). `/instalar`
+  carries the iOS drawing (L-19/L-33) and `/en/install` its English twin; both are
+  `run_worker_first` routes (the Play badge sits behind `landing.play_badge`). The display font is
+  **Newsreader** (L-51); Fraunces was dropped because its descending *f* and curly *j* are part of
+  the typeface and no axis in the served subset removes them. `assets-src/og-cover*.html` render
+  with the site's own fonts by relative path (`../public/fonts/`), headless Chrome at 1300×780
+  cropped to 1200×630.
 - **A link into the app must name a path the APP serves, and nothing here will 404 if it doesn't
   (L-27, 14/09/2026).** The app's `web/_redirects` answers **200 with `index.html`** for every
   path, so a wrong address boots the app and lets `RouteRules.redirect` decide: signed out goes
