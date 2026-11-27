@@ -2,7 +2,7 @@
 
 # Redes sociais — calendário de dezembro de 2026 (L-45)
 
-Instagram (carrosséis e Reels) e Pinterest (pins, no PR 2). Nada é publicado sozinho: cada post é
+Instagram (carrosséis e Reels) e Pinterest (pins, mais abaixo). Nada é publicado sozinho: cada post é
 agendado pelo owner, no Meta Business Suite (Instagram) e no agendador do próprio Pinterest.
 Nenhum post em 24, 25 e 31/12. O link de cada legenda é o da bio (o Instagram não deixa link
 clicável na legenda), e a chegada na landing é lida no Umami pelo referrer instagram.com,
@@ -12,15 +12,15 @@ nunca por `utm_*` (L-27).
 |---|---|---|---|---|
 | 01/12 | terça | Carrossel | Natal e Ano-Novo em duas casas: 3 jeitos de dividir | 7 PNG |
 | 03/12 | quinta | Carrossel | Ainda dá tempo: o que decidir antes do dia 24 | 8 PNG |
-| 05/12 | sábado | Reel | Quem fica com a criança hoje? Os dois veem a mesma resposta | MP4 (PR 2) |
+| 05/12 | sábado | Reel | Quem fica com a criança hoje? Os dois veem a mesma resposta | 1 MP4 |
 | 08/12 | terça | Carrossel | Três mensagens para combinar as festas sem briga | 7 PNG |
 | 10/12 | quinta | Carrossel | Férias de dezembro e janeiro: 3 formatos para dividir | 7 PNG |
-| 12/12 | sábado | Reel | Trocar o dia 24 pelo 31 com um pedido, não com uma conversa perdida | MP4 (PR 2) |
+| 12/12 | sábado | Reel | Trocar o dia 24 pelo 31 com um pedido, não com uma conversa perdida | 1 MP4 |
 | 15/12 | terça | Carrossel | Vai viajar com a criança? 4 perguntas para responder antes | 7 PNG |
 | 17/12 | quinta | Carrossel | O primeiro Natal depois da separação | 7 PNG |
-| 19/12 | sábado | Reel | O horário da entrega, marcado no próprio dia | MP4 (PR 2) |
+| 19/12 | sábado | Reel | O horário da entrega, marcado no próprio dia | 1 MP4 |
 | 22/12 | terça | Carrossel | Quando o combinado das festas muda em cima da hora | 7 PNG |
-| 26/12 | sábado | Reel | Cada pedido, aceite e recusa, com data e autor | MP4 (PR 2) |
+| 26/12 | sábado | Reel | Cada pedido, aceite e recusa, com data e autor | 1 MP4 |
 | 29/12 | terça | Carrossel | Duas casas, uma criança: o essencial das férias em cinco linhas | 7 PNG |
 
 ## 01/12 (terça) · Carrossel · Natal e Ano-Novo em duas casas: 3 jeitos de dividir
@@ -86,7 +86,7 @@ O roteiro completo está no blog do Entrelares (link na bio).
 
 Arquivos, nesta ordem:
 
-- Vídeo vertical 1080x1920 e roteiro: entram no PR 2 do L-45 (gravação no emulador contra a stack local).
+- `reels/2026-12-05-quem-fica-hoje.mp4` (vertical 1080x1920, sem áudio; o roteiro está no fim deste arquivo)
 
 Legenda (copiar inteira):
 
@@ -160,7 +160,7 @@ O guia completo está no blog do Entrelares (link na bio).
 
 Arquivos, nesta ordem:
 
-- Vídeo vertical 1080x1920 e roteiro: entram no PR 2 do L-45 (gravação no emulador contra a stack local).
+- `reels/2026-12-12-trocar-24-pelo-31.mp4` (vertical 1080x1920, sem áudio; o roteiro está no fim deste arquivo)
 
 Legenda (copiar inteira):
 
@@ -234,7 +234,7 @@ O guia completo está no blog do Entrelares (link na bio).
 
 Arquivos, nesta ordem:
 
-- Vídeo vertical 1080x1920 e roteiro: entram no PR 2 do L-45 (gravação no emulador contra a stack local).
+- `reels/2026-12-19-horario-da-entrega.mp4` (vertical 1080x1920, sem áudio; o roteiro está no fim deste arquivo)
 
 Legenda (copiar inteira):
 
@@ -280,7 +280,7 @@ Crie a conta grátis pelo link na bio.
 
 Arquivos, nesta ordem:
 
-- Vídeo vertical 1080x1920 e roteiro: entram no PR 2 do L-45 (gravação no emulador contra a stack local).
+- `reels/2026-12-26-tudo-no-historico.mp4` (vertical 1080x1920, sem áudio; o roteiro está no fim deste arquivo)
 
 Legenda (copiar inteira):
 
@@ -321,3 +321,132 @@ O guia completo está no blog do Entrelares (link na bio).
 
 #guardacompartilhada #coparentalidade #paisseparados #feriasescolares
 ```
+
+## Pinterest — um pin por rotina (perfil pinterest.com/entrelaresapp)
+
+Cada pin leva para a página da própria rotina, de onde vêm todos os números e frases da arte.
+Prancha sugerida: **Rotinas de guarda compartilhada**. Site reivindicado em 27/11/2026, então o
+pin mostra o Entrelares como autor do link.
+
+| Data | Dia | Rotina | Imagem |
+|---|---|---|---|
+| 02/12 | quarta | Fins de semana alternados | `pins/2026-12-02-fins-de-semana-alternados.png` |
+| 04/12 | sexta | Fins de semana alternados com pernoite de quarta | `pins/2026-12-04-fins-de-semana-alternados-com-pernoite.png` |
+| 09/12 | quarta | Rotina 2-2-3 | `pins/2026-12-09-2-2-3.png` |
+| 11/12 | sexta | Rotina 5-2-2-5 | `pins/2026-12-11-5-2-2-5.png` |
+| 16/12 | quarta | Rotina 3-4-4-3 | `pins/2026-12-16-3-4-4-3.png` |
+| 18/12 | sexta | Rotina dia sim, dia não (1-1) | `pins/2026-12-18-1-1.png` |
+
+### 02/12 (quarta) · Pin · Fins de semana alternados
+
+Imagem: `pins/2026-12-02-fins-de-semana-alternados.png`
+
+```text
+Título: Fins de semana alternados: o calendário de duas semanas
+Link: https://entrelares.app/rotinas/fins-de-semana-alternados
+Descrição: Na rotina de fins de semana alternados, a criança mora a semana numa casa e passa um fim de semana sim, outro não, na outra. Dias com cada um, em 14: 12 e 2. Trocas de casa a cada 14 dias: 2. Maior tempo sem a criança: 12 dias (Responsável 2). Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+### 04/12 (sexta) · Pin · Fins de semana alternados com pernoite de quarta
+
+Imagem: `pins/2026-12-04-fins-de-semana-alternados-com-pernoite.png`
+
+```text
+Título: Fins de semana alternados com pernoite de quarta: o calendário de duas semanas
+Link: https://entrelares.app/rotinas/fins-de-semana-alternados-com-pernoite
+Descrição: Fins de semana alternados com um pernoite no meio da semana: a criança mora numa casa, passa um fim de semana sim, outro não, na outra, e dorme lá toda quarta. Dias com cada um, em 14: 9 e 5. Trocas de casa a cada 14 dias: 6. Maior tempo sem a criança: 6 dias (Responsável 2). Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+### 09/12 (quarta) · Pin · Rotina 2-2-3
+
+Imagem: `pins/2026-12-09-2-2-3.png`
+
+```text
+Título: Rotina 2-2-3: o calendário de duas semanas
+Link: https://entrelares.app/rotinas/2-2-3
+Descrição: Na rotina 2-2-3, a criança fica dois dias com um responsável, dois com o outro e três com o primeiro, invertendo na semana seguinte. Dias com cada um, em 14: 7 e 7. Trocas de casa a cada 14 dias: 6. Maior tempo sem a criança: 3 dias. Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+### 11/12 (sexta) · Pin · Rotina 5-2-2-5
+
+Imagem: `pins/2026-12-11-5-2-2-5.png`
+
+```text
+Título: Rotina 5-2-2-5: o calendário de duas semanas
+Link: https://entrelares.app/rotinas/5-2-2-5
+Descrição: Na rotina 5-2-2-5, cada responsável tem dois dias fixos na semana e os fins de semana se alternam. Dias com cada um, em 14: 7 e 7. Trocas de casa a cada 14 dias: 4. Maior tempo sem a criança: 5 dias. Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+### 16/12 (quarta) · Pin · Rotina 3-4-4-3
+
+Imagem: `pins/2026-12-16-3-4-4-3.png`
+
+```text
+Título: Rotina 3-4-4-3: o calendário de duas semanas
+Link: https://entrelares.app/rotinas/3-4-4-3
+Descrição: Na rotina 3-4-4-3, a criança fica três dias com um responsável e quatro com o outro, invertendo na semana seguinte. Dias com cada um, em 14: 7 e 7. Trocas de casa a cada 14 dias: 4. Maior tempo sem a criança: 4 dias. Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+### 18/12 (sexta) · Pin · Rotina dia sim, dia não (1-1)
+
+Imagem: `pins/2026-12-18-1-1.png`
+
+```text
+Título: Rotina dia sim, dia não (1-1): o calendário de duas semanas
+Link: https://entrelares.app/rotinas/1-1
+Descrição: Na rotina 1-1, a criança troca de casa todo dia. Dias com cada um, em 14: 7 e 7. Trocas de casa a cada 14 dias: 14. Maior tempo sem a criança: 1 dia. Veja o calendário, para quem costuma funcionar e como montar no app Entrelares.
+```
+
+## Reels — roteiros (vídeos em `reels/`)
+
+Gravados no emulador contra a stack LOCAL do app (nunca dev nem produção), com a família demo do
+T-97 (Ana Martins, Bruno Costa e a filha Lia). Vertical 1080x1920, sem áudio: escolha a música no
+próprio Instagram ao publicar. A legenda de cada Reel está no calendário acima.
+
+### 05/12 (sábado) · Quem fica com a criança hoje? Os dois veem a mesma resposta
+
+Arquivo: `reels/2026-12-05-quem-fica-hoje.mp4`
+
+| Momento | Na tela | Texto |
+|---|---|---|
+| Abertura | Cartão | Quem fica com a criança hoje? |
+| 1 | O app abre no calendário; o cartão do topo diz quem é o responsável hoje. | A resposta aparece assim que o app abre. |
+| 2 | Passa para dezembro. | Os dois responsáveis veem o mesmo calendário. |
+| 3 | Toca no dia 24. | O dia 24 é um dia do calendário como os outros. |
+| Fecho | Cartão | Entrelares · Crie a conta grátis: link na bio |
+
+### 12/12 (sábado) · Trocar o dia 24 pelo 31 com um pedido, não com uma conversa perdida
+
+Arquivo: `reels/2026-12-12-trocar-24-pelo-31.mp4`
+
+| Momento | Na tela | Texto |
+|---|---|---|
+| Abertura | Cartão | Trocar o 24 pelo 31, sem conversa perdida |
+| 1 | Dezembro: o 24 é do Bruno e o 31 é da Ana. | O 24 está com o Bruno; o 31, com a Ana. |
+| 2 | Menu, Selecionar vários dias, toca no 24 e no 31. | A Ana seleciona um dia de cada um. |
+| 3 | Toca em Trocar: a folha mostra quem assume cada dia. | O app propõe a troca de uma vez, com um pedido por dia. |
+| 4 | Confirma a troca. | Até o Bruno responder, os dois dias ficam congelados. |
+| 5 | O Bruno aprova os dois pedidos; o calendário da Ana se atualiza. | Quando ele aprova, o calendário muda para os dois. |
+| Fecho | Cartão | Entrelares · Crie a conta grátis: link na bio |
+
+### 19/12 (sábado) · O horário da entrega, marcado no próprio dia
+
+Arquivo: `reels/2026-12-19-horario-da-entrega.mp4`
+
+| Momento | Na tela | Texto |
+|---|---|---|
+| Abertura | Cartão | “Dia 25 às 11h” é mais honesto do que “de manhã cedo” |
+| 1 | Passa para dezembro: os dias de transição mostram 18:00 na célula. | Nos dias de troca de casa, o horário da entrega fica no calendário. |
+| 2 | Toca no dia 28: a folha do dia mostra Entrega às 18:00. | E dentro do dia, o mesmo horário para os dois. |
+| Fecho | Cartão | Entrelares · Crie a conta grátis: link na bio |
+
+### 26/12 (sábado) · Cada pedido, aceite e recusa, com data e autor
+
+Arquivo: `reels/2026-12-26-tudo-no-historico.mp4`
+
+| Momento | Na tela | Texto |
+|---|---|---|
+| Abertura | Cartão | Quem trocou o quê? Está no histórico |
+| 1 | Abre Relatórios. | Em Relatórios, o Histórico guarda cada pedido e cada resposta. |
+| 2 | Toca em Histórico: a troca do 24 pelo 31, pedida e aprovada. | Com data e autor, e ninguém o reescreve depois. |
+| Fecho | Cartão | Entrelares · Crie a conta grátis: link na bio |

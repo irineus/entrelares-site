@@ -160,14 +160,14 @@ ${sections.join("\n")}
 /** The calendar the owner schedules from: one table, then every post with its caption. */
 export function calendarMarkdown(posts, month) {
   const rows = posts.map((p) => {
-    const files = p.kind === "carousel" ? `${p.slides.length} PNG` : "MP4 (PR 2)";
+    const files = p.kind === "carousel" ? `${p.slides.length} PNG` : "1 MP4";
     return `| ${p.date.slice(8, 10)}/12 | ${weekday(p.date)} | ${p.kind === "carousel" ? "Carrossel" : "Reel"} | ${p.title} | ${files} |`;
   });
   const blocks = posts.map((p) => {
     const head = `## ${p.date.slice(8, 10)}/12 (${weekday(p.date)}) · ${p.kind === "carousel" ? "Carrossel" : "Reel"} · ${p.title}`;
     const media = p.kind === "carousel"
       ? p.slides.map((_, i) => `- \`${slideFile(p, i)}\``).join("\n")
-      : "- Vídeo vertical 1080x1920 e roteiro: entram no PR 2 do L-45 (gravação no emulador contra a stack local).";
+      : `- \`reels/${p.date}-${p.slug}.mp4\` (vertical 1080x1920, sem áudio; o roteiro está no fim deste arquivo)`;
     const link = p.link ? `\nArtigo de origem: https://entrelares.app${p.link}\n` : "";
     return `${head}\n\nArquivos, nesta ordem:\n\n${media}\n${link}\nLegenda (copiar inteira):\n\n\`\`\`text\n${captionText(p)}\n\`\`\``;
   });
@@ -175,7 +175,7 @@ export function calendarMarkdown(posts, month) {
 
 # Redes sociais — calendário de ${month.label} (L-45)
 
-Instagram (carrosséis e Reels) e Pinterest (pins, no PR 2). Nada é publicado sozinho: cada post é
+Instagram (carrosséis e Reels) e Pinterest (pins, mais abaixo). Nada é publicado sozinho: cada post é
 agendado pelo owner, no Meta Business Suite (Instagram) e no agendador do próprio Pinterest.
 Nenhum post em 24, 25 e 31/12. O link de cada legenda é o da bio (o Instagram não deixa link
 clicável na legenda), e a chegada na landing é lida no Umami pelo referrer instagram.com,

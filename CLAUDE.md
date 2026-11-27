@@ -439,7 +439,15 @@ system; an unverified claim is a liability no matter who drafted it.
   the owner owns the accounts and schedules. Same rules as the site: no emoji, captions included
   (U-31), no price, no competitor, the legal disclaimer wherever a post touches authorisation or
   lawyers, and every sentence about the app checked against its code (S-15).
-  `test/social.test.js` pins the generated files, the PNG sizes and those rules.
+  **Pinterest pins** (`pins.mjs`, 1000×1500 in `pins/`) are READ from the `/rotinas/` pages they
+  link to — title, lead, the two-week grid, the three numbers, "para quem costuma funcionar" — so a
+  pin never says what its page does not; a new routine page fails the build until it gets a pin.
+  **Reels** (`reels.mjs`, MP4 in `reels/`): `record_reels.py` records one clip per beat of the real
+  app on the emulator against the app repo's LOCAL Supabase stack (never dev/prod; prerequisites in
+  its header) and `compose_reels.mjs` frames each clip under its sentence (ffmpeg, 30 fps, last
+  frame held — the emulator records only when the screen changes). Each beat's seconds live in
+  both files and the test compares them.
+  `test/social.test.js` pins the generated files, the image sizes and those rules.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
   `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
