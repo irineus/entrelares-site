@@ -6,9 +6,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { POSTS, CTA, BRAND_LINE } from "../assets-src/social/dezembro-2026.mjs";
 import { carousels, slideFile, captionText, weekday } from "../assets-src/social/social.mjs";
 import { outputs, pngSize } from "../assets-src/social/build.mjs";
+import { readPins, pinFile, pinCopy, PIN_ORDER } from "../assets-src/social/pins.mjs";
+import { REELS, OUTRO, reelFile } from "../assets-src/social/reels.mjs";
 
 const root = (rel) => new URL("../" + rel, import.meta.url);
 const read = (rel) => readFileSync(root(rel), "utf8").replace(/\r\n/g, "\n");
@@ -78,7 +81,11 @@ test("a carousel opens on a cover, closes on a call to action, and fits Instagra
 test("no emoji, no price and no competitor anywhere in the kit (U-31, L-45)", () => {
   const emoji = /[\u{1F000}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/u;
   const forbidden = [/R\$/, /\breais\b/i, /compartilhando a guarda/i, /ourfamilywizard/i, /2houses/i, /talkingparents/i, /\bcozi\b/i];
-  const all = [...POSTS.flatMap(texts), BRAND_LINE, ...Object.values(CTA).flatMap((c) => [c.line, c.action])];
+  const reelTexts = REELS.flatMap((r) => [r.intro.kicker, r.intro.title, ...r.beats.flatMap((b) => [b.text, b.screen])]);
+  const pinTexts = readPins(fileURLToPath(new URL("../public/", import.meta.url)))
+    .flatMap((p) => [p.title, p.lead, ...p.fits, ...Object.values(pinCopy(p))]);
+  const all = [...POSTS.flatMap(texts), BRAND_LINE, ...Object.values(CTA).flatMap((c) => [c.line, c.action]),
+    ...reelTexts, ...pinTexts, ...Object.values(OUTRO)];
   for (const t of all) {
     assert.doesNotMatch(t, emoji, `emoji in: ${t}`);
     for (const re of forbidden) assert.doesNotMatch(t, re, `forbidden in: ${t}`);
@@ -107,4 +114,40 @@ test("the PT home carries the Pinterest domain claim (L-45, profile entrelaresap
   // Pinterest reads the tag at the site's root when the owner clicks Verify; without it the
   // claim drops and the pins lose their site attribution. The value is public by design.
   assert.match(read("public/index.html"), /<meta name="p:domain_verify" content="a594c7f784fbf5a00c3eb0caf598ad5b" \/>/);
+});
+
+const publicDir = fileURLToPath(new URL("../public/", import.meta.url));
+
+test("one 1000x1500 pin per routine page, and nothing else in pins/", () => {
+  const pins = readPins(publicDir);
+  assert.equal(pins.length, PIN_ORDER.length);
+  for (const p of pins) {
+    const file = root("assets-src/social/" + pinFile(p));
+    assert.ok(existsSync(file), `${pinFile(p)} is missing — run: node assets-src/social/build.mjs`);
+    assert.deepEqual(pngSize(readFileSync(file)), { width: 1000, height: 1500 }, pinFile(p));
+    assert.equal(p.rows.length, 2);
+    assert.ok(p.fits.length >= 1, `${p.slug}: no "para quem costuma funcionar" item`);
+    const c = pinCopy(p);
+    assert.ok(c.title.length <= 100, `${p.slug}: Pinterest title is ${c.title.length} characters`);
+    assert.ok(c.description.length <= 500, `${p.slug}: Pinterest description is ${c.description.length} characters`);
+    assert.ok(existsSync(root("public" + p.link + ".html")), `${p.slug}: its page does not exist`);
+  }
+  assert.deepEqual(readdirSync(root("assets-src/social/pins/")).sort(), pins.map((p) => pinFile(p).split("/")[1]).sort());
+});
+
+test("every Reel of the calendar has its video, and its beats match the recorder's seconds", () => {
+  const reelPosts = POSTS.filter((p) => p.kind === "reel").map((p) => p.id).sort();
+  assert.deepEqual(REELS.map((r) => r.id).sort(), reelPosts, "reels.mjs and the calendar name the same Reels");
+  const recorder = read("assets-src/social/record_reels.py");
+  for (const r of REELS) {
+    const file = root("assets-src/social/" + reelFile(r, POSTS));
+    assert.ok(existsSync(file), `${reelFile(r, POSTS)} is missing — run record_reels.py, then compose_reels.mjs`);
+    assert.ok(readFileSync(file).length > 100_000, `${reelFile(r, POSTS)} looks empty`);
+    // the recorder's block for this Reel: "rNN": dict(prep=[...], beats=[ (secs, [...]), ... ]),
+    const start = recorder.indexOf(`"${r.id}": dict(`);
+    assert.ok(start >= 0, `record_reels.py has no block for ${r.id}`);
+    const end = recorder.indexOf("\n    ]),", start);
+    const recorded = [...recorder.slice(start, end).matchAll(/^\s+\((\d+), \[/gm)].map((m) => Number(m[1]));
+    assert.deepEqual(recorded, r.beats.map((b) => b.secs), `${r.id}: beat seconds differ between reels.mjs and record_reels.py`);
+  }
 });
