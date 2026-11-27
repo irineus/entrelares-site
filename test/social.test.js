@@ -102,3 +102,9 @@ test("every article a post points to exists on the site, in its extensionless fo
     assert.ok(existsSync(root("public" + p.link + ".html")), `${p.id}: public${p.link}.html does not exist`);
   }
 });
+
+test("the PT home carries the Pinterest domain claim (L-45, profile entrelaresapp)", () => {
+  // Pinterest reads the tag at the site's root when the owner clicks Verify; without it the
+  // claim drops and the pins lose their site attribution. The value is public by design.
+  assert.match(read("public/index.html"), /<meta name="p:domain_verify" content="a594c7f784fbf5a00c3eb0caf598ad5b" \/>/);
+});
