@@ -9,8 +9,10 @@ NEVER against dev or production. Prerequisites (the T-103 recipe, app repo memor
     `adb shell wm density 480`, the app signed in as Ana, in Portuguese, push strip dismissed;
   - the demo family seeded: Ana Martins (admin) and Bruno Costa, child Lia, alternating weeks
     Monday to Sunday from 02/11/2026 with handoff 18:00 on Mondays (24/12 Bruno, 31/12 Ana).
+    The demo accounts' password is whatever the seed used; pass it as L45_DEMO_PASSWORD (it is
+    never written here: a password-shaped literal trips the repository's secret scanner).
 
-    python -I assets-src/social/record_reels.py <out-dir>      (clips: <out-dir>/r0N-bM.mp4)
+    L45_DEMO_PASSWORD=... python -I assets-src/social/record_reels.py <out-dir> [r01 r03 r02 r04]
 
 The coordinates are the emulator's (1080x2400 at density 480) as read with `uiautomator dump`
 on 27/11/2026; a redesign of these screens means reading them again. Run order matters: r02
@@ -62,7 +64,7 @@ def bruno_approves_all():
             raw = r.read()
             return json.loads(raw) if raw else None
     jwt = call("/auth/v1/token?grant_type=password",
-               {"email": "bruno@exemplo.com", "password": "Demo-l45-reels-2026"})["access_token"]
+               {"email": "bruno@exemplo.com", "password": os.environ["L45_DEMO_PASSWORD"]})["access_token"]
     req = urllib.request.Request(BASE + "/rest/v1/swap_requests?status=eq.pending&select=id",
                                  headers={"apikey": PUB, "Authorization": f"Bearer {jwt}"})
     with urllib.request.urlopen(req) as r:
