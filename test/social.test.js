@@ -151,3 +151,19 @@ test("every Reel of the calendar has its video, and its beats match the recorder
     assert.deepEqual(recorded, r.beats.map((b) => b.secs), `${r.id}: beat seconds differ between reels.mjs and record_reels.py`);
   }
 });
+
+test("both homes name the product's own profiles in the Organization sameAs (L-45)", () => {
+  // Google ties a brand's profiles to its site through sameAs; a profile renamed or dropped
+  // must leave this list in the same delivery, or the homes point at somebody else's page.
+  const profiles = [
+    "https://play.google.com/store/apps/details?id=com.entrelares.app",
+    "https://www.instagram.com/app.entrelares/",
+    "https://www.pinterest.com/entrelaresapp/",
+    "https://www.youtube.com/@EntrelaresApp",
+  ];
+  for (const rel of ["public/index.html", "public/en/index.html"]) {
+    const org = /"@type": "Organization",[\s\S]*?"sameAs": (\[.*?\])/.exec(read(rel));
+    assert.ok(org, `${rel}: no Organization sameAs`);
+    assert.deepEqual(JSON.parse(org[1]), profiles, rel);
+  }
+});
