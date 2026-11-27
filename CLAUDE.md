@@ -430,6 +430,16 @@ system; an unverified claim is a liability no matter who drafted it.
   report**, not a test: Search Console (property `sc-domain:entrelares.app`) and Bing Webmaster
   Tools, both on **`irineus@gmail.com`** — URLs and dates in the app repo's `CLAUDE.md` console
   table. After a sitemap change, the owner resubmits it and reads *Success · 12* back.
+- **The product's own social profiles are fed from `assets-src/social/` (L-45, 26/11/2026)** —
+  one data file per month (`dezembro-2026.mjs`: calendar, every carousel slide, every caption) and
+  `node assets-src/social/build.mjs`, which writes the generator page `carrosseis.html`, the
+  owner's calendar `dezembro-2026.md` and the 1080×1350 PNGs (headless Chrome, site fonts). The
+  run STOPS before any screenshot if a slide's text overflows (the page's `#check` report): a cut
+  sentence would be published by hand, past every other check. Nothing is posted automatically —
+  the owner owns the accounts and schedules. Same rules as the site: no emoji, captions included
+  (U-31), no price, no competitor, the legal disclaimer wherever a post touches authorisation or
+  lawyers, and every sentence about the app checked against its code (S-15).
+  `test/social.test.js` pins the generated files, the PNG sizes and those rules.
 - **Generated images have generators in `assets-src/`, and the command lives in the file** — the
   lead-magnet PDF (`modelos-rotina.html`), the two OG banners (`og-cover.html` /
   `og-cover-en.html`, headless Chrome at 1200×630), the three icons (`brand-icons.py`) and the
