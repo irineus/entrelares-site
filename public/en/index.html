@@ -308,6 +308,9 @@
         .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
         .hero-play img { height: 46px; width: auto; display: block; }
         .hero-tiny { font-size: 13px; color: var(--muted); }
+        /* Phones only (L-52): there the live calendar drops below the fold, so the hero names
+           the simulator itself. On a wide screen the card's own button sits right beside it. */
+        .hero-sim { display: none; align-items: center; min-height: 44px; margin-top: 6px; font-size: 15px; font-weight: 600; color: var(--indigo); text-decoration: none; }
         .stage { position: relative; perspective: 1400px; }
         .cal-card { position: relative; background: var(--card); border-radius: 26px; padding: 22px; box-shadow: 0 24px 60px rgba(var(--ink-rgb), .16); border: 1px solid var(--line);
             transform-style: preserve-3d; transform: rotateY(var(--ry, -10deg)) rotateX(var(--rx, 5deg)); transition: transform .25s ease-out; scroll-margin-top: 90px; }
@@ -328,11 +331,19 @@
         .day.today { outline: 2.5px solid var(--accent); outline-offset: -2.5px; transform: translateZ(14px) scale(1.08); }
         .today-line { margin-top: 14px; display: flex; gap: 10px; align-items: center; font-size: 14px; background: var(--bg); border-radius: 12px; padding: 10px 12px; }
         .today-line .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
-        .cal-more { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; }
+        /* The way into the full simulator (L-52, 28/11/2026): a filled pill, not a text link —
+           the owner found the card's old underlined line too easy to miss. It sits 24px in
+           front of the card on the same 3D stage, so it tilts and pops with the calendar. */
+        .cal-more { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; padding: 12px 18px; border-radius: 999px;
+            background: var(--indigo); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; text-align: center;
+            box-shadow: 0 6px 18px rgba(var(--brand-rgb), .35); transform: translateZ(24px); transition: transform .15s ease, box-shadow .15s ease; }
+        .cal-more:hover { transform: translateZ(24px) translateY(-2px); box-shadow: 0 10px 24px rgba(var(--brand-rgb), .42); }
+        .cal-more:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
         .float { position: absolute; border-radius: 14px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 14px 30px rgba(var(--ink-rgb), .14); padding: 10px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: float 6s ease-in-out infinite; transform-style: preserve-3d; white-space: nowrap; }
         .float .sq { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-family: var(--font-display, Georgia, serif); font-size: 14px; flex: none; }
         .f1 { top: -26px; left: -34px; transform: translateZ(60px); animation-delay: -1s; }
-        .f2 { bottom: -18px; right: 18px; transform: translateZ(80px); animation-delay: -3s; }
+        /* Top-right since L-52: at the bottom it sat on the simulator button. */
+        .f2 { top: -20px; right: -28px; transform: translateZ(80px); animation-delay: -3s; }
         .f3 { top: 46%; left: -56px; transform: translateZ(40px); animation-delay: -5s; }
         @keyframes float { 0%, 100% { margin-top: 0; } 50% { margin-top: -10px; } }
 
@@ -558,6 +569,7 @@
             .cal-card { transform: none; }
             .f1 { left: auto; right: 6px; top: -20px; }
             .f2, .f3 { display: none; }
+            .hero-sim { display: inline-flex; }
             .scene-sec .wrap, .problem .wrap, .pane, .founder-row { grid-template-columns: 1fr; }
             .iso-wrap { height: 280px; }
             .steps { grid-template-columns: 1fr; }
@@ -663,6 +675,7 @@
                 <a class="btn btn-ghost" data-param-hide="landing.play_badge" hidden href="#como-funciona-anchor">See how it works</a>
             </div>
             <p class="hero-tiny">Free for both parents · no credit card · also in the browser, iPhone included · app in English and Portuguese</p>
+            <a class="hero-sim" data-umami-event="gerador-hero" href="#simulator">Still choosing a schedule? Try the simulator →</a>
         </div>
 
         <div class="stage" id="stage">

@@ -20,6 +20,8 @@
   "PLAY_IMG": "/img/google-play-badge-en.png",
   "PLAY_ALT": "Get it on Google Play",
   "HERO_TINY": "Free for both parents · no credit card · also in the browser, iPhone included · app in English and Portuguese",
+  "HERO_SIM": "Still choosing a schedule? Try the simulator →",
+  "HERO_SIM_HREF": "#simulator",
   "CAL_ARIA": "Try a parenting schedule",
   "CHIPS_ARIA": "Schedule pattern",
   "CHIP1": "Alternating weeks",
