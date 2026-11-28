@@ -46,8 +46,11 @@ const withMenu = pages.filter((p) => {
 });
 
 // [label, class] — the class is what decides which items leave first (1180px, then 980px).
+// "Simulador" has no class since L-52 (28/11/2026): the owner found the generator hard to
+// find, so it stays on screen at every width the menu shows, and on the home it opens the
+// generator page instead of scrolling to the hero card that is already in view.
 const PT_HOME = [
-  ['Como funciona', ''], ['Simulador', 'nav-opt'], ['Por quê', 'nav-opt2'], ['Benefícios', 'nav-opt'],
+  ['Como funciona', ''], ['Simulador', ''], ['Por quê', 'nav-opt2'], ['Benefícios', 'nav-opt'],
   ['Instalar', 'nav-opt'], ['Preços', ''], ['Dúvidas', 'nav-opt2'], ['Blog', ''],
 ];
 const PT_INTERNAL = PT_HOME.map(([l, c]) => [l === 'Instalar' ? 'Rotinas' : l, c]);

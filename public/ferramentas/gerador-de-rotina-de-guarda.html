@@ -5,7 +5,7 @@
     <meta name="entrelares-params" data-lang="pt" content='{"billing.price_annual_cents":"5490","billing.price_monthly_cents":"549","calendar_months_free":"6","calendar_months_premium":"24","free_caregivers":"2","landing.launch_free_badge":"true","landing.play_badge":"true","landing.promo_price_label":"true"}' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerador de rotina de guarda compartilhada — grátis e sem cadastro</title>
-    <meta name="description" content="Monte grátis o calendário de convivência dos filhos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Veja a divisão de dias, imprima ou salve em PDF — sem cadastro." />
+    <meta name="description" content="Monte grátis o calendário de convivência dos filhos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Veja a divisão de dias, imprima, salve em PDF ou baixe em planilha (Excel) — sem cadastro." />
     <link rel="canonical" href="https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda" />
     <link rel="icon" type="image/png" href="/favicon.png?v=6" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF8F3" />
@@ -14,7 +14,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Entrelares" />
     <meta property="og:title" content="Gerador de rotina de guarda compartilhada — grátis" />
-    <meta property="og:description" content="Monte o calendário de convivência dos filhos em segundos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Imprima ou salve em PDF, sem cadastro." />
+    <meta property="og:description" content="Monte o calendário de convivência dos filhos em segundos: semana alternada, quinzenal, dia sim/dia não ou um ciclo personalizado. Imprima, salve em PDF ou baixe em planilha (Excel), sem cadastro." />
     <meta property="og:url" content="https://entrelares.app/ferramentas/gerador-de-rotina-de-guarda" />
     <meta property="og:image" content="https://entrelares.app/og-cover.png" />
     <script type="application/ld+json">
@@ -28,7 +28,7 @@
       "inLanguage": "pt-BR",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
       "publisher": { "@type": "Organization", "name": "Entrelares", "logo": { "@type": "ImageObject", "url": "https://entrelares.app/icon-512.png" } },
-      "description": "Ferramenta gratuita que gera o calendário de convivência da guarda compartilhada — semana alternada (7/7), quinzenal (14/14), dia sim/dia não ou um ciclo personalizado — com impressão e PDF."
+      "description": "Ferramenta gratuita que gera o calendário de convivência da guarda compartilhada — semana alternada (7/7), quinzenal (14/14), dia sim/dia não ou um ciclo personalizado — com impressão, PDF e planilha para Excel ou Google Planilhas."
     }
     </script>
     <script type="application/ld+json">
@@ -215,7 +215,7 @@
         <a class="brand" href="/"><img src="/icon-192.png?v=6" alt="" width="32" height="32" /> Entrelares</a>
         <nav class="nav-links" aria-label="Seções">
             <a href="/#como-funciona">Como funciona</a>
-            <a class="nav-opt" href="/ferramentas/gerador-de-rotina-de-guarda" aria-current="page">Simulador</a>
+            <a href="/ferramentas/gerador-de-rotina-de-guarda" aria-current="page">Simulador</a>
             <a class="nav-opt2" href="/#porque">Por quê</a>
             <a class="nav-opt" href="/#beneficios">Benefícios</a>
             <a class="nav-opt" href="/rotinas/">Rotinas</a>
@@ -320,6 +320,7 @@
                 <button class="btn btn-primary" type="submit" data-umami-event="gerador-gerar">Gerar calendário</button>
                 <button class="btn btn-ghost" type="button" id="g-compartilhar" hidden data-umami-event="gerador-compartilhar">Compartilhar rotina</button>
                 <button class="btn btn-ghost" type="button" id="g-imprimir" hidden data-umami-event="gerador-imprimir">Imprimir / salvar PDF</button>
+                <button class="btn btn-ghost" type="button" id="g-planilha" hidden data-umami-event="gerador-planilha">Baixar planilha (Excel)</button>
             </div>
             <p class="share-status" id="g-share-status" role="status" aria-live="polite"></p>
             <input class="share-link" id="g-share-link" type="text" readonly hidden aria-label="Link da rotina" />
@@ -338,7 +339,7 @@
 
     <div class="explain">
         <h2>Como usar o gerador</h2>
-        <p>Preencha como as duas casas devem aparecer no calendário (pode ser o nome de cada responsável), escolha o modelo de rotina e quem fica com a criança no primeiro bloco. A ferramenta monta a prévia dia a dia, marca os <strong>dias de troca</strong> e mostra quantos dias ficam com cada um no período.</p>
+        <p>Preencha como as duas casas devem aparecer no calendário (pode ser o nome de cada responsável), escolha o modelo de rotina e quem fica com a criança no primeiro bloco. A ferramenta monta a prévia dia a dia, marca os <strong>dias de troca</strong> e mostra quantos dias ficam com cada um no período. Para guardar ou editar, <strong>Baixar planilha (Excel)</strong> entrega o mesmo calendário em um arquivo .xlsx, um dia por linha, que abre no Excel, no Google Planilhas e no LibreOffice — a planilha é montada no seu aparelho, e os nomes não saem dele.</p>
         <ul>
             <li><strong>Semana alternada (7/7):</strong> o modelo mais comum — uma semana em cada casa, uma única troca por semana.</li>
             <li><strong>Quinzenal (14/14):</strong> períodos mais longos, menos trocas — comum quando as casas são distantes.</li>
@@ -398,6 +399,7 @@
     import {
         buildSchedule, customBlocks, countDays, anchorStart, FRIDAY_ANCHORED, encodeRoutine, decodeRoutine,
     } from "/js/gerador-rotina.js";
+    import { buildXlsx, XLSX_MIME, XLSX_FILE } from "/js/planilha-xlsx.js";
 
     const $ = (id) => document.getElementById(id);
     const tool = $("g-tool");
@@ -405,6 +407,7 @@
     const err = $("g-erro");
     const preview = $("g-preview");
     const printBtn = $("g-imprimir");
+    const sheetBtn = $("g-planilha");
     const shareBtn = $("g-compartilhar");
     const shareStatus = $("g-share-status");
     const shareLink = $("g-share-link");
@@ -413,6 +416,8 @@
     // the form and a shared link — go through show(routine), which is what makes
     // a link render the same calendar on the phone that receives it.
     let current = null;
+    // L-52: what the spreadsheet button exports — the plan exactly as the preview drew it.
+    let currentSheet = null;
 
     // Default start: today (local).
     const today = new Date();
@@ -530,6 +535,8 @@
         }
         render(plan, names, r.time, modelLabel, r.weeks);
         current = r;
+        currentSheet = { plan, names, time: r.time, modelLabel };
+        sheetBtn.hidden = false;
         preview.classList.add("on");
         printBtn.hidden = false;
         shareBtn.hidden = false;
@@ -549,6 +556,19 @@
     });
 
     printBtn.addEventListener("click", () => window.print());
+
+    // L-52: the calendar as an .xlsx, built here (js/planilha-xlsx.js) — nothing is sent.
+    sheetBtn.addEventListener("click", () => {
+        if (!currentSheet) return;
+        const url = URL.createObjectURL(new Blob([buildXlsx(currentSheet)], { type: XLSX_MIME }));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = XLSX_FILE;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
 
     // Share: the system sheet where there is one (WhatsApp is one tap away on a
     // phone), the clipboard where there is not, and the link itself, selected,

@@ -490,6 +490,22 @@ system; an unverified claim is a liability no matter who drafted it.
   the tool's menu also offers the app's two alternating-weekend presets (`MENU_PRESETS` = 7-7, 14-14,
   1-1, 3-11, 3-2-1-6-1-1); `anchorStart` snaps a weekend preset to the Friday on or before the chosen
   date, as the wizard does, and a note under the model says so — the hero calendar uses the same call.
+- **The generator hands out its calendar as an .xlsx, built in the browser (L-52, 28/11/2026).**
+  `public/js/planilha-xlsx.js` writes the workbook's six XML parts into a ZIP with stored entries,
+  byte by byte — no library, no request, so the names a parent typed never leave the device (the
+  L-30 promise). One row per day: an Excel date (`dd/mm/yyyy`), the weekday, the house (tinted like
+  the preview) and "Troca às HH:MM" on handoff days; the button (`gerador-planilha`) appears with
+  the preview and exports exactly the plan on screen. `test/planilha-xlsx.test.js` unzips it with
+  its own reader, checks every CRC against `node:zlib` and reads the sheet back. It exists because
+  Google Brasil's autocomplete shows "calendário guarda compartilhada excel" (L-52's analysis).
+- **The titles of the six L-52 pages speak the searcher's words (28/11/2026).** Google Brasil's
+  autocomplete offers NOTHING for "rotina 2-2-3" or "5-2-2-5"; people type questions ("uma semana
+  em cada casa", "15 dias com cada paga pensão", "quantos dias fica com o pai"). So the routine
+  names stay in parentheses and the question leads. A legal question is answered only with the
+  cited article (CC art. 1.583, § 2º, checked against Lei 13.058/2014) and a referral to a lawyer
+  or the Defensoria. On `/rotinas/5-2-2-5`, `/3-4-4-3` and `/fins-de-semana-alternados-com-pernoite`
+  the H1 and meta description were NOT changed: `assets-src/social/pins.mjs` builds the December
+  Pinterest pins from those two fields and the pins were already scheduled (L-45).
 - **`/rotinas/<id>` (L-43, 02/10/2026) are claims about the app's rotation wizard.** One page per
   routine (2-2-3, 5-2-2-5, 1-1, 3-4-4-3, fins de semana alternados) plus the `/rotinas/` index. Each
   two-week grid declares its cycle in `data-blocks`/`data-inicio`, and `test/rotinas.test.js` walks it
